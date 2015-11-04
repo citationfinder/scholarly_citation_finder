@@ -1,0 +1,16 @@
+{% if author %}
+	<h2>{{ author.last_name }}</h2>
+	
+	<h4>Publications</h4>
+	{% if publications %}
+		<ul>
+		{% for i in publications %}
+			{% include "publication/item.html" with item=i %}
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No</p>
+	{% endif %}
+{% else %}
+	<h2>Not found</h2>
+{% endif %}

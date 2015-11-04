@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^citeseerx_harvester/', include('citeseerx_harvester.urls')),
     url(r'^dblp_harvester/', include('dblp_harvester.urls')),
     url(r'^citation_extractor/', include('citation_extractor.urls')),
+    url(r'^search_for_citations/', include('search_for_citations.urls')),
 ]

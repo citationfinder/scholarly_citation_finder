@@ -1,0 +1,17 @@
+<li>#{{item.id}}
+	{{item.title}}
+	(<a href="{{item.source}}">Source</a>
+	{% if item.citeseerx_id %}
+		@<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi={{item.citeseerx_id}}" target="_blank">CiteSeerX</a>
+	{% endif %}
+	{% if item.dblp_id %}
+		@<a href="http://dblp.uni-trier.de/db/{{item.dblp_id}}" target="_blank">DBLP</a>
+	{% endif %}
+	)<br>
+	{% for author in item.authors.all %}
+		<a href="../{{author.id}}">{{author.last_name}}</a>,
+	{% endfor %}<br>
+	{% if item.abstract %}
+		<p><i>{{item.abstract}}</i></p>
+	{% endif %}
+</li>
