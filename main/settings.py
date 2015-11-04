@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'search_for_citations',
-    'citeseerx_harvester'
+    'citeseerx_harvester',
+    'citation_extractor'
 )
 
 MIDDLEWARE_CLASSES = (
