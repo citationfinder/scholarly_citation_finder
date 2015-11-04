@@ -1,0 +1,8 @@
+<h2>Authors</h2>
+{% if authors %}
+	<ul>
+	{% for item in authors %}
+		<li><a href="./{{item.id}}/">{{item.last_name}}</a></li>
+	{% endfor %}
+	</ul>
+{% endif %}

@@ -2,6 +2,11 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Author, Publication
 
+def author_index(request):
+    return render(request, 'author/index.html', {
+        'authors': Author.objects.all()
+    })
+    
 def author_details(request, author_id):
     
     try:

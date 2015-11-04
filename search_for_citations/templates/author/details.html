@@ -1,13 +1,15 @@
+<a href="../"><- zurück</a>
 {% if author %}
 	<h2>{{ author.last_name }}</h2>
 	
 	<h4>Publications</h4>
 	{% if publications %}
-		<ul>
+		<small><a href="#all">All ({{ publications|length  }})</a></small>
+		<ol>
 		{% for i in publications %}
 			{% include "publication/item.html" with item=i %}
 		{% endfor %}
-		</ul>
+		</ol>
 	{% else %}
 		<p>No</p>
 	{% endif %}
