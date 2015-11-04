@@ -1,0 +1,19 @@
+# Temp files
+downloads/
+db.sqlite3
+db.sqlite3-journal
+
+############
+## Python
+############
+ 
+*.pyc
+__pycache__/
+
+############
+## Eclipse PyDev
+############
+ 
+.settings/
+.project
+.pydevproject
