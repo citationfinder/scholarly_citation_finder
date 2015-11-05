@@ -10,7 +10,7 @@ class Author(models.Model):
 class Publication(models.Model):
     title =  models.CharField(default=None, max_length=150)
     authors = models.ManyToManyField(Author)
-    date = models.DateField(default=None)
+    date = models.CharField(default=None, max_length=200)
     booktitle = models.CharField(default=None, max_length=200)
     journal = models.CharField(default=None, max_length=200)
     volume = models.PositiveIntegerField(default=0)

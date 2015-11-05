@@ -56,11 +56,10 @@ class CitationExtractor:
         self.fast_iter(context)
         return True
     
-    def get_element(self, element, tag):
+    def get_element(self, element, tag, variable):
         if element.tag == tag and element.text:
             return element.text
-        else:
-            return None
+        return variable
             
     def fast_iter(self, context, *args, **kwargs):
         #xml categories
@@ -82,12 +81,12 @@ class CitationExtractor:
             if elem.tag == 'author':
                 author_array.append(elem.text)
     
-            title = self.get_element(elem, 'title')
-            date = self.get_element(elem, 'date')
-            booktitle = self.get_element(elem, 'booktitle')
-            journal = self.get_element(elem, 'journal')
-            volume = self.get_element(elem, 'volume')
-            pages = self.get_element(elem, 'pages')
+            title = self.get_element(elem, 'title', title)
+            date = self.get_element(elem, 'date', date)
+            booktitle = self.get_element(elem, 'booktitle', booktitle)
+            journal = self.get_element(elem, 'journal', journal)
+            volume = self.get_element(elem, 'volume', volume)
+            pages = self.get_element(elem, 'pages', pages)
 
     
             if elem.tag == 'citation':
