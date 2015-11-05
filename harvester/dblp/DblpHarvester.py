@@ -14,7 +14,7 @@ class DblpHarvester():
     
     def harvest(self):
         context = etree.iterparse(self.DBLP_DIR + self.DBLP_FILE_XML, load_dtd=True, html=True)
-        self.fast_iter(context, self.process_element)        
+        self.fast_iter(context)        
 
     """
     @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py

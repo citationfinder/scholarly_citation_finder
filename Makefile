@@ -1,5 +1,5 @@
 run:
 	python manage.py runserver
 	
-test:
+tests:
 	python manage.py test
