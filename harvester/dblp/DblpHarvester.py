@@ -1,12 +1,8 @@
 from lxml import etree
-#import os, sys
 from unidecode import unidecode
 from search_for_citations.models import Publication
 
-"""
-https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
-"""
-class DblpParser():
+class DblpHarvester():
     
     DBLP_DIR = 'downloads/dblp/'
     DBLP_FILE_XML = 'dblp.xml'
@@ -16,18 +12,20 @@ class DblpParser():
     #                           publisher|note|crossref|isbn|series|school|chapter
     COLLABORATIONS = [u'www', u'phdthesis', u'inproceedings', u'incollection', u'proceedings', u'book', u'mastersthesis', u'article']
     
-    def __init__(self):   
+    def harvest(self):
         context = etree.iterparse(self.DBLP_DIR + self.DBLP_FILE_XML, load_dtd=True, html=True)
-        self.fast_iter(context, self.process_element)
+        self.fast_iter(context, self.process_element)        
 
     """
+    @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
+
     @func: fast_iter
     @param context : iterparsed (chunk of xml) data
     @param func : handler
     @desc: Read xml chunk. After read, clear and delete chunk to release memory.
             Also, replace html encoding to similar ascii code
     """
-    def fast_iter(self, context, func,*args, **kwargs):
+    def fast_iter(self, context, func, *args, **kwargs):
         #xml categories
         author_array = []
         title = ''
@@ -71,13 +69,3 @@ class DblpParser():
                 del elem.getparent()[0]
         del context
         #clear chunks
-
-    #@func: process_element
-    #@param elem : parsed data of chunk
-    #@param fout : file name to write
-    #@desc: It is handler to write content. just write content to file
-    def process_element(self, elem, fout):
-        print(elem)
-        print >>fout, elem
-        
-DblpParser()
