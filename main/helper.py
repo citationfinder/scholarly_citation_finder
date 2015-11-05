@@ -4,7 +4,6 @@ import requests
 import shutil
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-import requests
 from requests.exceptions import ConnectionError, InvalidSchema
 from clint.textui import progress    
 

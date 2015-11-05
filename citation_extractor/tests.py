@@ -12,6 +12,6 @@ class CitationExractorTest(TestCase):
     def setUp(self):
         self.extractor = CitationExtractor(None)
     
-    #def test_parse_citations(self):
-    #    first = self.extractor.parse_citations(self.TEST_DIR_FILES + 'citations.xml')
-    #    self.assertEqual(first, True)
+    def test_parse_citations(self):
+        first = self.extractor.parse_citations(self.TEST_DIR_FILES + 'citations.xml')
+        self.assertEqual(first, True)

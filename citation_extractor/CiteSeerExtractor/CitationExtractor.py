@@ -55,11 +55,22 @@ class CitationExtractor:
         context = etree.iterparse(xml, html=True)
         self.fast_iter(context)
         return True
-        
+    
+    def get_element(self, element, tag):
+        if element.tag == tag and element.text:
+            return element.text
+        else:
+            return None
+            
     def fast_iter(self, context, *args, **kwargs):
         #xml categories
-        author_array = []
         title = ''
+        author_array = []
+        date = ''
+        booktitle = ''
+        journal = ''
+        volume = ''
+        pages = ''
         #date = ''
         #journal
         #volume
@@ -71,14 +82,23 @@ class CitationExtractor:
             if elem.tag == 'author':
                 author_array.append(elem.text)
     
-            if elem.tag == 'title':
-                if elem.text:
-                    title = elem.text
+            title = self.get_element(elem, 'title')
+            date = self.get_element(elem, 'date')
+            booktitle = self.get_element(elem, 'booktitle')
+            journal = self.get_element(elem, 'journal')
+            volume = self.get_element(elem, 'volume')
+            pages = self.get_element(elem, 'pages')
+
     
             if elem.tag == 'citation':
                 parse_publication(
                     title=title,
-                    authors=author_array
+                    authors=author_array,
+                    date=date,
+                    booktitle=booktitle,
+                    journal=journal,
+                    volume=volume,
+                    pages=pages,                  
                 )
                     
                 del author_array[:]
@@ -86,7 +106,7 @@ class CitationExtractor:
             # Clear element
             elem.clear()
             while elem.getprevious() is not None:
-                if elem.getparent():
+                if elem.getparent() is not None:
                     del elem.getparent()[0]
         del context
         #clear chunks 
