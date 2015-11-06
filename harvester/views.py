@@ -5,6 +5,11 @@ from .dblp.DblpHarvester import DblpHarvester
 from .dblp.DblpDatabaseDownloader import DblpDatabaseDownloader
 from .citeseerx.CiteseerxHarvester import CiteseerxHarvester
 
+import logging
+
+logger = logging.getLogger()
+
+
 def citeseerx_index(request):
     harvester = CiteseerxHarvester()
     harvester.harvest()
@@ -12,6 +17,6 @@ def citeseerx_index(request):
     
 def dblp_index(request):
     #DblpDatabaseDownloader()
-    harvester = DblpHarvester()
-    harvester.harvest()
+    #harvester = DblpHarvester()
+    #harvester.harvest()
     return HttpResponse("Hello, world. You're at the polls index.")

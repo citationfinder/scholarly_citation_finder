@@ -27,6 +27,6 @@ class HelperTest(TestCase):
     def test_unzip_file(self):
         filename = unzip_file(self.EXAMPLE_GZ_FILE)
         first = os.path.isfile(filename);
-        #if first:
-        #    os.remove(filename)
+        if first:
+            os.remove(filename)
         self.assertEqual(first, True)
