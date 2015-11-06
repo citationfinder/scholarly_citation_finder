@@ -14,11 +14,16 @@ def create_dir(name):
 def unzip_file(filename):
     if os.path.isfile(filename):
         print('Unzip %s' % filename)
-        inF = gzip.GzipFile(filename, 'rb')
-        s = inF.read()
+        outfilename = filename[:-3]
+        inF = gzip.open(filename, 'rb')
+        outF = open(outfilename, 'wb')
+        outF.write( inF.read() )
         inF.close()
+        outF.close()
+        return outfilename
     else:
         print('No file to unzip!')
+        return False
         
 """
 Downloads a single file. Can handle large files.
