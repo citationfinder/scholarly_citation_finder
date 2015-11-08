@@ -2,18 +2,15 @@ from lxml import etree
 from unidecode import unidecode
 from search_for_citations.models import Publication
 
-class DblpHarvester():
-    
-    DBLP_DIR = 'downloads/dblp/'
-    DBLP_FILE_XML = 'dblp.xml'
+class DblpHarvester:
     
     # Available elements are:   article|inproceedings|proceedings|book|incollection|phdthesis|mastersthesis|www
     # Available tags are:       author|editor|title|booktitle|pages|year|address|journal|volume|number|month|url|ee|cdrom|cite|
     #                           publisher|note|crossref|isbn|series|school|chapter
     COLLABORATIONS = [u'www', u'phdthesis', u'inproceedings', u'incollection', u'proceedings', u'book', u'mastersthesis', u'article']
     
-    def harvest(self):
-        context = etree.iterparse(self.DBLP_DIR + self.DBLP_FILE_XML, load_dtd=True, html=True)
+    def harvest(self, filename):
+        context = etree.iterparse(filename, load_dtd=True, html=True)
         self.fast_iter(context)        
 
     """
@@ -25,37 +22,65 @@ class DblpHarvester():
     @desc: Read xml chunk. After read, clear and delete chunk to release memory.
             Also, replace html encoding to similar ascii code
     """
-    def fast_iter(self, context, func, *args, **kwargs):
+    def fast_iter(self, context, *args, **kwargs):
         #xml categories
-        author_array = []
         title = ''
-        abstract = ''
+        author_array = []
+        #abstract = ''
+        date = ''
+        journal = ''
+        volume = ''
+        number = ''
         source = ''
+        pages = ''
     
         #read chunk line by line
         #we focus author and title
         for event, elem in context:
+            if elem.tag == 'html' or elem.tag == 'body':
+                continue
+            
             if elem.tag == 'author':
                 author_array.append(unidecode(elem.text))
     
-            if elem.tag == 'title':
+            elif elem.tag == 'title':
                 if elem.text:
-                    title = unidecode(elem.text)
-                
-            if elem.tag == 'abstract':
+                    title = unidecode(elem.text)    
+            elif elem.tag == 'year':
                 if elem.text:
-                    abstract = unidecode(elem.text)
+                    date = unidecode(elem.text)
+                    
+            elif elem.tag == 'journal':
+                if elem.text:
+                    journal = unidecode(elem.text)
 
-            if elem.tag == 'ee':
+            elif elem.tag == 'volume':
+                if elem.text:
+                    volume = elem.text
+
+            elif elem.tag == 'number':
+                if elem.text:
+                    number = elem.text
+
+            elif elem.tag == 'pages':
+                if elem.text:
+                    pages = elem.text
+
+            elif elem.tag == 'ee':
                 if elem.text:
                     source = unidecode(elem.text)
     
-            if elem.tag in self.COLLABORATIONS:
+            elif elem.tag in self.COLLABORATIONS:                
                 publication = Publication(
+                    type=elem.tag,
                     title=title,
-                    abstract=abstract,
+                    date=date,
+                    journal=journal,
+                    volume=volume,
+                    number=number,
+                    pages=pages,
                     source=source,
-                    dblp_id=1)
+                    dblp_id=elem.get('key'))
                 publication.save()
                 
                 for author in author_array:

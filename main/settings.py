@@ -30,16 +30,21 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
+PREREQ_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'search_for_citations',
-    'harvester'
+    'django.contrib.staticfiles'               
 )
+
+PROJECT_APPS = (
+    'search_for_citations',
+    'harvester',
+    'citation_extractor'
+)
+INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -135,9 +140,9 @@ LOGGING = {
             'handlers':['file'],
             'propagate': True,
             'level':'DEBUG',
-        },                
+        },            
         '': {
-            #'formatter': 'verbose',
+            'formatter': 'verbose',
             'handlers': ['file'],
             'level': 'DEBUG'
         }

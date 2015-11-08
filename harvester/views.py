@@ -9,6 +9,8 @@ import logging
 
 logger = logging.getLogger()
 
+DBLP_DIR = 'downloads/dblp/'
+DBLP_FILE_XML = 'dblp.xml'
 
 def citeseerx_index(request):
     harvester = CiteseerxHarvester()
@@ -16,7 +18,8 @@ def citeseerx_index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
     
 def dblp_index(request):
+    logger.debug('ssssssssss')
     #DblpDatabaseDownloader()
     #harvester = DblpHarvester()
-    #harvester.harvest()
+    #harvester.harvest(DBLP_DIR + DBLP_FILE_XML)
     return HttpResponse("Hello, world. You're at the polls index.")

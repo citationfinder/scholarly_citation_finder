@@ -8,12 +8,14 @@ class Author(models.Model):
         return self.last_name
 
 class Publication(models.Model):
+    type = models.CharField(blank=True, null=True, max_length=150)
     title =  models.CharField(blank=True, null=True, max_length=150)
     authors = models.ManyToManyField(Author)
     date = models.CharField(blank=True, null=True, max_length=200)
     booktitle = models.CharField(blank=True, null=True, max_length=200)
     journal = models.CharField(blank=True, null=True, max_length=200)
     volume = models.PositiveIntegerField(blank=True, null=True)
+    number = models.PositiveIntegerField(blank=True, null=True)    
     pages = models.CharField(blank=True, null=True, max_length=20)
     publisher = models.CharField(blank=True, null=True, max_length=150)
     abstract = models.TextField(blank=True, null=True)

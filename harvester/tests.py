@@ -1,6 +1,9 @@
 from django.test import TestCase
 
 from .parser import parse_publication
+from .dblp.DblpHarvester import DblpHarvester
+from search_for_citations.models import Publication
+
 # Create your tests here.
 
 class ParserTest(TestCase):
@@ -14,3 +17,14 @@ class ParserTest(TestCase):
             authors = ['Author 1']
         )
         self.assertEqual(first, True, 'Test insert a publication')    
+        
+class DblpHarvesterTest(TestCase):
+    
+    def setUp(self):
+        self.harvester = DblpHarvester()
+    
+    def test_harvest(self):
+        num_objects_before = Publication.objects.all().count()
+        self.harvester.harvest('test/dblp/dblp_tiny.xml')
+        first = Publication.objects.all().count() - num_objects_before
+        self.assertEqual(first, 4, 'Test insert 4 publications from DBLP XML file')
