@@ -7,7 +7,7 @@
 		<small><a href="#all">All ({{ publications|length  }})</a></small>
 		<ol>
 		{% for i in publications %}
-			{% include "publication/item.html" with item=i %}
+			{% include "publications/item.html" with item=i %}
 		{% endfor %}
 		</ol>
 	{% else %}

@@ -14,7 +14,7 @@ class Publication(models.Model):
     date = models.CharField(blank=True, null=True, max_length=200)
     booktitle = models.CharField(blank=True, null=True, max_length=200)
     journal = models.CharField(blank=True, null=True, max_length=200)
-    volume = models.PositiveIntegerField(blank=True, null=True)
+    volume = models.CharField(blank=True, null=True, max_length=20)
     number = models.CharField(blank=True, null=True, max_length=20)    
     pages = models.CharField(blank=True, null=True, max_length=20)
     publisher = models.CharField(blank=True, null=True, max_length=150)

@@ -1,0 +1,9 @@
+<a href="../"><- zurück</a>
+{% if publication %}
+	<h2>{{ publication.title }}</h2>
+	<ul>
+		{% include "publications/item.html" with item=publication %}	
+	</ul>
+{% else %}
+	<h2>Not found</h2>
+{% endif %}
