@@ -2,6 +2,9 @@ from lxml import etree
 from unidecode import unidecode
 from search_for_citations.models import Publication
 
+import logging
+logger = logging.getLogger()
+
 class DblpHarvester:
     
     # Available elements are:   article|inproceedings|proceedings|book|incollection|phdthesis|mastersthesis|www
@@ -10,8 +13,10 @@ class DblpHarvester:
     COLLABORATIONS = [u'www', u'phdthesis', u'inproceedings', u'incollection', u'proceedings', u'book', u'mastersthesis', u'article']
     
     def harvest(self, filename):
+        logger.debug('Start')
         context = etree.iterparse(filename, load_dtd=True, html=True)
-        self.fast_iter(context)        
+        self.fast_iter(context)
+        logger.debug('End')        
 
     """
     @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
@@ -41,18 +46,18 @@ class DblpHarvester:
                 continue
             
             if elem.tag == 'author':
-                author_array.append(unidecode(elem.text))
+                author_array.append(elem.text)
     
             elif elem.tag == 'title':
                 if elem.text:
-                    title = unidecode(elem.text)    
+                    title = elem.text
             elif elem.tag == 'year':
                 if elem.text:
-                    date = unidecode(elem.text)
+                    date = elem.text
                     
             elif elem.tag == 'journal':
                 if elem.text:
-                    journal = unidecode(elem.text)
+                    journal = elem.text
 
             elif elem.tag == 'volume':
                 if elem.text:
@@ -68,7 +73,7 @@ class DblpHarvester:
 
             elif elem.tag == 'ee':
                 if elem.text:
-                    source = unidecode(elem.text)
+                    source = elem.text
     
             elif elem.tag in self.COLLABORATIONS:                
                 publication = Publication(

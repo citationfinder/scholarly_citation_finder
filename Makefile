@@ -6,3 +6,6 @@ tests:
 
 test_main:
 	python manage.py test search_for_citations.test
+	
+clear:
+	python manage.py flush
