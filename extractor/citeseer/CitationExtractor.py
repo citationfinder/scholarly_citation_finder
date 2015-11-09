@@ -4,6 +4,7 @@ from io import BytesIO
 
 from unidecode import unidecode
 from lxml import etree
+from search_for_citations.models import Citation
 from harvester.parser import parse_publication
 from main.helper import download_file, url_exits, upload_file
 from django.core.exceptions import ValidationError
@@ -84,9 +85,11 @@ class CitationExtractor:
             volume = self.get_element(elem, 'volume', volume)
             pages = self.get_element(elem, 'pages', pages)
 
+            #if elem.tag == 'context':
+            #    context = elem.text
     
             if elem.tag == 'citation':
-                parse_publication(
+                citation = parse_publication(
                     title=title,
                     authors=author_array,
                     date=date,
@@ -96,6 +99,14 @@ class CitationExtractor:
                     pages=pages,
                     extractor='citeseer'                  
                 )
+                if citation:
+                    
+                    newCitation = Citation(
+                        publication = self.publication,
+                        citation = citation,
+                        context = ''
+                    )
+                    newCitation.save()
                     
                 del author_array[:]
      

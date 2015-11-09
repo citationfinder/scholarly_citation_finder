@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .CiteSeerExtractor.CitationExtractor import CitationExtractor
+from .citeseer.CitationExtractor import CitationExtractor
 # Create your tests here.
 
 TEST_DIR = 'test/'

@@ -16,15 +16,17 @@ class ParserTest(TestCase):
             citeseerx_id='-1',
             authors = ['Author 1']
         )
-        self.assertEqual(first, True, 'Test insert a publication')    
+        self.assertNotEqual(first, False, 'Test insert a publication')    
         
 class DblpHarvesterTest(TestCase):
+    
+    TEST_DIR = 'test/harvester/dblp/'
     
     def setUp(self):
         self.harvester = DblpHarvester()
     
     def test_harvest(self):
         num_objects_before = Publication.objects.all().count()
-        self.harvester.harvest('test/dblp/dblp_tiny.xml')
+        self.harvester.harvest(self.TEST_DIR + 'dblp_tiny.xml')
         first = Publication.objects.all().count() - num_objects_before
         self.assertEqual(first, 4, 'Test insert 4 publications from DBLP XML file')

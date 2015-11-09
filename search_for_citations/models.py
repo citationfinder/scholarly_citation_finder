@@ -8,9 +8,9 @@ class Author(models.Model):
         return self.last_name
 
 class Publication(models.Model):
+    # attributes
     type = models.CharField(blank=True, null=True, max_length=150)
     title =  models.CharField(blank=True, null=True, max_length=150)
-    authors = models.ManyToManyField(Author)
     date = models.CharField(blank=True, null=True, max_length=200)
     booktitle = models.CharField(blank=True, null=True, max_length=200)
     journal = models.CharField(blank=True, null=True, max_length=200)
@@ -25,12 +25,16 @@ class Publication(models.Model):
     extractor = models.CharField(blank=True, null=True, max_length=150)    
     source = models.URLField(blank=True, null=True)
     source_extracted = models.BooleanField(default=False)
+    # relations
+    authors = models.ManyToManyField(Author)
     
     def __unicode__(self):
         return self.title
     
 class Citation(models.Model):
-    publication = models.OneToOneField(Publication, related_name='%(class)s_publication')
-    citation = models.OneToOneField(Publication, related_name='%(class)s_citation')
+    publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
+    reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
+    #publication = models.OneToOneField(Publication, related_name='%(class)s_publication')
+    #reference = models.OneToOneField(Publication, related_name='%(class)s_citation')
     context = models.TextField(blank=True, null=True)
     self = models.BooleanField(default=False)

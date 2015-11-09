@@ -4,6 +4,14 @@
 	<ul>
 		{% include "publications/item.html" with item=publication %}	
 	</ul>
+	{% if citations %}
+		<h3>Citations</h3>
+		<ul>
+		{% for i in citations %}
+			{% include "citations/item.html" with item=i %}
+		{% endfor %}
+		</ul>
+	{% endif %}
 {% else %}
 	<h2>Not found</h2>
 {% endif %}

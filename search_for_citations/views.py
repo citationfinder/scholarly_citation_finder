@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Author, Publication
+from .models import Author, Publication, Citation
 
 def authors_index(request):
     return render(request, 'authors/index.html', {
@@ -42,7 +42,7 @@ def publications_details(request, publication_id):
         publication = Publication.objects.get(pk=publication_id)
         context = {
             'publication': publication,
-            #'publications': author.publication_set.all()
+            'citations': Citation.objects.filter(publication=publication)
         }
     except(ObjectDoesNotExist):
         context = {}

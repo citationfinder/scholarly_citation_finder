@@ -27,7 +27,7 @@ def parse_publication(title=None, authors=None, date=None, booktitle=None, journ
             for author in authors:
                 publication.authors.create(last_name=author)
                 
-            return True
+            return publication
         #else:
             
         #    return False 
