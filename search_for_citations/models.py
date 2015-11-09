@@ -22,6 +22,7 @@ class Publication(models.Model):
     doi = models.CharField(blank=True, null=True, max_length=50)
     citeseerx_id = models.CharField(blank=True, null=True, max_length=150)
     dblp_id = models.CharField(blank=True, null=True, max_length=150)
+    extractor = models.CharField(blank=True, null=True, max_length=150)    
     source = models.URLField(blank=True, null=True)
     source_extracted = models.BooleanField(default=False)
     

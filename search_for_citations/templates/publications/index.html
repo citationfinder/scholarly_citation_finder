@@ -1,11 +1,12 @@
 <h2>Publications ({{ source }})</h2>
+<small>
+	Results ({{ publications|length  }})</a>:
+	<a href="./">All</a> |
+	<a href="./dblp">DBLP</a> |
+	<a href="./citeseerx">CiteSeerX</a> |	
+	<a href="citeseerextractor">CiteSeerExtractor</a>	
+</small>
 {% if publications %}
-	<small>
-		Results ({{ publications|length  }})</a>:
-		<a href="./">All</a> |
-		<a href="./dblp">DBLP</a> |
-		<a href="./citeseerx">CiteSeerX</a> |		
-	</small>
 	<ul>
 	{% for item in publications %}
 		<li><a href="./{{item.id}}/">{{item.title}}</a></li>

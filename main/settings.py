@@ -42,7 +42,7 @@ PREREQ_APPS = (
 PROJECT_APPS = (
     'search_for_citations',
     'harvester',
-    'citation_extractor'
+    'extractor'
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
@@ -143,7 +143,7 @@ LOGGING = {
         },            
         '': {
             'formatter': 'verbose',
-            'handlers': ['file'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG'
         }
     },    

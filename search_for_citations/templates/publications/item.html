@@ -1,5 +1,5 @@
 <li>#{{item.id}}
-	{{item.title}}
+	{{item.title}} {{booktitle.booktitle}}
 	(<a href="{{item.source}}">Source</a>
 	{% if item.citeseerx_id %}
 		@<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi={{item.citeseerx_id}}" target="_blank">CiteSeerX</a>
@@ -14,4 +14,5 @@
 	{% if item.abstract %}
 		<p><i>{{item.abstract}}</i></p>
 	{% endif %}
+	<p>date: {{item.date}}, journal: {{item.journal}}, volume: {{item.volume}}, numer: {{item.number}}, pages: {{item.pages}}, publisher: {{item.publisher}}</p>
 </li>

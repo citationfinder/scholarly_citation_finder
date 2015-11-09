@@ -19,6 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^harvester/', include('harvester.urls')),
-    url(r'^citation_extractor/', include('citation_extractor.urls')),
+    url(r'^extractor/', include('extractor.urls')),
     url(r'^search_for_citations/', include('search_for_citations.urls')),
 ]

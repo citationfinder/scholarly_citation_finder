@@ -46,6 +46,15 @@ def download_file(url, path):
                 #f.flush() commented by recommendation from J.F.Sebastian
     return local_filename
 
+def upload_file(url, filename, status_code = 201):
+    logger.debug("Upload %s [%s]" % (filename, url))
+    files = {'myfile': open(filename, 'rb')}
+    r = requests.post(url, files=files)
+    if r.status_code == status_code:
+        return str(r.text)
+    else:
+        return False    
+
 def url_exits(url):
     #validate = URLValidator(verify_exists=True)
     try:

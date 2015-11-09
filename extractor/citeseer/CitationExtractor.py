@@ -5,7 +5,11 @@ from io import BytesIO
 from unidecode import unidecode
 from lxml import etree
 from harvester.parser import parse_publication
-from main.helper import download_file, url_exits
+from main.helper import download_file, url_exits, upload_file
+from django.core.exceptions import ValidationError
+
+import logging
+logger = logging.getLogger()
 
 class CitationExtractor:
     
@@ -14,37 +18,28 @@ class CitationExtractor:
 
     def __init__(self, publication):
         self.publication = publication
-    
-    def download_file(self, url):
-        if (url_exits(url)):
-            return download_file(url, self.DOWNLOAD_DIR)
+        if (url_exits(publication.source)):
+            self.url = publication.source # src()
         else:
-            #raise Exception('Unvalid URL: '+ str(url))   
-            self.publication.source = None
-            self.publication.save()
-    
-    def upload_file_to_extractor(self, filename):
-        files = {'myfile': open(filename, 'rb')}
-        r = requests.post(self.CITESEERX_EXTRACTOR_API, files=files)
-        print('a')
-        print(r)
-        if r.status_code == 201:
-            #print(r.text)
-            return etree.XML(str(r.text))
-        else:
-            return False
+            logger.warn('Unvalid URL: ' + publication.source)
+            raise ValidationError('Unvalid URL')
 
-    def extract(self, url):
-        filename = self.download_file(url)
-        response = self.upload_file_to_extractor(filename)
-        if len(response):
-            self.request_citations(response.find('citations').text)            
+    def extract(self):
+        logger.debug("Extract %s" % self.url)
+        # Download file tempoary and upload this file to the extrator
+        filename = download_file(self.url, self.DOWNLOAD_DIR)
+        response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
+        if response:
+            responseAsXml = etree.XML(response)
+            self.request_citations(responseAsXml.find('citations').text)            
             #header = response.find('header').text
             #print(header)
             return True
+        else:
+            return False
     
     def request_citations(self, url):
-        print(url)
+        logger.debug("Request %s" % url)
         r = requests.get(url)
         if r.status_code == 200:
             self.parse_citations(BytesIO(r.text.encode('utf-8')))
@@ -52,7 +47,8 @@ class CitationExtractor:
             raise Exception('Expected server response 200, it is ' + r.status_code)
         
     def parse_citations(self, xml):
-        context = etree.iterparse(xml, html=True)
+        logger.debug("Parse citations")
+        context = etree.iterparse(xml, html=False)
         self.fast_iter(context)
         return True
     
@@ -97,7 +93,8 @@ class CitationExtractor:
                     booktitle=booktitle,
                     journal=journal,
                     volume=volume,
-                    pages=pages,                  
+                    pages=pages,
+                    extractor='citeseer'                  
                 )
                     
                 del author_array[:]
@@ -105,7 +102,7 @@ class CitationExtractor:
             # Clear element
             elem.clear()
             while elem.getprevious() is not None:
-                if elem.getparent() is not None:
-                    del elem.getparent()[0]
+                #if elem.getparent() is not None:
+                del elem.getparent()[0]
         del context
         #clear chunks 

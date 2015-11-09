@@ -27,6 +27,8 @@ def publications_index(request, source):
     elif source == 'citeseerx':
         print('a')
         publications = Publication.objects.exclude(citeseerx_id=None)
+    elif source == 'citeseerextractor':
+        publications = Publication.objects.filter(extractor='citeseer')
     else:
         publications = Publication.objects.all()
         
