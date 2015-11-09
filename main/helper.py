@@ -55,13 +55,16 @@ def upload_file(url, filename, status_code = 201):
     else:
         return False    
 
-def url_exits(url):
+def url_exits(url, check_exists=False):
     #validate = URLValidator(verify_exists=True)
     try:
         validate = URLValidator()
         validate(url)
-        response = requests.get(url)
-        return response.status_code < 400
+        if check_exists:
+            response = requests.get(url)
+            return response.status_code < 400
+        else:
+            return True
     except(ValidationError):
         return False
     except(ConnectionError, InvalidSchema):

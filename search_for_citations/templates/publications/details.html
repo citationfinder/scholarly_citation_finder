@@ -1,17 +1,25 @@
-<a href="../"><- zurück</a>
+{% include "navbar.html" %}
+
 {% if publication %}
 	<h2>{{ publication.title }}</h2>
-	<ul>
-		{% include "publications/item.html" with item=publication %}	
-	</ul>
-	{% if citations %}
-		<h3>Citations</h3>
+	{% include "publications/item.html" with item=publication %}	
+	<h3>References ({{references|length}})</h3>
+	{% if references %}
 		<ul>
-		{% for i in citations %}
-			{% include "citations/item.html" with item=i %}
+		{% for i in references %}
+			<li>{% include "citations/reference_item.html" with item=i.reference %}</li>
 		{% endfor %}
 		</ul>
 	{% endif %}
+	<h3>Citations ({{citations|length}})</h3>
+	{% if citations %}
+		<ul>
+		{% for i in citations %}
+			<li>{% include "citations/reference_item.html" with item=i.publication %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
 {% else %}
 	<h2>Not found</h2>
 {% endif %}

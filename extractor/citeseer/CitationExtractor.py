@@ -10,6 +10,7 @@ from main.helper import download_file, url_exits, upload_file
 from django.core.exceptions import ValidationError
 
 import logging
+from lxml.etree import XMLSyntaxError
 logger = logging.getLogger()
 
 class CitationExtractor:
@@ -35,10 +36,11 @@ class CitationExtractor:
             self.request_citations(responseAsXml.find('citations').text)            
             #header = response.find('header').text
             #print(header)
+            return {'hel': 'sad'}
             return True
         else:
             return False
-    
+        
     def request_citations(self, url):
         logger.debug("Request %s" % url)
         r = requests.get(url)
@@ -49,9 +51,13 @@ class CitationExtractor:
         
     def parse_citations(self, xml):
         logger.debug("Parse citations")
-        context = etree.iterparse(xml, html=False)
-        self.fast_iter(context)
-        return True
+        try:
+            context = etree.iterparse(xml, html=False)
+            self.fast_iter(context)
+            return True
+        except XMLSyntaxError as e:
+            logger.debug(str(e))
+            return False
     
     def get_element(self, element, tag, variable):
         if element.tag == tag and element.text:
@@ -71,6 +77,7 @@ class CitationExtractor:
         #journal
         #volume
         #abstract = ''
+        citation_context = ''
     
         #read chunk line by line
         #we focus author and title
@@ -84,12 +91,13 @@ class CitationExtractor:
             journal = self.get_element(elem, 'journal', journal)
             volume = self.get_element(elem, 'volume', volume)
             pages = self.get_element(elem, 'pages', pages)
+            citation_context = self.get_element(elem, 'context', citation_context)
 
             #if elem.tag == 'context':
             #    context = elem.text
     
             if elem.tag == 'citation':
-                citation = parse_publication(
+                reference = parse_publication(
                     title=title,
                     authors=author_array,
                     date=date,
@@ -99,12 +107,11 @@ class CitationExtractor:
                     pages=pages,
                     extractor='citeseer'                  
                 )
-                if citation:
-                    
+                if reference:
                     newCitation = Citation(
                         publication = self.publication,
-                        citation = citation,
-                        context = ''
+                        reference = reference,
+                        context = citation_context
                     )
                     newCitation.save()
                     

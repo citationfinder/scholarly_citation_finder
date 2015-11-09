@@ -1,13 +1,13 @@
-<a href="../"><- zurück</a>
+{% include "navbar.html" %}
+
 {% if author %}
 	<h2>{{ author.last_name }}</h2>
 	
-	<h4>Publications</h4>
+	<h3>Publications ({{ publications|length }})</h3>
 	{% if publications %}
-		<small><a href="#all">All ({{ publications|length  }})</a></small>
 		<ol>
 		{% for i in publications %}
-			{% include "publications/item.html" with item=i %}
+			<li>{% include "publications/item.html" with item=i %}</li>
 		{% endfor %}
 		</ol>
 	{% else %}

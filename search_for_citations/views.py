@@ -42,7 +42,8 @@ def publications_details(request, publication_id):
         publication = Publication.objects.get(pk=publication_id)
         context = {
             'publication': publication,
-            'citations': Citation.objects.filter(publication=publication)
+            'references': Citation.objects.filter(publication=publication),
+            'citations': Citation.objects.filter(reference=publication)
         }
     except(ObjectDoesNotExist):
         context = {}
