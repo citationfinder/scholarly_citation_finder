@@ -20,7 +20,9 @@ def citeseerx_index(request):
 def dblp_index(request):
     logger.debug('dblp_index')
     #DblpDatabaseDownloader()
-    harvester = DblpHarvester()
-    #harvester.harvest(DBLP_DIR + DBLP_FILE_XML)
-    harvester.harvest('test/dblp/dblp_medium.xml')
+    try:
+        harvester = DblpHarvester()
+        harvester.harvest(DBLP_DIR + DBLP_FILE_XML)
+    except(Exception) as e:
+        logger.warn(str(e))
     return HttpResponse("Hello, world. You're at the polls index.")

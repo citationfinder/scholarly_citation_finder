@@ -2,6 +2,7 @@ from lxml import etree
 from unidecode import unidecode
 from search_for_citations.models import Publication
 
+import os.path
 import logging
 logger = logging.getLogger()
 
@@ -13,10 +14,14 @@ class DblpHarvester:
     COLLABORATIONS = [u'www', u'phdthesis', u'inproceedings', u'incollection', u'proceedings', u'book', u'mastersthesis', u'article']
     
     def harvest(self, filename):
-        logger.debug('Start')
-        context = etree.iterparse(filename, load_dtd=True, html=True)
-        self.fast_iter(context)
-        logger.debug('End')        
+        if os.path.isfile(filename):
+            logger.debug('Start')
+            context = etree.iterparse(filename, load_dtd=True, html=True)
+            self.fast_iter(context)
+            logger.debug('End')
+        else:
+            raise IOError
+            
 
     """
     @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py

@@ -10,10 +10,15 @@ def citeseer_index(request):
     
     for publication in Publication.objects.filter(source__endswith='.pdf'):
         try:
-            CitationExtractor(publication).extract()
+            result = CitationExtractor(publication).extract()
+            if result:
+                publication.source_extracted = True
+                publication.save()
+            else:
+                publication.source = None
+                publication.save()
         except ValidationError:
             publication.source = None
             publication.save()
-        break
     
     return HttpResponse("Hello, world. You're at the polls index.")

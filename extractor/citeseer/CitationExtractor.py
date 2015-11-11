@@ -30,13 +30,13 @@ class CitationExtractor:
         logger.debug("Extract %s" % self.url)
         # Download file tempoary and upload this file to the extrator
         filename = download_file(self.url, self.DOWNLOAD_DIR)
+        if not filename:
+            return
+            
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
             self.request_citations(responseAsXml.find('citations').text)            
-            #header = response.find('header').text
-            #print(header)
-            return {'hel': 'sad'}
             return True
         else:
             return False

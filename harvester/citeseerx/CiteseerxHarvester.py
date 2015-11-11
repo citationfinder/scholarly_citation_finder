@@ -1,10 +1,13 @@
+import string
+import logging
+
 from django.http import HttpResponse
 from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry, oai_dc_reader
 from search_for_citations.models import Publication
-import string
 
-import logging
+from ..parser import parse_publication
+
 logger = logging.getLogger()
 
 class CiteseerxHarvester:
@@ -31,6 +34,13 @@ class CiteseerxHarvester:
                 title = metadata['title'][0]
             if metadata['date']:
                 date = metadata['date'][-1]
+                '''
+                <dc:date>2009-04-19</dc:date>
+                <dc:date>2007-11-19</dc:date>
+                <dc:date>1998</dc:date>
+                '''
+                if len(date) != 4:
+                    date = ''
             if metadata['description']:
                 abstract = metadata['description'][0]
             if metadata['publisher']:
@@ -38,19 +48,15 @@ class CiteseerxHarvester:
             if metadata['source']:
                 source = metadata['source'][0]
             
+            # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
             citeseerx_id = string.replace(header.identifier(), 'oai:CiteSeerX.psu:', '')
-                  
-            publication = Publication(
+            
+            parse_publication(
+                authors=metadata['creator'],
                 title=title,
                 date=date,
                 publisher=publisher,
                 abstract=abstract,
                 source=source,
                 citeseerx_id=citeseerx_id)
-            publication.save()
-            
-            for author in metadata['creator']:
-                #a = Author(last_name=unidecode(author))
-                #publication.authors.add(a)
-                publication.authors.create(last_name=author)
         logger.debug('End')
