@@ -9,7 +9,7 @@ class HarvesterTest(unittest.TestCase):
         self.harvester = Harvester()
         
     def test_harvest(self):
-        first = self.harvester.parse_publication(title="Hey $äüö", authors=['Na äüö'])
+        first = self.harvester.parse_publication(title=u'Hey $äüöé', authors=[u'Na éäüö'])
         self.assertEqual(first, True)
 
     def test_get_arguments_short_forms(self):
