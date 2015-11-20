@@ -58,7 +58,7 @@ class CiteseerxHarvester(Harvester):
                 source=source,
                 citeseerx_id=citeseerx_id)
             
-        
+
         self.stop_harvest()
         
 if __name__ == '__main__':

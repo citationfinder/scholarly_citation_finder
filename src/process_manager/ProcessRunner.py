@@ -1,4 +1,5 @@
 import logging
+from .Process import HarvesterProcess, ExtractorProcess
 
 class ProcessRunner:
     
@@ -13,7 +14,7 @@ class ProcessRunner:
         #self.runnable_logger.setLevel(logging.INFO)
         
     def add_process(self, process, output_results=True):
-        self.processes.append(processes)
+        self.processes.append(process)
 
         if issubclass(process, HarvesterProcess):
             self.harvesterProcesses.append(process)

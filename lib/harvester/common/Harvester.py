@@ -19,8 +19,8 @@ def check_author_name(name):
 class Harvester:
     
     PREFIX = ''
-    LOG_PATH = '../../../log/'
-    DOWNLOAD_PATH = '../../../downloads/'
+    LOG_PATH = '../log/'
+    DOWNLOAD_PATH = '../downloads/'
     
     def __init__(self):
         self.init_logger()
