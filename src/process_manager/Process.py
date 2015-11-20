@@ -1,6 +1,6 @@
 import sys
 
-class Process():
+class Process(object):
     
     def __init__(self):
         pass

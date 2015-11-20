@@ -3,6 +3,9 @@ from process_manager.Process import HarvesterProcess, ProcessError
 from process_manager.utils import external_process
 import subprocess32 as subprocess
 
+import logging
+logger = logging.getLogger()
+
 class DblpHarvesterProcess(HarvesterProcess):
     
     PATH = 'harvester.dblp.DblpHarvester'
@@ -15,7 +18,11 @@ class DblpHarvesterProcess(HarvesterProcess):
         finally:
             pass
     
-        if status != 0:
-            raise ProcessError('ParsCit Failure. Possible error:\n' + stderr)
+        logger.debug('status={}'.format(status))
+        logger.debug('stdout={}'.format(stdout))
+        logger.debug('stderr={}'.format(stderr))
+        
+        #if status != 0:
+        #    raise ProcessError('DblpHarvester Failure. Possible error:\n' + stderr)
     
         return True

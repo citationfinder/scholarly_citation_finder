@@ -2,7 +2,7 @@ from lxml import etree
 from unidecode import unidecode
 #from search_for_citations.models import Publication
 
-from harvester.common.Harvester import Harvester
+from ..common.Harvester import Harvester
 
 import os.path
 #import logging
