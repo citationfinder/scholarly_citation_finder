@@ -8,7 +8,7 @@ logger = logging.getLogger()
 
 class DblpHarvesterProcess(HarvesterProcess):
     
-    PATH = 'harvester.dblp.DblpHarvester'
+    PATH = 'scf_lib.harvester.dblp.DblpHarvester'
     
     def harvest(self, config = None):
         try:
@@ -16,6 +16,7 @@ class DblpHarvesterProcess(HarvesterProcess):
         except subprocess.TimeoutExpired as e:
             raise ProcessError('DblpHarvester timed out while processing document')
         finally:
+            # e.g. delte temp files
             pass
     
         logger.debug('status={}'.format(status))

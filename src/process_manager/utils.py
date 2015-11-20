@@ -1,7 +1,7 @@
 import subprocess32 as subprocess
 
 def external_process(process_args, input_data='', timeout=None):
-   '''
+    '''
    Pipes input_data via stdin to the process specified by process_args and returns the results
 
    Arguments:
@@ -16,19 +16,19 @@ def external_process(process_args, input_data='', timeout=None):
    Examples:
       >>> external_process(['grep', 'Data'], input_data="Some String\nWith Data")
       (0, 'With Data\n', '')
-   '''
-   process = subprocess.Popen(process_args,
+    '''
+    process = subprocess.Popen(process_args,
                               stdout=subprocess.PIPE,
                               stdin=subprocess.PIPE,
                               stderr=subprocess.PIPE)
-   try:
-      (stdout, stderr) =  process.communicate(input_data, timeout)
-   except subprocess.TimeoutExpired as e:
-      # cleanup process
-      # see https://docs.python.org/3.3/library/subprocess.html?highlight=subprocess#subprocess.Popen.communicate
-      process.kill()
-      process.communicate()
-      raise e
+    try:
+            (stdout, stderr) =  process.communicate(input_data, timeout)
+    except subprocess.TimeoutExpired as e:
+        # cleanup process
+        # see https://docs.python.org/3.3/library/subprocess.html?highlight=subprocess#subprocess.Popen.communicate
+        process.kill()
+        process.communicate()
+        raise e
 
-   exit_status = process.returncode
-   return (exit_status, stdout, stderr)
+    exit_status = process.returncode
+    return (exit_status, stdout, stderr)

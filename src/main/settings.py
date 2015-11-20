@@ -40,9 +40,11 @@ PREREQ_APPS = (
 )
 
 PROJECT_APPS = (
-    'search_for_citations',
+    'extractor',
     'harvester',
-    'extractor'
+    'process_manager',
+    'scf_lib',
+    'search_for_citations'
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 

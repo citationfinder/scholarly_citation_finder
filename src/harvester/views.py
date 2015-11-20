@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from . import DblpHarvesterProcess
+from .DblpHarvesterProcess import DblpHarvesterProcess
 
 import logging
 
@@ -21,7 +21,7 @@ def dblp_index(request):
     #DblpDatabaseDownloader()
     try:
         process = DblpHarvesterProcess()
-        process.run()
+        process.harvest()
     except(Exception) as e:
         logger.warn(str(e))
     return HttpResponse("Hello, world. You're at the polls index.")
