@@ -2,7 +2,7 @@ from lxml import etree
 from unidecode import unidecode
 #from search_for_citations.models import Publication
 
-from ..common.Harvester import Harvester
+from harvester.common.Harvester import Harvester
 
 import os.path
 #import logging
@@ -94,6 +94,11 @@ class DblpHarvester(Harvester):
                     source=source
                 )
                 del author_array[:]
+                
+                # Check, if break harvest loop
+                if self.limit and self.count_publications == self.limit:
+                    self.stop_harvest()
+                    break
      
             # Clear element
             elem.clear()
@@ -104,4 +109,4 @@ class DblpHarvester(Harvester):
         
 if __name__ == '__main__':
     harvester = DblpHarvester()
-    harvester.harvest('../downloads/dblp/dblp.xml')
+    harvester.harvest(DblpHarvester.DOWNLOAD_PATH+'dblp/dblp.xml')

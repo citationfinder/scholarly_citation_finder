@@ -3,3 +3,6 @@ dblp:
 	
 citeseerx:
 	python -m harvester.citeseer.CiteseerxHarvester
+
+tests:
+	python -m test

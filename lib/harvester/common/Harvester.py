@@ -1,13 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import codecs
+import getopt
 import logging
-logging.basicConfig(
-    filename='../log/harvester.log',
-    level=logging.DEBUG,
-    format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s'
-)
-logger = logging.getLogger()
+import sys
+
+
 
 def check_author_name(name):
     # block: n.n., S., Jr., A.
@@ -17,18 +15,50 @@ def check_author_name(name):
             return True
     return False
 
+
 class Harvester:
     
     PREFIX = ''
+    LOG_PATH = '../../../log/'
+    DOWNLOAD_PATH = '../../../downloads/'
     
     def __init__(self):
-        logger.info('start')
+        self.init_logger()
         self.count_publications = 0
         self.split_publications = 10000
+        self.limit = self.get_arguments(sys.argv[1:])
+        self.logger.info('start')
+    
+    def init_logger(self):
+        logging.basicConfig(
+            filename=self.LOG_PATH+self.PREFIX+'_harvester.log',
+            level=logging.DEBUG,
+            format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s'
+        )
+        self.logger = logging.getLogger()
+        
+    def get_arguments(self, argv):
+        try:
+            opts, args = getopt.getopt(argv, "hl:", ["help", "limit="])
+        except getopt.GetoptError as e:
+            print(str(e))
+            print('Usage: -h for help')
+            sys.exit(2)    
+    
+        limit = None
+        for opt, arg in opts:
+            if opt == '-h':
+                print('Usage: my-process.py -s <start> -e <end>')
+                sys.exit()
+            elif opt in ("-l", "--limit"):
+                limit = int(arg);
+            else:
+                raise Exception("unhandled option")
+        return limit 
         
     def stop_harvest(self):
         self.f.close()
-        logger.info('stop')
+        self.logger.info('stop')
         
     def _write_element(self, element, value):
         if value:
@@ -39,8 +69,8 @@ class Harvester:
         if title and authors:
 
             if self.count_publications % self.split_publications == 0:
-                filename = '../downloads/harvester/{}/publication-{}.xml'.format(self.PREFIX, self.count_publications / self.split_publications)
-                self.f = codecs.open(filename, 'w+', 'utf8')               
+                filename = self.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.PREFIX, self.count_publications / self.split_publications)
+                self.f = codecs.open(filename, 'w+', 'utf-8')               
                 #self.f.write('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n')
                 
             self.count_publications += 1
@@ -66,11 +96,11 @@ class Harvester:
                 if check_author_name(author):
                     self._write_element('author', author)
                 else:
-                    logger.warn("Not an author name: %s" % author)
+                    self.logger.warn("Not an author name: %s" % author)
             
             self.f.write("</publication>\n")
             return True
         else:
-            logger.warn("No title (%s) or authors" % title)
+            self.logger.warn("No title (%s) or authors" % title)
             #print('no title or authors')
             return False

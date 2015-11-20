@@ -18,4 +18,6 @@ class ProcessRunner:
         if issubclass(process, HarvesterProcess):
             self.harvesterProcesses.append(process)
         if issubclass(process, ExtractorProcess):
-            self.harvesterProcesses.append(process)        
+            self.harvesterProcesses.append(process)
+            
+            
