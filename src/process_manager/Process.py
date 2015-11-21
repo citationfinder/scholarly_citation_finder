@@ -27,7 +27,7 @@ class HarvesterProcess(Process):
         raise ProcessError('Override this method')
     
 class ExtractorProcess(Process):
-    def extract(self, config):
+    def extract(self, data):
         raise ProcessError('Override this method')
     
 

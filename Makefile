@@ -12,3 +12,6 @@ test_harvester:
 
 clear:
 	python src/manage.py flush
+	
+test_lib:
+	python src/tests.py

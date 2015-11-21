@@ -14,9 +14,9 @@ def citeseerx_index(request):
     
 def dblp_index(request):
     #logger.debug('dblp_index')
-    try:
-        process = DblpHarvesterProcess()
-        process.harvest()
-    except(Exception) as e:
-        logger.warn(str(e))
+    #try:
+    process = DblpHarvesterProcess()
+    process.harvest()
+    #except(Exception) as e:
+    #    logger.warn(str(e))
     return HttpResponse("Start DblpHarvester process")

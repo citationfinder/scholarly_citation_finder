@@ -8,11 +8,13 @@ import sys
 
 
 def check_author_name(name):
+    # Milena Mihail, et al.
+    name = name.strip().replace(', et al.', '')
     # block: n.n., S., Jr., A.
     if ' ' in name:
         # block: University, Università, Universität, Université
         if not any(extension in name for extension in ('Universit', 'et al.')):
-            return True
+            return name
     return False
 
 
@@ -103,7 +105,8 @@ class Harvester:
             self._write_element('source', source)
 
             for author in authors:
-                if check_author_name(author):
+                author = check_author_name(author)
+                if author:
                     self._write_element('author', author)
                 else:
                     self.logger.warn("Not an author name: %s" % author)
