@@ -22,6 +22,7 @@ class DblpHarvester(Harvester):
         if os.path.isfile(filename):
             context = etree.iterparse(filename, load_dtd=True, html=True)
             self._fast_iter(context)
+            self.stop_harvest()
         else:
             raise IOError('File {} not found'.format(filename))
             
@@ -96,8 +97,7 @@ class DblpHarvester(Harvester):
                 del author_array[:]
                 
                 # Check, if break harvest loop
-                if self.limit and self.count_publications == self.limit:
-                    self.stop_harvest()
+                if self.check_stop_harvest():
                     break
      
             # Clear element

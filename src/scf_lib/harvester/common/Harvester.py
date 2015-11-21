@@ -59,6 +59,13 @@ class Harvester:
     def stop_harvest(self):
         self.f.close()
         self.logger.info('stop')
+    
+    def check_stop_harvest(self):
+        if self.limit and self.count_publications >= self.limit:
+            self.stop_harvest()
+            return True
+        else:
+            return False
         
     def _write_element(self, element, value):
         if value:
@@ -70,7 +77,10 @@ class Harvester:
 
             if self.count_publications % self.split_publications == 0:
                 filename = self.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.PREFIX, self.count_publications / self.split_publications)
-                self.f = codecs.open(filename, 'w+', 'utf-8')               
+                try:
+                    self.f = codecs.open(filename, 'w+', 'utf-8')
+                except(IOError) as e:
+                    raise IOError('Path to file {} not found'.format(filename))
                 #self.f.write('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n')
                 
             self.count_publications += 1

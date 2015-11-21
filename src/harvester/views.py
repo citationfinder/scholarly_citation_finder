@@ -2,26 +2,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .DblpHarvesterProcess import DblpHarvesterProcess
+from .CiteseerxHarvesterProcess import CiteseerxHarvesterProcess
 
-import logging
-
-logger = logging.getLogger()
-
-DBLP_DIR = 'downloads/dblp/'
-DBLP_FILE_XML = 'dblp.xml'
+#import logging
+#logger = logging.getLogger()
 
 def citeseerx_index(request):
-    pass
-    #harvester = CiteseerxHarvester()
-    #harvester.harvest()
-    #return HttpResponse("Hello, world. You're at the polls index.")
+    process = CiteseerxHarvesterProcess()
+    process.harvest()
+    return HttpResponse("Start CiteseerxHarvester process")
     
 def dblp_index(request):
-    logger.debug('dblp_index')
-    #DblpDatabaseDownloader()
+    #logger.debug('dblp_index')
     try:
         process = DblpHarvesterProcess()
         process.harvest()
     except(Exception) as e:
         logger.warn(str(e))
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Start DblpHarvester process")

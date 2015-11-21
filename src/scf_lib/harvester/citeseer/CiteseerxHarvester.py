@@ -10,7 +10,7 @@ class CiteseerxHarvester(Harvester):
     
     OAI_PHM_URL = 'http://citeseerx.ist.psu.edu/oai2'
     
-    PREFIX = 'citeseerx_'
+    PREFIX = 'citeseerx'
     
     def harvest(self):
         registry = MetadataRegistry()
@@ -57,6 +57,9 @@ class CiteseerxHarvester(Harvester):
                 abstract=abstract,
                 source=source,
                 citeseerx_id=citeseerx_id)
+            
+            if self.check_stop_harvest():
+                break
             
 
         self.stop_harvest()
