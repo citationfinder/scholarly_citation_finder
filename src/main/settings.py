@@ -29,7 +29,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 PREREQ_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,12 +37,9 @@ PREREQ_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles'               
 )
-
 PROJECT_APPS = (
-    'extractor',
-    'harvester',
-    'process_manager',
-    'scf_lib',
+    'api',
+    'lib',
     'search_for_citations'
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS

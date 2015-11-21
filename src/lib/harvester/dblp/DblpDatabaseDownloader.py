@@ -2,7 +2,7 @@ import os.path
 import filecmp
 import logging
 
-from main.helper import create_dir, download_file, unzip_file
+from ...utils import create_dir, download_file, unzip_file
 
 logger = logging.getLogger()
 

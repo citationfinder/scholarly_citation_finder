@@ -6,7 +6,7 @@ from unidecode import unidecode
 from lxml import etree
 from search_for_citations.models import Citation
 from harvester.parser import parse_publication
-from main.helper import download_file, url_exits, upload_file
+from ...utils import download_file, url_exits, upload_file
 from django.core.exceptions import ValidationError
 
 import logging
