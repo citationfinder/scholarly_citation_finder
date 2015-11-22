@@ -9,7 +9,7 @@ from config import DOWNLOAD_TMP_PATH
 class Extractor(Parser):
     
     def __init__(self, name):
-        super(Extractor, self).__init__(name)
+        super(Extractor, self).__init__(name+'_extractor')
     
     def extract_from_xml_file(self, filename, func):
         if os.path.isfile(filename):
@@ -22,10 +22,11 @@ class Extractor(Parser):
                     url = etree.fromstring(line).text
                     filename = download_file(url, DOWNLOAD_TMP_PATH)
                     if filename:
+                        self.output.write("\t<citations>\n")
                         func(filename)
-                    #source = etree.fromstring(line).text
-                    self.output.write("\t<citations>\n")
-                    self.output.write("\t</citations>\n")
+                        self.output.write("\t</citations>\n")
+                    
+                   
                             
             
                      

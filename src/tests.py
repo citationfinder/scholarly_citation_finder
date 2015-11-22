@@ -6,14 +6,16 @@ from lib.harvester.dblp import DblpHarvesterTest
 from lib import ParserTest
 from lib.extractor.common import ExtractorTest
 from lib.extractor.grobid import GrobidExtractorTest
+from lib.extractor.citeseer import CiteseerExtractorTest
 
-tests = unittest.TestLoader()
+CiteseerExtractorTest = unittest.TestLoader()
 test_arr = []
-#test_arr.append(tests.loadTestsFromModule(HarvesterTest))
-#test_arr.append(tests.loadTestsFromModule(DblpHarvesterTest))
-#test_arr.append(tests.loadTestsFromModule(ExtractorTest))
-#test_arr.append(tests.loadTestsFromModule(ParserTest))
-test_arr.append(tests.loadTestsFromModule(GrobidExtractorTest))
+#test_arr.append(CiteseerExtractorTest.loadTestsFromModule(HarvesterTest))
+#test_arr.append(CiteseerExtractorTest.loadTestsFromModule(DblpHarvesterTest))
+#test_arr.append(CiteseerExtractorTest.loadTestsFromModule(ExtractorTest))
+#test_arr.append(CiteseerExtractorTest.loadTestsFromModule(ParserTest))
+#test_arr.append(CiteseerExtractorTest.loadTestsFromModule(GrobidExtractorTest))
+test_arr.append(CiteseerExtractorTest.loadTestsFromModule(CiteseerExtractorTest))
 
 all_tests = unittest.TestSuite(test_arr)
 

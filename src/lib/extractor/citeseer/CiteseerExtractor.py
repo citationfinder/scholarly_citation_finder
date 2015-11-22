@@ -1,36 +1,28 @@
 import requests
-from StringIO import StringIO
 from io import BytesIO
 
-from unidecode import unidecode
 from lxml import etree
-from core.models import Citation
-from ...utils import download_file, url_exits, upload_file
-from django.core.exceptions import ValidationError
+from ...utils import upload_file
 
-from ..common import Extractor
+from ..common.Extractor import Extractor
 
 import logging
 from lxml.etree import XMLSyntaxError
-logger = logging.getLogger()
 
 class CiteseerExtractor(Extractor):
     
-    CITESEERX_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
+    #CITESEERX_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
+    CITESEERX_EXTRACTOR_API = 'http://localhost:8081/extractor'
 
-    def __init__(self, publication):
-        self.publication = publication
-        if (url_exits(publication.source)):
-            self.url = publication.source # src()
-        else:
-            logger.warn('Unvalid URL: ' + publication.source)
-            raise ValidationError('Unvalid URL')
+    def __init__(self):
+        super(CiteseerExtractor, self).__init__('citeseer')
 
     def extract_from_xml_file(self, filename):
         super(CiteseerExtractor, self).extract_from_xml_file(filename, self.extract_from_file)
     
     def extract_from_file(self, filename):
-        logger.debug("Extract %s" % self.url)
+        self.logger.debug("Extract %s" % filename)
+        self.open_output_file(filename+'xml')
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
@@ -40,7 +32,7 @@ class CiteseerExtractor(Extractor):
             return False
         
     def request_citations(self, url):
-        logger.debug("Request %s" % url)
+        self.logger.debug("Request %s" % url)
         r = requests.get(url)
         if r.status_code == 200:
             self.parse_citations(BytesIO(r.text.encode('utf-8')))
@@ -48,13 +40,13 @@ class CiteseerExtractor(Extractor):
             raise Exception('Expected server response 200, it is ' + r.status_code)
         
     def parse_citations(self, xml):
-        logger.debug("Parse citations")
+        self.logger.debug("Parse citations")
         try:
             context = etree.iterparse(xml, html=False)
             self.fast_iter(context)
             return True
         except XMLSyntaxError as e:
-            logger.debug(str(e))
+            self.logger.debug(str(e))
             return False
     
     def get_element(self, element, tag, variable):
@@ -95,7 +87,8 @@ class CiteseerExtractor(Extractor):
             #    context = elem.text
     
             if elem.tag == 'citation':
-                reference = parse_publication(
+                self.parse_citation(
+                    context = citation_context,
                     title=title,
                     authors=author_array,
                     date=date,
@@ -105,13 +98,6 @@ class CiteseerExtractor(Extractor):
                     pages=pages,
                     extractor='citeseer'                  
                 )
-                if reference:
-                    newCitation = Citation(
-                        publication = self.publication,
-                        reference = reference,
-                        context = citation_context
-                    )
-                    newCitation.save()
                     
                 del author_array[:]
      

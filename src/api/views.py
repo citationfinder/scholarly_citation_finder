@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from core.models import Publication
+import requests
 
 #from .extractor.CitationExtractor import CitationExtractor
 from django.core.exceptions import ValidationError
@@ -8,7 +9,16 @@ from django.core.exceptions import ValidationError
 from .harvester.DblpHarvesterProcess import DblpHarvesterProcess
 from .harvester.CiteseerxHarvesterProcess import CiteseerxHarvesterProcess
 
+from lib.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
+
 def extractor_citeseer_index(request):
+    
+    extractor = CiteseerExtractor()
+    
+    filename = request.GET.get('filename', None)
+    if filename:
+        extractor.extract_from_file(filename)
+        return HttpResponse("Extract file")
     
     """
     for publication in Publication.objects.filter(source__endswith='.pdf'):
