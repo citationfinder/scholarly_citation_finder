@@ -31,11 +31,6 @@ class CiteseerExtractor(Extractor):
     
     def extract_from_file(self, filename):
         logger.debug("Extract %s" % self.url)
-        # Download file tempoary and upload this file to the extrator
-        filename = download_file(self.url, self.DOWNLOAD_DIR)
-        if not filename:
-            return
-            
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
