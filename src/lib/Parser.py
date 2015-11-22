@@ -10,6 +10,7 @@ class Parser(object):
         self.name = name
         self.init_logger(name)
         self.count_publications = 0
+        self.count_citations = 0
         
     def init_logger(self, name):
         logging.basicConfig(
@@ -43,6 +44,8 @@ class Parser(object):
         self.output.close()
     
     def parse_citation(self, context=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
+        self.count_citations += 1
+        
         self.output.write("<citation>\n")
         self._write_element('context', context)
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)

@@ -15,26 +15,19 @@ def extractor_citeseer_index(request):
     
     extractor = CiteseerExtractor()
     
+    # http://localhost:8000/api/extractor/citeseer?filename=../test/paper/OJWT_2014v1i2n02_Kusserow.pdf
     filename = request.GET.get('filename', None)
+    # http://localhost:8000/api/extractor/citeseer?filename=../downloads/harvester/citeseerx/publication-0.xml
+    filelist = request.GET.get('filelist', None)    
     if filename:
         extractor.extract_from_file(filename)
         return HttpResponse("Extract file")
+    elif filelist:
+        extractor.extract_from_xml_file(str(filelist))
+        return HttpResponse("Extract list")        
     
-    """
-    for publication in Publication.objects.filter(source__endswith='.pdf'):
-        try:
-            result = CitationExtractor(publication).extract()
-            if result:
-                publication.source_extracted = True
-                publication.save()
-            else:
-                publication.source = None
-                publication.save()
-        except ValidationError:
-            publication.source = None
-            publication.save()
-    """
-    return HttpResponse("Hello, world. You're at the polls index.")
+
+    return HttpResponse("Nothing to do")
 
 #import logging
 #logger = logging.getLogger()
@@ -45,10 +38,6 @@ def harvester_citeseerx_index(request):
     return HttpResponse("Start CiteseerxHarvester process")
     
 def harvester_dblp_index(request):
-    #logger.debug('dblp_index')
-    #try:
     process = DblpHarvesterProcess()
     process.harvest()
-    #except(Exception) as e:
-    #    logger.warn(str(e))
     return HttpResponse("Start DblpHarvester process")

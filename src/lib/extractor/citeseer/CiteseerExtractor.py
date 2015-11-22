@@ -12,7 +12,7 @@ from lxml.etree import XMLSyntaxError
 class CiteseerExtractor(Extractor):
     
     #CITESEERX_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
-    CITESEERX_EXTRACTOR_API = 'http://localhost:8081/extractor'
+    CITESEERX_EXTRACTOR_API = 'http://localhost:8080/extractor'
 
     def __init__(self):
         super(CiteseerExtractor, self).__init__('citeseer')
@@ -22,7 +22,7 @@ class CiteseerExtractor(Extractor):
     
     def extract_from_file(self, filename):
         self.logger.debug("Extract %s" % filename)
-        self.open_output_file(filename+'xml')
+        self.open_output_file('{}.xml'.format(filename))
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
@@ -37,7 +37,7 @@ class CiteseerExtractor(Extractor):
         if r.status_code == 200:
             self.parse_citations(BytesIO(r.text.encode('utf-8')))
         else:
-            raise Exception('Expected server response 200, it is ' + r.status_code)
+            raise Exception('request_citations Expected server response 200, it is ' + r.status_code)
         
     def parse_citations(self, xml):
         self.logger.debug("Parse citations")

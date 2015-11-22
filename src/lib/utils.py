@@ -50,7 +50,7 @@ def download_file(url, path):
         return False
 
 def upload_file(url, filename, status_code = 201):
-    if os.path.isfile(filename):
+    try:
         logger.debug("Upload %s [%s]" % (filename, url))
         files = {'myfile': open(filename, 'rb')}
         r = requests.post(url, files=files)
@@ -58,9 +58,14 @@ def upload_file(url, filename, status_code = 201):
             return str(r.text)
         else:
             logger.warn("expected %s as status code, but was %s" % (status_code, r.status_code))
-    else:
-        logger.debug("%s is not a file" % filename)
-    return False
+    except(ConnectionError):
+        logger.debug("Connection to {} failed".format(url))
+        return False      
+    
+    #if os.path.isfile(filename):
+    #else:
+    #    logger.debug("%s is not a file" % filename)
+    #return False
 
 def url_exits(url, check_exists=False):
     #validate = URLValidator(verify_exists=True)
