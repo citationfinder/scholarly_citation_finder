@@ -8,7 +8,7 @@ logger = logging.getLogger()
 
 class DblpHarvesterProcess(HarvesterProcess):
     
-    PATH = 'scf_lib.harvester.dblp.DblpHarvester'
+    PATH = 'lib.harvester.dblp.DblpHarvester'
     PARAM = '-l 100000'
     
     def harvest(self, config = None):

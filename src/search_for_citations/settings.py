@@ -39,8 +39,8 @@ PREREQ_APPS = (
 )
 PROJECT_APPS = (
     'api',
-    'lib',
-    'core'
+    'core',
+    'lib'
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
@@ -51,8 +51,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    #'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'search_for_citations.urls'
