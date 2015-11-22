@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search_for_citations', '0015_publication_extractor'),
+        ('core', '0015_publication_extractor'),
     ]
 
     operations = [
@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='citation',
             name='publication',
-            field=models.ForeignKey(to='search_for_citations.Publication'),
+            field=models.ForeignKey(to='core.Publication'),
         ),
     ]

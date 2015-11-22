@@ -4,7 +4,7 @@ from io import BytesIO
 
 from unidecode import unidecode
 from lxml import etree
-from search_for_citations.models import Citation
+from core.models import Citation
 from ...utils import download_file, url_exits, upload_file
 from django.core.exceptions import ValidationError
 

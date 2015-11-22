@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search_for_citations', '0010_auto_20151106_1330'),
+        ('core', '0011_publication_type'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='publication',
-            name='type',
-            field=models.CharField(max_length=150, null=True, blank=True),
+            name='number',
+            field=models.PositiveIntegerField(null=True, blank=True),
         ),
     ]

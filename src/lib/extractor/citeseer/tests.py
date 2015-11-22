@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from search_for_citations.models import Citation, Publication
+from core.models import Citation, Publication
 from .citeseer.CitationExtractor import CitationExtractor
 # Create your tests here.
 

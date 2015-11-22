@@ -36,17 +36,17 @@ class Migration(migrations.Migration):
                 ('source', models.URLField()),
                 ('citeseerx_id', models.CharField(max_length=150)),
                 ('dblp_id', models.CharField(max_length=150)),
-                ('authors', models.ManyToManyField(to='search_for_citations.Author')),
+                ('authors', models.ManyToManyField(to='core.Author')),
             ],
         ),
         migrations.AddField(
             model_name='citation',
             name='citation',
-            field=models.OneToOneField(related_name='citation_citation', to='search_for_citations.Publication'),
+            field=models.OneToOneField(related_name='citation_citation', to='core.Publication'),
         ),
         migrations.AddField(
             model_name='citation',
             name='publication',
-            field=models.OneToOneField(related_name='citation_publication', to='search_for_citations.Publication'),
+            field=models.OneToOneField(related_name='citation_publication', to='core.Publication'),
         ),
     ]

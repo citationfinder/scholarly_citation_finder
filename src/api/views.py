@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from search_for_citations.models import Publication
+from core.models import Publication
 
 #from .extractor.CitationExtractor import CitationExtractor
 from django.core.exceptions import ValidationError

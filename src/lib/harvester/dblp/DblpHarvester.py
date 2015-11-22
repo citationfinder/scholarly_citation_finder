@@ -1,6 +1,6 @@
 from lxml import etree
 from unidecode import unidecode
-#from search_for_citations.models import Publication
+#from core.models import Publication
 
 from ..common.Harvester import Harvester
 

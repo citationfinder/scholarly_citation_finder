@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from search_for_citations.models import Publication, Author
+from core.models import Publication, Author
 
 import logging
 logger = logging.getLogger()
