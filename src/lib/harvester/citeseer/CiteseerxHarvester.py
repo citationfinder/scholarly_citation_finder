@@ -10,7 +10,8 @@ class CiteseerxHarvester(Harvester):
     
     OAI_PHM_URL = 'http://citeseerx.ist.psu.edu/oai2'
     
-    PREFIX = 'citeseerx'
+    def __init__(self):
+        super(CiteseerxHarvester, self).__init__('citeseerx')
     
     def harvest(self):
         registry = MetadataRegistry()
@@ -49,6 +50,7 @@ class CiteseerxHarvester(Harvester):
             citeseerx_id = string.replace(header.identifier(), 'oai:CiteSeerX.psu:', '')
             source = "http://citeseerx.ist.psu.edu/viewdoc/download?doi="+citeseerx_id+"&rep=rep1&type=pdf"            
             
+            self.open_split_file()            
             self.parse_publication(
                 authors=metadata['creator'],
                 title=title,

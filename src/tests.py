@@ -1,15 +1,17 @@
 import unittest
 
-from scf_lib.harvester.common import HarvesterTest
-from scf_lib.harvester.dblp import DblpHarvesterTest
+from lib.harvester.common import HarvesterTest
+from lib.harvester.dblp import DblpHarvesterTest
 
-from scf_lib.extractor import ExtractorTest
+from lib.extractor.common import ExtractorTest
+from lib import ParserTest
 
 tests = unittest.TestLoader()
 test_arr = []
-#test_arr.append(tests.loadTestsFromModule(HarvesterTest))
-#test_arr.append(tests.loadTestsFromModule(DblpHarvesterTest))
-test_arr.append(tests.loadTestsFromModule(ExtractorTest))
+test_arr.append(tests.loadTestsFromModule(HarvesterTest))
+test_arr.append(tests.loadTestsFromModule(DblpHarvesterTest))
+#test_arr.append(tests.loadTestsFromModule(ExtractorTest))
+test_arr.append(tests.loadTestsFromModule(ParserTest))
 
 all_tests = unittest.TestSuite(test_arr)
 

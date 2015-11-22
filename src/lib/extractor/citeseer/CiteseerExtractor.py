@@ -5,17 +5,17 @@ from io import BytesIO
 from unidecode import unidecode
 from lxml import etree
 from search_for_citations.models import Citation
-from harvester.parser import parse_publication
 from ...utils import download_file, url_exits, upload_file
 from django.core.exceptions import ValidationError
+
+from ..common import Extractor
 
 import logging
 from lxml.etree import XMLSyntaxError
 logger = logging.getLogger()
 
-class CitationExtractor:
+class CiteseerExtractor(Extractor):
     
-    DOWNLOAD_DIR = 'downloads/tmp/'
     CITESEERX_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
 
     def __init__(self, publication):
@@ -26,7 +26,10 @@ class CitationExtractor:
             logger.warn('Unvalid URL: ' + publication.source)
             raise ValidationError('Unvalid URL')
 
-    def extract(self):
+    def extract_from_xml_file(self, filename):
+        super(CiteseerExtractor, self).extract_from_xml_file(filename, self.extract_from_file)
+    
+    def extract_from_file(self, filename):
         logger.debug("Extract %s" % self.url)
         # Download file tempoary and upload this file to the extrator
         filename = download_file(self.url, self.DOWNLOAD_DIR)

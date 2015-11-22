@@ -1,10 +1,12 @@
 import unittest
 from .DblpHarvester import DblpHarvester
 import os.path
+import config
+
 class DblpHarvesterTest(unittest.TestCase):
 
     DOWNLOAD_DIR = '../downloads/'
-    TEST_DIR = '../test/harvester/dblp/'
+    TEST_DIR = config.TEST_PATH+'harvester/dblp/'
 
     def setUp(self):
         self.harvester = DblpHarvester()
@@ -14,7 +16,7 @@ class DblpHarvesterTest(unittest.TestCase):
 
     def test_harvest_file_creation(self):
         self.harvester.harvest(self.TEST_DIR + 'dblp_tiny.xml')
-        first = os.path.isfile(self.DOWNLOAD_DIR+'harvester/dblp/publication-0.xml')
+        first = os.path.isfile(config.DOWNLOAD_PATH+'harvester/dblp/publication-0.xml')
         self.assertEqual(first, True)
         
     """

@@ -10,8 +10,8 @@ import os.path
 
 class DblpHarvester(Harvester):
     
-    PREFIX = 'dblp'
-    
+    def __init__(self):
+        super(DblpHarvester, self).__init__('dblp')
     
     # Available elements are:   article|inproceedings|proceedings|book|incollection|phdthesis|mastersthesis|www
     # Available tags are:       author|editor|title|booktitle|pages|year|address|journal|volume|number|month|url|ee|cdrom|cite|
@@ -83,6 +83,7 @@ class DblpHarvester(Harvester):
                     source = elem.text
     
             elif elem.tag in self.COLLABORATIONS:
+                self.open_split_file()
                 self.parse_publication(
                     title=title,
                     authors=author_array,
