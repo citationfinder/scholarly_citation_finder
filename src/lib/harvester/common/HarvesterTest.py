@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*
 import unittest
-from ..common.Harvester import Harvester
+from .Harvester import Harvester
 
 class HarvesterTest(unittest.TestCase):
 

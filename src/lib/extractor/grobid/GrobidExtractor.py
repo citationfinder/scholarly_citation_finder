@@ -1,16 +1,19 @@
-from ..common import Extractor
+from ..common.Extractor import Extractor
 from api.process_manager.Process import ProcessError
 import requests
 import re
 
-class GrobidExtracor(Extractor):
+class GrobidExtractor(Extractor):
     
     # URL to Grobid service
     GROBID_HOST = 'http://localhost:8080'
+    
+    def __init__(self):
+        super(GrobidExtractor, self).__init__('grobid')
 
     #result_file_name = '.cite.tei'
     def extract_from_file(self, filename):
-        self.extract(open(filename, 'rb').read().read())
+        self.extract(open(filename, 'rb').read())
     
     def extract(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
@@ -30,6 +33,7 @@ class GrobidExtracor(Extractor):
         if resp.status_code != 200:
             raise ProcessError('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
     
+        print(resp.content)
         # remove all namespace info from xml string
         # this is hacky but makes parsing it much much easier down the road
         #remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')

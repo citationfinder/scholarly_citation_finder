@@ -6,7 +6,7 @@ class ExtractorTest(unittest.TestCase):
 
 
     def setUp(self):
-        self.extractor = Extractor()
+        self.extractor = Extractor('test_extractor')
 
 
     def test_extract(self):

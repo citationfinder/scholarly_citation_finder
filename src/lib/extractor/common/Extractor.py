@@ -2,13 +2,14 @@ import os.path
 
 import codecs
 from lxml import etree
-from ...harvester.common.Harvester import Harvester
+from ...Parser import Parser
 from ...utils import download_file
 from config import DOWNLOAD_TMP_PATH
 
-class Extractor(Harvester):
+class Extractor(Parser):
     
-    PREFIX = 'extractor_common'
+    def __init__(self, name):
+        super(Extractor, self).__init__(name)
     
     def extract_from_xml_file(self, filename, func):
         if os.path.isfile(filename):

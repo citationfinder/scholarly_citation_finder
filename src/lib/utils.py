@@ -6,7 +6,6 @@ import logging
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from requests.exceptions import ConnectionError, InvalidSchema
-from clint.textui import progress    
 from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
 logger = logging.getLogger()

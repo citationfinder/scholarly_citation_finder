@@ -1,5 +1,5 @@
 from lxml import etree
-from unidecode import unidecode
+#from unidecode import unidecode
 #from core.models import Publication
 
 from ..common.Harvester import Harvester
