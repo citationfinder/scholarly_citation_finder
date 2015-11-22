@@ -32,8 +32,11 @@ def unzip_file(filename):
 """
 Downloads a single file. Can handle large files.
 """
-def download_file(url, path):
-    local_filename = path+url.split('/')[-1]
+def download_file(url, path=None, name=None):
+    if name:
+        local_filename = path+name
+    else:
+        local_filename = path+url.split('/')[-1]
     # NOTE the stream=True parameter
     try:
         r = requests.get(url, stream=True)
