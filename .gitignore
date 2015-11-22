@@ -17,5 +17,5 @@ __pycache__/
 ############
  
 .settings/
-.project
-.pydevproject
+#.project
+#.pydevproject
