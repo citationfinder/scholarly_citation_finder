@@ -20,6 +20,9 @@ class Parser(object):
         )
         self.logger = logging.getLogger()      
     
+    def _write_line(self, line):
+        self.output.write("%s\n" % line)
+    
     def _write_element(self, element, value):
         if value:
             self.output.write("\t<%s>%s</%s>\n" % (element, value, element))
@@ -46,10 +49,10 @@ class Parser(object):
     def parse_citation(self, context=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
         self.count_citations += 1
         
-        self.output.write("<citation>\n")
+        self._write_line("\t\t<citation>")
         self._write_element('context', context)
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)
-        self.output.write("</citation>\n")
+        self._write_line("\t\t</citation>")
     
     def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
     
@@ -58,7 +61,7 @@ class Parser(object):
             self.count_publications += 1
                 
             #if date and pages and (booktitle or (journal and volume)):
-            self.output.write("<publication>\n")
+            self._write_line('<publication>')
             self._write_element('title', title)
             self._write_element('date', date)
             self._write_element('booktitle', booktitle)            
@@ -81,7 +84,7 @@ class Parser(object):
                 else:
                     self.logger.warn("Not an author name: %s" % author)
             
-            self.output.write("</publication>\n")
+            self._write_line("</publication>")
             return True
         else:
             self.logger.warn("No title (%s) or authors" % title)

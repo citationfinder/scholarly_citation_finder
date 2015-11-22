@@ -30,9 +30,9 @@ class Extractor(Parser):
                     tmp_file = download_file(url, DOWNLOAD_TMP_PATH, '{}.pdf'.format(self.count_citations))
                     if tmp_file:
                         self.count_citations += 1
-                        self.output.write("\t<citations>\n")
+                        self._write_line('\t<citations>')
                         func(tmp_file)
-                        self.output.write("\t</citations>\n")
+                        self._write_line('\t</citations>')
             return True
         else:
             raise IOError('File {} not found'.format(filelist))    
