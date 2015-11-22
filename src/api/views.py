@@ -8,29 +8,13 @@ from django.core.exceptions import ValidationError
 
 from .harvester.DblpHarvesterProcess import DblpHarvesterProcess
 from .harvester.CiteseerxHarvesterProcess import CiteseerxHarvesterProcess
-
-from lib.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
+from .extractor.CiteseerExtractorProcess import CiteseerExtractorProcess
 
 def extractor_citeseer_index(request):
-    
-    extractor = CiteseerExtractor()
-    
     # http://localhost:8000/api/extractor/citeseer?filename=../test/paper/OJWT_2014v1i2n02_Kusserow.pdf
-    filename = request.GET.get('filename', None)
-    # http://localhost:8000/api/extractor/citeseer?filename=../downloads/harvester/citeseerx/publication-0.xml
-    filelist = request.GET.get('filelist', None)    
-    if filename:
-        extractor.extract_from_file(filename)
-        return HttpResponse("Extract file")
-    elif filelist:
-        extractor.extract_from_xml_file(str(filelist))
-        return HttpResponse("Extract list")        
-    
-
-    return HttpResponse("Nothing to do")
-
-#import logging
-#logger = logging.getLogger()
+    # http://localhost:8000/api/extractor/citeseer?filelist=../downloads/harvester/citeseerx/publication-0.xml
+    process = CiteseerExtractorProcess()
+    return process.extract(request.GET.get('filename', None), request.GET.get('filelist', None) )
 
 def harvester_citeseerx_index(request):
     process = CiteseerxHarvesterProcess()

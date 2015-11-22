@@ -1,17 +1,17 @@
 run:
-	python src/manage.py runserver
+	python manage.py runserver
 	
 clear:
-	python src/manage.py flush
+	python manage.py flush
 
 tests:
-	python src/manage.py test
+	python manage.py test
 
 test_main:
 	python manage.py test core.tests
 	
 test_lib:
-	python src/tests.py
+	python tests.py
 	
 run_citeseerx:
 	python lib/CiteSeerExtractor/src/service.py 8081

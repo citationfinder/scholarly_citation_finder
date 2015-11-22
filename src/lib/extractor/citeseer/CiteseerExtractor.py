@@ -22,7 +22,7 @@ class CiteseerExtractor(Extractor):
     
     def extract_from_file(self, filename):
         self.logger.debug("Extract %s" % filename)
-        self.open_output_file('{}.xml'.format(filename))
+        #self.open_output_file('{}.xml'.format(filename))
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)

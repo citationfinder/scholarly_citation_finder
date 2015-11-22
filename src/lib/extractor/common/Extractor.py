@@ -26,8 +26,8 @@ class Extractor(Parser):
                     
                     print(url)
                     
-                    response = requests.get(url)
-                    #tmp_file = download_file(url, DOWNLOAD_TMP_PATH, self.count_citations)
+                    #response = requests.get(url)
+                    tmp_file = download_file(url, DOWNLOAD_TMP_PATH, '{}.pdf'.format(self.count_citations))
                     if tmp_file:
                         self.count_citations += 1
                         self.output.write("\t<citations>\n")
