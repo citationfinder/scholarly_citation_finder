@@ -1,6 +1,5 @@
-
-from ..process_manager.Process import HarvesterProcess, ProcessError
-from ..process_manager.utils import external_process,external_process2
+from core.process_manager.Process import HarvesterProcess, ProcessError
+from core.process_manager.utils import external_process,external_process2
 import subprocess32 as subprocess
 
 import logging
