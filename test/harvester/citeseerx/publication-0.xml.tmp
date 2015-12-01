@@ -1,0 +1,48 @@
+<publication>
+	<title>Winner-Take-All Network Utilising Pseudoinverse Reconstruction Subnets Demonstrates Robustness on the Handprinted Character Recognition Problem</title>
+	<date>1999</date>
+	<publisher>Springer</publisher>
+	<abstract>Wittmeyer’s pseudoinverse iterative algorithm is formulated
+as a dynamic connectionist Data Compression and Reconstruction (DCR) network, and subnets of this type are supplemented by the winner-take-all paradigm. The winner is selected upon the goodness-of-fit of the input reconstruction. The network can be characterised as a competitive-cooperative-competitive architecture by virtue of the contrast enhancing properties of the pseudoinverse subnets. The network is capable of fast learning. The adopted learning method gives rise to increased sampling in the vicinity of dubious boundary regions that resembles the phenomenon of categorical perception. The generalising abilities of the scheme allow one to utilise single bit connection strengths. The network is robust against input noise and contrast levels, shows little sensitivity to imprecise connection strengths, and is promising for mixed VLSI implementation with on-chip learning properties. The features of the DCR network are demonstrated on the NIST database of handprinted characters.</abstract>
+	<citeseerx_id>10.1.1.1.1484</citeseerx_id>
+	<source>http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1.1484&rep=rep1&type=pdf</source>
+	<author>J. Körmendy-rácz</author>
+	<author>S. Szabó</author>
+	<author>J. Lörincz</author>
+	<author>G. Antal</author>
+	<author>G. Kovács</author>
+	<author>A. Lörincz</author>
+	<citation>
+		<context>w: all samples. Middle row: memories selected according to Training Rule 1. Bottom row: histograms for both cases (white: all samples, black: selected memories). Left (right) column: data for digit 0 =-=(1)-=-. x¯: average position from centreplane, s[x]: standard deviation. For details, see text. memory sets belonging to other categories. The DCR pseudoinverse architecture allows one to use inputs as memo</context>
+		<publication>
+			<title>Principles of Neurodynamics</title>
+			<date>1962</date>
+			<extractor>citeseer</extractor>
+			<author>F Rosenblatt</author>
+		</publication>
+	</citation>
+	<citation>
+		<context> reconstructed input y; the third deals with the reconstructed input and computes the experienced internal representation ae. The internal representation undergoes (1) differencing between ad and ae, =-=(2)-=- integration with gain factor l, and (3) summation to form the corrected internal representation a. the case, for example, if memory matrix Q is being tuned by the PCA method. Provided that matrix Q i</context>
+		<publication>
+			<title>Beyond regression: New tools for prediction and analysis in the behavioral sciences</title>
+			<date>1974</date>
+			<extractor>citeseer</extractor>
+			<author>Werbos PJ</author>
+		</publication>
+	</citation>	
+</publication>
+<publication>
+	<title>DEEM: a Tool for the Dependability Modeling and Evaluation</title>
+	<date>2000</date>
+	<publisher>IEEE Computer Society</publisher>
+	<abstract>Multiple-Phased Systems, whose operational life can be partitioned in a set of disjoint periods, called Â¿phasesÂ¿; include several classes of systems such as Phased Mission Systems and Scheduled Maintenance Systems. Because of their deployment in critical applications, the dependability modeling and analysis of Multiple-Phased Systems is a task of primary relevance. However, the phased behavior makes the analysis of Multiple-Phased Systems extremely complex. This paper is centered on the description and application of DEEM, a dependability modeling and evaluation tool for Multiple Phased Systems. DEEM supports a powerful and efficient methodology for the analytical dependability modeling and evaluation of Multiple Phased Systems, based on Deterministic and Stochastic Petri Nets and on Markov Regenerative Processes.</abstract>
+	<citeseerx_id>10.1.1.1.1485</citeseerx_id>
+	<source>http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1.1485&rep=rep1&type=pdf</source>
+	<citations>
+	</citations>
+	<author>A. Bondavalli</author>
+	<author>I. Mura</author>
+	<author>S. Chiaradonna</author>
+	<author>S. Poli</author>
+	<author>F. Sandrini</author>
+</publication>
