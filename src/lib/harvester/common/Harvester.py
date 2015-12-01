@@ -33,7 +33,10 @@ class Harvester(Parser):
         
     def open_split_file(self):
         if self.count_publications % self.split_publications == 0:
-            self.open_output_file(config.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.name, self.count_publications / self.split_publications))   
+            num = self.count_publications / self.split_publications
+            if num > 0:
+                self.close_output_file()
+            self.open_output_file(config.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.name, num))   
         
     def stop_harvest(self):
         self.close_output_file()

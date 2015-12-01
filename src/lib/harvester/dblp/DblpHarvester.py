@@ -1,12 +1,15 @@
+import os.path
 from lxml import etree
 #from unidecode import unidecode
 #from core.models import Publication
 
+import config
 from ..common.Harvester import Harvester
 
-import os.path
 #import logging
 #logger = logging.getLogger()
+
+DOWNLOAD_PATH = 'downloads/'
 
 class DblpHarvester(Harvester):
     
@@ -110,4 +113,4 @@ class DblpHarvester(Harvester):
         
 if __name__ == '__main__':
     harvester = DblpHarvester()
-    harvester.harvest(DblpHarvester.DOWNLOAD_PATH+'dblp/dblp.xml')
+    harvester.harvest(DOWNLOAD_PATH+'dblp/dblp.xml')

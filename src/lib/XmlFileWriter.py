@@ -34,6 +34,7 @@ class XmlFileWriter:
     def open(self, filename):
         try:
             self.output = codecs.open(filename, 'w+', self.ENCODING) # may just 'w'?
+            self.tabbing = '' # reset tabbing for new file
         except(IOError) as e:
             raise IOError('Path to file {} not found: {}'.format(filename, e))           
 
