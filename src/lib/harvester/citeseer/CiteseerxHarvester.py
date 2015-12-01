@@ -1,5 +1,4 @@
 import string
-import logging
 
 from ..common.Harvester import Harvester
 from oaipmh.client import Client

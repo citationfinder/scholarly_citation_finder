@@ -8,18 +8,17 @@ class Harvester(Parser):
     
     def __init__(self, name):
         super(Harvester, self).__init__(name)
-
         self.split_publications = 10000
         self.limit = self.get_arguments(sys.argv[1:])
         self.logger.info('start')
     
     def get_arguments(self, argv):
         try:
-            opts, args = getopt.getopt(argv, "hl:", ["help", "limit="])
+            opts, _ = getopt.getopt(argv, "hl:", ["help", "limit="])
         except getopt.GetoptError as e:
             print(str(e))
             print('Usage: -h for help')
-            sys.exit(2)    
+            sys.exit(2)
     
         limit = None
         for opt, arg in opts:
@@ -34,8 +33,7 @@ class Harvester(Parser):
         
     def open_split_file(self):
         if self.count_publications % self.split_publications == 0:
-            self.open_output_file(config.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.name, self.count_publications / self.split_publications))
-           
+            self.open_output_file(config.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.name, self.count_publications / self.split_publications))   
         
     def stop_harvest(self):
         self.close_output_file()

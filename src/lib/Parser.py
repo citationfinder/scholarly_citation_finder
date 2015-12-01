@@ -6,6 +6,8 @@ from .XmlFileWriter import XmlFileWriter
 
 class Parser(object):
     
+    MAIN_TAG = 'sfc'    
+
     def __init__(self, name):
         self.name = name
         self.init_logger(name)
@@ -33,8 +35,11 @@ class Parser(object):
     
     def open_output_file(self, filename):
         self.output.open(filename)
+        self.output.write_declaration()
+        self.output.write_start_tag(self.MAIN_TAG)
     
     def close_output_file(self):
+        self.output.write_close_tag(self.MAIN_TAG)
         self.output.close()
     
     def parse_citation(self, context=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):

@@ -14,24 +14,6 @@
 		<author>G. Antal</author>
 		<author>G. Kovács</author>
 		<author>A. Lörincz</author>
-		<citation>
-			<context>w: all samples. Middle row: memories selected according to Training Rule 1. Bottom row: histograms for both cases (white: all samples, black: selected memories). Left (right) column: data for digit 0 =-=(1)-=-. x¯: average position from centreplane, s[x]: standard deviation. For details, see text. memory sets belonging to other categories. The DCR pseudoinverse architecture allows one to use inputs as memo</context>
-			<publication>
-				<title>Principles of Neurodynamics</title>
-				<date>1962</date>
-				<extractor>citeseer</extractor>
-				<author>F Rosenblatt</author>
-			</publication>
-		</citation>
-		<citation>
-			<context> reconstructed input y; the third deals with the reconstructed input and computes the experienced internal representation ae. The internal representation undergoes (1) differencing between ad and ae, =-=(2)-=- integration with gain factor l, and (3) summation to form the corrected internal representation a. the case, for example, if memory matrix Q is being tuned by the PCA method. Provided that matrix Q i</context>
-			<publication>
-				<title>Beyond regression: New tools for prediction and analysis in the behavioral sciences</title>
-				<date>1974</date>
-				<extractor>citeseer</extractor>
-				<author>Werbos PJ</author>
-			</publication>
-		</citation>	
 	</publication>
 	<publication>
 		<title>DEEM: a Tool for the Dependability Modeling and Evaluation</title>
@@ -46,4 +28,4 @@
 		<author>S. Poli</author>
 		<author>F. Sandrini</author>
 	</publication>
-</scf>
+</sfc>

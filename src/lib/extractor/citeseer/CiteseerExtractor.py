@@ -1,12 +1,10 @@
-import requests
 from io import BytesIO
-
 from lxml import etree
-from ...utils import upload_file
-
-from ..common.Extractor import Extractor
-
 from lxml.etree import XMLSyntaxError
+import requests
+
+from lib.utils import upload_file
+from ..common.Extractor import Extractor
 
 class CiteseerExtractor(Extractor):
     
@@ -21,7 +19,6 @@ class CiteseerExtractor(Extractor):
     
     def extract_from_file(self, filename):
         self.logger.debug("Extract %s" % filename)
-        #self.open_output_file('{}.xml'.format(filename))
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
@@ -95,7 +92,7 @@ class CiteseerExtractor(Extractor):
                     journal=journal,
                     volume=volume,
                     pages=pages,
-                    extractor='citeseer'                  
+                    extractor=self.name             
                 )
                     
                 del author_array[:]
@@ -103,7 +100,6 @@ class CiteseerExtractor(Extractor):
             # Clear element
             elem.clear()
             while elem.getprevious() is not None:
-                #if elem.getparent() is not None:
                 del elem.getparent()[0]
         del context
         #clear chunks 
