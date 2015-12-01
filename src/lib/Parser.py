@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import codecs
 import logging
 from config import LOG_PATH
+from .XmlFileWriter import XmlFileWriter
 
 class Parser(object):
     
@@ -11,6 +11,7 @@ class Parser(object):
         self.init_logger(name)
         self.count_publications = 0
         self.count_citations = 0
+        self.output = XmlFileWriter()
         
     def init_logger(self, name):
         logging.basicConfig(
@@ -19,13 +20,6 @@ class Parser(object):
             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s'
         )
         self.logger = logging.getLogger()      
-    
-    def _write_line(self, line):
-        self.output.write("%s\n" % line)
-    
-    def _write_element(self, element, value):
-        if value:
-            self.output.write("\t<%s>%s</%s>\n" % (element, value, element))
 
     def check_author_name(self, name):
         # Milena Mihail, et al.
@@ -38,10 +32,7 @@ class Parser(object):
         return False 
     
     def open_output_file(self, filename):
-        try:
-            self.output = codecs.open(filename, 'w+', 'utf-8')
-        except(IOError) as e:
-            raise IOError('Path to file {} not found: {}'.format(filename, e))                  
+        self.output.open(filename)
     
     def close_output_file(self):
         self.output.close()
@@ -49,11 +40,11 @@ class Parser(object):
     def parse_citation(self, context=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
         self.count_citations += 1
         
-        #self._write_line("\t\t<citation>")
-        self._write_element('context', context)
+        self.output.write_start_tag('citation')
+        self.output.write_element('context', context)
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)
-        #self._write_line("\t\t</citation>")
-    
+        self.output.write_end_tag('citation')
+
     def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
     
         if title and authors:
@@ -61,30 +52,30 @@ class Parser(object):
             self.count_publications += 1
                 
             #if date and pages and (booktitle or (journal and volume)):
-            self._write_line('<publication>')
-            self._write_element('title', title)
-            self._write_element('date', date)
-            self._write_element('booktitle', booktitle)            
-            self._write_element('journal', journal)
-            self._write_element('volume', volume)
-            self._write_element('pages', pages)
-            self._write_element('number', number)
-            self._write_element('publisher', publisher)
-            self._write_element('abstract', abstract)
-            self._write_element('doi', doi)
-            self._write_element('citeseerx_id', citeseerx_id)
-            self._write_element('dblp_id', dblp_id)
-            self._write_element('extractor', extractor)
-            self._write_element('source', source)
+            self.output.write_start_tag('publication')
+            self.output.write_element('title', title)
+            self.output.write_element('date', date)
+            self.output.write_element('booktitle', booktitle)            
+            self.output.write_element('journal', journal)
+            self.output.write_element('volume', volume)
+            self.output.write_element('pages', pages)
+            self.output.write_element('number', number)
+            self.output.write_element('publisher', publisher)
+            self.output.write_element('abstract', abstract)
+            self.output.write_element('doi', doi)
+            self.output.write_element('citeseerx_id', citeseerx_id)
+            self.output.write_element('dblp_id', dblp_id)
+            self.output.write_element('extractor', extractor)
+            self.output.write_element('source', source)
 
             for author in authors:
                 author = self.check_author_name(author)
                 if author:
-                    self._write_element('author', author)
+                    self.output.write_element('author', author)
                 else:
                     self.logger.warn("Not an author name: %s" % author)
             
-            self._write_line("</publication>")
+            self.output.write_close_tag("publication")
             return True
         else:
             self.logger.warn("No title (%s) or authors" % title)

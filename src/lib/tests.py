@@ -1,9 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.test import TestCase
 import os.path
 import config
 from .utils import url_exits, download_file, unzip_file
 # Create your tests here.
+from .Parser import Parser
 
+"""
 class UtilTest(TestCase):
     
     URL_PDF = 'http://www.ronpub.com/publications/OJWT_2014v1i2n02_Kusserow.pdf'
@@ -15,11 +19,9 @@ class UtilTest(TestCase):
         first = url_exits('http://example./paper.pdf')
         self.assertEqual(first, False)    
     
-    """
-    def test_url_does_not_exits(self):
-        first = url_exits('http://example.org/paper.pdf')
-        self.assertEqual(first, False)
-    """ 
+    #def test_url_does_not_exits(self):
+    #    first = url_exits('http://example.org/paper.pdf')
+    #    self.assertEqual(first, False)
        
     #def test_pdf_exits(self):
     #    first = url_exits('http://www.informatik.uni-bremen.de/agra/doc/work/evohot04.pdf')
@@ -37,11 +39,33 @@ class UtilTest(TestCase):
         self.assertEqual(first, True)
         os.remove(filename)
     
-    """
-    def test_unzip_file(self):
-        filename = unzip_file(self.EXAMPLE_GZ_FILE)
-        first = os.path.isfile(filename);
-        if first:
-            os.remove(filename)
+
+    #def test_unzip_file(self):
+    #    filename = unzip_file(self.EXAMPLE_GZ_FILE)
+    #    first = os.path.isfile(filename);
+    #    if first:
+    #        os.remove(filename)
+    #    self.assertEqual(first, True)
+"""
+    
+class ParserTest(TestCase):
+
+    SAMPLE_XML = config.TEST_PATH+'harvester/test_parser.xml'
+
+    def setUp(self):
+        self.parser = Parser('test_parser')
+        
+    def test_parse_publication(self):
+        self.parser.open_output_file(self.SAMPLE_XML)
+        first = self.parser.parse_publication(title=u'Hey $äüöé', authors=[u'Na éäüö'])
+        self.parser.close_output_file()
         self.assertEqual(first, True)
-    """
+        os.remove(self.SAMPLE_XML)
+    
+    def test_check_author_name_blacklist(self):
+        first = self.parser.check_author_name('University Oslo')
+        self.assertEqual(first, False)
+        
+    def test_check_author_name_single_word(self):
+        first = self.parser.check_author_name('Jr.')
+        self.assertEqual(first, False)  

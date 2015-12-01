@@ -1,5 +1,4 @@
 import os.path
-import codecs
 from lxml import etree
 from core.models import Publication, Citation, Author
 
@@ -9,7 +8,6 @@ class Parser:
     
     def store_from_xml_file(self, filelist):
         if os.path.isfile(filelist):
-            #self.input = codecs.open(filelist, "r", "utf-8")
             context = etree.iterparse(filelist)
             self._fast_iter(context)
         else:
