@@ -10,7 +10,7 @@ class ParserTest(unittest.TestCase):
         self.parser = Parser('test_parser')
         
     def test_harvest(self):
-        self.parser.open_output_file(TEST_PATH+'test_parser.xml')
+        self.parser.open_output_file(TEST_PATH+'harvester/test_parser.xml')
         first = self.parser.parse_publication(title=u'Hey $äüöé', authors=[u'Na éäüö'])
         self.parser.close_output_file()
         self.assertEqual(first, True)
