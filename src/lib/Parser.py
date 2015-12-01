@@ -49,10 +49,10 @@ class Parser(object):
     def parse_citation(self, context=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
         self.count_citations += 1
         
-        self._write_line("\t\t<citation>")
+        #self._write_line("\t\t<citation>")
         self._write_element('context', context)
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)
-        self._write_line("\t\t</citation>")
+        #self._write_line("\t\t</citation>")
     
     def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
     
