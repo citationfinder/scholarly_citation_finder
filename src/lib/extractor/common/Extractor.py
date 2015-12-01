@@ -1,11 +1,9 @@
 import os.path
 
 import codecs
-from lxml import etree
 from ...Parser import Parser
 from ...utils import download_file
 from config import DOWNLOAD_TMP_PATH
-import requests
 
 class Extractor(Parser):
     

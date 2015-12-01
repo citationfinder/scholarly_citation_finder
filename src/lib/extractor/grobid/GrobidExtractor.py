@@ -1,5 +1,5 @@
 from ..common.Extractor import Extractor
-from api.process_manager.Process import ProcessError
+from core.process_manager.Process import ProcessError
 import requests
 import re
 

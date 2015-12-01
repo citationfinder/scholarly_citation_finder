@@ -6,7 +6,6 @@ from ...utils import upload_file
 
 from ..common.Extractor import Extractor
 
-import logging
 from lxml.etree import XMLSyntaxError
 
 class CiteseerExtractor(Extractor):

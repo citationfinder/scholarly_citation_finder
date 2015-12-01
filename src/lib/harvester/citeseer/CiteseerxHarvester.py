@@ -48,7 +48,7 @@ class CiteseerxHarvester(Harvester):
             
             # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
             citeseerx_id = string.replace(header.identifier(), 'oai:CiteSeerX.psu:', '')
-            source = "http://citeseerx.ist.psu.edu/viewdoc/download?doi="+citeseerx_id+"&rep=rep1&type=pdf"            
+            source = "http://citeseerx.ist.psu.edu/viewdoc/download?doi="+citeseerx_id+"&amp;rep=rep1&amp;type=pdf"            
             
             self.open_split_file()            
             self.parse_publication(
