@@ -70,7 +70,7 @@ class CiteseerExtractor(Extractor):
     
         #read chunk line by line
         #we focus author and title
-        for event, elem in context:
+        for _, elem in context:
             if elem.tag == 'author':
                 author_array.append(elem.text)
     
