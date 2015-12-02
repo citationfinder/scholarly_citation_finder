@@ -5,7 +5,7 @@ class Author(models.Model):
     last_name = models.CharField(blank=True, null=True, max_length=100)
 
     def __unicode__(self):
-        return self.last_name
+        return unicode(self.last_name)
 
 class Publication(models.Model):
     # attributes
@@ -29,7 +29,7 @@ class Publication(models.Model):
     authors = models.ManyToManyField(Author)
     
     def __unicode__(self):
-        return self.title
+        return unicode(self.title)
     
 class Citation(models.Model):
     publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
