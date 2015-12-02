@@ -106,4 +106,4 @@ class DblpHarvester(Harvester):
         
 if __name__ == '__main__':
     harvester = DblpHarvester()
-    harvester.harvest(config.DOWNLOAD_PATH+'dblp/dblp.xml')
+    harvester.harvest(os.path.join(config.DOWNLOAD_DIR, 'dblp', 'dblp.xml'))

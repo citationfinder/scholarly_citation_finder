@@ -5,12 +5,12 @@ import os.path
 
 class CiteseerExtractorTest(TestCase):
 
-    TEST_DIR = config.TEST_PATH+'extractor/citeseer/2/'
-    TEST_FILE_CITATIONS = TEST_DIR + 'citations.xml'
+    TEST_DIR = os.path.join(config.TEST_DIR, 'extractor', 'citeseer', '2')
+    TEST_FILE_CITATIONS = os.path.join(TEST_DIR, 'citations.xml')
     TEST_FILE_CITATIONS_COUNT = 5
     
-    TEST_PDF = config.TEST_PATH+'paper/OJWT_2014v1i2n02_Kusserow.pdf';
-    TEST_FILELIST = config.TEST_PATH+'harvester/citeseerx/publication-0.xml'
+    TEST_PDF = os.path.join(config.TEST_DIR, 'paper', 'OJWT_2014v1i2n02_Kusserow.pdf')
+    TEST_FILELIST = os.path.join(config.TEST_DIR, 'harvester', 'citeseerx', 'publication-0.xml')
     
     def setUp(self):
         self.extractor = CiteseerExtractor()
