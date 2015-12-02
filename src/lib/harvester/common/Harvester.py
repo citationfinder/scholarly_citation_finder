@@ -2,12 +2,15 @@ import getopt
 import sys
 import config
 
+import config
+from lib import utils
 from ...Parser import Parser
 
 class Harvester(Parser):
     
     def __init__(self, name):
-        super(Harvester, self).__init__(name)
+        super(Harvester, self).__init__('{}'.format(name))
+        utils.create_dir('{}harvester/{}'.format(config.DOWNLOAD_PATH, name))
         self.split_publications = 10000
         self.limit = self.get_arguments(sys.argv[1:])
         self.logger.info('start')
