@@ -56,18 +56,18 @@ class CiteseerExtractor(Extractor):
         return text.replace('<', '&lt;').replace('>', '&gt;')
             
     def fast_iter(self, context, *args, **kwargs):
-        #xml categories
+        
         title = ''
-        author_array = []
         date = ''
         booktitle = ''
         journal = ''
         volume = ''
+        #number
         pages = ''
-        #date = ''
-        #journal
-        #volume
+        #publisher
         #abstract = ''
+        author_array = []
+        
         citation_context = ''
     
         #read chunk line by line
