@@ -41,6 +41,7 @@ PREREQ_APPS = (
 PROJECT_APPS = (
     'api',
     'core',
+    'frontend',
     'lib'
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS

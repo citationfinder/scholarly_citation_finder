@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Author, Publication, Citation
+from core.models import Author, Publication, Citation
 
 def authors_index(request):
     return render(request, 'authors/index.html', {

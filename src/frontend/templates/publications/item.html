@@ -1,4 +1,4 @@
-<a href="/search_for_citations/publications/{{item.id}}">{{item.title}}</a> {{booktitle.booktitle}}
+<a href="/frontend/publications/{{item.id}}">{{item.title}}</a> {{booktitle.booktitle}}
 (<a href="{{item.source}}">Source</a>
 {% if item.citeseerx_id %}
 	@<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi={{item.citeseerx_id}}" target="_blank">CiteSeerX</a>
@@ -8,7 +8,7 @@
 {% endif %}
 )<br>
 {% for author in item.authors.all %}
-	<a href="/search_for_citations/authors/{{author.id}}">{{author.last_name}}</a>,
+	<a href="/frontend/authors/{{author.id}}">{{author.last_name}}</a>,
 {% endfor %}<br>
 {% if item.abstract %}
 	<p><i>{{item.abstract}}</i></p>
