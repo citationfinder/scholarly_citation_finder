@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
+import os.path
 from django.test import TestCase
 
 from .Parser import Parser
@@ -8,7 +9,7 @@ from core.models import Publication, Citation, Author
 
 class ParserTest(TestCase):
     
-    XML_FILELIST = config.TEST_PATH+'harvester/citeseerx/publication-0.xml.tmp'
+    XML_FILELIST = os.path.join(config.TEST_DIR, 'harvester', 'citeseerx', 'publication-0.xml.tmp')
     
     def setUp(self):
         self.parser = Parser()

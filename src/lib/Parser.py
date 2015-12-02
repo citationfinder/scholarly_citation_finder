@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os.path
 import logging
-from config import LOG_PATH
+
+import config
 from .XmlFileWriter import XmlFileWriter
 
 class Parser(object):
@@ -17,7 +19,7 @@ class Parser(object):
         
     def init_logger(self, name):
         logging.basicConfig(
-            filename=LOG_PATH+name+'.log',
+            filename = os.path.join(config.LOG_DIR, name+'.log'),
             level=logging.DEBUG,
             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s'
         )

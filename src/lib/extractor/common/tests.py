@@ -1,3 +1,4 @@
+import os.path
 from django.test import TestCase
 
 import config
@@ -6,7 +7,7 @@ from .Extractor import Extractor
 """
 class ExtractorTest(TestCase):
 
-    SAMPLE_XML = config.TEST_PATH+'harvester/citeseerx/publication-0.xml'
+    SAMPLE_XML = os.path.join(config.TEST_DIR, 'harvester', 'citeseerx', 'publication-0.xml')
 
     def setUp(self):
         self.extractor = Extractor('test')

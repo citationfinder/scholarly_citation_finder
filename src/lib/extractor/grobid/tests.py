@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*
+import os.path
 import unittest
-from .GrobidExtractor import GrobidExtractor
+
 import config
+from .GrobidExtractor import GrobidExtractor
 
 """
 class GrobidExtractorTest(unittest.TestCase):
 
-    TEST_PDF = config.TEST_PATH+'paper/OJWT_2014v1i2n02_Kusserow.pdf'
+    TEST_PDF = os.path.join(config.TEST_DIR', 'paper', 'OJWT_2014v1i2n02_Kusserow.pdf')
 
     def setUp(self):
         self.extractor = GrobidExtractor()

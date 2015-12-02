@@ -1,6 +1,6 @@
+import os.path
 import getopt
 import sys
-import config
 
 import config
 from lib import utils
@@ -10,7 +10,7 @@ class Harvester(Parser):
     
     def __init__(self, name):
         super(Harvester, self).__init__('{}'.format(name))
-        utils.create_dir('{}harvester/{}'.format(config.DOWNLOAD_PATH, name))
+        utils.create_dir(os.path.join(config.DOWNLOAD_DIR, 'harvester', name))
         self.split_publications = 10000
         self.limit = self.get_arguments(sys.argv[1:])
         self.logger.info('start')
@@ -39,7 +39,7 @@ class Harvester(Parser):
             file_num = self.count_publications / self.split_publications
             if file_num > 0:
                 self.close_output_file()
-            self.open_output_file(config.DOWNLOAD_PATH+'harvester/{}/publication-{}.xml'.format(self.name, file_num))   
+            self.open_output_file(os.path.join(config.DOWNLOAD_DIR, 'harvester', self.name, 'publication-{}.xml'.format(file_num)))   
         
     def stop_harvest(self):
         self.close_output_file()

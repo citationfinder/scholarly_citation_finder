@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -125,7 +124,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': config.LOG_PATH+'../log/debug.log',
+            'filename': os.path.abspath(os.path.join(BASE_DIR, '../log', 'debug.log')),
             'formatter': 'verbose'
         },
         'console':{
