@@ -52,7 +52,8 @@ class CiteseerExtractor(Extractor):
         return variable
     
     def _escape_text(self, text):
-        return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+        # TODO: .replace('&', '&amp;') destroys other symbols like "&lt;", which are already escaped
+        return text.replace('<', '&lt;').replace('>', '&gt;')
             
     def fast_iter(self, context, *args, **kwargs):
         #xml categories
