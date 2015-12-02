@@ -23,6 +23,7 @@ class Extractor(Parser):
                     #url = etree.fromstring(line).text
                     
                     tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_citations))
+                    #tmp_file = os.path.join(config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_citations))
                     if tmp_file:
                         self.count_citations += 1
                         func(tmp_file)

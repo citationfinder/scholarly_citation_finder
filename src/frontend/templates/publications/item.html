@@ -6,6 +6,9 @@
 {% if item.dblp_id %}
 	@<a href="http://dblp.uni-trier.de/rec/html/{{item.dblp_id}}" target="_blank">DBLP</a>
 {% endif %}
+{% if item.arxiv_id %}
+	@<a href="http://arxiv.org/abs/{{item.arxiv_id}}" target="_blank">ArXiv</a>
+{% endif %}
 )<br>
 {% for author in item.authors.all %}
 	<a href="/frontend/authors/{{author.id}}">{{author.last_name}}</a>,
