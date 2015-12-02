@@ -1,0 +1,1522 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sfc>
+	<publication>
+		<title>Calculation of prompt diphoton production cross sections at Tevatron and
+  LHC energies</title>
+		<date>2007-07-24</date>
+		<abstract>  A fully differential calculation in perturbative quantum chromodynamics is
+presented for the production of massive photon pairs at hadron colliders. All
+next-to-leading order perturbative contributions from quark-antiquark,
+gluon-(anti)quark, and gluon-gluon subprocesses are included, as well as
+all-orders resummation of initial-state gluon radiation valid at
+next-to-next-to-leading logarithmic accuracy. The region of phase space is
+specified in which the calculation is most reliable. Good agreement is
+demonstrated with data from the Fermilab Tevatron, and predictions are made for
+more detailed tests with CDF and DO data. Predictions are shown for
+distributions of diphoton pairs produced at the energy of the Large Hadron
+Collider (LHC). Distributions of the diphoton pairs from the decay of a Higgs
+boson are contrasted with those produced from QCD processes at the LHC, showing
+that enhanced sensitivity to the signal can be obtained with judicious
+selection of events.
+</abstract>
+		<citeseerx_id>0704.0001</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0001.pdf</source>
+		<author>Balázs, C.</author>
+		<author>Berger, E. L.</author>
+		<author>Nadolsky, P. M.</author>
+		<author>Yuan, C. -P.</author>
+	</publication>
+	<publication>
+		<title>Sparsity-certifying Graph Decompositions</title>
+		<date>2008-12-13</date>
+		<abstract>  We describe a new algorithm, the $(k,\ell)$-pebble game with colors, and use
+it obtain a characterization of the family of $(k,\ell)$-sparse graphs and
+algorithmic solutions to a family of problems concerning tree decompositions of
+graphs. Special instances of sparse graphs appear in rigidity theory and have
+received increased attention in recent years. In particular, our colored
+pebbles generalize and strengthen the previous results of Lee and Streinu and
+give a new proof of the Tutte-Nash-Williams characterization of arboricity. We
+also present a new decomposition that certifies sparsity based on the
+$(k,\ell)$-pebble game with colors. Our work also exposes connections between
+pebble game algorithms and previous sparse graph algorithms by Gabow, Gabow and
+Westermann and Hendrickson.
+</abstract>
+		<citeseerx_id>0704.0002</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0002.pdf</source>
+<citation>
+	<context>the counts, have a geometric interpretation [11, 21, 22, 24]. A pebble game algorithm was first proposed in [10] as an elegant alternative to Hendrickson’s Laman graph algorithms [9]. Berg and Jordan =-=[1]-=-, provided the formal analysis of the pebble game of [10] and introduced the idea of playing the game on a directed graph. Lee and Streinu [12] generalized the pebble game to the entire range of param</context>
+	<publication>
+		<title>T.: Algorithms for graph rigidity and scene analysis</title>
+		<date>2003</date>
+		<booktitle>In: Proc. 11th European Symposium on Algorithms (ESA ’03), LNCS</booktitle>
+		<volume>2832</volume>
+		<pages>78--89</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A R Berg</author>
+	</publication>
+</citation>
+<citation>
+	<context> condition on tree-pieces and the decomposition into ` edge-disjoint trees. Finally, an application of (I4), shows that every vertex must in in exactly k of the trees, as required. Corollary 6 (Crapo =-=[2]-=-, Haas [7]). Let k ≤ `≤ 2k−1. A graph G is tight if and only if it is a proper `Tk . 8. Pebble game algorithms for finding decompositions A naı¨ve implementation of the constructions in the previous s</context>
+	<publication>
+		<title>On the generic rigidity of plane frameworks</title>
+		<date>1988</date>
+		<booktitle>In: Proc. 11th European Symposium on Algorithms (ESA ’03), LNCS</booktitle>
+		<volume>2832</volume>
+		<pages>78--89</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>H Crapo</author>
+	</publication>
+</citation>
+<citation>
+	<context>tour has three black tree-pieces and one gray tree-piece. (c) The highlighted subgraph inside the dashed countour has three gray tree-pieces (one is a single vertex) and one black tree-piece. Edmonds =-=[3, 4]-=- gave another proof of this result using matroid unions. The equivalence of mapsand-trees graphs and tight graphs in the lower range is shown using matroid unions in [24], and matroid augmenting paths</context>
+	<publication>
+		<title>Minimum partition of a matroid into independent sets</title>
+		<date>1965</date>
+		<booktitle>In: Proc. 11th European Symposium on Algorithms (ESA ’03), LNCS</booktitle>
+		<journal>J. Res. Nat. Bur. Standards Sect. B 69B</journal>
+		<volume>67</volume>
+		<pages>78--89</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Edmonds</author>
+	</publication>
+</citation>
+<citation>
+	<context>tour has three black tree-pieces and one gray tree-piece. (c) The highlighted subgraph inside the dashed countour has three gray tree-pieces (one is a single vertex) and one black tree-piece. Edmonds =-=[3, 4]-=- gave another proof of this result using matroid unions. The equivalence of mapsand-trees graphs and tight graphs in the lower range is shown using matroid unions in [24], and matroid augmenting paths</context>
+	<publication>
+		<title>Submodular functions, matroids, and certain polyhedra</title>
+		<date>2003</date>
+		<booktitle>in LNCS</booktitle>
+		<journal>In: Combinatorial Optimization—Eureka, You Shrink</journal>
+		<volume>2570</volume>
+		<pages>11--26</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Edmonds</author>
+	</publication>
+</citation>
+<citation>
+	<context> The equivalence of mapsand-trees graphs and tight graphs in the lower range is shown using matroid unions in [24], and matroid augmenting paths are the basis of the algorithms for the lower range of =-=[5, 6, 19]-=-. In rigidity theory a foundational theorem of Laman [11] shows that (2,3)-tight (Laman) graphs correspond to generically minimally rigid bar-and-joint frameworks in the plane. Tay [21] proved an anal</context>
+	<publication>
+		<title>A matroid approach to finding edge connectivity and packing arborescences</title>
+		<date>1995</date>
+		<booktitle>in LNCS</booktitle>
+		<journal>Journal of Computer and System Sciences</journal>
+		<volume>50</volume>
+		<pages>259--273</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>H N Gabow</author>
+	</publication>
+</citation>
+<citation>
+	<context>nship between the `+1 pebble condition, which applies to the upper range of `, to matroid union augmenting paths, which do not apply in the upper range. Algorithmic consequences and open problems. In =-=[6]-=-, Gabow and Westermann give an O(n3/2) algorithm for recognizing sparse graphs in the lower range and extracting sparse subgraphs from dense ones. Their technique is based on efficiently finding matro</context>
+	<publication>
+		<title>H.H.: Forests, frames, and games: Algorithms for matroid sums and applications</title>
+		<date>1992</date>
+		<booktitle>in LNCS</booktitle>
+		<journal>Algorithmica</journal>
+		<volume>7</volume>
+		<pages>465--497</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>H N Gabow</author>
+	</publication>
+</citation>
+<citation>
+	<context>nship between the `+1 pebble condition, which applies to the upper range of `, to matroid union augmenting paths, which do not apply in the upper range. Algorithmic consequences and open problems. In =-=[6]-=-, Gabow and Westermann give an O(n3/2) algorithm for recognizing sparse graphs in the lower range and extracting sparse subgraphs from dense ones. Their technique is based on efficiently finding matro</context>
+	<publication>
+		<title>Characterizations of arboricity of graphs</title>
+		<date>2002</date>
+		<booktitle>in LNCS</booktitle>
+		<journal>Ars Combinatorica</journal>
+		<volume>63</volume>
+		<pages>129--137</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R Haas</author>
+	</publication>
+</citation>
+<citation>
+	<context> that admits a decomposition into k− ` edge-disjoint map-graphs and ` spanning trees. Another characterization of map-graphs, which we will use extensively in this paper, is as the (1,0)-tight graphs =-=[8, 24]-=-. The k-map-graphs are evidently (k,0)-tight, and [8, 24] show that the converse holds as well. 1 Our terminology follows Lova´sz in [16]. In the matroid literature map-graphs are sometimes known as b</context>
+	<publication>
+		<title>L.: Characterizing sparse graphs by map decompositions</title>
+		<date>2007</date>
+		<booktitle>in LNCS</booktitle>
+		<journal>Journal of Combinatorial Mathematics and Combinatorial Computing</journal>
+		<volume>62</volume>
+		<pages>3--11</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R Haas</author>
+		<author>A Lee</author>
+		<author>I Streinu</author>
+	</publication>
+</citation>
+<citation>
+	<context>Theorem 1 to complete the proof. Remark: We observe that a pebble-game decomposition for a Laman graph may be read out of the bipartite matching used in Hendrickson’s Laman graph extraction algorithm =-=[9]-=-. Indeed, pebble game orientations have a natural correspondence with the bipartite matchings used in [9]. 10 Ileana Streinu, Louis Theran Maps-and-trees are a special case of pebble-game decompositio</context>
+	<publication>
+		<title>Conditions for unique graph realizations</title>
+		<date>1992</date>
+		<booktitle>18 Ileana Streinu, Louis Theran</booktitle>
+		<journal>SIAM Journal on Computing</journal>
+		<volume>21</volume>
+		<pages>65--84</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>B Hendrickson</author>
+	</publication>
+</citation>
+<citation>
+	<context>ion, all the combinatorial characterizations of the upper range of sparse graphs, including the counts, have a geometric interpretation [11, 21, 22, 24]. A pebble game algorithm was first proposed in =-=[10]-=- as an elegant alternative to Hendrickson’s Laman graph algorithms [9]. Berg and Jordan [1], provided the formal analysis of the pebble game of [10] and introduced the idea of playing the game on a di</context>
+	<publication>
+		<title>B.: An algorithm for two-dimensional rigidity percolation: the pebble game</title>
+		<date>1997</date>
+		<booktitle>18 Ileana Streinu, Louis Theran</booktitle>
+		<journal>Journal of Computational Physics</journal>
+		<volume>137</volume>
+		<pages>346--365</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D J Jacobs</author>
+	</publication>
+</citation>
+<citation>
+	<context>dity in dimension 2 and slider-pinning In this short section we present a new application for the special case of practical importance, k = 2, ` = 3. As discussed in the introduction, Laman’s theorem =-=[11]-=- characterizes minimally rigid graphs as the (2,3)-tight graphs. In recent work on slider pinning, developed after the current paper was submitted, we introduced the slider-pinning model of rigidity [</context>
+	<publication>
+		<title>On graphs and rigidity of plane skeletal structures</title>
+		<date>1970</date>
+		<booktitle>18 Ileana Streinu, Louis Theran</booktitle>
+		<journal>Journal of Engineering Mathematics</journal>
+		<volume>4</volume>
+		<pages>346--365</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>G Laman</author>
+	</publication>
+</citation>
+<citation>
+	<context>eran a maps-and-trees or proper `Tk decomposition can be found using a pebble game algorithm in O(n2) time and space. These time and space bounds mean that our algorithm can be combined with those of =-=[12]-=- without any change in complexity. 5. Pebble game graphs In this section we prove Theorem 1, a strengthening of results from [12] to the pebble game with colors. Since many of the relevant properties </context>
+	<publication>
+		<title>I.: Pebble game algorihms and sparse graphs</title>
+		<date>2008</date>
+		<booktitle>18 Ileana Streinu, Louis Theran</booktitle>
+		<journal>Discrete Mathematics</journal>
+		<volume>308</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Lee</author>
+	</publication>
+</citation>
+<citation>
+	<context>gorithm 17 can be used to replace cyclic scanning in Gabow and Westermann’s algorithm without changing the running time. The data structures used in the implementation of the pebble game, detailed in =-=[12, 13]-=- are simpler and easier to implement than those used to support cyclic scanning. The two major open algorithmic problems related to the pebble game are then: Problem 1. Develop a pebble game algorithm</context>
+	<publication>
+		<title>L.: Finding and maintaining rigid components</title>
+		<date>2005</date>
+		<booktitle>In: Proc. Canadian Conference of Computational Geometry</booktitle>
+		<journal>Discrete Mathematics</journal>
+		<volume>308</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Lee</author>
+		<author>I Streinu</author>
+	</publication>
+</citation>
+<citation>
+	<context>arse for subgraphs containing no loops. 2. (2,0)-tight when loops are included. We call these graphs (2,0,3)-graded-tight, and they are a special case of the graded-sparse graphs studied in our paper =-=[14]-=-. The connection with the pebble games in this paper is the following. Corollary 19 (Pebble games and slider-pinning). In any (2,3)-pebble game graph, if we replace pebbles by loops, we obtain a (2,0,</context>
+	<publication>
+		<title>L.: Graded sparse graphs and matroids</title>
+		<date>2007</date>
+		<booktitle>In: Proc. Canadian Conference of Computational Geometry</booktitle>
+		<journal>Journal of Universal Computer Science</journal>
+		<volume>13</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Lee</author>
+		<author>I Streinu</author>
+	</publication>
+</citation>
+<citation>
+	<context>rollary 19 (Pebble games and slider-pinning). In any (2,3)-pebble game graph, if we replace pebbles by loops, we obtain a (2,0,3)-graded-tight graph. Proof. Follows from invariant (I3) of Lemma 7. In =-=[15]-=-, we study a special case of slider pinning where every slider is either vertical or horizontal. We model the sliders as pre-colored loops, with the color indicating x or y direction. For this axis pa</context>
+	<publication>
+		<title>L.: The slider-pinning problem</title>
+		<date>2007</date>
+		<booktitle>In: Proceedings of the 19th Canadian Conference on Computational Geometry (CCCG’07</booktitle>
+		<journal>Journal of Universal Computer Science</journal>
+		<volume>13</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Lee</author>
+		<author>I Streinu</author>
+	</publication>
+</citation>
+<citation>
+	<context>use extensively in this paper, is as the (1,0)-tight graphs [8, 24]. The k-map-graphs are evidently (k,0)-tight, and [8, 24] show that the converse holds as well. 1 Our terminology follows Lova´sz in =-=[16]-=-. In the matroid literature map-graphs are sometimes known as bases of the bicycle matroid or spanning pseudoforests. Sparsity-certifying Graph Decompositions 3 a c b e d (a) 1 2 3 4 (b) (c) Fig. 1. E</context>
+	<publication>
+		<title>Combinatorial Problems and Exercises. Akademiai Kiado and North-Holland</title>
+		<date>1979</date>
+		<booktitle>In: Proceedings of the 19th Canadian Conference on Computational Geometry (CCCG’07</booktitle>
+		<journal>Journal of Universal Computer Science</journal>
+		<volume>13</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>L Lova´sz</author>
+	</publication>
+</citation>
+<citation>
+	<context>of each of these colors. By Lemma 12, each of these pebbles is the root of a monochromatic tree-piece with n− 1 edges, yielding the required ` edge-disjoint spanning trees. Corollary 5 (Nash-Williams =-=[17]-=-, Tutte [23], White and Whiteley [24]). Let `≤ k. A graph G is tight if and only if has a (k, `)-maps-and-trees decomposition. We next consider the decompositions induced by canonical pebble game cons</context>
+	<publication>
+		<title>Decomposition of finite graphs into forests</title>
+		<date>1964</date>
+		<booktitle>In: Proceedings of the 19th Canadian Conference on Computational Geometry (CCCG’07</booktitle>
+		<journal>Journal of the London Mathematical Society</journal>
+		<volume>39</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>C S A Nash-Williams</author>
+	</publication>
+</citation>
+<citation>
+	<context>. Figure 1(b) shows an example of a 2-map-graphs; the edges are oriented in one possible configuration certifying that each color forms a map-graph. Map-graphs may be equivalently defined (see, e.g., =-=[18]-=-) as having exactly one cycle per connected component.1 A (k, `)-maps-and-trees is a graph that admits a decomposition into k− ` edge-disjoint map-graphs and ` spanning trees. Another characterization</context>
+	<publication>
+		<title>Matroid theory</title>
+		<date>1992</date>
+		<booktitle>In: Proceedings of the 19th Canadian Conference on Computational Geometry (CCCG’07</booktitle>
+		<journal>Journal of the London Mathematical Society</journal>
+		<volume>39</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J G Oxley</author>
+	</publication>
+</citation>
+<citation>
+	<context> The equivalence of mapsand-trees graphs and tight graphs in the lower range is shown using matroid unions in [24], and matroid augmenting paths are the basis of the algorithms for the lower range of =-=[5, 6, 19]-=-. In rigidity theory a foundational theorem of Laman [11] shows that (2,3)-tight (Laman) graphs correspond to generically minimally rigid bar-and-joint frameworks in the plane. Tay [21] proved an anal</context>
+	<publication>
+		<title>R.E.: A note on finding minimum cost edge disjoint spanning trees</title>
+		<date>1985</date>
+		<booktitle>In: Proceedings of the 19th Canadian Conference on Computational Geometry (CCCG’07</booktitle>
+		<journal>Mathematics of Operations Research</journal>
+		<volume>10</volume>
+		<pages>1425--1437</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Roskind</author>
+	</publication>
+</citation>
+<citation>
+	<context>] characterizes minimally rigid graphs as the (2,3)-tight graphs. In recent work on slider pinning, developed after the current paper was submitted, we introduced the slider-pinning model of rigidity =-=[15, 20]-=-. Combinatorially, we model the bar-slider frameworks as simple graphs together with some loops placed on their vertices in such a way that there are no more than 2 loops per vertex, one of each color</context>
+	<publication>
+		<title>L.: Combinatorial genericity and minimal rigidity</title>
+		<date>1985</date>
+		<booktitle>In: SCG ’08: Proceedings of the twenty-fourth annual Symposium on Computational Geometry</booktitle>
+		<journal>Mathematics of Operations Research</journal>
+		<volume>10</volume>
+		<pages>365</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>I Streinu</author>
+	</publication>
+</citation>
+<citation>
+	<context>] characterizes minimally rigid graphs as the (2,3)-tight graphs. In recent work on slider pinning, developed after the current paper was submitted, we introduced the slider-pinning model of rigidity =-=[15, 20]-=-. Combinatorially, we model the bar-slider frameworks as simple graphs together with some loops placed on their vertices in such a way that there are no more than 2 loops per vertex, one of each color</context>
+</citation>
+<citation>
+	<context>bserve that aside from our new pebblegame-with-colors decomposition, all the combinatorial characterizations of the upper range of sparse graphs, including the counts, have a geometric interpretation =-=[11, 21, 22, 24]-=-. A pebble game algorithm was first proposed in [10] as an elegant alternative to Hendrickson’s Laman graph algorithms [9]. Berg and Jordan [1], provided the formal analysis of the pebble game of [10]</context>
+	<publication>
+		<title>Rigidity of multigraphs I: linking rigid bodies in n-space</title>
+		<date>1984</date>
+		<booktitle>In: SCG ’08: Proceedings of the twenty-fourth annual Symposium on Computational Geometry</booktitle>
+		<journal>Journal of Combinatorial Theory, Series B</journal>
+		<volume>26</volume>
+		<pages>95--112</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>T S Tay</author>
+	</publication>
+</citation>
+<citation>
+	<context>bserve that aside from our new pebblegame-with-colors decomposition, all the combinatorial characterizations of the upper range of sparse graphs, including the counts, have a geometric interpretation =-=[11, 21, 22, 24]-=-. A pebble game algorithm was first proposed in [10] as an elegant alternative to Hendrickson’s Laman graph algorithms [9]. Berg and Jordan [1], provided the formal analysis of the pebble game of [10]</context>
+	<publication>
+		<title>A new proof of Laman’s theorem</title>
+		<date>1993</date>
+		<booktitle>In: SCG ’08: Proceedings of the twenty-fourth annual Symposium on Computational Geometry</booktitle>
+		<journal>Graphs and Combinatorics 9</journal>
+		<volume>365</volume>
+		<pages>95--112</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>T S Tay</author>
+	</publication>
+</citation>
+<citation>
+	<context>hese colors. By Lemma 12, each of these pebbles is the root of a monochromatic tree-piece with n− 1 edges, yielding the required ` edge-disjoint spanning trees. Corollary 5 (Nash-Williams [17], Tutte =-=[23]-=-, White and Whiteley [24]). Let `≤ k. A graph G is tight if and only if has a (k, `)-maps-and-trees decomposition. We next consider the decompositions induced by canonical pebble game constructions wh</context>
+	<publication>
+		<title>On the problem of decomposing a graph into n connected factors</title>
+		<date>1961</date>
+		<booktitle>In: SCG ’08: Proceedings of the twenty-fourth annual Symposium on Computational Geometry</booktitle>
+		<journal>Journal of the London Mathematical Society 142</journal>
+		<volume>221</volume>
+		<pages>95--112</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W T Tutte</author>
+	</publication>
+</citation>
+<citation>
+	<context>aph if and only if it is a proper `Tk with kn− ` edges. As corollaries, we obtain the existing decomposition results for sparse graphs. Corollary 5 (Nash-Williams [17], Tutte [23], White and Whiteley =-=[24]-=-). Let `≤ k. A graph G is tight if and only if has a (k, `)-maps-and-trees decomposition. Corollary 6 (Crapo [2], Haas [7]). Let k ≤ `≤ 2k−1. A graph G is tight if and only if it is a proper `Tk . Eff</context>
+	<publication>
+		<title>The union of matroids and the rigidity of frameworks</title>
+		<date>1988</date>
+		<booktitle>In: SCG ’08: Proceedings of the twenty-fourth annual Symposium on Computational Geometry</booktitle>
+		<journal>SIAM Journal on Discrete Mathematics</journal>
+		<volume>1</volume>
+		<pages>237--255</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W Whiteley</author>
+	</publication>
+</citation>
+		<author>Streinu, Ileana</author>
+		<author>Theran, Louis</author>
+	</publication>
+	<publication>
+		<title>The evolution of the Earth-Moon system based on the dark matter field
+  fluid model</title>
+		<date>2008-01-12</date>
+		<abstract>  The evolution of Earth-Moon system is described by the dark matter field
+fluid model proposed in the Meeting of Division of Particle and Field 2004,
+American Physical Society. The current behavior of the Earth-Moon system agrees
+with this model very well and the general pattern of the evolution of the
+Moon-Earth system described by this model agrees with geological and fossil
+evidence. The closest distance of the Moon to Earth was about 259000 km at 4.5
+billion years ago, which is far beyond the Roche's limit. The result suggests
+that the tidal friction may not be the primary cause for the evolution of the
+Earth-Moon system. The average dark matter field fluid constant derived from
+Earth-Moon system data is 4.39 x 10^(-22) s^(-1)m^(-1). This model predicts
+that the Mars's rotation is also slowing with the angular acceleration rate
+about -4.38 x 10^(-22) rad s^(-2).
+</abstract>
+		<citeseerx_id>0704.0003</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0003.pdf</source>
+<citation>
+	<context>, Slichter 1963). The tidal friction theories explain that the presentsrate of tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (=-=Brush 1983-=-). Kagan gave a detailed review about thosestidal friction models (Kagan 1997). Those models are based on many assumptions aboutsgeological (continental position and drifting) and physical conditions </context>
+	<publication>
+		<title>editor), Ghost from the Nineteenth century: Creationist Arguments for a young Earth. Scientists confront creationism</title>
+		<date>1983</date>
+		<pages>49</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>S G Brush</author>
+	</publication>
+</citation>
+<citation>
+	<context>rth was abouts259000 km (center to center) or 250900 km (surface to surface) at 4.5 billion years ago,sthis is far beyond the Roche's limit. In the modern astronomy textbook by Chaisson andsMcMillan (=-=Chaisson and McMillan, 1993-=-, p.173), the estimated distance at 4.5 billionsyears ago was 250000 km, this is probably the most reasonable number that mostsastronomers believe and it agrees excellently with the result of this mod</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1993</date>
+		<pages>07632</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>E Chaisson</author>
+		<author>S McMillan</author>
+	</publication>
+</citation>
+<citation>
+	<context>rth was abouts259000 km (center to center) or 250900 km (surface to surface) at 4.5 billion years ago,sthis is far beyond the Roche's limit. In the modern astronomy textbook by Chaisson andsMcMillan (=-=Chaisson and McMillan, 1993-=-, p.173), the estimated distance at 4.5 billionsyears ago was 250000 km, this is probably the most reasonable number that mostsastronomers believe and it agrees excellently with the result of this mod</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1994</date>
+		<journal>Science</journal>
+		<volume>265</volume>
+		<pages>482</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J O Dickey</author>
+	</publication>
+</citation>
+<citation>
+	<context> of the EarthMoon system to avoid such difficulty or crisis and put the Moon at quite a comfortablesdistance from Earth at 4.5 billion years ago (Hansen 1982, Kagan and Maslova 1994, Rayset al. 1999, =-=Finch 1981-=-, Slichter 1963). The tidal friction theories explain that the presentsrate of tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1981</date>
+		<journal>Earth, Moon, and Planets</journal>
+		<volume>26</volume>
+		<pages>109</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D G Finch</author>
+	</publication>
+</citation>
+<citation>
+	<context> of the EarthMoon system to avoid such difficulty or crisis and put the Moon at quite a comfortablesdistance from Earth at 4.5 billion years ago (Hansen 1982, Kagan and Maslova 1994, Rayset al. 1999, =-=Finch 1981-=-, Slichter 1963). The tidal friction theories explain that the presentsrate of tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1981</date>
+		<journal>Earth, Moon, and Planets</journal>
+		<volume>20</volume>
+		<pages>457</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>Space Phys</author>
+	</publication>
+</citation>
+<citation>
+	<context>accepted theory for the formation of the Earth-Moon system is thatsthe Moon was formed from debris of a strong impact by a giant planetesimal with thesEarth at the close of the planet-forming period (=-=Hartmann and Davis 1975-=-). Since thesformation of the Earth-Moon system, it has been evolving at all time scale. It is wellsknown that the Moon is receding from us and both the Earth’s rotation and Moon’ssrotation are slowin</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1975</date>
+		<journal>Icarus</journal>
+		<volume>24</volume>
+		<pages>504</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W K Hartmann</author>
+		<author>D R Davis</author>
+	</publication>
+</citation>
+<citation>
+	<context>sed in the past to describe the evolution of the EarthMoon system to avoid such difficulty or crisis and put the Moon at quite a comfortablesdistance from Earth at 4.5 billion years ago (Hansen 1982, =-=Kagan and Maslova 1994-=-, Rayset al. 1999, Finch 1981, Slichter 1963). The tidal friction theories explain that the presentsrate of tidal dissipation is anomalously high because the tidal force is close to a resonancesin the</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1994</date>
+		<journal>Earth, Moon and Planets</journal>
+		<volume>66</volume>
+		<pages>173</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>B A Kagan</author>
+		<author>N B Maslova</author>
+	</publication>
+</citation>
+<citation>
+	<context>f tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (Brush 1983). Kagan gave a detailed review about thosestidal friction models (=-=Kagan 1997-=-). Those models are based on many assumptions aboutsgeological (continental position and drifting) and physical conditions in the past, andsmany parameters (such as phase lag angle, multi-mode approxi</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1997</date>
+		<journal>Prog. Oceanog</journal>
+		<volume>40</volume>
+		<pages>109</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>B A Kagan</author>
+	</publication>
+</citation>
+<citation>
+	<context>f tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (Brush 1983). Kagan gave a detailed review about thosestidal friction models (=-=Kagan 1997-=-). Those models are based on many assumptions aboutsgeological (continental position and drifting) and physical conditions in the past, andsmany parameters (such as phase lag angle, multi-mode approxi</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1999</date>
+		<journal>Prog. Oceanog</journal>
+		<volume>40</volume>
+		<pages>109</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>E P Kvale</author>
+		<author>H W Johnson</author>
+		<author>C O Sonett</author>
+		<author>A W Archer</author>
+		<author>A Zawistoski</author>
+	</publication>
+</citation>
+<citation>
+	<context>f tidal dissipation is anomalously high because the tidal force is close to a resonancesin the response function of ocean (Brush 1983). Kagan gave a detailed review about thosestidal friction models (=-=Kagan 1997-=-). Those models are based on many assumptions aboutsgeological (continental position and drifting) and physical conditions in the past, andsmany parameters (such as phase lag angle, multi-mode approxi</context>
+	<publication>
+		<title>Astronomy Today</title>
+		<date>1999</date>
+		<journal>Prog. Oceanog</journal>
+		<volume>69</volume>
+		<pages>1154</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<context> by the moon and earth on each other.sIn addition, the eccentricity of the Moon's orbit is small enough to be ignored. The datasabout the Moon and the Earth from references (Dickey et .al., 1994,sand =-=Lang, 1992-=-) areslisted below for the readers' convenience to verify the calculation because the data maysvary slightly with different data sources.sMoon:sMean radius:srs= 1738.0 kmsMass:sm = 7.3483 × 1025 grams</context>
+	<publication>
+		<title>Astrophysical Data: Planets and Stars</title>
+		<date>1992</date>
+		<journal>Prog. Oceanog</journal>
+		<volume>69</volume>
+		<pages>1154</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>K Lang</author>
+	</publication>
+</citation>
+<citation>
+	<context>ction is not significant. Insthe Meeting of Division of Particle and Field 2004, American Physical Society,sUniversity of California at Riverside, the author proposed a dark matter field fluid models(=-=Pan 2005-=-) with a non-Newtonian approach, the current Moon and Earth data agree withsthis model very well. This paper will demonstrate that the past evolution of Moon-Earthssystem can be described by the dark </context>
+	<publication>
+		<title>Astrophysical Data: Planets and Stars</title>
+		<date>2005</date>
+		<journal>Internat. J. Modern Phys. A</journal>
+		<volume>20</volume>
+		<pages>3135</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>H Pan</author>
+	</publication>
+</citation>
+<citation>
+	<context>ction is not significant. Insthe Meeting of Division of Particle and Field 2004, American Physical Society,sUniversity of California at Riverside, the author proposed a dark matter field fluid models(=-=Pan 2005-=-) with a non-Newtonian approach, the current Moon and Earth data agree withsthis model very well. This paper will demonstrate that the past evolution of Moon-Earthssystem can be described by the dark </context>
+	<publication>
+		<title>Astrophysical Data: Planets and Stars</title>
+		<date>1999</date>
+		<journal>Internat. J. Modern Phys. A</journal>
+		<volume>104</volume>
+		<pages>17653</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R D Ray</author>
+		<author>B G Bills</author>
+		<author>B F Chao</author>
+	</publication>
+</citation>
+<citation>
+	<context>ction is not significant. Insthe Meeting of Division of Particle and Field 2004, American Physical Society,sUniversity of California at Riverside, the author proposed a dark matter field fluid models(=-=Pan 2005-=-) with a non-Newtonian approach, the current Moon and Earth data agree withsthis model very well. This paper will demonstrate that the past evolution of Moon-Earthssystem can be described by the dark </context>
+	<publication>
+		<title>Tidal Friction and the Earth’s Rotation</title>
+		<date>1999</date>
+		<journal>Internat. J. Modern Phys. A</journal>
+		<volume>104</volume>
+		<pages>154</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>P Brosche</author>
+		<author>J Sundermann</author>
+	</publication>
+</citation>
+<citation>
+	<context>ction is not significant. Insthe Meeting of Division of Particle and Field 2004, American Physical Society,sUniversity of California at Riverside, the author proposed a dark matter field fluid models(=-=Pan 2005-=-) with a non-Newtonian approach, the current Moon and Earth data agree withsthis model very well. This paper will demonstrate that the past evolution of Moon-Earthssystem can be described by the dark </context>
+	<publication>
+		<title>Tidal Friction and the Earth’s Rotation</title>
+		<date>1999</date>
+		<journal>Internat. J. Modern Phys. A</journal>
+		<volume>68</volume>
+		<pages>14</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<context>ction is not significant. Insthe Meeting of Division of Particle and Field 2004, American Physical Society,sUniversity of California at Riverside, the author proposed a dark matter field fluid models(=-=Pan 2005-=-) with a non-Newtonian approach, the current Moon and Earth data agree withsthis model very well. This paper will demonstrate that the past evolution of Moon-Earthssystem can be described by the dark </context>
+	<publication>
+		<title>Tidal Friction and the Earth’s Rotation</title>
+		<date>1996</date>
+		<journal>Science</journal>
+		<volume>273</volume>
+		<pages>100</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>C P Sonett</author>
+		<author>E P Kvale</author>
+		<author>M A Chan</author>
+		<author>T M Demko</author>
+	</publication>
+</citation>
+<citation>
+	<context>the recession has been accelerating with time. Therefore, it must be concluded that tidalsfriction was very much less in the remote past than we would deduce on the basis ofspresent-day observations (=-=Stacey 1977-=-). This was called “geological time scalesdifficulty” or “Lunar crisis” and is one of the main arguments by creationists against thestidal friction theory (Brush 1983).sBut we have to consider the cas</context>
+	<publication>
+		<title>Physics of the Earth, second edition</title>
+		<date>1977</date>
+		<journal>Science</journal>
+		<volume>273</volume>
+		<pages>100</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>F D Stacey</author>
+	</publication>
+</citation>
+		<author>Pan, Hongjun</author>
+	</publication>
+	<publication>
+		<title>A determinant of Stirling cycle numbers counts unlabeled acyclic
+  single-source automata</title>
+		<date>2007-03-30</date>
+		<abstract>  We show that a determinant of Stirling cycle numbers counts unlabeled acyclic
+single-source automata. The proof involves a bijection from these automata to
+certain marked lattice paths and a sign-reversing involution to evaluate the
+determinant.
+</abstract>
+		<citeseerx_id>0704.0004</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0004.pdf</source>
+<citation>
+	<context>y source, that is, g(∅) = bk(n) and the Proposition now follows from (1). An unlabeled SAF automaton is an equivalence class of SAF automata under relabeling of the interior vertices. Liskovets notes =-=[1]-=- (and we prove below) that Bk(n) has no nontrivial automorphisms, that is, each of the (n− 1)! relabelings of the interior vertices of B ∈ Bk(n) produces a different automaton. So unlabeled SAF automa</context>
+	<publication>
+		<title>Exact enumeration of acyclic deterministic automata</title>
+		<date>2006</date>
+		<journal>Disc. Appl. Math</journal>
+		<extractor>citeseer_extractor</extractor>
+		<author>Valery A Liskovets</author>
+	</publication>
+</citation>
+<citation>
+	<context>, let f(X) = # automata in A whose set of interior vertices includes X, g(X) = # automata in A whose set of interior vertices is precisely X. Then f(X) = ∑ Y :X⊆Y⊆[2,n] g(Y ) and by Mo¨bius inversion =-=[2]-=- on the lattice of subsets of [2, n], g(X) = ∑ Y :X⊆Y⊆[2,n] µ(X, Y )f(Y ) where µ(X, Y ) is the Mo¨bius function for this 3 lattice. Since µ(X, Y ) = (−1)|Y |−|X| if X ⊆ Y , we have in particular that</context>
+	<publication>
+		<title>Exact enumeration of acyclic deterministic automata</title>
+		<date>2001</date>
+		<booktitle>A Course in Combinatorics, 2nd ed</booktitle>
+		<journal>Disc. Appl. Math</journal>
+		<extractor>citeseer_extractor</extractor>
+		<author>J H van Lint</author>
+		<author>R M Wilson</author>
+	</publication>
+</citation>
+<citation>
+	<context> particular, the number of SAF automata on a 2-letter alphabet is | C2(n) | = |C ∗ 1(n, n) | = ∑ 1≤b1≤b2≤...≤bn bi ≤ i for all i b1b2 . . . bn = (1, 3, 16, 127, 1363, . . .)n≥1, 6 sequence A082161 in =-=[3]-=-. 4 Bijection from Paths to Automata In this section we exhibit a bijection from C ∗ k(n, n) to Ck+1(n). Using the illustrated path as a working example with k = 2 and n = 4, b b b b b b b b b b b b b</context>
+	<publication>
+		<title>founder and maintainer), The On-Line Encyclopedia</title>
+		<date>2001</date>
+		<booktitle>of Integer Sequences http://www.research.att.com:80/ njas/sequences/index.html?blank=1</booktitle>
+		<journal>Disc. Appl. Math</journal>
+		<extractor>citeseer_extractor</extractor>
+		<author>Neil J Sloane</author>
+	</publication>
+</citation>
+		<author>Callan, David</author>
+	</publication>
+	<publication>
+		<title>From dyadic $\Lambda_{\alpha}$ to $\Lambda_{\alpha}$</title>
+		<date>2007-04-02</date>
+		<abstract>  In this paper we show how to compute the $\Lambda_{\alpha}$ norm, $\alpha\ge
+0$, using the dyadic grid. This result is a consequence of the description of
+the Hardy spaces $H^p(R^N)$ in terms of dyadic and special atoms.
+</abstract>
+		<citeseerx_id>0704.0005</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0005.pdf</source>
+<citation>
+	<context> but ‖fn‖H1 D ∼ |n| tends to infinity with n. Next, when Sα is the family of piecewise polynomial splines constructed above with α = N(1/p − 1), in analogy with the one-dimensional results in [4] and =-=[1]-=-, HpSα is referred to as the space generated by special atoms. We are now ready to describe Hp atoms as a superposition of dyadic and special atoms. Lemma 1.1. Let a be an L2 p -atom with defining cub</context>
+</citation>
+<citation>
+	<context> . It turns out that the BMO question is closely related to that of approximating functions in the Hardy space H1(RN ) by the Haar system. The approximation in H1(RN ) by affine systems was proved in =-=[2]-=-, but this result does not apply to the Haar system. Now, if HA(R) denotes the closure of the Haar system in H1(R), it is not hard to see that the distance d(f,HA) of f ∈ H1(R) to HA is ∼ ∣∣ ∫∞ 0 f(x)</context>
+	<publication>
+		<title>Approximation and spanning in the Hardy space, by affine systems</title>
+		<booktitle>Characterizations of the Hardy space H1 and BMO</booktitle>
+		<journal>Constr. Approx</journal>
+		<extractor>citeseer_extractor</extractor>
+		<author>H-Q Bui</author>
+		<author>R S Laugesen</author>
+	</publication>
+</citation>
+<citation>
+	<context>Aα(g) [∑ j,L |cj,L| p ]1/p , and, consequently, taking the infimum over all atomic decompositions of f in HpSα , we get g ∈ (H p Sα )∗ and ‖g‖(Hp Sα )∗ ≤ Aα(g). To prove the converse we proceed as in =-=[3]-=-. Let Qn = [−2 n, 2n]N . We begin by observing that functions f in L2(Qn) that have vanishing moments up to order [α] and coincide with polynomials of degree [α] on the dyadic subcubes of Qn belong to</context>
+	<publication>
+		<title>Parabolic maximal functions associated with a distibution</title>
+		<date>1977</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>Constr. Approx</journal>
+		<volume>24</volume>
+		<extractor>citeseer_extractor</extractor>
+		<author>A P Caldero´n</author>
+		<author>A Torchinsky</author>
+	</publication>
+</citation>
+<citation>
+	<context>‖H1 = 1, but ‖fn‖H1 D ∼ |n| tends to infinity with n. Next, when Sα is the family of piecewise polynomial splines constructed above with α = N(1/p − 1), in analogy with the one-dimensional results in =-=[4]-=- and [1], HpSα is referred to as the space generated by special atoms. We are now ready to describe Hp atoms as a superposition of dyadic and special atoms. Lemma 1.1. Let a be an L2 p -atom with defi</context>
+	<publication>
+		<title>Spaces formed by special atoms</title>
+		<date>1984</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>I, Rocky Mountain J. Math</journal>
+		<volume>14</volume>
+		<pages>423--431</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>G S de Souza</author>
+	</publication>
+</citation>
+<citation>
+	<context>that individual Hp atoms can be written as a superposition of dyadic and special atoms; this fact may be thought of as an extension of the one-dimensional result of Fridli concerning L∞ 1- atoms, see =-=[5]-=- and [1]. Then, we prove Theorem B. In Section 2 we discuss how to pass from Λα,D, and Λα,D0 , to the Lipschitz space Λα. 1. Characterization of the Hardy spaces Hp We adopt the atomic definition of t</context>
+	<publication>
+		<title>Transition from the dyadic to the real nonperiodic Hardy space</title>
+		<date>1984</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>Acta Math. Acad. Paedagog. Niha´zi (N.S</journal>
+		<volume>16</volume>
+		<pages>423--431</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>S Fridli</author>
+	</publication>
+</citation>
+<citation>
+	<context> In Section 2 we discuss how to pass from Λα,D, and Λα,D0 , to the Lipschitz space Λα. 1. Characterization of the Hardy spaces Hp We adopt the atomic definition of the Hardy spaces Hp, 0 < p ≤ 1, see =-=[6]-=- and [10]. Recall that a compactly supported function a with [N(1/p− 1)] vanishing moments is an L2 p -atom with defining cube Q if supp(a) ⊆ Q, and |Q|1/p ( 1 |Q| ∫ Q | a(x) |2dx )1/2 ≤ 1 . The Hardy</context>
+	<publication>
+		<title>de Francia, Weighted norm inequalities and related topics, Notas de Matema´tica 116</title>
+		<date>1985</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>Acta Math. Acad. Paedagog. Niha´zi (N.S</journal>
+		<volume>16</volume>
+		<pages>423--431</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Garc´ıa-Cuerva</author>
+		<author>J L Rubio</author>
+	</publication>
+</citation>
+<citation>
+	<context> The process of averaging the translates of dyadic BMO functions leads to BMO, and is an important tool in obtaining results in BMO once they are known to be true in its dyadic counterpart, BMOd, see =-=[7]-=-. It is also known that BMO can be obtained as the intersection of BMOd and one of its shifted counterparts, see [8]. These results motivate our next proposition, which essentially says that g ∈ Λα if</context>
+	<publication>
+		<title>BMO from dyadic BMO</title>
+		<date>1982</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>Pacific J. Math</journal>
+		<volume>99</volume>
+		<pages>351--371</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Garnett</author>
+		<author>P Jones</author>
+	</publication>
+</citation>
+<citation>
+	<context> results in BMO once they are known to be true in its dyadic counterpart, BMOd, see [7]. It is also known that BMO can be obtained as the intersection of BMOd and one of its shifted counterparts, see =-=[8]-=-. These results motivate our next proposition, which essentially says that g ∈ Λα if, and only if, g ∈ Λα,D and g is in the Lipschitz class obtained from the shifted dyadic grid. Note that the shifts </context>
+	<publication>
+		<title>BMO is the intersection of two translates of dyadic BMO</title>
+		<date>1982</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>C. R. Math. Acad. Sci. Paris</journal>
+		<volume>336</volume>
+		<pages>1003--1006</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>T Mei</author>
+	</publication>
+</citation>
+<citation>
+	<context>nce of the description of the Hardy spaces Hp(RN ) in terms of dyadic and special atoms. Recently, several novel methods for computing the BMO norm of a function f in two dimensions were discussed in =-=[9]-=-. Given its importance, it is also of interest to explore the possibility of computing the norm of a BMO function, or more generally a function in the Lipschitz class Λα, using the dyadic grid in RN .</context>
+	<publication>
+		<title>Vese, Image decomposition using total variation and div</title>
+		<date>1982</date>
+		<booktitle>II, Advances in Math</booktitle>
+		<journal>BMO)∗, Multiscale Model. Simul</journal>
+		<volume>4</volume>
+		<pages>390--423</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>T M Le and L A</author>
+	</publication>
+</citation>
+<citation>
+	<context>ion 2 we discuss how to pass from Λα,D, and Λα,D0 , to the Lipschitz space Λα. 1. Characterization of the Hardy spaces Hp We adopt the atomic definition of the Hardy spaces Hp, 0 < p ≤ 1, see [6] and =-=[10]-=-. Recall that a compactly supported function a with [N(1/p− 1)] vanishing moments is an L2 p -atom with defining cube Q if supp(a) ⊆ Q, and |Q|1/p ( 1 |Q| ∫ Q | a(x) |2dx )1/2 ≤ 1 . The Hardy space Hp</context>
+	<publication>
+		<title>Real-variable methods in harmonic analysis</title>
+		<date>2004</date>
+		<booktitle>IN 47405 E-mail address: wabusham@indiana.edu Department of Mathematics, Indiana University, Bloomington IN 47405 E-mail address: torchins@indiana.edu</booktitle>
+		<journal>BMO)∗, Multiscale Model. Simul</journal>
+		<volume>4</volume>
+		<pages>390--423</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Torchinsky</author>
+	</publication>
+</citation>
+		<author>Abu-Shammala, Wael</author>
+		<author>Torchinsky, Alberto</author>
+	</publication>
+	<publication>
+		<title>Bosonic characters of atomic Cooper pairs across resonance</title>
+		<date>2007-03-31</date>
+		<abstract>  We study the two-particle wave function of paired atoms in a Fermi gas with
+tunable interaction strengths controlled by Feshbach resonance. The Cooper pair
+wave function is examined for its bosonic characters, which is quantified by
+the correction of Bose enhancement factor associated with the creation and
+annihilation composite particle operators. An example is given for a
+three-dimensional uniform gas. Two definitions of Cooper pair wave function are
+examined. One of which is chosen to reflect the off-diagonal long range order
+(ODLRO). Another one corresponds to a pair projection of a BCS state. On the
+side with negative scattering length, we found that paired atoms described by
+ODLRO are more bosonic than the pair projected definition. It is also found
+that at $(k_F a)^{-1} \ge 1$, both definitions give similar results, where more
+than 90% of the atoms occupy the corresponding molecular condensates.
+</abstract>
+		<citeseerx_id>0704.0006</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0006.pdf</source>
+		<author>Pong, Y. H.</author>
+		<author>Law, C. K.</author>
+	</publication>
+	<publication>
+		<title>Polymer Quantum Mechanics and its Continuum Limit</title>
+		<date>2007-08-22</date>
+		<abstract>  A rather non-standard quantum representation of the canonical commutation
+relations of quantum mechanics systems, known as the polymer representation has
+gained some attention in recent years, due to its possible relation with Planck
+scale physics. In particular, this approach has been followed in a symmetric
+sector of loop quantum gravity known as loop quantum cosmology. Here we explore
+different aspects of the relation between the ordinary Schroedinger theory and
+the polymer description. The paper has two parts. In the first one, we derive
+the polymer quantum mechanics starting from the ordinary Schroedinger theory
+and show that the polymer description arises as an appropriate limit. In the
+second part we consider the continuum limit of this theory, namely, the reverse
+process in which one starts from the discrete theory and tries to recover back
+the ordinary Schroedinger quantum mechanics. We consider several examples of
+interest, including the harmonic oscillator, the free particle and a simple
+cosmological model.
+</abstract>
+		<citeseerx_id>0704.0007</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0007.pdf</source>
+		<author>Corichi, Alejandro</author>
+		<author>Vukasinac, Tatjana</author>
+		<author>Zapata, Jose A.</author>
+	</publication>
+	<publication>
+		<title>Numerical solution of shock and ramp compression for general material
+  properties</title>
+		<date>2008-07-01</date>
+		<abstract>  A general formulation was developed to represent material models for
+applications in dynamic loading. Numerical methods were devised to calculate
+response to shock and ramp compression, and ramp decompression, generalizing
+previous solutions for scalar equations of state. The numerical methods were
+found to be flexible and robust, and matched analytic results to a high
+accuracy. The basic ramp and shock solution methods were coupled to solve for
+composite deformation paths, such as shock-induced impacts, and shock
+interactions with a planar interface between different materials. These
+calculations capture much of the physics of typical material dynamics
+experiments, without requiring spatially-resolving simulations. Example
+calculations were made of loading histories in metals, illustrating the effects
+of plastic work on the temperatures induced in quasi-isentropic and
+shock-release experiments, and the effect of a phase transition.
+</abstract>
+		<citeseerx_id>0704.0008</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0008.pdf</source>
+<citation>
+	<publication>
+		<title>High-Velocity Impact Phenomena</title>
+		<date>1970</date>
+		<extractor>citeseer_extractor</extractor>
+		<author>J K Dienes</author>
+		<author>J M Walsh</author>
+		<author>in R Kinslow</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>High-Velocity Impact Phenomena</title>
+		<date>1995</date>
+		<volume>15</volume>
+		<pages>558--571</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>High-Velocity Impact Phenomena</title>
+		<date>1970</date>
+		<volume>15</volume>
+		<pages>558--571</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J W Gehring</author>
+		<author>in R Kinslow</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>High-Velocity Impact Phenomena</title>
+		<date>2001</date>
+		<journal>Asphaug, Nature</journal>
+		<volume>412</volume>
+		<pages>708--712</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R M Canup</author>
+	</publication>
+</citation>
+<citation>
+</citation>
+<citation>
+	<publication>
+		<title>5] For a recent review and introduction, see e.g. M.R. Boslough and J.R</title>
+		<date>2001</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>Asphaug, Nature</journal>
+		<volume>72</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>Sci Instrum</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Dynamic Behavior of Materials</title>
+		<date>1994</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>Asphaug, Nature</journal>
+		<volume>72</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>M A Meyers</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>HighVelocity Impact Phenomena</title>
+		<date>1970</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>Asphaug, Nature</journal>
+		<volume>72</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>G McQueen</author>
+		<author>S P March</author>
+		<author>J W Taylor</author>
+		<author>J N Fritz</author>
+		<author>W J Carter</author>
+		<author>in R Kinslow</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Inertial Confinement Fusion</title>
+		<date>1998</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>Asphaug, Nature</journal>
+		<volume>72</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J D Lindl</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Inertial Confinement Fusion</title>
+		<date>2001</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>B</journal>
+		<volume>64</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>of the Earth and Planetary Interiors 110, pp</title>
+		<date>1999</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>B</journal>
+		<volume>64</volume>
+		<pages>3587</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J P Poirier</author>
+		<author>G D Price</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>of the Earth and Planetary Interiors 110, pp</title>
+		<date>1980</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>B</journal>
+		<volume>51</volume>
+		<pages>1498</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>15] A version of the software, including representative parts of the material model library and the algorithms for calculating the ramp adiabat and shock Hugoniot, is available as a supplementary file provided with the preprint of this manuscript, arXiv:0704.0008. Software support, and versions with additional models, are available commercially from Wessex Scientific and Technical Services Ltd (http://wxres.com</title>
+		<date>2003</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>B</journal>
+		<volume>93</volume>
+		<pages>211</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1992</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>Appl. Mechanics and Eng</journal>
+		<volume>99</volume>
+		<pages>235</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D Benson</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>2006</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>of Solids</journal>
+		<volume>54</volume>
+		<pages>237--265</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1950</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>of Solids</journal>
+		<volume>21</volume>
+		<pages>232--237</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1979</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>of Solids</journal>
+		<volume>21</volume>
+		<pages>232--237</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W Fickett</author>
+		<author>W C Davis</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1989</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>of Solids</journal>
+		<volume>61</volume>
+		<pages>75--130</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>Mod Phys</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1983</date>
+		<booktitle>Asay, in J.R. Asay, M. Shahinpoor (Eds), “High-Pressure Shock Compression of Solids” (Springer-Verlag</booktitle>
+		<journal>of Solids</journal>
+		<volume>41</volume>
+		<pages>275</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>Amer Math Soc</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Computer Methods in</title>
+		<date>1984</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>of Solids</journal>
+		<volume>41</volume>
+		<pages>275</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>K S Holian</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Equation of State and Strength Properties of Selected Materials, Lawrence Livermore National Laboratory report UCRL-MA-106439 change 1</title>
+		<date>1996</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>of Solids</journal>
+		<volume>41</volume>
+		<pages>275</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D J Steinberg</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>Equation of State and Strength Properties of Selected Materials, Lawrence Livermore National Laboratory report UCRL-MA-106439 change 1</title>
+		<date>2005</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>Phys.Plasmas</journal>
+		<volume>12</volume>
+		<pages>275</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D C Swift</author>
+		<author>T E Tierney</author>
+		<author>S-N Luo</author>
+		<author>D L Paisley</author>
+		<author>G A Kyrala</author>
+		<author>A Hauer</author>
+		<author>S R Greenfield</author>
+		<author>A C Koskelo</author>
+		<author>K J McClellan</author>
+		<author>H E Lorenzana</author>
+		<author>D Kalantar</author>
+		<author>B A Remington</author>
+		<author>P Peralta</author>
+		<author>E Loomis</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>The Mathematical Theory of Plasticity</title>
+		<date>1950</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>Phys.Plasmas</journal>
+		<volume>12</volume>
+		<pages>275</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R Hill</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>The Mathematical Theory of Plasticity</title>
+		<date>2000</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>Plasmas</journal>
+		<volume>7</volume>
+		<pages>2069--2075</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>C A Hall</author>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>The Mathematical Theory of Plasticity</title>
+		<date>2007</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>B</journal>
+		<volume>76</volume>
+		<pages>2069--2075</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<publication>
+		<title>The Mathematical Theory of Plasticity</title>
+		<date>2008</date>
+		<booktitle>T-4 Handbook of Material Property Data Bases, Vol 1c: Equations of State, Los Alamos National Laboratory report LA-10160-MS</booktitle>
+		<journal>B</journal>
+		<volume>77</volume>
+		<pages>134104</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+		<author>Swift, Damian C.</author>
+	</publication>
+	<publication>
+		<title>The Spitzer c2d Survey of Large, Nearby, Insterstellar Clouds. IX. The
+  Serpens YSO Population As Observed With IRAC and MIPS</title>
+		<date>2007-04-02</date>
+		<abstract>  We discuss the results from the combined IRAC and MIPS c2d Spitzer Legacy
+observations of the Serpens star-forming region. In particular we present a set
+of criteria for isolating bona fide young stellar objects, YSO's, from the
+extensive background contamination by extra-galactic objects. We then discuss
+the properties of the resulting high confidence set of YSO's. We find 235 such
+objects in the 0.85 deg^2 field that was covered with both IRAC and MIPS. An
+additional set of 51 lower confidence YSO's outside this area is identified
+from the MIPS data combined with 2MASS photometry. We describe two sets of
+results, color-color diagrams to compare our observed source properties with
+those of theoretical models for star/disk/envelope systems and our own modeling
+of the subset of our objects that appear to be star+disks. These objects
+exhibit a very wide range of disk properties, from many that can be fit with
+actively accreting disks to some with both passive disks and even possibly
+debris disks. We find that the luminosity function of YSO's in Serpens extends
+down to at least a few x .001 Lsun or lower for an assumed distance of 260 pc.
+The lower limit may be set by our inability to distinguish YSO's from
+extra-galactic sources more than by the lack of YSO's at very low luminosities.
+A spatial clustering analysis shows that the nominally less-evolved YSO's are
+more highly clustered than the later stages and that the background
+extra-galactic population can be fit by the same two-point correlation function
+as seen in other extra-galactic studies. We also present a table of matches
+between several previous infrared and X-ray studies of the Serpens YSO
+population and our Spitzer data set.
+</abstract>
+		<citeseerx_id>0704.0009</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0009.pdf</source>
+<citation>
+</citation>
+<citation>
+	<context>avelength at which the infrared excess begins λturn−off for the sample of wTTs (solid dots), a sample of cTTs in Lupus from Cieza et al. (2006), the median SED of cTTs in Taurus from D’Alessio et al. =-=(1999)-=- in asterisks (marked as D99), and a sample of debris disks from Chen et al. (2005) in diamonds. The arrows represent the limits for the class II objects in Serpens and the triangles the Class III sou</context>
+</citation>
+<citation>
+	<context>avelength at which the infrared excess begins λturn−off for the sample of wTTs (solid dots), a sample of cTTs in Lupus from Cieza et al. (2006), the median SED of cTTs in Taurus from D’Alessio et al. =-=(1999)-=- in asterisks (marked as D99), and a sample of debris disks from Chen et al. (2005) in diamonds. The arrows represent the limits for the class II objects in Serpens and the triangles the Class III sou</context>
+</citation>
+<citation>
+	<context>avelength at which the infrared excess begins λturn−off for the sample of wTTs (solid dots), a sample of cTTs in Lupus from Cieza et al. (2006), the median SED of cTTs in Taurus from D’Alessio et al. =-=(1999)-=- in asterisks (marked as D99), and a sample of debris disks from Chen et al. (2005) in diamonds. The arrows represent the limits for the class II objects in Serpens and the triangles the Class III sou</context>
+	<publication>
+		<title>Third Catalog of Emission-Line Stars of the Orion Population, http://www-int.stsci.edu/∼welty/HBC/HBCintro.html</title>
+		<date>1984</date>
+		<booktitle>1999, in “The Physics and Chemistry of the Interstellar Medium</booktitle>
+		<journal>A</journal>
+		<volume>619</volume>
+		<pages>931</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>L Hartmann</author>
+		<author>S T Megeath</author>
+		<author>L Allen</author>
+		<author>K Luhman</author>
+		<author>N Calvet</author>
+		<author>P D’Alessio</author>
+		<author>R FrancoHernandez</author>
+		<author>G Fazio</author>
+	</publication>
+</citation>
+<citation>
+	<context>avelength at which the infrared excess begins λturn−off for the sample of wTTs (solid dots), a sample of cTTs in Lupus from Cieza et al. (2006), the median SED of cTTs in Taurus from D’Alessio et al. =-=(1999)-=- in asterisks (marked as D99), and a sample of debris disks from Chen et al. (2005) in diamonds. The arrows represent the limits for the class II objects in Serpens and the triangles the Class III sou</context>
+	<publication>
+		<title>Third Catalog of Emission-Line Stars of the Orion Population, http://www-int.stsci.edu/∼welty/HBC/HBCintro.html</title>
+		<date>1994</date>
+		<booktitle>MNRAS, 242, 43p Makovoz</booktitle>
+		<journal>ApJ</journal>
+		<volume>433</volume>
+		<pages>931</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W Li</author>
+		<author>N J Evans</author>
+		<author>P M Harvey</author>
+		<author>C Colome´</author>
+	</publication>
+</citation>
+<citation>
+	<context>avelength at which the infrared excess begins λturn−off for the sample of wTTs (solid dots), a sample of cTTs in Lupus from Cieza et al. (2006), the median SED of cTTs in Taurus from D’Alessio et al. =-=(1999)-=- in asterisks (marked as D99), and a sample of debris disks from Chen et al. (2005) in diamonds. The arrows represent the limits for the class II objects in Serpens and the triangles the Class III sou</context>
+	<publication>
+		<title>Third Catalog of Emission-Line Stars of the Orion Population, http://www-int.stsci.edu/∼welty/HBC/HBCintro.html</title>
+		<date>1994</date>
+		<booktitle>MNRAS, 242, 43p Makovoz</booktitle>
+		<journal>2004, ApJS</journal>
+		<volume>154</volume>
+		<pages>931</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J Muzerolle</author>
+	</publication>
+</citation>
+		<author>Harvey, Paul</author>
+		<author>Merin, Bruno</author>
+		<author>Huard, Tracy L.</author>
+		<author>Rebull, Luisa M.</author>
+		<author>Chapman, Nicholas</author>
+		<author>Evans II, Neal J.</author>
+		<author>Myers, Philip C.</author>
+	</publication>
+	<publication>
+		<title>Partial cubes: structures, characterizations, and constructions</title>
+		<date>2007-03-31</date>
+		<abstract>  Partial cubes are isometric subgraphs of hypercubes. Structures on a graph
+defined by means of semicubes, and Djokovi\'{c}'s and Winkler's relations play
+an important role in the theory of partial cubes. These structures are employed
+in the paper to characterize bipartite graphs and partial cubes of arbitrary
+dimension. New characterizations are established and new proofs of some known
+results are given.
+  The operations of Cartesian product and pasting, and expansion and
+contraction processes are utilized in the paper to construct new partial cubes
+from old ones. In particular, the isometric and lattice dimensions of finite
+partial cubes obtained by means of these operations are calculated.
+</abstract>
+		<citeseerx_id>0704.0010</citeseerx_id>
+		<source>http://arxiv.org/pdf/0704.0010.pdf</source>
+<citation>
+	<context> form a partition of V for any edge ab ∈ E. Proof. Let us recall that a connected graph G is bipartite if and only if for every vertex x there is no edge ab with d(x, a) = d(x, b) (see, for instance, =-=[1]-=-). For any edge ab ∈ E and vertex x ∈ V we clearly have d(x, a) = d(x, b) ⇔ x /∈ Wab ∪Wba. The result follows. The following lemma is instrumental and will be used frequently in the rest of the paper.</context>
+	<publication>
+		<title>Bipartite Graphs and their Applications</title>
+		<date>1998</date>
+		<extractor>citeseer_extractor</extractor>
+		<author>A S Asratian</author>
+		<author>T M J Denley</author>
+		<author>R Ha¨ggkvist</author>
+	</publication>
+</citation>
+<citation>
+	<context>s. The characterization problem for partial cubes was considered as an important one and many characterizations are known. We list contributions in the chronological order: Djokovic´ [9] (1973), Avis =-=[2]-=- (1981), Winkler [20] (1984), Roth and Winkler [18] (1986), Chepoi [6, 7] (1988 and 1994). In the paper, we present new proofs for the results of Djokovic´ [9], Winkler [20], and Chepoi [6], and obtai</context>
+	<publication>
+		<title>Hypermetric spaces and the Hamming cone</title>
+		<date>1981</date>
+		<journal>Canadian Journal of Mathematics</journal>
+		<volume>33</volume>
+		<pages>795--802</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D Avis</author>
+	</publication>
+</citation>
+<citation>
+	<context> (X) if P ∩Q ⊆ R ⊆ P ∪Q. It is metrically between P and Q if d(P,R) + d(R,Q) = d(P,Q). The following theorem is a well-known result about these two betweenness relations on Pf (X) (see, for instance, =-=[3]-=-). Theorem 2.2. Lattice and metric betweenness relations coincide on Pf (X). Let F be a family of finite subsets of X . The set of all R ∈ F that are between P,Q ∈ F is the interval I(P,Q) between P a</context>
+	<publication>
+		<title>Theory and Applications of Distance Geometry</title>
+		<date>1953</date>
+		<journal>Canadian Journal of Mathematics</journal>
+		<volume>33</volume>
+		<pages>795--802</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>L Blumenthal</author>
+	</publication>
+</citation>
+<citation>
+	<context>graph K1 by successive vertex-pasting of copies of K2 (cf. Theorem 2.3(e) in [12]). Any connected graph G can be constructed by successive vertex-pasting of its blocks using its block cut-vertex tree =-=[4]-=- structure. Let G1 be an endblock of G with a cut vertex v and G2 be the union of the remaining blocks of G. Then G can be obtained from G1 and G2 by vertex-pasting along the vertex v. It follows that</context>
+	<publication>
+		<title>Basic graph theory: Paths and circuits</title>
+		<date>1995</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>Canadian Journal of Mathematics</journal>
+		<volume>33</volume>
+		<pages>3--110</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>J A Bondy</author>
+	</publication>
+</citation>
+<citation>
+	<context>graph K1 by successive vertex-pasting of copies of K2 (cf. Theorem 2.3(e) in [12]). Any connected graph G can be constructed by successive vertex-pasting of its blocks using its block cut-vertex tree =-=[4]-=- structure. Let G1 be an endblock of G with a cut vertex v and G2 be the union of the remaining blocks of G. Then G can be obtained from G1 and G2 by vertex-pasting along the vertex v. It follows that</context>
+	<publication>
+		<title>Basic graph theory: Paths and circuits</title>
+		<date>1966</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>Canadian Journal of Mathematics</journal>
+		<volume>33</volume>
+		<pages>3--110</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<context>], where it is shown that a graph is a median graph if and only if it can be obtained from K1 by a sequence of convex expansions (see also [15]). A similar result for partial cubes was established in =-=[6]-=- (see also [7]) as a corollary to a more general result concerning isometric embeddability into Hamming graphs; it was also established in [13] in the framework of oriented matroids theory. 26 In this</context>
+	<publication>
+		<title>Isometric subgraphs of Hamming graphs and d-convexity</title>
+		<date>1988</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>Control and Cybernetics</journal>
+		<volume>24</volume>
+		<pages>6--11</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>V Chepoi</author>
+	</publication>
+</citation>
+<citation>
+	<context> shown that a graph is a median graph if and only if it can be obtained from K1 by a sequence of convex expansions (see also [15]). A similar result for partial cubes was established in [6] (see also =-=[7]-=-) as a corollary to a more general result concerning isometric embeddability into Hamming graphs; it was also established in [13] in the framework of oriented matroids theory. 26 In this section we in</context>
+	<publication>
+		<title>Separation of two convex sets in convexity structures</title>
+		<date>1994</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>Journal of Geometry</journal>
+		<volume>50</volume>
+		<pages>30--51</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>V Chepoi</author>
+	</publication>
+</citation>
+<citation>
+	<context>5.1. Let G be the graph shown in Figure 2.1. It is easy to see that dimI(G) = 3 and dimZ(G) = 2. 15 Example 5.2. Let T be a tree with n edges and m leaves. Then dimI(T ) = n and dimZ(T ) = ⌈m/2⌉ (cf. =-=[8]-=- and [14], respectively). Example 5.3. For the cycle C6 we have (see Figure 8.2) dimI(C6) = dimZ(C6) = 3. 6 Subcubes and Cartesian products Let G be a partial cube. We say that G′ is a subcube of G if</context>
+	<publication>
+		<title>Geometry of Cuts and Metrics</title>
+		<date>1997</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>Journal of Geometry</journal>
+		<volume>50</volume>
+		<pages>30--51</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>M M Deza</author>
+		<author>M Laurent</author>
+	</publication>
+</citation>
+<citation>
+	<context> of the metric space V , they are half-spaces in V [19]. This terminology is used in [6, 7]. The following theorem presents four characterizations of partial cubes. The first two are due to Djokovic´ =-=[9]-=- and Winkler [20] (cf. Theorem 2.10 in [15]). Theorem 3.4. Let G = (V,E) be a connected graph. The following statements are equivalent: (i) G is a partial cube. 9 (ii) G is bipartite and all semicubes</context>
+	<publication>
+		<title>Distance preserving subgraphs of hypercubes</title>
+		<date>1973</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>J. Combin. Theory Ser. B</journal>
+		<volume>14</volume>
+		<pages>263--267</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D Zˇ Djokovic´</author>
+	</publication>
+</citation>
+<citation>
+	<context> of the metric space V , they are half-spaces in V [19]. This terminology is used in [6, 7]. The following theorem presents four characterizations of partial cubes. The first two are due to Djokovic´ =-=[9]-=- and Winkler [20] (cf. Theorem 2.10 in [15]). Theorem 3.4. Let G = (V,E) be a connected graph. The following statements are equivalent: (i) G is a partial cube. 9 (ii) G is bipartite and all semicubes</context>
+	<publication>
+		<title>Well-graded families of relations, Discrete Math</title>
+		<date>1997</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>J. Combin. Theory Ser. B</journal>
+		<volume>14</volume>
+		<pages>173</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<context>n graph G is isometrically embeddable, its lattice dimension and denote it dimZ(G). The lattice dimension of a partial cube can be expressed in terms of maximum matchings in so-called semicube graphs =-=[11]-=-. Definition 5.1. The semicube graph Sc(G) has all semicubes in G as the set of its vertices. Two vertices Wab and Wcd are connected in Sc(G) if Wab ∪Wcd = V and Wab ∩Wcd 6= ∅. (5.3) If G is a partial</context>
+	<publication>
+		<title>The lattice dimension of a graph</title>
+		<date>1997</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>10--1016</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>D Eppstein</author>
+	</publication>
+</citation>
+<citation>
+	<context>eleting the leaf v. Clearly, G can be obtained by vertex-pasting G1 and K2. It follows that any tree can obtained from the graph K1 by successive vertex-pasting of copies of K2 (cf. Theorem 2.3(e) in =-=[12]-=-). Any connected graph G can be constructed by successive vertex-pasting of its blocks using its block cut-vertex tree [4] structure. Let G1 be an endblock of G with a cut vertex v and G2 be the union</context>
+	<publication>
+		<title>Connectivity and network flows, in</title>
+		<date>1995</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>111--177</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>A Frank</author>
+	</publication>
+</citation>
+<citation>
+	<context>]). A similar result for partial cubes was established in [6] (see also [7]) as a corollary to a more general result concerning isometric embeddability into Hamming graphs; it was also established in =-=[13]-=- in the framework of oriented matroids theory. 26 In this section we investigate properties of (isometric) expansion and contraction operations and, in particular, prove in two different ways that a g</context>
+	<publication>
+		<title>Antipodal graphs and oriented matroids, Discrete Mathematics 111</title>
+		<date>1993</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>245--256</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>K Fukuda</author>
+		<author>K Handa</author>
+	</publication>
+</citation>
+<citation>
+	<context>Z(G2)} ≤ dimZ(G) ≤ dimZ(G1) + dimZ(G2). The following example illustrate possible cases for inequalities in Theorem 7.3. Let us recall that the lattice dimension of a tree with m leaves is ⌈m/2⌉ (cf. =-=[14]-=-). Example 7.4. The star K1,6 can be obtained from the stars K1,2 and K1,4 by vertex-pasting these two stars along their centers. Clearly, max{dimZ(K1,2), dimZ(K1,4)} &lt; dimZ(K1,6) = dimZ(K1,2) + dimZ(</context>
+	<publication>
+		<title>Antipodal graphs and oriented matroids, Discrete Mathematics 111</title>
+		<date>1978</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>13</pages>
+		<extractor>citeseer_extractor</extractor>
+	</publication>
+</citation>
+<citation>
+	<context>ting these half-spaces (see [17] where this analogy is formalized in the context of hyperplane arrangements). The following theorem generalizes the result obtained in [16] for median graphs (see also =-=[15]-=-). Theorem 4.1. Let ab be an edge of a connected bipartite graph G. If the semicubes Wab and Wba are convex, then the set Fab is a matching and induces an isomorphism between the graphs 〈Uab〉 and 〈Uba</context>
+	<publication>
+		<title>Product Graphs</title>
+		<date>2000</date>
+		<booktitle>Lova´sz (Eds.), Handbook of Combinatorics</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>13</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>W Imrich</author>
+		<author>S Klavzˇar</author>
+	</publication>
+</citation>
+<citation>
+	<context>ar K1,7 of lattice dimension 4. Thus, max{dimZ(G1), dimZ(G2)} ≤ dimZ(G) = dimZ(G1) + dimZ(G2). 8 Expansions and contractions of partial cubes The graph expansion procedure was introduced by Mulder in =-=[16]-=-, where it is shown that a graph is a median graph if and only if it can be obtained from K1 by a sequence of convex expansions (see also [15]). A similar result for partial cubes was established in [</context>
+	<publication>
+		<title>The Interval Function of a Graph</title>
+		<date>1980</date>
+		<booktitle>Mathematical Centre Tracts 132, Mathematisch Centrum</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>13</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>H M Mulder</author>
+	</publication>
+</citation>
+<citation>
+	<context>ite graph is a partial cube if and only if it is embeddable in some integer lattice. Examples of infinite partial cubes isometrically embeddable into a finite dimensional integer lattice are found in =-=[17]-=-. We call the minimum possible dimension n of an integer lattice Zn, in which a given graph G is isometrically embeddable, its lattice dimension and denote it dimZ(G). The lattice dimension of a parti</context>
+	<publication>
+		<title>theory: representations and examples, Discrete Applied Mathematics, (in review, e-print available at http://arxiv.org/abs/math.CO/0512282</title>
+		<date>1980</date>
+		<booktitle>Mathematical Centre Tracts 132, Mathematisch Centrum</booktitle>
+		<journal>European J. Combinatorics</journal>
+		<volume>26</volume>
+		<pages>13</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>S Ovchinnikov</author>
+	</publication>
+</citation>
+<citation>
+	<context>was considered as an important one and many characterizations are known. We list contributions in the chronological order: Djokovic´ [9] (1973), Avis [2] (1981), Winkler [20] (1984), Roth and Winkler =-=[18]-=- (1986), Chepoi [6, 7] (1988 and 1994). In the paper, we present new proofs for the results of Djokovic´ [9], Winkler [20], and Chepoi [6], and obtain two more characterizations of partial cubes. 1 Th</context>
+	<publication>
+		<title>Collapse of the metric hierarchy for bipartite graphs</title>
+		<date>1986</date>
+		<booktitle>Mathematical Centre Tracts 132, Mathematisch Centrum</booktitle>
+		<journal>European Journal of Combinatorics</journal>
+		<volume>7</volume>
+		<pages>371--375</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>R I Roth</author>
+		<author>P M Winkler</author>
+	</publication>
+</citation>
+<citation>
+	<context>e, P ∈ WAB, and the result follows. (iv) Follows from (iii) and Lemma 3.6. Remark 3.2. Since semicubes of a partial cube G = (V,E) are convex subsets of the metric space V , they are half-spaces in V =-=[19]-=-. This terminology is used in [6, 7]. The following theorem presents four characterizations of partial cubes. The first two are due to Djokovic´ [9] and Winkler [20] (cf. Theorem 2.10 in [15]). Theore</context>
+	<publication>
+		<title>de Vel, Theory of Convex Structures</title>
+		<date>1993</date>
+		<booktitle>Mathematical Centre Tracts 132, Mathematisch Centrum</booktitle>
+		<journal>European Journal of Combinatorics</journal>
+		<volume>7</volume>
+		<pages>371--375</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>M L J van</author>
+	</publication>
+</citation>
+<citation>
+	<context>pace V , they are half-spaces in V [19]. This terminology is used in [6, 7]. The following theorem presents four characterizations of partial cubes. The first two are due to Djokovic´ [9] and Winkler =-=[20]-=- (cf. Theorem 2.10 in [15]). Theorem 3.4. Let G = (V,E) be a connected graph. The following statements are equivalent: (i) G is a partial cube. 9 (ii) G is bipartite and all semicubes of G are convex.</context>
+	<publication>
+		<title>Isometric embedding in products of complete graphs</title>
+		<date>1984</date>
+		<booktitle>Mathematical Centre Tracts 132, Mathematisch Centrum</booktitle>
+		<journal>Discrete Appl. Math</journal>
+		<volume>8</volume>
+		<pages>209--212</pages>
+		<extractor>citeseer_extractor</extractor>
+		<author>P M Winkler</author>
+	</publication>
+</citation>
+		<author>Ovchinnikov, Sergei</author>
+	</publication>
+</sfc>
