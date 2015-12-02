@@ -1,6 +1,6 @@
 
-from core.process_manager.Process import HarvesterProcess, ProcessError
-from core.process_manager.utils import external_process,external_process2
+from core.process_manager.Process import HarvesterProcess
+from core.process_manager.utils import external_process2
 
 class CiteseerxHarvesterProcess(HarvesterProcess):
     

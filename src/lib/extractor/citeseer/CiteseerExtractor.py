@@ -1,3 +1,4 @@
+import os.path
 from io import BytesIO
 from lxml import etree
 from lxml.etree import XMLSyntaxError
@@ -102,4 +103,10 @@ class CiteseerExtractor(Extractor):
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
-        #clear chunks 
+        #clear chunks
+
+if __name__ == '__main__':
+    extractor = CiteseerExtractor()
+    if extractor.file_publications:
+        print (extractor.file_publications)
+        extractor.extract_from_xml_file(extractor.file_publications)

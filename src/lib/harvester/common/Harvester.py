@@ -46,9 +46,4 @@ class Harvester(Parser):
         self.logger.info('stop')
     
     def check_stop_harvest(self):
-        if self.limit and self.count_publications >= self.limit:
-            return True
-        else:
-            return False
-        
-
+        return self.limit and self.count_publications >= self.limit        
