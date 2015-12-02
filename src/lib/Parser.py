@@ -68,7 +68,7 @@ class Parser(object):
             self.output.write_element('pages', pages)
             self.output.write_element('number', number)
             self.output.write_element('publisher', publisher)
-            self.output.write_element('abstract', abstract)
+            self.output.write_element('abstract', abstract, is_cdata=True)
             self.output.write_element('doi', doi)
             self.output.write_element('citeseerx_id', citeseerx_id)
             self.output.write_element('dblp_id', dblp_id)
