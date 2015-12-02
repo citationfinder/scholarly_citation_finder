@@ -24,8 +24,9 @@ def publications_index(request, source):
     print(source)
     if source == 'dblp':
         publications = Publication.objects.exclude(dblp_id=None)
+    if source == 'arxiv':
+        publications = Publication.objects.exclude(arxiv_id=None)
     elif source == 'citeseerx':
-        print('a')
         publications = Publication.objects.exclude(citeseerx_id=None)
     elif source == 'citeseerextractor':
         publications = Publication.objects.filter(extractor='citeseer_extractor')

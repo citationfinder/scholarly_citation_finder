@@ -50,7 +50,7 @@ class Parser(object):
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)
         self.output.write_close_tag('citation')
 
-    def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
+    def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
     
         if title and authors:
 
@@ -70,6 +70,7 @@ class Parser(object):
             self.output.write_element('doi', doi)
             self.output.write_element('citeseerx_id', citeseerx_id)
             self.output.write_element('dblp_id', dblp_id)
+            self.output.write_element('arxiv_id', arxiv_id)            
             self.output.write_element('extractor', extractor)
             self.output.write_element('source', source)
 

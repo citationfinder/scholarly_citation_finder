@@ -57,7 +57,8 @@ class ArxivHarvester(Harvester):
                 publisher=publisher,
                 abstract=abstract,
                 source=source,
-                citeseerx_id=arxiv_id)
+                arxiv_id=arxiv_id
+            )
             
             if self.check_stop_harvest():
                 break
