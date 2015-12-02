@@ -13,9 +13,9 @@ class GrobidExtractor(Extractor):
 
     #result_file_name = '.cite.tei'
     def extract_from_file(self, filename):
-        self.extract(open(filename, 'rb').read())
+        self._extract(open(filename, 'rb').read())
     
-    def extract(self, data, dep_results=None):
+    def _extract(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
         #return ExtractorResult(xml_result=xml)    
         return xml
