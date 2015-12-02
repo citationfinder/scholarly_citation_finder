@@ -48,7 +48,7 @@ class Parser(object):
         self.output.write_start_tag('citation')
         self.output.write_element('context', context)
         self.parse_publication(title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, extractor, source)
-        self.output.write_end_tag('citation')
+        self.output.write_close_tag('citation')
 
     def parse_publication(self, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, extractor=None, source=None):
     
