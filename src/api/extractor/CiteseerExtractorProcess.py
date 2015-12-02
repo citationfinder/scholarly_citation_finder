@@ -10,7 +10,6 @@ class CiteseerExtractorProcess:
             return HttpResponse("Extract file")
         elif filelist:
             extractor.extract_from_xml_file(str(filelist))
-            return HttpResponse("Extract list")        
-        
+            return HttpResponse("Extract list")
     
         return HttpResponse("Nothing to do") 

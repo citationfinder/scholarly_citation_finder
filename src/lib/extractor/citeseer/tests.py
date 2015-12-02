@@ -2,9 +2,7 @@ from django.test import TestCase
 from lib.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
 import config
 import os.path
-# Create your tests here.
-#
-"""
+
 class CiteseerExtractorTest(TestCase):
 
     TEST_DIR = config.TEST_PATH+'extractor/citeseer/2/'
@@ -16,17 +14,16 @@ class CiteseerExtractorTest(TestCase):
     
     def setUp(self):
         self.extractor = CiteseerExtractor()
-    
 
-    def test_extract_from_file(self):
-        first = self.extractor.extract_from_file(self.TEST_PDF)
-        self.assertEquals(first, True)
-        
+    #def test_extract_from_file(self):
+    #    self.extractor.output.open('{}.tmp.xml'.format(self.TEST_FILELIST[:-4])) # TODO: not really good
+    #    first = self.extractor.extract_from_file(self.TEST_PDF)
+    #    self.assertEquals(first, True)
+    
     def test_extract_from_xml_file(self):
         self.extractor.extract_from_xml_file(self.TEST_FILELIST)
-        first = os.path.isfile('{}.tmp'.format(self.TEST_FILELIST))
+        first = os.path.isfile('{}.tmp.xml'.format(self.TEST_FILELIST[:-4]))
         self.assertEqual(first, True)
-"""
     
     #def test_parse_citations(self):
     #    self.extractor.parse_citations(self.TEST_FILE_CITATIONS)

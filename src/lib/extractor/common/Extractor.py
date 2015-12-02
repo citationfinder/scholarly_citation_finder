@@ -22,10 +22,8 @@ class Extractor(Parser):
                     url = line.replace('</source>\n', '')
                     #url = etree.fromstring(line).text
                     
-                    print(url)
-                    
-                    #response = requests.get(url)
-                    tmp_file = download_file(url, config.DOWNLOAD_TMP_PATH, '{}.pdf'.format(self.count_citations))
+                    #tmp_file = download_file(url, config.DOWNLOAD_TMP_PATH, '{}.pdf'.format(self.count_citations))
+                    tmp_file = '{}{}.pdf'.format(config.DOWNLOAD_TMP_PATH, self.count_citations)
                     if tmp_file:
                         self.count_citations += 1
                         func(tmp_file)

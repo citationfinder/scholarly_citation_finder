@@ -37,8 +37,8 @@ def download_file(url, path=None, name=None):
         local_filename = path+name
     else:
         local_filename = path+url.split('/')[-1]
-    # NOTE the stream=True parameter
     try:
+        # NOTE the stream=True parameter
         r = requests.get(url, stream=True)
         with open(local_filename, 'wb') as f:
             logging.debug("Downloading %s" % local_filename)
@@ -53,14 +53,18 @@ def download_file(url, path=None, name=None):
         return False
 
 def upload_file(url, filename, status_code = 201):
+    logger.debug("Upload {} [{}]".format(filename, url))
+    if not os.path.isfile(filename):
+        logger.debug("{} is not a file".format(filename))
+        return False
+    
     try:
-        logger.debug("Upload %s [%s]" % (filename, url))
         files = {'myfile': open(filename, 'rb')}
         r = requests.post(url, files=files)
         if r.status_code == status_code:
             return str(r.text)
         else:
-            logger.warn("expected %s as status code, but was %s" % (status_code, r.status_code))
+            logger.warn("expected {} as status code, but was {}".format(status_code, r.status_code))
     except(ConnectionError):
         logger.debug("Connection to {} failed".format(url))
         return False      
