@@ -23,8 +23,7 @@ class CiteseerExtractor(Extractor):
         response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
-            self.request_citations(responseAsXml.find('citations').text)            
-            return True
+            return self.request_citations(responseAsXml.find('citations').text)            
         else:
             return False
         
@@ -32,9 +31,10 @@ class CiteseerExtractor(Extractor):
         self.logger.debug("Request %s" % url)
         r = requests.get(url)
         if r.status_code == 200:
-            self.parse_citations(BytesIO(r.text.encode('utf-8')))
+            return self.parse_citations(BytesIO(r.text.encode('utf-8')))
         else:
-            raise Exception('request_citations Expected server response 200, it is ' + r.status_code)
+            self.logger.debug('request_citations Expected server response 200, it is {}'.format(r.status_code))
+            return False
         
     def parse_citations(self, xml):
         self.logger.debug("Parse citations")
@@ -48,8 +48,11 @@ class CiteseerExtractor(Extractor):
     
     def get_element(self, element, tag, variable):
         if element.tag == tag and element.text:
-            return element.text
+            return self._escape_text(element.text)
         return variable
+    
+    def _escape_text(self, text):
+        return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
             
     def fast_iter(self, context, *args, **kwargs):
         #xml categories
@@ -69,8 +72,8 @@ class CiteseerExtractor(Extractor):
         #read chunk line by line
         #we focus author and title
         for _, elem in context:
-            if elem.tag == 'author':
-                author_array.append(elem.text)
+            if elem.tag == 'author' and elem.text:
+                author_array.append(self._escape_text(elem.text))
     
             title = self.get_element(elem, 'title', title)
             date = self.get_element(elem, 'date', date)
