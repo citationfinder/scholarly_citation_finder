@@ -8,7 +8,7 @@ class Parser:
     
     def store_from_xml_file(self, filelist):
         if os.path.isfile(filelist):
-            context = etree.iterparse(filelist)
+            context = etree.iterparse(filelist, events=("start", "end"))
             self._fast_iter(context)
         else:
             raise IOError('File {} not found'.format(filelist))
@@ -39,7 +39,13 @@ class Parser:
 
         is_citation = False
         
-        for _, elem in context:
+        for event, elem in context:
+            
+            if event in 'start':
+                if elem.tag in 'citation':
+                    is_citation = True
+                    publication_citations.append(Citation())
+                continue
             
             if elem.tag in self.PUBLICATION_ATTRIBUTES and elem.text:
                 if is_citation:
@@ -59,12 +65,8 @@ class Parser:
                 publication = Publication()                
             
             # Beginning of an citation    
-            elif elem.tag in 'context':
-                is_citation = True
-                publication_citations.append(Citation())
-                
-                if elem.text:
-                    publication_citations[-1].context = elem.text
+            elif elem.tag in 'context' and elem.text:
+                publication_citations[-1].context = elem.text
             elif elem.tag in 'citation':
                 is_citation = False
                 self.store_publication(reference, reference_authors)

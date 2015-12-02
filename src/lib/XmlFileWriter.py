@@ -24,8 +24,10 @@ class XmlFileWriter:
         self.tabbing = self.tabbing[1:] # remove one tab (\t); a tab is one character long        
         self._write_line("</%s>" % (tag))
         
-    def write_element(self, tag, value):
+    def write_element(self, tag, value, is_cdata = False):
         if value:
+            if is_cdata:
+                value = "<![CDATA[%s]]>" % value
             self._write_line("<%s>%s</%s>" % (tag, value, tag))
             
     def write_declaration(self):
