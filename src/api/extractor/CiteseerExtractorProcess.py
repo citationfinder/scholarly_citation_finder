@@ -13,7 +13,7 @@ class CiteseerExtractorProcess(ExtractorProcess):
         
         if filelist:
             external_process2(['python', '-m', self.PATH, self.PARAM, '-f {}'.format(filelist)]) 
-            return HttpResponse("Start CiteseerExtractor process")
+            return HttpResponse("Start {} process".format(self.PATH))
         """
         extractor = CiteseerExtractor() 
         
