@@ -52,12 +52,12 @@ class Extractor(Parser):
                     
                     #tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
                     tmp_file = os.path.join(config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
-                    if tmp_file:
+                    if tmp_file and not self.check_stop_extract():
                         self.count_extracted_papers += 1
                         func(tmp_file)
                         
-                    if self.check_stop_harvester():
-                        break
+                    #if self.check_stop_extract():
+                    #    break
 
             self.stop_extract()
             return True
@@ -67,5 +67,5 @@ class Extractor(Parser):
     def stop_extract(self):
         self.output.close()  
         
-    def check_stop_harvester(self):
+    def check_stop_extract(self):
         return self.limit and self.count_extracted_papers >= self.limit
