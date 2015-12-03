@@ -7,11 +7,14 @@ clear:
 tests:
 	python src/manage.py test
 
-test_main:
-	python src/manage.py test core.tests
+test_core:
+	python src/manage.py test core
 	
 test_lib:
-	python src/manage.py test lib.extractor.grobid
+	python src/manage.py test lib
 	
 run_citeseerx:
-	python lib/CiteSeerExtractor/src/service.py 8081
+	cd lib/CiteSeerExtractor/src && python service.py 8081
+
+run_grobid:
+	cd lib/grobid/grobid-service && mvn -Dmaven.test.skip=true jetty:run-war
