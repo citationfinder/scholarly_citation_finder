@@ -1,4 +1,3 @@
-import os.path
 from io import BytesIO
 from lxml import etree
 from lxml.etree import XMLSyntaxError
@@ -10,10 +9,10 @@ from ..common.Extractor import Extractor, get_arguments
 class CiteseerExtractor(Extractor):
     
     #CITESEER_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
-    CITESEER_EXTRACTOR_API = 'http://localhost:8080/extractor'
+    CITESEER_EXTRACTOR_API = 'http://localhost:8081/extractor'
 
-    def __init__(self):
-        super(CiteseerExtractor, self).__init__('citeseer')
+    def __init__(self, **kwargs):
+        super(CiteseerExtractor, self).__init__('citeseer', **kwargs)
 
     def extract_from_xml_file(self, filename):
         super(CiteseerExtractor, self).extract_from_xml_file(filename, self.extract_from_file)
