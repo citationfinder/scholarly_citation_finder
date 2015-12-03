@@ -3,6 +3,7 @@ import requests
 from ..common.Extractor import Extractor, get_arguments
 from core.process_manager.Process import ProcessError
 from .TeiParser import TeiParser
+#from core.process_manager.utils import external_process
 
 class GrobidExtractor(Extractor):
     
@@ -31,6 +32,30 @@ class GrobidExtractor(Extractor):
         #return ExtractorResult(xml_result=xml)    
         return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_citation)
     
+    """
+    def _call_grobid_method2(self, input, method):
+        '''
+        
+        :param input: Directory not file!
+        :param method:
+        '''
+        
+        GROBID_VERSION = '0.3.9-SNAPSHOT'
+        GROBID_DIR = '/home/neo/code/python/search_for_citations/lib/grobid'
+        GROBID_HOME = '{}/grobid-home'.format(GROBID_DIR)
+        GROBID_OUTPUT = '/home/neo/code/python/search_for_citations/lib/grobid/grobid-home/config'
+        
+        #command = "java -Xmx1024m -jar grobid-core-{}.one-jar.jar -gH {} -gP {} -dIn {} -dOut /path/to/output/directory -exe {}".format(GROBID_VERSION, GROBID_HOME, GROBID_PROPERTIES, input, method)
+        #command = ['java', '-Xmx1024m', '-jar {}/grobid-core-{}.one-jar.jar'.format(GROBID_JAR, GROBID_VERSION), '-gH {}'.format(GROBID_HOME), '-gP {}'.format(GROBID_PROPERTIES), '-dIn {}'.format(input), '-dOut /path/to/output/directory -exe {}'.format(method)]
+        #command = ['java', '-Xmx1024m', '-jar', '{}/grobid-core/target/grobid-core-{}.one-jar.jar'.format(GROBID_DIR, GROBID_VERSION), '-gH', GROBID_HOME, '-gP', GROBID_PROPERTIES, '-dIn', input, '-dOut', '{}/tmp'.format(GROBID_DIR), '-exe', method]
+        command = ['java', '-Xmx1024m', '-jar', '{}/grobid-core/target/grobid-core-{}.one-jar.jar'.format(GROBID_DIR, GROBID_VERSION), '-gH', GROBID_HOME, '-gP', '{}/config/grobid.properties'.format(GROBID_HOME), '-dIn', input, '-dOut', GROBID_OUTPUT, '-exe', method]
+        (exit_status, stdout, stderr) = external_process(command)
+        
+        print(exit_status)
+        print(stdout)
+        print(stderr)
+    """
+
     def _call_grobid_method(self, data, method):
         self.logger.debug("Call grobid method: {}".format(method))
         url = '{0}/{1}'.format(self.GROBID_API, method)
