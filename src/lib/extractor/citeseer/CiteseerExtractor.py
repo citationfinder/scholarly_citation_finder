@@ -5,12 +5,12 @@ from lxml.etree import XMLSyntaxError
 import requests
 
 from lib.utils import upload_file
-from ..common.Extractor import Extractor
+from ..common.Extractor import Extractor, get_arguments
 
 class CiteseerExtractor(Extractor):
     
-    #CITESEERX_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
-    CITESEERX_EXTRACTOR_API = 'http://localhost:8080/extractor'
+    #CITESEER_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
+    CITESEER_EXTRACTOR_API = 'http://localhost:8080/extractor'
 
     def __init__(self):
         super(CiteseerExtractor, self).__init__('citeseer')
@@ -20,7 +20,7 @@ class CiteseerExtractor(Extractor):
     
     def extract_from_file(self, filename):
         self.logger.debug("Extract %s" % filename)
-        response = upload_file(self.CITESEERX_EXTRACTOR_API, filename)
+        response = upload_file(self.CITESEER_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
             return self.request_citations(responseAsXml.find('citations').text)            
@@ -110,7 +110,8 @@ class CiteseerExtractor(Extractor):
         #clear chunks
 
 if __name__ == '__main__':
-    extractor = CiteseerExtractor()
-    if extractor.file_publications:
-        print (extractor.file_publications)
-        extractor.extract_from_xml_file(extractor.file_publications)
+    file_publications, limit = get_arguments()
+    
+    extractor = CiteseerExtractor(limit=limit)
+    if file_publications:
+        extractor.extract_from_xml_file(file_publications)

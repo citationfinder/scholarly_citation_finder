@@ -7,34 +7,35 @@ import config
 from lib.utils import download_file
 from ...Parser import Parser
 
+def get_arguments():
+    argv = sys.argv[1:]
+    try:
+        opts, _ = getopt.getopt(argv, "hf:l:", ["help", "file=", "limit="])
+    except getopt.GetoptError as e:
+        print(str(e))
+        print('Usage: -h for help')
+        sys.exit(2)
+    
+    limit = None
+    file_publications = None
+    for opt, arg in opts:
+        if opt == '-h':
+            print('Usage: my-process.py -s <start> -e <end>')
+            sys.exit()
+        elif opt in ("-f", "--file"):
+            file_publications = arg.strip();
+        elif opt in ("-l", "--limit"):
+            limit = int(arg);
+        else:
+            raise Exception("unhandled option")
+    return (file_publications, limit)
+
 class Extractor(Parser):
     
-    def __init__(self, name):
+    def __init__(self, name, limit=None):
         super(Extractor, self).__init__('{}_extractor'.format(name))
         self.count_extracted_papers = 0
-        self.file_publications, self.limit = self.get_arguments(sys.argv[1:])
-    
-    def get_arguments(self, argv):
-        try:
-            opts, _ = getopt.getopt(argv, "hf:l:", ["help", "file=", "limit="])
-        except getopt.GetoptError as e:
-            print(str(e))
-            print('Usage: -h for help')
-            sys.exit(2)
-    
-        limit = None
-        file_publications = None
-        for opt, arg in opts:
-            if opt == '-h':
-                print('Usage: my-process.py -s <start> -e <end>')
-                sys.exit()
-            elif opt in ("-f", "--file"):
-                file_publications = arg.strip();
-            elif opt in ("-l", "--limit"):
-                limit = int(arg);
-            else:
-                raise Exception("unhandled option")
-        return (file_publications, limit)
+        self.limit = limit
     
     def extract_from_xml_file(self, file_publications, func):
         if os.path.isfile(file_publications):
