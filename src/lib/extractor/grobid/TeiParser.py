@@ -1,17 +1,16 @@
 from lxml import etree
+from io import BytesIO
 
-from lib.Parser import Parser
+class TeiParser():
+    
+    def __init__(self, name=''):
+        self.name = name
 
-class TeiParser(Parser):
-    
-    def __init__(self):
-        super(TeiParser, self).__init__('tei')
-    
-    def parse(self, xml):
-        context = etree.iterparse(xml, html=True)
-        self.fast_iter(context)
+    def parse(self, xml, callback_biblstruct):
+        context = etree.iterparse(BytesIO(xml), html=True)
+        self.fast_iter(context, callback_biblstruct)
       
-    def fast_iter(self, context):
+    def fast_iter(self, context, callback_biblstruct):
         title = ''
         date = ''
         booktitle = ''
@@ -26,13 +25,11 @@ class TeiParser(Parser):
         tmp_author_name = ''
         
         for _, elem in context:     
-            #print("{}".format(elem.tag))
             if elem.tag == 'forename':
                 tmp_author_name += elem.text+' '
             elif elem.tag == 'surname':
                 tmp_author_name = elem.text + ', ' + tmp_author_name
             elif elem.tag == 'author':
-                print(tmp_author_name)
                 author_array.append(tmp_author_name)
                 tmp_author_name = ''
             elif elem.tag == 'title' and 'level' in elem.attrib:
@@ -57,7 +54,7 @@ class TeiParser(Parser):
                 publisher = elem.text
                     
             elif elem.tag == 'biblstruct':
-                self.parse_citation(
+                callback_biblstruct(
                     context = elem.attrib.get('xml:id'),
                     title=title,
                     date=date,
