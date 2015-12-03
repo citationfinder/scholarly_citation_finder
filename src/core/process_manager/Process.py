@@ -32,9 +32,6 @@ class ExtractorProcess(Process):
     
 
 class ProcessError(Exception):
-    
-    def __init__(self, msg):
-        self.msg = msg
-        
-    def __unicode__(self):
-        return "RunnableError: {0}".format(self.msg)
+    pass
+    #def __init__(self, message):
+    #    super(ProcessError, self).__init__('ProcessError: {}'.format(message))
