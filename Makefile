@@ -13,7 +13,7 @@ test_core:
 test_lib:
 	python src/manage.py test lib
 	
-run_citeseerx:
+run_citeseer:
 	cd lib/CiteSeerExtractor/src && python service.py 8081
 
 run_grobid:

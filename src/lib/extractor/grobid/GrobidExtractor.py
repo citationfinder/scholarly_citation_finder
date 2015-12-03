@@ -22,14 +22,13 @@ class GrobidExtractor(Extractor):
         try:
             self._extract_references(open(filename, 'rb').read())
             return True
-        except(IOError) as e:
+        except(IOError, ProcessError) as e:
             self.logger.warn(str(e))
             return False
     
     def _extract_references(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
         #return ExtractorResult(xml_result=xml)    
-        self.logger.info(xml)
         return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_citation)
     
     def _call_grobid_method(self, data, method):
