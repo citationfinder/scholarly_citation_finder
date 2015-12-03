@@ -39,6 +39,7 @@ class Extractor(Parser):
     
     def extract_from_xml_file(self, file_publications, func):
         if os.path.isfile(file_publications):
+            self.logger.info('start to extract from {}'.format(file_publications))
             self.input = codecs.open(file_publications, "r", "utf-8")
             self.output.open('{}.tmp.xml'.format(file_publications[:-4])) # ending .xml is 4 characters long
 
@@ -65,6 +66,7 @@ class Extractor(Parser):
             raise IOError('File {} not found'.format(file_publications))
         
     def stop_extract(self):
+        self.logger.info('Stop extraction')
         self.output.close()  
         
     def check_stop_extract(self):
