@@ -10,7 +10,7 @@
 ### Setup
 
 Install Python dependencies
-	`pip install pyoai lxml subprocess32 requests`
+	`pip install pyoai lxml subprocess32 requests beautifulsoup4`
 	
 ```
 Create folders:
