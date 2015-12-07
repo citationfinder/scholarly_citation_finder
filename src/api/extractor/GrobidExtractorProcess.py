@@ -5,7 +5,7 @@ from core.process_manager.utils import external_process2
 
 class GrobidExtractorProcess(ExtractorProcess):
     
-    PATH = "lib.extractor.grobid.GrobidExtractor"
+    PATH = "lib.extractor.grobid"
     PARAM = '-l 2'    
     
     def extract(self, filename=None, filelist=None): 

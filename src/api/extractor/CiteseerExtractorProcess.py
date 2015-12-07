@@ -6,7 +6,7 @@ from core.process_manager.utils import external_process2
 
 class CiteseerExtractorProcess(ExtractorProcess):
     
-    PATH = "lib.extractor.citeseer.CiteseerExtractor"
+    PATH = "lib.extractor.citeseer"
     PARAM = '-l 2'    
     
     def extract(self, filename=None, filelist=None): 

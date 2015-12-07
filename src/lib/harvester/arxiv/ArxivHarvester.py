@@ -65,7 +65,3 @@ class ArxivHarvester(Harvester):
             
 
         self.stop_harvest()
-        
-if __name__ == '__main__':
-    harvester = ArxivHarvester()
-    harvester.harvest()

@@ -64,7 +64,3 @@ class CiteseerxHarvester(Harvester):
             
 
         self.stop_harvest()
-        
-if __name__ == '__main__':
-    harvester = CiteseerxHarvester()
-    harvester.harvest()

@@ -4,7 +4,7 @@ from lxml.etree import XMLSyntaxError
 import requests
 
 from lib.utils import upload_file
-from ..common.Extractor import Extractor, get_arguments
+from ..common.Extractor import Extractor
 
 class CiteseerExtractor(Extractor):
     
@@ -107,10 +107,3 @@ class CiteseerExtractor(Extractor):
                 del elem.getparent()[0]
         del context
         #clear chunks
-
-if __name__ == '__main__':
-    file_publications, limit = get_arguments()
-    
-    extractor = CiteseerExtractor(limit=limit)
-    if file_publications:
-        extractor.extract_from_xml_file(file_publications)
