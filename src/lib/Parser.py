@@ -8,7 +8,28 @@ from .XmlFileWriter import XmlFileWriter
 
 class Parser(object):
     
-    MAIN_TAG = 'sfc'    
+    MAIN_TAG = 'sfc'
+
+    PUBLICATION_FIELDS = [
+        'type',
+        'title',
+        'date',
+        'booktitle'
+        'journal',
+        'volume',
+        'number',
+        'pages_from',
+        'pages_to',
+        'series',
+        'publisher',
+        'isbn',
+        'doi',
+        'abstract',
+        'citeseerx_id',
+        'dblp_id'
+        'arxiv_id',
+        'extractor'
+    ]
 
     def __init__(self, name):
         self.name = name
@@ -51,6 +72,37 @@ class Parser(object):
         self.output.write_element('context', context, is_cdata=True)
         self.parse_publication(type, title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, arxiv_id, extractor, source)
         self.output.write_close_tag('citation')
+
+    def _check_publication_is_valid(self, entry):
+        return 'title' in entry and 'authors' in entry
+
+    def parse_publication2(self, entry, check_author=True):
+        print(entry)
+        if not self._check_publication_is_valid(entry):
+            self.logger.warn("No title or authors")
+            return False
+        
+        self.count_publications += 1
+        self.output.write_start_tag('publication')
+        for field in self.PUBLICATION_FIELDS:
+            if field in entry:
+                self.output.write_element(field, entry[field])
+        if 'authors' in entry:
+            for author in entry['authors']:
+                if check_author:
+                    author = self.check_author_name(author)
+                    if author:
+                        self.output.write_element('author', author)
+                    else:
+                        self.logger.warn("Not an author name: %s" % author)
+                else:
+                    self.output.write_element('author', author) 
+        if 'urls' in entry:
+            for url in entry['urls']:
+                self.output.write_element('url', url)                    
+        
+        self.output.write_close_tag("publication")
+        return True     
 
     def parse_publication(self, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
     
