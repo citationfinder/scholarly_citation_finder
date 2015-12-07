@@ -54,4 +54,15 @@
 		<ee>http://dx.doi.org/10.1016/0097-8493(83)90051-1</ee>
 		<url>db/journals/cg/cg7.html#Encarnacao83b</url>
 	</article>
+	<proceedings mdate="2003-01-21" key="journals/lncs/1994-910">
+		<editor>Andreas Podelski</editor>
+		<title>Constraint Programming: Basics and Trends, Ch&acirc;tillon Spring School, Ch&acirc;tillon-sur-Seine, France, May 16 - 20, 1994, Selected Papers</title>
+		<booktitle>Constraint Programming</booktitle>
+		<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+		<volume>910</volume>
+		<publisher>Springer</publisher>
+		<year>1995</year>
+		<isbn>3-540-59155-9</isbn>
+		<url>db/journals/lncs/lncs910.html</url>
+	</proceedings>
 </dblp>

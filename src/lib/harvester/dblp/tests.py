@@ -1,12 +1,13 @@
-import unittest
-from .DblpHarvester import DblpHarvester
 import os.path
+from django.test import TestCase
+
+from .DblpHarvester import DblpHarvester
 import config
 
-class DblpHarvesterTest(unittest.TestCase):
+class DblpHarvesterTest(TestCase):
 
-    DOWNLOAD_DIR = '../downloads/'
-    TEST_DIR = os.path.join(config.TEST_DIR, 'harvester', 'dblp/')
+    TEST_DIR = os.path.join(config.TEST_DIR, 'harvester', 'dblp')
+    TEST_XML = os.path.join(TEST_DIR, 'dblp_tiny.xml')
 
     def setUp(self):
         self.harvester = DblpHarvester()
@@ -15,7 +16,7 @@ class DblpHarvesterTest(unittest.TestCase):
         self.assertRaises(IOError, self.harvester.harvest, 'non-existing-file.xml')
 
     def test_harvest_file_creation(self):
-        self.harvester.harvest(self.TEST_DIR + 'dblp_tiny.xml')
+        self.harvester.harvest(self.TEST_XML)
         first = os.path.isfile(os.path.join(config.DOWNLOAD_DIR, 'harvester', 'dblp', 'publication-0.xml'))
         self.assertEqual(first, True)
         
