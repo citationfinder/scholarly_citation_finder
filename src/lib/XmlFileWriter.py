@@ -14,24 +14,24 @@ class XmlFileWriter:
         self.output.write(line)
         
     def _write_line(self, line):
-        self.output.write("%s%s\n" % (self.tabbing, line))
+        self.output.write('%s%s\n' % (self.tabbing, line))
         
     def write_start_tag(self, tag):
-        self._write_line("<%s>" % tag)
+        self._write_line('<%s>' % tag)
         self.tabbing += '\t' # add one tab
         
     def write_close_tag(self, tag):
         self.tabbing = self.tabbing[1:] # remove one tab (\t); a tab is one character long        
-        self._write_line("</%s>" % (tag))
+        self._write_line('</%s>' % (tag))
         
     def write_element(self, tag, value, is_cdata = False):
         if value:
             if is_cdata:
-                value = "<![CDATA[%s]]>" % value
-            self._write_line("<%s>%s</%s>" % (tag, value, tag))
+                value = '<![CDATA[%s]]>' % value
+            self._write_line('<%s>%s</%s>' % (tag, value, tag))
             
     def write_declaration(self):
-        self._write_line("<?xml version='1.0' encoding='{}'?>".format(self.ENCODING))        
+        self._write_line('<?xml version="1.0" encoding="{}"?>'.format(self.ENCODING))        
     
     def open(self, filename):
         try:

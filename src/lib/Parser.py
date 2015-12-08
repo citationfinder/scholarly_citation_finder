@@ -25,6 +25,7 @@ class Parser(object):
         'isbn',
         'doi',
         'abstract',
+        'copyright',
         'citeseerx_id',
         'dblp_id'
         'arxiv_id',
@@ -76,6 +77,13 @@ class Parser(object):
     def _check_publication_is_valid(self, entry):
         return 'title' in entry and 'authors' in entry
 
+    def _parse_publication_urls(self, urls):
+        for url in urls:
+            if isinstance(url, dict):
+                self.output._write_line('<%s type="%s">%s</%s>' % ('url', url['type'], url['value'], 'url'))
+            else:
+                self.output.write_element('url', url)
+
     def parse_publication2(self, entry, check_author=True):
         if not self._check_publication_is_valid(entry):
             self.logger.warn("No title or authors")
@@ -97,8 +105,7 @@ class Parser(object):
                 else:
                     self.output.write_element('author', author) 
         if 'urls' in entry:
-            for url in entry['urls']:
-                self.output.write_element('url', url)                    
+            self._parse_publication_urls(entry['urls'])
         
         self.output.write_close_tag("publication")
         return True     
