@@ -29,7 +29,6 @@ class Parser:
         return author
     
     def parse_url(self, url, type=''):
-        print(type)
         return PublicationUrl(url=url, type=type)
 
     def store_publication(self, publication, authors=[], citations=[], urls=[]):
@@ -86,6 +85,7 @@ class Parser:
                 # Reset
                 publication_citations = []
                 publication_authors = []
+                publication_urls = []
                 publication = Publication()
 
             # Beginning of an citation
