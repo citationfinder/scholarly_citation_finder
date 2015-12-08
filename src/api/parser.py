@@ -44,12 +44,12 @@ def parse_publication(title=None, authors=None, date=None, booktitle=None, journ
                     else:
                         publication.authors.create(last_name=author)
                 else:
-                    logger.warn("Not an author name: %s" % author)
+                    logger.warn('Not an author name: %s' % author)
             return publication
         #else:
             
         #    return False 
     else:
-        logger.warn("No title (%s) or authors" % title)
+        logger.warn('No title (%s) or authors' % title)
         #print('no title or authors')
         return False

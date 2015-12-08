@@ -2,6 +2,7 @@ import os.path
 import filecmp
 import logging
 
+import config
 from ...utils import create_dir, download_file, unzip_file
 
 logger = logging.getLogger()
@@ -9,7 +10,7 @@ logger = logging.getLogger()
 class DblpDatabaseDownloader:
     
     DBLP_BASE_URL = 'http://dblp.uni-trier.de/xml/'
-    DBLP_DIR = 'downloads/dblp/'
+    DBLP_DIR = os.path.join(config.DOWNLOAD_DIR, 'dblp')
     DBLP_FILE_XML_GZ = 'dblp.xml.gz'
     DBLP_FILE_MD5 = 'dblp.xml.gz.md5'
     

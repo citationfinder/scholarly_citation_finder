@@ -47,7 +47,7 @@ class ArxivHarvester(Harvester):
             
             # <identifier>oai:arXiv.org:10.1.1.1.1519</identifier>
             arxiv_id = string.replace(header.identifier(), 'oai:arXiv.org:', '')
-            source = "http://arxiv.org/pdf/"+arxiv_id+".pdf"            
+            source = 'http://arxiv.org/pdf/'+arxiv_id+'.pdf'            
             
             self.open_split_file()            
             self.parse_publication(

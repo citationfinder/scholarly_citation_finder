@@ -18,7 +18,7 @@ class CiteseerExtractor(Extractor):
         super(CiteseerExtractor, self).extract_from_xml_file(filename, self.extract_from_file)
     
     def extract_from_file(self, filename):
-        self.logger.debug("Extract %s" % filename)
+        self.logger.debug('Extract %s' % filename)
         response = upload_file(self.CITESEER_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
@@ -27,7 +27,7 @@ class CiteseerExtractor(Extractor):
             return False
         
     def request_citations(self, url):
-        self.logger.debug("Request %s" % url)
+        self.logger.debug('Request %s' % url)
         r = requests.get(url)
         if r.status_code == 200:
             return self.parse_citations(BytesIO(r.text.encode('utf-8')))
@@ -36,7 +36,7 @@ class CiteseerExtractor(Extractor):
             return False
         
     def parse_citations(self, xml):
-        self.logger.debug("Parse citations")
+        self.logger.debug('Parse citations')
         try:
             context = etree.iterparse(xml, html=False)
             self.fast_iter(context)

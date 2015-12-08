@@ -1,4 +1,3 @@
-import logging
 from .Process import HarvesterProcess, ExtractorProcess
 
 class ProcessRunner:

@@ -19,7 +19,7 @@ class GrobidExtractor(Extractor):
 
     #result_file_name = '.cite.teiEx
     def extract_from_file(self, filename):
-        self.logger.debug("Extract file: {}".format(filename))
+        self.logger.debug('Extract file: {}'.format(filename))
         try:
             self._extract_references(open(filename, 'rb').read())
             return True
@@ -57,7 +57,7 @@ class GrobidExtractor(Extractor):
     """
 
     def _call_grobid_method(self, data, method):
-        self.logger.debug("Call grobid method: {}".format(method))
+        self.logger.debug('Call grobid method: {}'.format(method))
         url = '{0}/{1}'.format(self.GROBID_API, method)
         files = {'input': data}
         vars = {}

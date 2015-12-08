@@ -101,13 +101,13 @@ class Parser(object):
                     if author:
                         self.output.write_element('author', author_parsed)
                     else:
-                        self.logger.warn("Not an author name: %s" % author)
+                        self.logger.warn('Not an author name: %s' % author)
                 else:
                     self.output.write_element('author', author) 
         if 'urls' in entry:
             self._parse_publication_urls(entry['urls'])
         
-        self.output.write_close_tag("publication")
+        self.output.write_close_tag('publication')
         return True     
 
     def parse_publication(self, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
@@ -140,11 +140,11 @@ class Parser(object):
                 if author:
                     self.output.write_element('author', author)
                 else:
-                    self.logger.warn("Not an author name: %s" % author)
+                    self.logger.warn('Not an author name: %s' % author)
             
-            self.output.write_close_tag("publication")
+            self.output.write_close_tag('publication')
             return True
         else:
-            self.logger.warn("No title (%s) or authors" % title)
+            self.logger.warn('No title (%s) or authors' % title)
             #print('no title or authors')
             return False

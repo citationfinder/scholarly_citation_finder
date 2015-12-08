@@ -4,11 +4,26 @@ from core.models import Publication, Citation, Author
 
 class Parser:
     
-    PUBLICATION_ATTRIBUTES = [u'title', u'date', u'booktitle', u'journal', u'volume', u'pages', u'number', u'publisher', u'abstract', u'doi', u'citeseerx_id', u'dblp_id', u'arxiv_id', u'extractor', u'source']
+    PUBLICATION_ATTRIBUTES = [
+        u'title',
+        u'date',
+        u'booktitle',
+        u'journal',
+        u'volume',
+        u'pages',
+        u'number',
+        u'publisher',
+        u'abstract',
+        u'doi',
+        u'citeseerx_id',
+        u'dblp_id',
+        u'arxiv_id',
+        u'extractor',
+        u'source']
     
     def store_from_xml_file(self, filelist):
         if os.path.isfile(filelist):
-            context = etree.iterparse(filelist, events=("start", "end"))
+            context = etree.iterparse(filelist, events=('start', 'end'))
             self._fast_iter(context)
         else:
             raise IOError('File {} not found'.format(filelist))

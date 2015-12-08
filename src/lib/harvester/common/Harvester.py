@@ -17,7 +17,7 @@ class Harvester(Parser):
     
     def get_arguments(self, argv):
         try:
-            opts, _ = getopt.getopt(argv, "hl:", ["help", "limit="])
+            opts, _ = getopt.getopt(argv, 'hl:', ['help', 'limit='])
         except getopt.GetoptError as e:
             print(str(e))
             print('Usage: -h for help')
@@ -28,10 +28,10 @@ class Harvester(Parser):
             if opt == '-h':
                 print('Usage: my-process.py -s <start> -e <end>')
                 sys.exit()
-            elif opt in ("-l", "--limit"):
+            elif opt in ('-l', '--limit'):
                 limit = int(arg);
             else:
-                raise Exception("unhandled option")
+                raise Exception('unhandled option')
         return limit 
         
     def open_split_file(self):

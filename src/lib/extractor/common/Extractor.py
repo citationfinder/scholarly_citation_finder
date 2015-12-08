@@ -10,7 +10,7 @@ from ...Parser import Parser
 def get_arguments():
     argv = sys.argv[1:]
     try:
-        opts, _ = getopt.getopt(argv, "hf:l:", ["help", "file=", "limit="])
+        opts, _ = getopt.getopt(argv, 'hf:l:', ['help', 'file=', 'limit='])
     except getopt.GetoptError as e:
         print(str(e))
         print('Usage: -h for help')
@@ -22,12 +22,12 @@ def get_arguments():
         if opt == '-h':
             print('Usage: my-process.py -s <start> -e <end>')
             sys.exit()
-        elif opt in ("-f", "--file"):
+        elif opt in ('-f', '--file'):
             file_publications = arg.strip();
-        elif opt in ("-l", "--limit"):
+        elif opt in ('-l', '--limit'):
             limit = int(arg);
         else:
-            raise Exception("unhandled option")
+            raise Exception('unhandled option')
     return (file_publications, limit)
 
 class Extractor(Parser):
@@ -45,7 +45,7 @@ class Extractor(Parser):
 
             for line in self.input:
                 self.output.write(line)
-                if "<source>" in line:
+                if '<source>' in line:
                     line = line.replace('\t\t<source>', '')
                     url = line.replace('</source>\n', '')
                     url = url.replace('&amp;', '&') # otherwise download from citeseer does not work

@@ -1,5 +1,3 @@
-import sys
-
 class Process(object):
     
     def __init__(self):

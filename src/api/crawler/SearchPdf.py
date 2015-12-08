@@ -27,7 +27,7 @@ class SearchPdf:
 
         soup = BeautifulSoup(html, 'lxml')
         # Get all links, which contains the string 'pdf'
-        for link in soup.findAll('a', attrs={'href': re.compile("(.*)pdf(.*)")}):
+        for link in soup.findAll('a', attrs={'href': re.compile('(.*)pdf(.*)')}):
             href = link.get('href')
             # Convert relativ urls to absolute url
             if href.startswith(('http://', 'https://')):

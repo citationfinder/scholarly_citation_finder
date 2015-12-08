@@ -41,7 +41,7 @@ def download_file(url, path=None, name=None):
         # NOTE the stream=True parameter
         r = requests.get(url, stream=True)
         with open(local_filename, 'wb') as f:
-            logging.debug("Downloading %s" % local_filename)
+            logging.debug('Downloading %s' % local_filename)
             #total_length = int(r.headers.get('content-length'))
             #for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length/1024) + 1):
             for chunk in r.iter_content(chunk_size=1024):
@@ -53,9 +53,9 @@ def download_file(url, path=None, name=None):
         return False
 
 def upload_file(url, filename, status_code = 201):
-    logger.debug("Upload {} [{}]".format(filename, url))
+    logger.debug('Upload {} [{}]'.format(filename, url))
     if not os.path.isfile(filename):
-        logger.debug("{} is not a file".format(filename))
+        logger.debug('{} is not a file'.format(filename))
         return False
     
     try:
@@ -64,9 +64,9 @@ def upload_file(url, filename, status_code = 201):
         if r.status_code == status_code:
             return str(r.text)
         else:
-            logger.warn("expected {} as status code, but was {}".format(status_code, r.status_code))
+            logger.warn('expected {} as status code, but was {}'.format(status_code, r.status_code))
     except(ConnectionError):
-        logger.debug("Connection to {} failed".format(url))
+        logger.debug('Connection to {} failed'.format(url))
         return False      
     
     #if os.path.isfile(filename):
