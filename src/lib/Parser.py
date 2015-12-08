@@ -77,7 +77,6 @@ class Parser(object):
         return 'title' in entry and 'authors' in entry
 
     def parse_publication2(self, entry, check_author=True):
-        print(entry)
         if not self._check_publication_is_valid(entry):
             self.logger.warn("No title or authors")
             return False
@@ -90,9 +89,9 @@ class Parser(object):
         if 'authors' in entry:
             for author in entry['authors']:
                 if check_author:
-                    author = self.check_author_name(author)
+                    author_parsed = self.check_author_name(author)
                     if author:
-                        self.output.write_element('author', author)
+                        self.output.write_element('author', author_parsed)
                     else:
                         self.logger.warn("Not an author name: %s" % author)
                 else:

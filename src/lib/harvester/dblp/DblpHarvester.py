@@ -62,6 +62,12 @@ class DblpHarvester(Harvester):
         for _, elem in context:
             if elem.tag == 'html' or elem.tag == 'body':
                 continue
+            # title
+            elif elem.tag == 'title' and elem.text:
+                title = elem.text
+                if title.endswith('.'):
+                    title = title[:-1]
+                result_entry[self.FIELD_MAPPING[elem.tag]] = title
             # author and editor
             elif elem.tag in ('author', 'editor') and elem.text:
                 field = self.FIELD_MAPPING['author']
@@ -72,7 +78,7 @@ class DblpHarvester(Harvester):
             elif elem.tag == 'pages' and elem.text:
                 pages = elem.text.split('-')
                 result_entry['pages_from'] = pages[0]
-                if pages[1]:
+                if len(pages) > 1:
                     result_entry['pages_to'] = pages[1]
             # ee
             elif elem.tag == 'ee' and elem.text:
