@@ -11,7 +11,7 @@ class Parser(object):
     
     MAIN_TAG = 'sfc'
 
-    PUBLICATION_FIELDS = [
+    PUBLICATION_ATTRIBUTES = [
         'type',
         'title',
         'date',
@@ -92,7 +92,7 @@ class Parser(object):
         
         self.count_publications += 1
         self.output.write_start_tag('publication')
-        for field in self.PUBLICATION_FIELDS:
+        for field in self.PUBLICATION_ATTRIBUTES:
             if field in entry:
                 self.output.write_element(field, entry[field])
         if 'authors' in entry:

@@ -45,15 +45,20 @@ class Publication(models.Model):
         return unicode(self.title)
 
 
-class PublicationUrls(models.Model):
+class PublicationUrl(models.Model):
     MIME_TYPE_PDF = 'application/pdf'
+    MIME_TYPE_HTML = 'text/html'
     MIME_TYPES = (
+        ('', ''),
         (MIME_TYPE_PDF, 'PDF'),
-        ('text/html', 'HTML')
+        (MIME_TYPE_HTML, 'HTML')
     )
     publication = models.ForeignKey(Publication)
     type = models.CharField(max_length=50, default=MIME_TYPE_PDF, choices=MIME_TYPES)
     url = models.URLField()
+    
+    def __unicode__(self):
+        return unicode(self.url)
 
 
 class Citation(models.Model):
