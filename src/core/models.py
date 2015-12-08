@@ -31,6 +31,7 @@ class Publication(models.Model):
     doi = models.CharField(blank=True, null=True, max_length=50)
     
     abstract = models.TextField(blank=True, null=True)
+    copyright = models.CharField(blank=True, null=True, max_length=300)
     
     citeseerx_id = models.CharField(blank=True, null=True, max_length=150)
     dblp_id = models.CharField(blank=True, null=True, max_length=150)
