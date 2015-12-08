@@ -28,7 +28,7 @@ class Parser(object):
         'abstract',
         'copyright',
         'citeseerx_id',
-        'dblp_id'
+        'dblp_id',
         'arxiv_id',
         'extractor'
     ]
