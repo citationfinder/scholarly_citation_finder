@@ -1,32 +1,21 @@
 import os.path
 from lxml import etree
+import logging
+logger = logging.getLogger(__name__)
 
-from core.models import Publication, Citation, Author
+
+from core.models import Publication, Citation, Author, PublicationUrl
 from lib.Parser import Parser
 
 
 class Parser:
 
-    PUBLICATION_ATTRIBUTES = [
-        u'title',
-        u'date',
-        u'booktitle',
-        u'journal',
-        u'volume',
-        u'pages',
-        u'number',
-        u'publisher',
-        u'abstract',
-        u'doi',
-        u'citeseerx_id',
-        u'dblp_id',
-        u'arxiv_id',
-        u'extractor',
-        u'source']
+    PUBLICATION_ATTRIBUTES = Parser.PUBLICATION_ATTRIBUTES
 
     def store_from_xml_file(self, filelist):
+        logger.debug('start')
         if os.path.isfile(filelist):
-            context = etree.iterparse(filelist, events=('start', 'end'))
+            context = etree.iterparse(filelist, events=('start', 'end'), html=True)
             self._fast_iter(context)
         else:
             raise IOError('File {} not found'.format(filelist))
@@ -38,19 +27,28 @@ class Parser:
             author = Author(last_name=last_name)
             author.save()
         return author
+    
+    def parse_url(self, url, type=''):
+        print(type)
+        return PublicationUrl(url=url, type=type)
 
-    def store_publication(self, publication, authors=[], citations=[]):
+    def store_publication(self, publication, authors=[], citations=[], urls=[]):
+        # TODO: check pub already exists
         publication.save()
         for author in authors:
             publication.authors.add(author)
         for citation in citations:
             citation.publication = publication
             citation.save()
+        for url in urls:
+            url.publication = publication
+            url.save()
 
     def _fast_iter(self, context):
         publication = Publication()
         publication_citations = []
         publication_authors = []
+        publication_urls = []
 
         reference = Publication()
         reference_authors = []
@@ -65,18 +63,26 @@ class Parser:
                     publication_citations.append(Citation())
                 continue
 
-            if elem.tag in self.PUBLICATION_ATTRIBUTES and elem.text:
-                if is_citation:
-                    setattr(reference, elem.tag, elem.text)
-                else:
-                    setattr(publication, elem.tag, elem.text)
-            elif elem.tag in 'author' and elem.text:
+            # author
+            if elem.tag in 'author' and elem.text:
                 if is_citation:
                     reference_authors.append(self.parse_author(elem.text))
                 else:
                     publication_authors.append(self.parse_author(elem.text))
+            # url
+            elif elem.tag in 'url' and elem.text:
+                if not is_citation:
+                    publication_urls.append(self.parse_url(elem.text, elem.get('type', '')))
+            # other
+            elif elem.tag in self.PUBLICATION_ATTRIBUTES and elem.text:
+                if is_citation:
+                    setattr(reference, elem.tag, elem.text)
+                else:
+                    setattr(publication, elem.tag, elem.text)
+            
+            # publication
             elif elem.tag in 'publication' and not is_citation:
-                self.store_publication(publication, publication_authors, publication_citations)
+                self.store_publication(publication, publication_authors, publication_citations, publication_urls)
                 # Reset
                 publication_citations = []
                 publication_authors = []
