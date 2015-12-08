@@ -1,3 +1,10 @@
-<a href="/frontend/authors">Authors</a> | <a href="/frontend/publications">Publications</a>
-
+Authors:
+{% for letter in alphabet %}
+	<a href="/frontend/authors?prefix={{letter}}">{{letter}}</a>
+{% endfor %}
+<br>
+Publications:
+{% for letter in alphabet %}
+	<a href="/frontend/publications?prefix={{letter}}">{{letter}}</a>
+{% endfor %}
 <hr>

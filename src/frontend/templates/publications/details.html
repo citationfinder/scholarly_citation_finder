@@ -2,7 +2,15 @@
 
 {% if publication %}
 	<h2>{{ publication.title }}</h2>
-	{% include "publications/item.html" with item=publication %}	
+	{% include "publications/item.html" with item=publication %}
+	<h3>Urls ({{urls|length}})</h3>
+	{% if urls %}
+		<ul>
+		{% for i in urls %}
+			<li>{% include "urls/item.html" with item=i %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
 	<h3>References ({{references|length}})</h3>
 	{% if references %}
 		<ul>
