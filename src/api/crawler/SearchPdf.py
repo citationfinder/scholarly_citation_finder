@@ -6,11 +6,12 @@ from requests.exceptions import ConnectionError
 import logging
 logger = logging.getLogger(__name__)
 
+
 class SearchPdf:
-    
+
     MIMETYPE_PDF = 'application/pdf'
     MIMETYPE_HTML = 'text/html'
-    
+
     def get_pdf(self, url):
         links = self.get_links(url)
         if links:
@@ -19,7 +20,7 @@ class SearchPdf:
                     return link
             return links[-1]
         return False
-    
+
     def get_links_from_html(self, html, url):
         result = []
         parsed_uri = urlparse(url)
@@ -35,12 +36,12 @@ class SearchPdf:
             elif href.startswith('/'):
                 href = url_domain + href
             else:
-                href = url + href;
-            result.append(href)        
-        return result    
-    
+                href = url + href
+            result.append(href)
+        return result
+
     def get_links(self, url):
-        try:            
+        try:
             r = requests.get(url)
             r_type = r.headers.get('content-type')
 

@@ -27,8 +27,8 @@ class CiteseerxHarvester(Harvester):
         client = Client(self.OAI_PHM_URL, registry)
         #harvestStart = datetime.strptime("2014-06-17T23:59:59Z", "%Y-%m-%dT%H:%M:%SZ")
         for record in client.listRecords(metadataPrefix='oai_dc'):
-            header = record[0];
-            metadata = record[1];
+            header = record[0]
+            metadata = record[1]
             
             result_entry = {
                 'urls': []
@@ -64,11 +64,10 @@ class CiteseerxHarvester(Harvester):
                 'type': 'application/pdf'
             })
             
-            self.open_split_file()            
+            self.open_split_file()
             self.parse_publication2(result_entry)
             
             if self.check_stop_harvest():
                 break
-            
 
         self.stop_harvest()

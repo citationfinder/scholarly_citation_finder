@@ -5,6 +5,7 @@ from core.process_manager.Process import ProcessError
 from .TeiParser import TeiParser
 #from core.process_manager.utils import external_process
 
+
 class GrobidExtractor(Extractor):
     
     # URL to Grobid service
@@ -29,7 +30,7 @@ class GrobidExtractor(Extractor):
     
     def _extract_references(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
-        #return ExtractorResult(xml_result=xml)    
+        #return ExtractorResult(xml_result=xml)
         return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_citation)
     
     """
@@ -74,6 +75,6 @@ class GrobidExtractor(Extractor):
         # this is hacky but makes parsing it much much easier down the road
         #remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
         #xml_text = remove_xmlns.sub('', resp.content)
-        #   
-        #xml = safeET.fromstring(xml_text)    
+        #
+        #xml = safeET.fromstring(xml_text)
         return resp.content

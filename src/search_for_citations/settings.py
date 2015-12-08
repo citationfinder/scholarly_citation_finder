@@ -35,7 +35,7 @@ PREREQ_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'               
+    'django.contrib.staticfiles'
 )
 PROJECT_APPS = (
     'api',
@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
-    #'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'search_for_citations.urls'
@@ -128,22 +128,22 @@ LOGGING = {
             'filename': os.path.abspath(os.path.join(BASE_DIR, '../log', 'debug.log')),
             'formatter': 'verbose'
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
-        }, 
+        },
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers': ['file'],
             'propagate': True,
-            'level':'WARN',
-        },            
+            'level': 'WARN'
+        },
         '': {
             'formatter': 'verbose',
             'handlers': ['console', 'file'],
             'level': 'DEBUG'
         }
-    },    
+    },
 }

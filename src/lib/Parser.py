@@ -6,6 +6,7 @@ import logging
 import config
 from .XmlFileWriter import XmlFileWriter
 
+
 class Parser(object):
     
     MAIN_TAG = 'sfc'
@@ -41,11 +42,11 @@ class Parser(object):
         
     def init_logger(self, name):
         logging.basicConfig(
-            filename = os.path.join(config.LOG_DIR, name+'.log'),
+            filename=os.path.join(config.LOG_DIR, name + '.log'),
             level=logging.DEBUG,
             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s'
         )
-        self.logger = logging.getLogger()      
+        self.logger = logging.getLogger()
 
     def check_author_name(self, name):
         # Milena Mihail, et al.
@@ -55,7 +56,7 @@ class Parser(object):
             # block: University, Università, Universität, Université
             if not any(extension in name for extension in ('Universit', 'et al.')):
                 return name
-        return False 
+        return False
     
     def open_output_file(self, filename):
         self.output.open(filename)
@@ -103,12 +104,12 @@ class Parser(object):
                     else:
                         self.logger.warn('Not an author name: %s' % author)
                 else:
-                    self.output.write_element('author', author) 
+                    self.output.write_element('author', author)
         if 'urls' in entry:
             self._parse_publication_urls(entry['urls'])
         
         self.output.write_close_tag('publication')
-        return True     
+        return True
 
     def parse_publication(self, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
     
@@ -121,7 +122,7 @@ class Parser(object):
             self.output.write_element('type', type)
             self.output.write_element('title', title)
             self.output.write_element('date', date)
-            self.output.write_element('booktitle', booktitle)            
+            self.output.write_element('booktitle', booktitle)
             self.output.write_element('journal', journal)
             self.output.write_element('volume', volume)
             self.output.write_element('pages', pages)
@@ -131,7 +132,7 @@ class Parser(object):
             self.output.write_element('doi', doi)
             self.output.write_element('citeseerx_id', citeseerx_id)
             self.output.write_element('dblp_id', dblp_id)
-            self.output.write_element('arxiv_id', arxiv_id)            
+            self.output.write_element('arxiv_id', arxiv_id)
             self.output.write_element('extractor', extractor)
             self.output.write_element('source', source)
 

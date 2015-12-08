@@ -7,6 +7,7 @@ from ...utils import create_dir, download_file, unzip_file
 
 logger = logging.getLogger()
 
+
 class DblpDatabaseDownloader:
     
     DBLP_BASE_URL = 'http://dblp.uni-trier.de/xml/'
@@ -40,8 +41,8 @@ class DblpDatabaseDownloader:
     """
     def download_database(self):
         logger.debug('Download (and unzip) data')
-        download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, self.DBLP_DIR);
-        download_file(self.DBLP_BASE_URL + 'dblp.dtd', self.DBLP_DIR);
-        download_file(self.DBLP_BASE_URL + self.DBLP_FILE_XML_GZ, self.DBLP_DIR);
+        download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, self.DBLP_DIR)
+        download_file(self.DBLP_BASE_URL + 'dblp.dtd', self.DBLP_DIR)
+        download_file(self.DBLP_BASE_URL + self.DBLP_FILE_XML_GZ, self.DBLP_DIR)
         # Override old md5 file
         #shutil.move(self.DBLP_FILE_MD5, self.DBLP_DIR + self.DBLP_FILE_MD5)

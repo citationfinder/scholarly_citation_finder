@@ -21,6 +21,7 @@ class GrobidExtractorTest(TestCase):
         self.assertEqual(first, True)
 """
 
+
 class TeiParserTest(TestCase):
     
     TMP_OUTPUT_FILE = os.path.join(config.TEST_DIR, 'tmp.xml')

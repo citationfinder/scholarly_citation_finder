@@ -6,9 +6,10 @@ import requests
 from lib.utils import upload_file
 from ..common.Extractor import Extractor
 
+
 class CiteseerExtractor(Extractor):
-    
-    #CITESEER_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
+
+    # CITESEER_EXTRACTOR_API = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
     CITESEER_EXTRACTOR_API = 'http://localhost:8081/extractor'
 
     def __init__(self, **kwargs):
@@ -22,7 +23,7 @@ class CiteseerExtractor(Extractor):
         response = upload_file(self.CITESEER_EXTRACTOR_API, filename)
         if response:
             responseAsXml = etree.XML(response)
-            return self.request_citations(responseAsXml.find('citations').text)            
+            return self.request_citations(responseAsXml.find('citations').text)
         else:
             return False
         
@@ -53,7 +54,7 @@ class CiteseerExtractor(Extractor):
     def _escape_text(self, text):
         # TODO: .replace('&', '&amp;') destroys other symbols like "&lt;", which are already escaped
         return text.replace('<', '&lt;').replace('>', '&gt;')
-            
+
     def fast_iter(self, context, *args, **kwargs):
         
         title = ''
@@ -88,7 +89,7 @@ class CiteseerExtractor(Extractor):
     
             if elem.tag == 'citation':
                 self.parse_citation(
-                    context = citation_context,
+                    context=citation_context,
                     title=title,
                     authors=author_array,
                     date=date,
@@ -96,7 +97,7 @@ class CiteseerExtractor(Extractor):
                     journal=journal,
                     volume=volume,
                     pages=pages,
-                    extractor=self.name             
+                    extractor=self.name
                 )
                     
                 del author_array[:]
@@ -106,4 +107,4 @@ class CiteseerExtractor(Extractor):
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
-        #clear chunks
+        # clear chunks

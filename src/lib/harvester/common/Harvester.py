@@ -6,6 +6,7 @@ import config
 from lib import utils
 from ...Parser import Parser
 
+
 class Harvester(Parser):
     
     def __init__(self, name):
@@ -29,21 +30,21 @@ class Harvester(Parser):
                 print('Usage: my-process.py -s <start> -e <end>')
                 sys.exit()
             elif opt in ('-l', '--limit'):
-                limit = int(arg);
+                limit = int(arg)
             else:
                 raise Exception('unhandled option')
-        return limit 
+        return limit
         
     def open_split_file(self):
         if self.count_publications % self.split_publications == 0:
             file_num = self.count_publications / self.split_publications
             if file_num > 0:
                 self.close_output_file()
-            self.open_output_file(os.path.join(config.DOWNLOAD_DIR, 'harvester', self.name, 'publication-{}.xml'.format(file_num)))   
+            self.open_output_file(os.path.join(config.DOWNLOAD_DIR, 'harvester', self.name, 'publication-{}.xml'.format(file_num)))
         
     def stop_harvest(self):
         self.close_output_file()
         self.logger.info('stop')
     
     def check_stop_harvest(self):
-        return self.limit and self.count_publications >= self.limit        
+        return self.limit and self.count_publications >= self.limit

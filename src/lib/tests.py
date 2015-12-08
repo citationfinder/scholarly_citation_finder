@@ -17,7 +17,7 @@ class UtilTest(TestCase):
     
     def test_url_not_well_formed(self):
         first = url_exits('http://example./paper.pdf')
-        self.assertEqual(first, False)    
+        self.assertEqual(first, False)
     
     #def test_url_does_not_exits(self):
     #    first = url_exits('http://example.org/paper.pdf')
@@ -25,7 +25,7 @@ class UtilTest(TestCase):
        
     #def test_pdf_exits(self):
     #    first = url_exits('http://www.informatik.uni-bremen.de/agra/doc/work/evohot04.pdf')
-    #    self.assertEqual(first, True)    
+    #    self.assertEqual(first, True)
     
     def test_download_file(self):
         filename = download_file(self.URL_PDF, config.TEST_DIR)
@@ -47,7 +47,8 @@ class UtilTest(TestCase):
     #        os.remove(filename)
     #    self.assertEqual(first, True)
 """
-    
+
+
 class ParserTest(TestCase):
 
     SAMPLE_XML = os.path.join(config.TEST_DIR, 'harvester', 'test_parser.xml')
@@ -68,4 +69,4 @@ class ParserTest(TestCase):
         
     def test_check_author_name_single_word(self):
         first = self.parser.check_author_name('Jr.')
-        self.assertEqual(first, False)  
+        self.assertEqual(first, False)

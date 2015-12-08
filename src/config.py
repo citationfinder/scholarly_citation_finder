@@ -1,6 +1,7 @@
 import os.path
 from search_for_citations.settings import BASE_DIR
 
+
 def get_abspath(path):
     return os.path.abspath(os.path.join(BASE_DIR, path))
 

@@ -7,6 +7,7 @@ import config
 from lib.utils import download_file
 from ...Parser import Parser
 
+
 def get_arguments():
     argv = sys.argv[1:]
     try:
@@ -23,12 +24,13 @@ def get_arguments():
             print('Usage: my-process.py -s <start> -e <end>')
             sys.exit()
         elif opt in ('-f', '--file'):
-            file_publications = arg.strip();
+            file_publications = arg.strip()
         elif opt in ('-l', '--limit'):
-            limit = int(arg);
+            limit = int(arg)
         else:
             raise Exception('unhandled option')
     return (file_publications, limit)
+
 
 class Extractor(Parser):
     
@@ -41,14 +43,14 @@ class Extractor(Parser):
         if os.path.isfile(file_publications):
             self.logger.info('start to extract from {}'.format(file_publications))
             self.input = codecs.open(file_publications, "r", "utf-8")
-            self.output.open('{}.tmp.xml'.format(file_publications[:-4])) # ending .xml is 4 characters long
+            self.output.open('{}.tmp.xml'.format(file_publications[:-4]))  # ending .xml is 4 characters long
 
             for line in self.input:
                 self.output.write(line)
                 if '<source>' in line:
                     line = line.replace('\t\t<source>', '')
                     url = line.replace('</source>\n', '')
-                    url = url.replace('&amp;', '&') # otherwise download from citeseer does not work
+                    url = url.replace('&amp;', '&')  # otherwise download from citeseer does not work
                     #url = etree.fromstring(line).text
                     
                     #tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
@@ -67,7 +69,7 @@ class Extractor(Parser):
         
     def stop_extract(self):
         self.logger.info('Stop extraction')
-        self.output.close()  
+        self.output.close()
         
     def check_stop_extract(self):
         return self.limit and self.count_extracted_papers >= self.limit

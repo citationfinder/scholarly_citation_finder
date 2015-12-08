@@ -1,5 +1,6 @@
 import subprocess32 as subprocess
 
+
 def external_process(process_args, input_data='', timeout=None):
     '''
    Pipes input_data via stdin to the process specified by process_args and returns the results
@@ -18,11 +19,11 @@ def external_process(process_args, input_data='', timeout=None):
       (0, 'With Data\n', '')
     '''
     process = subprocess.Popen(process_args,
-                              stdout=subprocess.PIPE,
-                              stdin=subprocess.PIPE,
-                              stderr=subprocess.PIPE)
+                               stdout=subprocess.PIPE,
+                               stdin=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
     try:
-            (stdout, stderr) =  process.communicate(input_data, timeout)
+            (stdout, stderr) = process.communicate(input_data, timeout)
     except subprocess.TimeoutExpired as e:
         # cleanup process
         # see https://docs.python.org/3.3/library/subprocess.html?highlight=subprocess#subprocess.Popen.communicate
@@ -33,9 +34,10 @@ def external_process(process_args, input_data='', timeout=None):
     exit_status = process.returncode
     return (exit_status, stdout, stderr)
 
+
 def external_process2(process_args):
     process = subprocess.Popen(process_args,
-                              stdout=None,
-                              stdin=None,
-                              stderr=None)
+                               stdout=None,
+                               stdin=None,
+                               stderr=None)
     return process

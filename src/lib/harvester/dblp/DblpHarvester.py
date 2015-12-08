@@ -3,6 +3,7 @@ from lxml import etree
 
 from ..common.Harvester import Harvester
 
+
 class DblpHarvester(Harvester):
     
     COLLABORATIONS = [
@@ -10,7 +11,7 @@ class DblpHarvester(Harvester):
         'inproceedings',
         'proceedings',
         'book',
-        'incollection',        
+        'incollection',
         'phdthesis',
         'mastersthesis',
         'www'
@@ -36,7 +37,7 @@ class DblpHarvester(Harvester):
     }
     
     def __init__(self):
-        super(DblpHarvester, self).__init__('dblp')   
+        super(DblpHarvester, self).__init__('dblp')
     
     def harvest(self, filename):
         if os.path.isfile(filename):
@@ -112,4 +113,4 @@ class DblpHarvester(Harvester):
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
-        #clear chunks
+        # clear chunks

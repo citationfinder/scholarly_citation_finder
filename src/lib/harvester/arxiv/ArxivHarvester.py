@@ -18,8 +18,8 @@ class ArxivHarvester(Harvester):
         client = Client(self.OAI_PHM_URL, registry)
         #harvestStart = datetime.strptime("2014-06-17T23:59:59Z", "%Y-%m-%dT%H:%M:%SZ")
         for record in client.listRecords(metadataPrefix='oai_dc'):
-            header = record[0];
-            metadata = record[1];
+            header = record[0]
+            metadata = record[1]
     
             title = ''
             date = ''
@@ -47,9 +47,9 @@ class ArxivHarvester(Harvester):
             
             # <identifier>oai:arXiv.org:10.1.1.1.1519</identifier>
             arxiv_id = string.replace(header.identifier(), 'oai:arXiv.org:', '')
-            source = 'http://arxiv.org/pdf/'+arxiv_id+'.pdf'            
+            source = 'http://arxiv.org/pdf/' + arxiv_id + '.pdf'
             
-            self.open_split_file()            
+            self.open_split_file()
             self.parse_publication(
                 authors=metadata['creator'],
                 title=title,
@@ -62,6 +62,5 @@ class ArxivHarvester(Harvester):
             
             if self.check_stop_harvest():
                 break
-            
 
         self.stop_harvest()

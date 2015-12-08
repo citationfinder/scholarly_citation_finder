@@ -1,7 +1,8 @@
 from lxml import etree
 from io import BytesIO
 
-class TeiParser():
+
+class TeiParser:
     
     def __init__(self, name=''):
         self.name = name
@@ -24,9 +25,9 @@ class TeiParser():
         
         tmp_author_name = ''
         
-        for _, elem in context:     
+        for _, elem in context:
             if elem.tag == 'forename':
-                tmp_author_name += elem.text+' '
+                tmp_author_name += elem.text + ' '
             elif elem.tag == 'surname':
                 tmp_author_name = elem.text + ', ' + tmp_author_name
             elif elem.tag == 'author':
@@ -55,7 +56,7 @@ class TeiParser():
                     
             elif elem.tag == 'biblstruct':
                 callback_biblstruct(
-                    context = elem.attrib.get('xml:id'),
+                    context=elem.attrib.get('xml:id'),
                     title=title,
                     date=date,
                     booktitle=booktitle,
@@ -66,11 +67,11 @@ class TeiParser():
                     publisher=publisher,
                     extractor=self.name,
                     
-                    authors=author_array,             
+                    authors=author_array,
                 )
                 
                 del author_array[:]
             elem.clear()
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
-        del context                           
+        del context

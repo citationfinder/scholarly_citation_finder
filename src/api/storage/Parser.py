@@ -1,9 +1,12 @@
 import os.path
 from lxml import etree
+
 from core.models import Publication, Citation, Author
+from lib.Parser import Parser
+
 
 class Parser:
-    
+
     PUBLICATION_ATTRIBUTES = [
         u'title',
         u'date',
@@ -20,14 +23,14 @@ class Parser:
         u'arxiv_id',
         u'extractor',
         u'source']
-    
+
     def store_from_xml_file(self, filelist):
         if os.path.isfile(filelist):
             context = etree.iterparse(filelist, events=('start', 'end'))
             self._fast_iter(context)
         else:
             raise IOError('File {} not found'.format(filelist))
-        
+
     def parse_author(self, last_name):
         try:
             author = Author.objects.get(last_name=last_name)
@@ -35,15 +38,15 @@ class Parser:
             author = Author(last_name=last_name)
             author.save()
         return author
-    
-    def store_publication(self, publication, authors = [], citations = []):
+
+    def store_publication(self, publication, authors=[], citations=[]):
         publication.save()
         for author in authors:
             publication.authors.add(author)
         for citation in citations:
             citation.publication = publication
-            citation.save()        
-        
+            citation.save()
+
     def _fast_iter(self, context):
         publication = Publication()
         publication_citations = []
@@ -53,15 +56,15 @@ class Parser:
         reference_authors = []
 
         is_citation = False
-        
+
         for event, elem in context:
-            
+
             if event in 'start':
                 if elem.tag in 'citation':
                     is_citation = True
                     publication_citations.append(Citation())
                 continue
-            
+
             if elem.tag in self.PUBLICATION_ATTRIBUTES and elem.text:
                 if is_citation:
                     setattr(reference, elem.tag, elem.text)
@@ -77,9 +80,9 @@ class Parser:
                 # Reset
                 publication_citations = []
                 publication_authors = []
-                publication = Publication()                
-            
-            # Beginning of an citation    
+                publication = Publication()
+
+            # Beginning of an citation
             elif elem.tag in 'context' and elem.text:
                 publication_citations[-1].context = elem.text
             elif elem.tag in 'citation':
@@ -89,8 +92,8 @@ class Parser:
                 # Reset
                 reference = Publication()
                 reference_authors = []
-                
-            
+
+
 """
 import os.path
 import codecs, StringIO
@@ -116,7 +119,7 @@ class Parser:
                     buffer = None
                     
                 if buffer is not None:
-                    buffer += line     
+                    buffer += line
         else:
             raise IOError('File {} not found'.format(filelist))
         
