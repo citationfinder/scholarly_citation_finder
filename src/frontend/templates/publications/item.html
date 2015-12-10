@@ -10,7 +10,7 @@
 {% endif %}
 <br>
 {% for author in item.authors.all %}
-	<a href="/frontend/authors/{{author.id}}">{{author.last_name}}</a>,
+	{% include "authors/item.html" with item=author %},
 {% endfor %}<br>
 {% if item.abstract %}
 	<p><i>{{item.abstract}}</i></p>

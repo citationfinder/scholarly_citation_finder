@@ -3,6 +3,16 @@
 {% if author %}
 	<h2>{{ author.last_name }}</h2>
 	
+	<h3>Coauthors ({{ coauthors|length }})</h3>
+	{% if coauthors %}
+		<ul>
+		{% for i in coauthors %}
+			<li>{% include "authors/item.html" with item=i %}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No</p>
+	{% endif %}
 	<h3>Publications ({{ publications|length }})</h3>
 	{% if publications %}
 		<ol>
