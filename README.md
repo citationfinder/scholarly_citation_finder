@@ -20,9 +20,9 @@ Create folders:
  |- log 
 ```
 
-#### Install dependencies ####
+#### Install dependencies
 
-**For Ubuntu **
+**For Ubuntu**
 
 ```
 sudo apt-get install python python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev
