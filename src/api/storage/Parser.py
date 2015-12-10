@@ -36,6 +36,13 @@ class Parser:
         publication.save()
         for author in authors:
             publication.authors.add(author)
+        # store coauthors
+        for author in authors:
+            for coauthor in authors:
+                if author.last_name not in coauthor.last_name:
+                    author.coauthors.add(coauthor)
+            author.save()
+        # store citations
         for citation in citations:
             citation.publication = publication
             citation.save()
