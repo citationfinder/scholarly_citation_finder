@@ -18,3 +18,6 @@ run_citeseer:
 
 run_grobid:
 	cd lib/grobid/grobid-service && mvn -Dmaven.test.skip=true jetty:run-war
+
+create_dep:
+	pip freeze > requirements.txt
