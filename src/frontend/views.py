@@ -18,6 +18,7 @@ def authors_details(request, author_id):
         author = Author.objects.get(pk=author_id)
         context = {
             'author': author,
+            'coauthors': author.coauthors.all(),
             'publications': author.publication_set.all(),
             'alphabet': list(string.ascii_uppercase)
         }
