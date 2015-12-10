@@ -4,6 +4,7 @@ from django.db import models
 class Author(models.Model):
     first_name = models.CharField(blank=True, null=True, max_length=100)
     last_name = models.CharField(blank=True, null=True, max_length=100)
+    coauthors = models.ManyToManyField('self')
 
     def __unicode__(self):
         return unicode(self.last_name)
