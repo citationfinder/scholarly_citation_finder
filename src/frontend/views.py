@@ -56,7 +56,7 @@ def publications_details(request, publication_id):
             'publication': publication,
             'references': Citation.objects.filter(publication=publication),
             'citations': Citation.objects.filter(reference=publication),
-            'urls': PublicationUrl.objects.filter(publication=publication),
+            'urls': publication.publicationurl_set.filter(publication=publication),
             'alphabet': list(string.ascii_uppercase)
         }
     except(ObjectDoesNotExist):

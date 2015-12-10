@@ -15,4 +15,5 @@
 {% if item.abstract %}
 	<p><i>{{item.abstract}}</i></p>
 {% endif %}
-<p style="color:grey">date: {{item.date}}, journal: {{item.journal}}, volume: {{item.volume}}, numer: {{item.number}}, pages: {{item.pages}}, publisher: {{item.publisher}}</p>
+<p style="color:grey">date: {{item.date}}, journal: {{item.journal}}, volume: {{item.volume}}, numer: {{item.number}}, pages: {{item.pages_from}}--{{item.pages_to}}, series: {{item.series}}<br>
+publisher: {{item.publisher}}, isbn: {{item.isbn}}, doi: <a href="http://dx.doi.org/{{item.doi}}" target="_blank">{{item.doi}}</a></p>
