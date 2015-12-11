@@ -4,6 +4,9 @@ run:
 clear:
 	python src/manage.py flush
 
+setup:
+	python src/manage.py migrate
+
 tests:
 	python src/manage.py test
 
