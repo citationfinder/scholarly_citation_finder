@@ -4,7 +4,6 @@ bibtexparser==0.6.1
 clint==0.5.1
 Django==1.8.5
 lxml==3.4.4
-MySQL-python==1.2.5
 plumbum==1.6.0
 pprintpp==0.2.3
 pyoai==2.4.4
