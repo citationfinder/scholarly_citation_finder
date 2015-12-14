@@ -16,20 +16,27 @@ def create_dir(name):
         os.makedirs(name)
 
 
-def unzip_file(filename):
+def unzip_file(filename, huge_file=True):
     if os.path.isfile(filename):
         logging.debug('Unzip %s' % filename)
         outfilename = filename[:-3]
-        inF = gzip.open(filename, 'rb')
-        outF = open(outfilename, 'wb')
-        outF.write(inF.read())
-        inF.close()
-        outF.close()
+        input = gzip.open(filename, 'rb')
+        output = open(outfilename, 'wb')
+        if huge_file:
+            while True:
+                line = input.readline()
+                if not line:
+                    break
+                output.write(line)
+        else:          
+            output.write(input.read())
+        input.close()
+        output.close()
         return outfilename
     else:
-        logging.warn('No file to unzip!')
+        logging.warn('{} is not a file (to unzip)'.format(filename))
         return False
-
+    
 
 def download_file(url, path=None, name=None):
     """
