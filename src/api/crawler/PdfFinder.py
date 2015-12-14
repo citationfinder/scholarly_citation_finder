@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class SearchPdf:
+class PdfFinder:
 
     MIMETYPE_PDF = 'application/pdf'
     MIMETYPE_HTML = 'text/html'
