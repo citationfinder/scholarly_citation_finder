@@ -59,6 +59,7 @@ class Parser(object):
         return False
     
     def open_output_file(self, filename):
+        self.logger.debug('open output file: {}'.format(filename))
         self.output.open(filename)
         self.output.write_declaration()
         self.output.write_start_tag(self.MAIN_TAG)
@@ -87,7 +88,7 @@ class Parser(object):
 
     def parse_publication2(self, entry, check_author=True):
         if not self._check_publication_is_valid(entry):
-            self.logger.warn("No title or authors")
+            #self.logger.warn("No title or authors")
             return False
         
         self.count_publications += 1

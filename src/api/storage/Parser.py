@@ -41,7 +41,6 @@ class Parser:
             for coauthor in authors:
                 if author.last_name not in coauthor.last_name:
                     author.coauthors.add(coauthor)
-            author.save()
         # store citations
         for citation in citations:
             citation.publication = publication
