@@ -11,17 +11,21 @@ class GoogleScholar:
     
     SCHOLAR_PATH = os.path.join('lib', 'scholar.py', 'scholar.py')
     
+    def _parse_output(self, csv):   
+        split = csv.split('|')
+        if len(split) >= 7:
+            url_pdf = split[6]
+            return url_pdf
+        return False
+    
     def get_pdf(self, title):
         
         try:
-            status, stdout, stderr = external_process(['python', self.SCHOLAR_PATH, '--phrase', title, '-c 1', '--no-citations'])
-            print(stderr)
-            
+            status, stdout, stderr = external_process(['python', self.SCHOLAR_PATH, '--phrase', title, '-c 1', '--no-citations', '--csv'])            
             if status == 0:
-                return stdout
+                return self._parse_output(stdout)
             else:
                 logger.warn('Unexpected return code {}, error may: {}'.format(status, stderr))
-                return False
         except ProcessError as e:
             logger.warn(str(e))
         
