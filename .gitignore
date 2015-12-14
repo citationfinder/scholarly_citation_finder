@@ -1,9 +1,13 @@
+# Generated files
+/doc/
 /lib/
-# Temp files
-log/
-downloads/
 *.sqlite3
 *.sqlite3-journal
+
+# Temporary files
+/log/
+/downloads/
+
 
 ############
 ## Python
@@ -11,6 +15,7 @@ downloads/
  
 *.pyc
 __pycache__/
+
 
 ############
 ## Eclipse PyDev
