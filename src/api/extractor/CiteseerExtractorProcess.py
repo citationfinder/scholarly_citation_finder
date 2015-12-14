@@ -8,7 +8,7 @@ class CiteseerExtractorProcess(ExtractorProcess):
 
     PATH = 'lib.extractor.citeseer'
 
-    def extract(self, filename=None, filelist=None, limit):
+    def extract(self, filename=None, filelist=None, limit=None):
 
         if filelist:
             params = ''
