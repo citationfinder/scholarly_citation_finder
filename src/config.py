@@ -1,5 +1,5 @@
 import os.path
-from search_for_citations.settings import BASE_DIR
+from search_for_citations.settings.development import BASE_DIR
 
 
 def get_abspath(path):

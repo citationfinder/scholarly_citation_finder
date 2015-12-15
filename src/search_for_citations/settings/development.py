@@ -81,9 +81,24 @@ WSGI_APPLICATION = 'search_for_citations.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'd': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    #http://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/
+    'e': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sfc',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1'
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sfc',
+        'USER': 'sfc',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1'
     }
 }
 
