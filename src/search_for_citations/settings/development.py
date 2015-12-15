@@ -95,9 +95,9 @@ DATABASES = {
     },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sfc',
-        'USER': 'sfc',
-        'PASSWORD': 'root',
+        'NAME': 'application_name',
+        'USER': 'application_name',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1'
     }
 }
