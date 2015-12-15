@@ -1,20 +1,14 @@
 run:
-	python src/manage.py runserver
+	python manage.py runserver
 	
 clear:
-	python src/manage.py flush
+	python manage.py flush
 
 setup:
-	python src/manage.py migrate
+	python manage.py migrate
 
 tests:
-	python src/manage.py test
-
-test_core:
-	python src/manage.py test core
-	
-test_lib:
-	python src/manage.py test lib
+	python manage.py test
 	
 run_citeseer:
 	cd lib/CiteSeerExtractor/src && python service.py 8081
