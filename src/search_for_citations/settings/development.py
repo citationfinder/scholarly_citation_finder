@@ -140,7 +140,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.abspath(os.path.join(BASE_DIR, '../log', 'debug.log')),
+            'filename': os.path.abspath(os.path.join(BASE_DIR, '../../log', 'debug.log')),
             'formatter': 'verbose'
         },
         'console': {
