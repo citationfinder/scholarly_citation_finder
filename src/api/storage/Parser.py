@@ -13,10 +13,11 @@ class Parser:
     PUBLICATION_ATTRIBUTES = Parser.PUBLICATION_ATTRIBUTES
 
     def store_from_xml_file(self, filelist):
-        logger.debug('start')
         if os.path.isfile(filelist):
+            logger.debug('start')
             context = etree.iterparse(filelist, events=('start', 'end'), html=True)
             self._fast_iter(context)
+            logger.debug('end')
         else:
             raise IOError('File {} not found'.format(filelist))
 
