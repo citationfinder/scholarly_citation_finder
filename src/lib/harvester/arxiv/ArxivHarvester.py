@@ -9,10 +9,10 @@ class ArxivHarvester(Harvester):
     
     OAI_PHM_URL = 'http://export.arxiv.org/oai2'
     
-    def __init__(self):
-        super(ArxivHarvester, self).__init__('arxiv')
+    def __init__(self, **kwargs):
+        super(ArxivHarvester, self).__init__('arxiv', **kwargs)
     
-    def harvest(self):
+    def harvest(self, _from=None):
         registry = MetadataRegistry()
         registry.registerReader('oai_dc', oai_dc_reader)
         client = Client(self.OAI_PHM_URL, registry)

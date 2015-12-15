@@ -36,8 +36,8 @@ class DblpHarvester(Harvester):
         'ee': 'urls'
     }
     
-    def __init__(self):
-        super(DblpHarvester, self).__init__('dblp')
+    def __init__(self, **kwargs):
+        super(DblpHarvester, self).__init__('dblp', **kwargs)
     
     def harvest(self, filename):
         if os.path.isfile(filename):

@@ -17,10 +17,10 @@ class CiteseerxHarvester(Harvester):
         #subject
     }
     
-    def __init__(self):
-        super(CiteseerxHarvester, self).__init__('citeseerx')
+    def __init__(self, **kwargs):
+        super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
     
-    def harvest(self, _from='2015-12-07'):
+    def harvest(self, _from=None):
         list_records_options = {
             'metadataPrefix': 'oai_dc'
         }
