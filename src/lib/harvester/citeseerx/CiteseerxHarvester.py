@@ -1,8 +1,9 @@
 import string
-
-from ..common.Harvester import Harvester
 from sickle import Sickle
 from sickle.oaiexceptions import BadArgument
+
+from ..common.Harvester import Harvester
+
 
 class CiteseerxHarvester(Harvester):
     
@@ -57,7 +58,7 @@ class CiteseerxHarvester(Harvester):
                         }
                     result_entry['urls'].append(url)
                 for field in self.FIELD_MAPPING:
-                    if metadata[field]:
+                    if field in metadata:
                         result_entry[self.FIELD_MAPPING[field]] = metadata[field][0]
                 
                 # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
