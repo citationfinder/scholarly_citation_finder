@@ -1,8 +1,6 @@
+import config
 from core.process_manager.Process import HarvesterProcess
 from core.process_manager.utils import external_process2
-
-import logging
-logger = logging.getLogger()
 
 
 class DblpHarvesterProcess(HarvesterProcess):
@@ -10,11 +8,11 @@ class DblpHarvesterProcess(HarvesterProcess):
     PATH = 'lib.harvester.dblp'
 
     def harvest(self, limit=None):
-        params = ''
+        process_args = ['python', '-m', self.PATH]
         if limit:
-            params += '-l {}'.format(limit)
+            process_args.append('-l {}'.format(limit))
 
-        external_process2(['python', '-m', self.PATH, params])
+        external_process2(process_args, cwd=config.HARVESTER_DBLP_DIR)
 
     """
     def harvest(self, config = None):

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 
+import config
 from core.process_manager.Process import ExtractorProcess
 from core.process_manager.utils import external_process2
 
@@ -15,7 +16,7 @@ class GrobidExtractorProcess(ExtractorProcess):
             if limit:
                 params += '-l {}'.format(limit)
             
-            external_process2(['python', '-m', self.PATH, params])
+            external_process2(['python', '-m', self.PATH, params], cwd=config.EXTRACTOR_GROBID_DIR)
             return HttpResponse('Start {} process'.format(self.PATH))
 
         return HttpResponse('Nothing to do')

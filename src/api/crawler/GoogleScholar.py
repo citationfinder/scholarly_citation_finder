@@ -15,7 +15,9 @@ class GoogleScholar:
         split = csv.split('|')
         if len(split) >= 7:
             url_pdf = split[6]
-            return url_pdf
+            if url_pdf is not ' ':
+                logger.debug('found: {}'.format(url_pdf))
+                return url_pdf
         return False
     
     def get_pdf(self, title):
@@ -26,6 +28,7 @@ class GoogleScholar:
                 return self._parse_output(stdout)
             else:
                 logger.warn('Unexpected return code {}, error may: {}'.format(status, stderr))
+                logger.warn('                           output is: {}'.format(stdout))
         except ProcessError as e:
             logger.warn(str(e))
         

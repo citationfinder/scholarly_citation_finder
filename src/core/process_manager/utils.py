@@ -35,9 +35,10 @@ def external_process(process_args, input_data='', timeout=None):
     return (exit_status, stdout, stderr)
 
 
-def external_process2(process_args):
+def external_process2(process_args, cwd=None):
     process = subprocess.Popen(process_args,
                                stdout=None,
                                stdin=None,
-                               stderr=None)
+                               stderr=None,
+                               cwd=cwd)
     return process

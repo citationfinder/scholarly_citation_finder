@@ -7,7 +7,8 @@ from .ArxivHarvesterProcess import ArxivHarvesterProcess
 
 def citeseerx_index(request):
     process = CiteseerxHarvesterProcess()
-    process.harvest(limit=request.GET.get('limit', None))
+    process.harvest(limit=request.GET.get('limit', None),
+                    _from=request.GET.get('from', None))
     return HttpResponse('Start CiteseerxHarvester process')
 
 
@@ -19,5 +20,6 @@ def dblp_index(request):
 
 def arxiv_index(request):
     process = ArxivHarvesterProcess()
-    process.harvest(limit=request.GET.get('limit', None))
+    process.harvest(limit=request.GET.get('limit', None),
+                    _from=request.GET.get('from', None))
     return HttpResponse('Start ArxivHarvester process')

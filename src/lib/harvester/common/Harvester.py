@@ -7,33 +7,38 @@ from lib import utils
 from ...Parser import Parser
 
 
+def get_arguments():
+    argv = sys.argv[1:]
+    try:
+        opts, _ = getopt.getopt(argv, 'hl:f:', ['help', 'limit=', 'from='])
+    except getopt.GetoptError as e:
+        print(str(e))
+        print('Usage: -h for help')
+        sys.exit(2)
+    
+    limit = None
+    _from = None
+    for opt, arg in opts:
+        if opt == '-h':
+            print('Usage: my-process.py -l 2 -f 2015-12-15')
+            sys.exit()
+        elif opt in ('-l', '--limit'):
+            limit = int(arg)
+        elif opt in ('-f', '--from'):
+            _from = arg.lstrip()
+        else:
+            raise Exception('unhandled option')
+    return (limit, _from)
+
+
 class Harvester(Parser):
     
-    def __init__(self, name):
+    def __init__(self, name, limit=None):
         super(Harvester, self).__init__('{}'.format(name))
         utils.create_dir(os.path.join(config.DOWNLOAD_DIR, 'harvester', name))
         self.split_publications = 10000
-        self.limit = self.get_arguments(sys.argv[1:])
+        self.limit = limit
         self.logger.info('start')
-    
-    def get_arguments(self, argv):
-        try:
-            opts, _ = getopt.getopt(argv, 'hl:', ['help', 'limit='])
-        except getopt.GetoptError as e:
-            print(str(e))
-            print('Usage: -h for help')
-            sys.exit(2)
-    
-        limit = None
-        for opt, arg in opts:
-            if opt == '-h':
-                print('Usage: my-process.py -s <start> -e <end>')
-                sys.exit()
-            elif opt in ('-l', '--limit'):
-                limit = int(arg)
-            else:
-                raise Exception('unhandled option')
-        return limit
         
     def open_split_file(self):
         if self.count_publications % self.split_publications == 0:
