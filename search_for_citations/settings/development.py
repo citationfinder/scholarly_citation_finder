@@ -118,9 +118,9 @@ STATIC_ROOT = os.getenv('STATIC_ROOT',
 STATIC_URL = '/static/'
 
 # Additional locations of static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, 'static'),
+#)
 
 
 # Logging
