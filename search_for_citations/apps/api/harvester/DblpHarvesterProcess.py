@@ -1,4 +1,3 @@
-from search_for_citations import config
 from ...core.process_manager.Process import HarvesterProcess
 from ...core.process_manager.utils import external_process2
 
@@ -12,7 +11,7 @@ class DblpHarvesterProcess(HarvesterProcess):
         if limit:
             process_args.append('-l {}'.format(limit))
 
-        external_process2(process_args, cwd=config.HARVESTER_DBLP_DIR)
+        external_process2(process_args)
 
     """
     def harvest(self, config = None):

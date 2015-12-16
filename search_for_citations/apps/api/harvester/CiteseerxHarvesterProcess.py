@@ -1,4 +1,3 @@
-from search_for_citations import config
 from ...core.process_manager.Process import HarvesterProcess
 from ...core.process_manager.utils import external_process2
 
@@ -13,5 +12,5 @@ class CiteseerxHarvesterProcess(HarvesterProcess):
             process_args.append('-l {}'.format(limit))
         if _from:
             process_args.append('-f {}'.format(_from))
-    
-        external_process2(process_args, cwd=config.HARVESTER_CITESEERX_DIR)
+
+        external_process2(process_args)

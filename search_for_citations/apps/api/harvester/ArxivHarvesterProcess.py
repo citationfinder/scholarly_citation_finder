@@ -1,4 +1,3 @@
-from search_for_citations import config
 from ...core.process_manager.Process import HarvesterProcess
 from ...core.process_manager.utils import external_process2
 
@@ -14,4 +13,4 @@ class ArxivHarvesterProcess(HarvesterProcess):
         if _from:
             process_args.append('-f {}'.format(_from))
 
-        external_process2(process_args, cwd=config.HARVESTER_ARXIV_DIR)
+        external_process2(process_args)
