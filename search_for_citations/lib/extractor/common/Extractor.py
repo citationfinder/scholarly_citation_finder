@@ -54,7 +54,8 @@ class Extractor(Parser):
                     #url = url.replace('&amp;', '&')  # otherwise download from citeseer does not work
                     url = etree.fromstring(line).text
                     self.logger.debug('url: {}'.format(url))
-                    tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
+
+                    tmp_file = download_file_pdf(url, path=config.DOWNLOAD_TMP_DIR, name='{}.pdf'.format(self.count_extracted_papers))
                     #tmp_file = os.path.join(config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
                     if tmp_file and not self.check_stop_extract():
                         self.count_extracted_papers += 1

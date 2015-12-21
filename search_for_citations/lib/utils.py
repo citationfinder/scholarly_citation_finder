@@ -38,7 +38,10 @@ def unzip_file(filename, huge_file=True):
         return False
     
 
-def download_file(url, path=None, name=None):
+def download_file_pdf(url, **kwargs):
+    return self.download_file(url, expected_content_type='application/pdf', **kwargs)
+
+def download_file(url, path=None, name=None, expected_content_type=None):
     """
     Downloads a single file. Can handle large files.
     """
@@ -49,6 +52,10 @@ def download_file(url, path=None, name=None):
     try:
         # NOTE the stream=True parameter
         r = requests.get(url, stream=True)
+        r_content_type = r.headers['content-type']
+        if expected_content_type and expected_content_type is not r_content_type:
+            logging.warn('expected content-type {}, but was {}'.format(expected_content_type, r_content_type))
+            return False
         with open(local_filename, 'wb') as f:
             logging.debug('Downloading %s' % local_filename)
             #total_length = int(r.headers.get('content-length'))
