@@ -79,6 +79,10 @@ class Parser(object):
     def _check_publication_is_valid(self, entry):
         return 'title' in entry and 'authors' in entry
 
+    def _parse_pubication_keywords(self, keywords):
+        for keyword in keywords:
+            self.output.write_element('keyword', keyword)
+
     def _parse_publication_urls(self, urls):
         for url in urls:
             if isinstance(url, dict):
@@ -106,6 +110,8 @@ class Parser(object):
                         self.logger.warn('Not an author name: %s' % author)
                 else:
                     self.output.write_element('author', author)
+        if 'keywords' in entry:
+            self._parse_pubication_keywords(entry['keywords'])
         if 'urls' in entry:
             self._parse_publication_urls(entry['urls'])
         

@@ -46,6 +46,20 @@ class Publication(models.Model):
         return unicode(self.title)
 
 
+class PublicationKeyword(models.Model):
+    publication = models.ForeignKey(Publication)
+    name = models.CharField(max_length=150)
+    
+
+class PublicationReference(models.Model):
+    publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
+    reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
+    #publication = models.OneToOneField(Publication, related_name='%(class)s_publication')
+    #reference = models.OneToOneField(Publication, related_name='%(class)s_citation')
+    context = models.TextField(blank=True, null=True)
+    self = models.BooleanField(default=False)
+
+
 class PublicationUrl(models.Model):
     MIME_TYPE_PDF = 'application/pdf'
     MIME_TYPE_HTML = 'text/html'
@@ -60,12 +74,3 @@ class PublicationUrl(models.Model):
     
     def __unicode__(self):
         return unicode(self.url)
-
-
-class PublicationReference(models.Model):
-    publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
-    reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
-    #publication = models.OneToOneField(Publication, related_name='%(class)s_publication')
-    #reference = models.OneToOneField(Publication, related_name='%(class)s_citation')
-    context = models.TextField(blank=True, null=True)
-    self = models.BooleanField(default=False)

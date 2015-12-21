@@ -38,6 +38,8 @@ class CiteseerxHarvester(Harvester):
         
             if 'creator' in metadata:
                 result_entry['authors'] = metadata['creator']
+            if 'subject' in metadata:
+                result_entry['keywords'] = metadata['subject']
             if 'date' in metadata:
                 date = metadata['date'][-1]
                 '''

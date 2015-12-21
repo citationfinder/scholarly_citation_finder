@@ -36,6 +36,8 @@ class ArxivHarvester(Harvester):
             
             if 'creator' in metadata:
                 result_entry['authors'] = metadata['creator']
+            if 'subject' in metadata:
+                result_entry['keywords'] = metadata['subject']
             if 'date' in metadata:
                 result_entry['date'] = metadata['date'][-1]
             if 'identifier' in metadata:
