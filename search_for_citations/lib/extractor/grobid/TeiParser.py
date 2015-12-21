@@ -48,8 +48,8 @@ class TeiParser:
                     number = elem.text
                 elif elem.attrib['unit'] == 'page':
                     pages = '{}--{}'.format(elem.attrib.get('from'), elem.attrib.get('to'))
-            elif elem.tag == 'date':
-                if elem.attrib['type'] == 'published':
+            elif elem.tag == 'date' and 'when' in elem.attrib:
+                if 'type' in elem.attrib and elem.attrib['type'] == 'published':
                     date = elem.attrib['when']
             elif elem.tag == 'publisher':
                 publisher = elem.text
