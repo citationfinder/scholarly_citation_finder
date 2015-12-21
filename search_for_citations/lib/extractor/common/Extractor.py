@@ -2,6 +2,7 @@ import codecs
 import getopt
 import os.path
 import sys
+from lxml import etree
 
 from search_for_citations import config
 from ...utils import download_file
@@ -47,14 +48,14 @@ class Extractor(Parser):
 
             for line in self.input:
                 self.output.write(line)
-                if '<source>' in line:
-                    line = line.replace('\t\t<source>', '')
-                    url = line.replace('</source>\n', '')
-                    url = url.replace('&amp;', '&')  # otherwise download from citeseer does not work
-                    #url = etree.fromstring(line).text
-                    
-                    #tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
-                    tmp_file = os.path.join(config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
+                if '<url type="application/pdf">http://citeseerx.ist.psu.edu/' in line:
+                    #line = line.replace('\t\t<source>', '')
+                    #url = line.replace('</source>\n', '')
+                    #url = url.replace('&amp;', '&')  # otherwise download from citeseer does not work
+                    url = etree.fromstring(line).text
+                    self.logger.debug('url: {}'.format(url))
+                    tmp_file = download_file(url, config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
+                    #tmp_file = os.path.join(config.DOWNLOAD_TMP_DIR, '{}.pdf'.format(self.count_extracted_papers))
                     if tmp_file and not self.check_stop_extract():
                         self.count_extracted_papers += 1
                         func(tmp_file)
