@@ -49,13 +49,17 @@ class Parser(object):
         self.logger = logging.getLogger()
 
     def check_author_name(self, name):
-        # Milena Mihail, et al.
-        name = name.strip().replace(', et al.', '')
-        # block: n.n., S., Jr., A.
-        if ' ' in name:
-            # block: University, Università, Universität, Université
-            if not any(extension in name for extension in ('Universit', 'et al.')):
-                return name
+        try:
+            # Milena Mihail, et al.
+            name = name.strip().replace(', et al.', '')
+            # block: n.n., S., Jr., A.
+            if ' ' in name:
+                # block: University, Università, Universität, Université
+                if not any(extension in name for extension in ('Universit', 'et al.')):
+                    return name
+        except(AttributionError) as e:
+            self.logger(str(e))
+
         return False
     
     def open_output_file(self, filename):
