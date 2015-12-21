@@ -57,7 +57,7 @@ class Parser(object):
                 # block: University, Università, Universität, Université
                 if not any(extension in name for extension in ('Universit', 'et al.')):
                     return name
-        except(AttributionError) as e:
+        except(AttributeError) as e:
             self.logger(str(e))
 
         return False

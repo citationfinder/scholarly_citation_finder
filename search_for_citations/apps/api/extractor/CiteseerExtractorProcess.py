@@ -9,9 +9,9 @@ class CiteseerExtractorProcess(ExtractorProcess):
     PATH = 'search_for_citations.lib.extractor.citeseer'
 
     def extract(self, filename=None, filelist=None, limit=None):
-
         if filelist:
             process_args = ['python', '-m', self.PATH]
+            process_args.append('-f {}'.format(filelist))
             if limit:
                 process_args.append('-l {}'.format(limit))
             
