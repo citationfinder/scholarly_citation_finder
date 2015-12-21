@@ -39,7 +39,8 @@ def unzip_file(filename, huge_file=True):
     
 
 def download_file_pdf(url, **kwargs):
-    return self.download_file(url, expected_content_type='application/pdf', **kwargs)
+    return download_file(url, expected_content_type='application/pdf', **kwargs)
+
 
 def download_file(url, path=None, name=None, expected_content_type=None):
     """

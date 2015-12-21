@@ -5,7 +5,7 @@ import sys
 from lxml import etree
 
 from search_for_citations import config
-from ...utils import download_file
+from ...utils import download_file_pdf
 from ...Parser import Parser
 
 
@@ -48,6 +48,7 @@ class Extractor(Parser):
 
             for line in self.input:
                 self.output.write(line)
+                # TODO: Handle multiple URLs
                 if '<url type="application/pdf">http://citeseerx.ist.psu.edu/' in line:
                     #line = line.replace('\t\t<source>', '')
                     #url = line.replace('</source>\n', '')
