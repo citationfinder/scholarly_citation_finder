@@ -68,13 +68,13 @@ class Parser(object):
         self.output.write_close_tag(self.MAIN_TAG)
         self.output.close()
     
-    def parse_citation(self, context=None, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
+    def parse_publication_reference(self, context=None, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
         self.count_citations += 1
         
-        self.output.write_start_tag('citation')
+        self.output.write_start_tag('reference')
         self.output.write_element('context', context, is_cdata=True)
         self.parse_publication(type, title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, arxiv_id, extractor, source)
-        self.output.write_close_tag('citation')
+        self.output.write_close_tag('reference')
 
     def _check_publication_is_valid(self, entry):
         return 'title' in entry and 'authors' in entry

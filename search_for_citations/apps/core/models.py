@@ -62,7 +62,7 @@ class PublicationUrl(models.Model):
         return unicode(self.url)
 
 
-class Citation(models.Model):
+class PublicationReference(models.Model):
     publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
     reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
     #publication = models.OneToOneField(Publication, related_name='%(class)s_publication')

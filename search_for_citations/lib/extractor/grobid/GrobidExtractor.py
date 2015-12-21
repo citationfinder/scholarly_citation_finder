@@ -30,7 +30,7 @@ class GrobidExtractor(Extractor):
     def _extract_references(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
         #return ExtractorResult(xml_result=xml)
-        return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_citation)
+        return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_publication_reference)
     
     """
     def _call_grobid_method2(self, input, method):

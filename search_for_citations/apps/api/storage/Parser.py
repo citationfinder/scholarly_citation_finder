@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 
 from search_for_citations.lib.Parser import Parser
-from ...core.models import Publication, Citation, Author, PublicationUrl
+from ...core.models import Author, Publication, PublicationReference, PublicationUrl
 
 
 class Parser:
@@ -32,7 +32,7 @@ class Parser:
     def parse_url(self, url, type=''):
         return PublicationUrl(url=url, type=type)
 
-    def store_publication(self, publication, authors=[], citations=[], urls=[]):
+    def store_publication(self, publication, authors=[], references=[], urls=[]):
         # TODO: check pub already exists
         publication.save()
         for author in authors:
@@ -42,66 +42,66 @@ class Parser:
             for coauthor in authors:
                 if author.last_name not in coauthor.last_name:
                     author.coauthors.add(coauthor)
-        # store citations
-        for citation in citations:
-            citation.publication = publication
-            citation.save()
+        # store references
+        for reference in references:
+            reference.publication = publication
+            reference.save()
         for url in urls:
             url.publication = publication
             url.save()
 
     def _fast_iter(self, context):
         publication = Publication()
-        publication_citations = []
+        publication_references = []
         publication_authors = []
         publication_urls = []
 
         reference = Publication()
         reference_authors = []
 
-        is_citation = False
+        is_reference = False
 
         for event, elem in context:
 
             if event in 'start':
-                if elem.tag in 'citation':
-                    is_citation = True
-                    publication_citations.append(Citation())
+                if elem.tag in 'reference':
+                    is_reference = True
+                    publication_references.append(PublicationReference())
                 continue
 
             # author
             if elem.tag in 'author' and elem.text:
-                if is_citation:
+                if is_reference:
                     reference_authors.append(self.parse_author(elem.text))
                 else:
                     publication_authors.append(self.parse_author(elem.text))
             # url
             elif elem.tag in 'url' and elem.text:
-                if not is_citation:
+                if not is_reference:
                     publication_urls.append(self.parse_url(elem.text, elem.get('type', '')))
             # other
             elif elem.tag in self.PUBLICATION_ATTRIBUTES and elem.text:
-                if is_citation:
+                if is_reference:
                     setattr(reference, elem.tag, elem.text)
                 else:
                     setattr(publication, elem.tag, elem.text)
             
             # publication
-            elif elem.tag in 'publication' and not is_citation:
-                self.store_publication(publication, publication_authors, publication_citations, publication_urls)
+            elif elem.tag in 'publication' and not is_reference:
+                self.store_publication(publication, publication_authors, publication_references, publication_urls)
                 # Reset
-                publication_citations = []
+                publication_references = []
                 publication_authors = []
                 publication_urls = []
                 publication = Publication()
 
-            # Beginning of an citation
+            # Beginning of an reference
             elif elem.tag in 'context' and elem.text:
-                publication_citations[-1].context = elem.text
-            elif elem.tag in 'citation':
-                is_citation = False
+                publication_references[-1].context = elem.text
+            elif elem.tag in 'reference':
+                is_reference = False
                 self.store_publication(reference, reference_authors)
-                publication_citations[-1].reference = reference
+                publication_references[-1].reference = reference
                 # Reset
                 reference = Publication()
                 reference_authors = []

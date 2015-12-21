@@ -87,8 +87,8 @@ class CiteseerExtractor(Extractor):
             #if elem.tag == 'context':
             #    context = elem.text
     
-            if elem.tag == 'citation':
-                self.parse_citation(
+            if elem.tag == 'reference':
+                self.parse_publication_reference(
                     context=citation_context,
                     title=title,
                     authors=author_array,
