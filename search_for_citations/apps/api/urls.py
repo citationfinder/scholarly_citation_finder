@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 
+
 urlpatterns = [
     url(r'^crawler/', include('search_for_citations.apps.api.crawler.urls')),
     url(r'^extractor/', include('search_for_citations.apps.api.extractor.urls')),

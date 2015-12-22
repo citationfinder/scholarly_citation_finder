@@ -33,13 +33,11 @@ class Process(object):
 
 class HarvesterProcess(Process):
     pass
-    #def harvest(self, params):
-    #    raise ProcessError('Override this method')
 
 
 class ExtractorProcess(Process):
     pass
 
 
-class ProcessError(Exception):
-    pass
+#class ProcessError(Exception):
+#    pass

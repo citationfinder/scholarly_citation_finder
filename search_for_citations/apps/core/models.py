@@ -50,12 +50,13 @@ class PublicationKeyword(models.Model):
     publication = models.ForeignKey(Publication)
     name = models.CharField(max_length=150)
     
+    def __unicode__(self):
+        return unicode(self.name)
+    
 
 class PublicationReference(models.Model):
     publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
     reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
-    #publication = models.OneToOneField(Publication, related_name='%(class)s_publication')
-    #reference = models.OneToOneField(Publication, related_name='%(class)s_citation')
     context = models.TextField(blank=True, null=True)
     self = models.BooleanField(default=False)
 
@@ -68,8 +69,9 @@ class PublicationUrl(models.Model):
         (MIME_TYPE_PDF, 'PDF'),
         (MIME_TYPE_HTML, 'HTML')
     )
+
     publication = models.ForeignKey(Publication)
-    type = models.CharField(max_length=50, default=MIME_TYPE_PDF, choices=MIME_TYPES)
+    type = models.CharField(max_length=50, default='', choices=MIME_TYPES)
     url = models.URLField()
     
     def __unicode__(self):

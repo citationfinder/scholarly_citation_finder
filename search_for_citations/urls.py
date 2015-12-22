@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('search_for_citations.apps.api.urls')),
     url(r'^frontend/', include('search_for_citations.apps.frontend.urls')),
+    url(r'^$', 'search_for_citations.apps.frontend.views.publications_index')
 ]

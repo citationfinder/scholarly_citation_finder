@@ -2,7 +2,7 @@ import string
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..core.models import Author, Publication, PublicationReference, PublicationUrl
+from ..core.models import Author, Publication, PublicationReference
     
     
 def authors_index(request):

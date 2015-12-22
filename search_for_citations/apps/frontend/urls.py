@@ -1,5 +1,7 @@
 from django.conf.urls import url
+
 from . import views
+
 
 urlpatterns = [
     url(r'^authors/$', views.authors_index, name='authors_index'),
