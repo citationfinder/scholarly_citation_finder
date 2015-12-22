@@ -62,8 +62,8 @@ class Extractor(Parser):
                         self.count_extracted_papers += 1
                         func(tmp_file)
                         
-                    #if self.check_stop_extract():
-                    #    break
+                    if self.check_stop_extract():
+                        break
 
             self.stop_extract()
             return True
