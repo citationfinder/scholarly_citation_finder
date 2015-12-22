@@ -1,6 +1,7 @@
 import os.path
 from lxml import etree
 import logging
+from django.db.backends.sqlite3.base import IntegrityError as IntegrityErrorSqlite
 from django.db.utils import IntegrityError
 logger = logging.getLogger(__name__)
 
@@ -54,6 +55,8 @@ class Parser:
             return True
         except(IntegrityError) as e:
             logger.warn(str(e))
+        except(IntegrityErrorSqlite) as e:
+            logger.error(str(e))
             return False
 
     def _fast_iter(self, context):
