@@ -12,10 +12,11 @@ class XmlFileWriter:
         self.tabbing = ''
     
     def write(self, line):
-        self.output.write(line)
+        if self.output:
+            self.output.write(line)
         
     def _write_line(self, line):
-        self.output.write('%s%s\n' % (self.tabbing, line))
+        self.write('%s%s\n' % (self.tabbing, line))
         
     def write_start_tag(self, tag):
         self._write_line('<%s>' % tag)
@@ -42,4 +43,5 @@ class XmlFileWriter:
             raise IOError('Path to file {} not found: {}'.format(filename, e))
 
     def close(self):
-        self.output.close()
+        if self.output:
+            self.output.close()
