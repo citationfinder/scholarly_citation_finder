@@ -2,7 +2,7 @@ import os.path
 import sys
 
 from search_for_citations import config
-from ..common.Harvester import get_arguments
+from ..Harvester import get_arguments
 from .DblpDatabaseDownloader import DblpDatabaseDownloader
 from .DblpHarvester import DblpHarvester
 

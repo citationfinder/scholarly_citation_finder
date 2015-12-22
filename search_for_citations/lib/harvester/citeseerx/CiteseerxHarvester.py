@@ -2,7 +2,7 @@ import string
 from sickle import Sickle
 from sickle.oaiexceptions import NoRecordsMatch
 
-from ..common.Harvester import Harvester
+from ..Harvester import Harvester
 
 
 class CiteseerxHarvester(Harvester):

@@ -4,8 +4,8 @@ import sys
 import time
 
 from search_for_citations import config
-from ... import utils
-from ...Parser import Parser
+from .. import utils
+from ..Parser import Parser
 
 
 def get_arguments(argv):

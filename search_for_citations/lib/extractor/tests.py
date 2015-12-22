@@ -2,7 +2,7 @@ import os.path
 from django.test import TestCase
 
 import search_for_citations.config
-from search_for_citations.lib.extractor import Extractor
+from .Extractor import Extractor
 
 """
 class ExtractorTest(TestCase):

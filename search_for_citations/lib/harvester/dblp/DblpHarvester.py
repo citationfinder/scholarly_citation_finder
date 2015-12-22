@@ -1,7 +1,7 @@
 import os.path
 from lxml import etree
 
-from ..common.Harvester import Harvester
+from ..Harvester import Harvester
 
 
 class DblpHarvester(Harvester):

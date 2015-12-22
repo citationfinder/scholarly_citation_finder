@@ -1,6 +1,6 @@
 import sys
 
-from ..common.Harvester import get_arguments
+from ..Harvester import get_arguments
 from .ArxivHarvester import ArxivHarvester
 
 
