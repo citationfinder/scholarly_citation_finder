@@ -33,22 +33,27 @@ class Parser:
         return PublicationUrl(url=url, type=type)
 
     def store_publication(self, publication, authors=[], references=[], urls=[]):
-        # TODO: check pub already exists
-        publication.save()
-        for author in authors:
-            publication.authors.add(author)
-        # store coauthors
-        for author in authors:
-            for coauthor in authors:
-                if author.last_name not in coauthor.last_name:
-                    author.coauthors.add(coauthor)
-        # store references
-        for reference in references:
-            reference.publication = publication
-            reference.save()
-        for url in urls:
-            url.publication = publication
-            url.save()
+        try:
+            # TODO: check pub already exists
+            publication.save()
+            for author in authors:
+                publication.authors.add(author)
+            # store coauthors
+            for author in authors:
+                for coauthor in authors:
+                    if author.last_name not in coauthor.last_name:
+                        author.coauthors.add(coauthor)
+            # store references
+            for reference in references:
+                reference.publication = publication
+                reference.save()
+            for url in urls:
+                url.publication = publication
+                url.save()
+            return True
+        except(IndentationError) as e:
+            logger.warn(str(e))
+            return False
 
     def _fast_iter(self, context):
         publication = Publication()
@@ -99,10 +104,12 @@ class Parser:
             elif elem.tag in 'context' and elem.text:
                 publication_references[-1].context = elem.text
             elif elem.tag in 'reference':
-                is_reference = False
-                self.store_publication(reference, reference_authors)
-                publication_references[-1].reference = reference
+                if self.store_publication(reference, reference_authors):
+                    publication_references[-1].reference = reference
+                else:
+                    del publication_references[-1]
                 # Reset
+                is_reference = False
                 reference = Publication()
                 reference_authors = []
 

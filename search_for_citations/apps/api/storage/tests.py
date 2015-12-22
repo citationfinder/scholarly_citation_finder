@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from search_for_citations import config
 from .Parser import Parser
-from ...core.models import Publication, Citation, Author
+from ...core.models import Author, Publication, PublicationReference
 
 
 class ParserTest(TestCase):
@@ -18,7 +18,7 @@ class ParserTest(TestCase):
     def test_store_from_xml_file(self):
         self.parser.store_from_xml_file(self.XML_FILELIST)
         self.assertEqual(Publication.objects.all().count(), 4)
-        self.assertEqual(Citation.objects.all().count(), 2)
+        self.assertEqual(PublicationReference.objects.all().count(), 2)
         self.assertEqual(Author.objects.all().count(), 13)
 
     """
