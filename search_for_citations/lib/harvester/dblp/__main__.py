@@ -15,5 +15,4 @@ if __name__ == '__main__':
     kwargs = get_arguments(sys.argv[1:])
 
     harvester = DblpHarvester()
-    harvester.harvest(filename=os.path.join(DBLP_DIR, 'dblp.xml'),
-                      limit=kwargs['limit'])
+    harvester.harvest(filename=os.path.join(DBLP_DIR, 'dblp.xml'), **kwargs)
