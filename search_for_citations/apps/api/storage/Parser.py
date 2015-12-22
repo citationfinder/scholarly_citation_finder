@@ -1,6 +1,7 @@
 import os.path
 from lxml import etree
 import logging
+from django.db.utils import IntegrityError
 logger = logging.getLogger(__name__)
 
 
@@ -51,7 +52,7 @@ class Parser:
                 url.publication = publication
                 url.save()
             return True
-        except(IndentationError) as e:
+        except(IntegrityError) as e:
             logger.warn(str(e))
             return False
 
