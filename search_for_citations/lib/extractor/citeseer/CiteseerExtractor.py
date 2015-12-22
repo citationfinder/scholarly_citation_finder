@@ -4,7 +4,7 @@ from lxml.etree import XMLSyntaxError
 import requests
 
 from ...utils import upload_file
-from ..common.Extractor import Extractor
+from ..extractor import Extractor
 
 
 class CiteseerExtractor(Extractor):

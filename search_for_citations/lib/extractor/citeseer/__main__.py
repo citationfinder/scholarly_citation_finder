@@ -1,4 +1,4 @@
-from ..common.Extractor import get_arguments
+from ..Extractor import get_arguments
 from .CiteseerExtractor import CiteseerExtractor
 
 if __name__ == '__main__':

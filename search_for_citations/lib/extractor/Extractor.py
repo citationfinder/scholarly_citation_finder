@@ -5,8 +5,8 @@ import sys
 from lxml import etree
 
 from search_for_citations import config
-from ...utils import download_file_pdf
-from ...Parser import Parser
+from ..utils import download_file_pdf
+from ..Parser import Parser
 
 
 def get_arguments():

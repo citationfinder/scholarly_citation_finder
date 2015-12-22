@@ -1,5 +1,5 @@
 import os.path
-from settings.development import BASE_DIR
+from settings.base import BASE_DIR
 
 
 def get_abspath(path):

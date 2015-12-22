@@ -1,7 +1,8 @@
 import requests
 
 from search_for_citations.apps.core.process_manager.Process import ProcessError
-from ..common.Extractor import Extractor, get_arguments
+from ..common.Extractor import get_arguments
+from ..extractor import Extractor
 from .TeiParser import TeiParser
 
 
