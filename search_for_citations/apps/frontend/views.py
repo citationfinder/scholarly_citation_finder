@@ -36,8 +36,8 @@ def publications_index(request):
         publications = Publication.objects.exclude(arxiv_id=None)
     elif source == 'citeseerx':
         publications = Publication.objects.exclude(citeseerx_id=None)
-    elif source == 'citeseerextractor':
-        publications = Publication.objects.filter(extractor='citeseer_extractor')
+    elif source == 'grobid':
+        publications = Publication.objects.filter(extractor='grobid')
     else:
         prefix = request.GET.get('prefix', 'A')
         publications = Publication.objects.filter(title__startswith=prefix)
