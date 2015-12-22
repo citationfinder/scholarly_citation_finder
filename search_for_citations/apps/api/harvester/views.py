@@ -1,29 +1,25 @@
 from django.http import HttpResponse
 
-from .DblpHarvesterProcess import DblpHarvesterProcess
-from .CiteseerxHarvesterProcess import CiteseerxHarvesterProcess
-from .ArxivHarvesterProcess import ArxivHarvesterProcess
+from ...core.process_manager.Process import HarvesterProcess
 
 
-def _get_params(request):
-    return {'limit': request.GET.get('limit', None),
+def _run_process(request, module):
+    params = {'limit': request.GET.get('limit', None),
             'from': request.GET.get('from', None),
             'until': request.GET.get('until', None)}
 
+    process = HarvesterProcess()
+    process_args = process.run(['python', '-m', module], params)
+    return HttpResponse('Start {}'.format(process_args))
+
     
 def citeseerx_index(request):
-    process = CiteseerxHarvesterProcess()
-    r = process.harvest(_get_params(request))
-    return HttpResponse('Start {}'.format(r))
+    return _run_process(request, 'search_for_citations.lib.harvester.citeseerx')
 
 
 def dblp_index(request):
-    process = DblpHarvesterProcess()
-    r= process.harvest(_get_params(request))
-    return HttpResponse('Start {}'.format(r))
+    return _run_process(request, 'search_for_citations.lib.harvester.dblp')
 
 
 def arxiv_index(request):
-    process = ArxivHarvesterProcess()
-    r = process.harvest(_get_params(request))
-    return HttpResponse('Start {}'.format(r))
+    return _run_process(request, 'search_for_citations.lib.harvester.arxiv')
