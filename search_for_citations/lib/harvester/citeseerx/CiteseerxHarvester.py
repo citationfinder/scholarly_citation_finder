@@ -14,7 +14,7 @@ class CiteseerxHarvester(Harvester):
         'description': 'abstract',
         'publisher': 'publisher',
         'rights': 'copyright'
-        #subject
+        #'subject': 'keywords'
     }
     
     def __init__(self, **kwargs):
@@ -29,49 +29,51 @@ class CiteseerxHarvester(Harvester):
         
         client = Sickle(self.OAI_PHM_URL)
         records = client.ListRecords(**list_records_options)
-        for record in records:
-            metadata = record.metadata
-                
-            result_entry = {
-                'urls': []
-            }
-        
-            if 'creator' in metadata:
-                result_entry['authors'] = metadata['creator']
-            if 'subject' in metadata:
-                result_entry['keywords'] = metadata['subject']
-            if 'date' in metadata:
-                date = metadata['date'][-1]
-                '''
-                <dc:date>2009-04-19</dc:date>
-                <dc:date>2007-11-19</dc:date>
-                <dc:date>1998</dc:date>
-                '''
-                if len(date) == 4:
-                    result_entry['date'] = date
-            if 'source' in metadata:
-                url = metadata['source'][0]
-                if 'format' in metadata:
-                    url = {
-                        'value': url,
-                        'type': metadata['format'][0]
-                    }
-                result_entry['urls'].append(url)
-            for field in self.FIELD_MAPPING:
-                if field in metadata:
-                    result_entry[self.FIELD_MAPPING[field]] = metadata[field][0]
-                
-            # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
-            result_entry['citeseerx_id'] = string.replace(record.header.identifier, 'oai:CiteSeerX.psu:', '')
-            result_entry['urls'].append({
-                'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
-                'type': 'application/pdf'
-            })
-                
-            self.open_split_file()
-            self.parse_publication2(result_entry)
-                
-            if self.check_stop_harvest():
-                break
+        try:
+            for record in records:
+                metadata = record.metadata
+                result_entry = {
+                    'urls': []
+                }
             
-        self.stop_harvest()
+                if 'creator' in metadata:
+                    result_entry['authors'] = metadata['creator']
+                if 'subject' in metadata:
+                    result_entry['keywords'] = metadata['subject']
+                if 'date' in metadata:
+                    date = metadata['date'][-1]
+                    '''
+                    <dc:date>2009-04-19</dc:date>
+                    <dc:date>2007-11-19</dc:date>
+                    <dc:date>1998</dc:date>
+                    '''
+                    if len(date) == 4:
+                        result_entry['date'] = date
+                if 'source' in metadata:
+                    url = metadata['source'][0]
+                    if 'format' in metadata:
+                        url = {
+                            'value': url,
+                            'type': metadata['format'][0]
+                        }
+                    result_entry['urls'].append(url)
+                for field in self.FIELD_MAPPING:
+                    if field in metadata:
+                        result_entry[self.FIELD_MAPPING[field]] = metadata[field][0]
+                    
+                # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
+                result_entry['citeseerx_id'] = string.replace(record.header.identifier, 'oai:CiteSeerX.psu:', '')
+                result_entry['urls'].append({
+                    'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
+                    'type': 'application/pdf'
+                })
+                    
+                self.open_split_file()
+                self.parse_publication2(result_entry)
+                    
+                if self.check_stop_harvest():
+                    break
+        except(AttributeError) as e:
+            self.logger.warn(str(e))
+        finally:
+            self.stop_harvest()

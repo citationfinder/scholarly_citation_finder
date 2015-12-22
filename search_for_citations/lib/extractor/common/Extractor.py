@@ -44,10 +44,10 @@ class Extractor(Parser):
         if os.path.isfile(file_publications):
             self.logger.info('start to extract from {}'.format(file_publications))
             self.input = codecs.open(file_publications, "r", "utf-8")
-            self.output.open('{}.tmp.xml'.format(file_publications[:-4]))  # ending .xml is 4 characters long
+            self.xml_writer.open('{}.tmp.xml'.format(file_publications[:-4]))  # ending .xml is 4 characters long
 
             for line in self.input:
-                self.output.write(line)
+                self.xml_writer.write(line)
                 # TODO: Handle multiple URLs
                 if '<url type="application/pdf">http://citeseerx.ist.psu.edu/' in line:
                     #line = line.replace('\t\t<source>', '')
@@ -72,7 +72,7 @@ class Extractor(Parser):
         
     def stop_extract(self):
         self.logger.info('Stop extraction')
-        self.output.close()
+        self.xml_writer.close()
         
     def check_stop_extract(self):
         return self.limit and self.count_extracted_papers >= self.limit
