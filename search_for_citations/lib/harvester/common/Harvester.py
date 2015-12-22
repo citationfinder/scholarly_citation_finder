@@ -8,37 +8,36 @@ from ... import utils
 from ...Parser import Parser
 
 
-def get_arguments():
-    argv = sys.argv[1:]
+def get_arguments(argv):
     try:
-        opts, _ = getopt.getopt(argv, 'hl:f:', ['help', 'limit=', 'from='])
+        opts, _ = getopt.getopt(argv, 'hl:f:u:', ['help', 'limit=', 'from=', 'until='])
     except getopt.GetoptError as e:
         print(str(e))
         print('Usage: -h for help')
         sys.exit(2)
     
-    limit = None
-    _from = None
+    kwargs = {}
     for opt, arg in opts:
         if opt == '-h':
-            print('Usage: my-process.py -l 2 -f 2015-12-15')
+            print('Usage: my-process.py -l 2 -f 2015-12-15 -u 2015-12-24')
             sys.exit()
         elif opt in ('-l', '--limit'):
-            limit = int(arg)
+            kwargs['limit'] = int(arg)
         elif opt in ('-f', '--from'):
-            _from = arg.lstrip()
+            kwargs['_from'] = arg.lstrip()
+        elif opt in ('-u', '--until'):
+            kwargs['until'] = arg.lstrip()
         else:
             raise Exception('unhandled option')
-    return (limit, _from)
+    return kwargs
 
 
 class Harvester(Parser):
     
-    def __init__(self, name, limit=None):
+    def __init__(self, name):
         super(Harvester, self).__init__('{}'.format(name))
         utils.create_dir(os.path.join(config.DOWNLOAD_DIR, 'harvester', name))
         self.split_publications = 10000
-        self.limit = limit
         self.start_time = int(time.time())
         self.logger.info('start at {}'.format(self.start_time))
         

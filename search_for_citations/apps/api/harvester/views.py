@@ -5,21 +5,25 @@ from .CiteseerxHarvesterProcess import CiteseerxHarvesterProcess
 from .ArxivHarvesterProcess import ArxivHarvesterProcess
 
 
+def _get_params(request):
+    return {'limit': request.GET.get('limit', None),
+            'from': request.GET.get('from', None),
+            'until': request.GET.get('until', None)}
+
+    
 def citeseerx_index(request):
     process = CiteseerxHarvesterProcess()
-    process.harvest(limit=request.GET.get('limit', None),
-                    _from=request.GET.get('from', None))
-    return HttpResponse('Start CiteseerxHarvester process')
+    r = process.harvest(_get_params(request))
+    return HttpResponse('Start {}'.format(r))
 
 
 def dblp_index(request):
     process = DblpHarvesterProcess()
-    process.harvest(limit=request.GET.get('limit', None))
-    return HttpResponse('Start DblpHarvester process')
+    r= process.harvest(_get_params(request))
+    return HttpResponse('Start {}'.format(r))
 
 
 def arxiv_index(request):
     process = ArxivHarvesterProcess()
-    process.harvest(limit=request.GET.get('limit', None),
-                    _from=request.GET.get('from', None))
-    return HttpResponse('Start ArxivHarvester process')
+    r = process.harvest(_get_params(request))
+    return HttpResponse('Start {}'.format(r))

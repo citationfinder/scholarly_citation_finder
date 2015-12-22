@@ -6,11 +6,11 @@ class CiteseerxHarvesterProcess(HarvesterProcess):
 
     PATH = 'search_for_citations.lib.harvester.citeseerx'
 
-    def harvest(self, limit=None, _from=None):
+    def harvest(self, params):
         process_args = ['python', '-m', self.PATH]
-        if limit:
-            process_args.append('-l {}'.format(limit))
-        if _from:
-            process_args.append('-f {}'.format(_from))
-
+        for key, value in params.iteritems():
+            if value:
+                process_args.append('--{}'.format(key))
+                process_args.append('{}'.format(value))
         external_process2(process_args)
+        return process_args

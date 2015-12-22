@@ -1,5 +1,6 @@
 import string
 from sickle import Sickle
+from sickle.oaiexceptions import NoRecordsMatch
 
 from ..common.Harvester import Harvester
 
@@ -19,12 +20,16 @@ class ArxivHarvester(Harvester):
     def __init__(self, **kwargs):
         super(ArxivHarvester, self).__init__('arxiv', **kwargs)
     
-    def harvest(self, _from=None):
+    def harvest(self, limit=None, _from=None, until=None):
+        self.limit = limit
+
         list_records_options = {
             'metadataPrefix': 'oai_dc'
         }
         if _from:
             list_records_options['from'] = _from
+        if until:
+            list_records_options['until'] = until
         
         client = Sickle(self.OAI_PHM_URL)
         try:
@@ -60,7 +65,7 @@ class ArxivHarvester(Harvester):
 
                 if self.check_stop_harvest():
                     break
-        except(AttributeError) as e:
+        except(AttributeError, NoRecordsMatch) as e:
             self.logger.warn(str(e))
         finally:
             self.stop_harvest()

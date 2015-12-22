@@ -6,12 +6,14 @@ class DblpHarvesterProcess(HarvesterProcess):
 
     PATH = 'search_for_citations.lib.harvester.dblp'
 
-    def harvest(self, limit=None):
+    def harvest(self, params):
         process_args = ['python', '-m', self.PATH]
-        if limit:
-            process_args.append('-l {}'.format(limit))
-
+        for key, value in params.iteritems():
+            if value:
+                process_args.append('--{} {}'.format(key))
+                process_args.append('{}'.format(value))
         external_process2(process_args)
+        return process_args
 
     """
     def harvest(self, config = None):

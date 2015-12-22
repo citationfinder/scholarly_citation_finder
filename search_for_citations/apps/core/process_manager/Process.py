@@ -21,7 +21,7 @@ class Process(object):
 
 
 class HarvesterProcess(Process):
-    def harvest(self, config):
+    def harvest(self, params):
         raise ProcessError('Override this method')
 
 
