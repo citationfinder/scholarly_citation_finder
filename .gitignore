@@ -1,0 +1,24 @@
+# Generated files
+*.sqlite3
+*.sqlite3-journal
+
+# Temporary files
+/log/
+/downloads/
+
+
+############
+## Python
+############
+ 
+*.pyc
+__pycache__/
+
+
+############
+## Eclipse PyDev
+############
+
+.settings/
+#.project
+#.pydevproject
