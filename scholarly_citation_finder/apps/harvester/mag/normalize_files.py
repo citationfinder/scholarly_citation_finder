@@ -1,5 +1,4 @@
 import os
-import sys
 import codecs
 import logging
 
@@ -38,15 +37,19 @@ class MagNormalize():
 			output = os.path.join(self.path, '{}_pre.txt'.format(file[:-4]))
 			if os.path.isfile(input) and not os.path.isfile(output):
 				try:
-					output = codecs.open(output, 'w+')
+					output_file = codecs.open(output, 'w+')
 					self.logger.info('start normalize {}'.format(input))
-					getattr(self, name, input, output)
-					output.close
+					getattr(self, name)(input, output_file)
+					output_file.close
 					self.logger.info('normalize done')
 				except(Exception) as e:
+					if output_file:
+						output_file.close()
+					if os.path.isfile(output):
+						os.remove(output)
 					self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
 			else:
-				self.logger.info('skip {}'.format(output))
+				self.logger.info('skip {}'.format(input))
 		self.logger.info('run done ------------------------')
 
 	def affiliations(self, input, output):
@@ -114,11 +117,15 @@ class MagNormalize():
 			for line in f:
 				v = line.split('\t')
 				if len(v[2]) <= 40 and len(v[3]) <= 250 and len(v[4]) <= 100 and len(v[5]) <= 100:
+					# Conference series ID
+					if v[0]:
+						v[0] = int(v[0], 16)
+					# Conference start date
 					if len(v[6]) == 10: # 2014/06/01
 						v[6] = v[6][0:3]
 					else:
 						v[6] = ''
-					output.write('\n%s\t%s\t%s\t%s\t%s\t%s\t%s' % (int(v[1], 16), int(v[0], 16), v[2], v[3], v[4], v[5], v[6]))
+					output.write('\n%s\t%s\t%s\t%s\t%s\t%s\t%s' % (int(v[1], 16), v[0], v[2], v[3], v[4], v[5], v[6]))
 	
 	def fields_of_study(self, input, output):
 		'''
@@ -147,7 +154,7 @@ class MagNormalize():
 					output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
 
 	def papers(self, input, output):
-		"""
+		'''
 		Papers
 		0	Paper ID
 		1	Original paper title
@@ -160,9 +167,9 @@ class MagNormalize():
 		8	Journal ID mapped to venue name
 		9	Conference series ID mapped to venue name
 		10	Paper rank
-		"""
+		'''
 		with codecs.open(input) as f:
-			sys.stdout.write('Paper ID\tTitle\tYear\tDate\tDOI\tOriginal venue name\tJournal ID\tConference ID')
+			output.write('Paper ID\tTitle\tYear\tDate\tDOI\tOriginal venue name\tJournal ID\tConference ID')
 			for line in f:
 				v = line.split('\t')
 				if len(v[2]) <= 250 and len(v[5]) <= 50 and len(v[6]) <= 200:
@@ -175,7 +182,7 @@ class MagNormalize():
 					output.write('\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (int(v[0], 16), v[2], v[3], v[4], v[5], v[6], v[8], v[9]))
 				
 	def paper_author_affiliations(self, input, output):
-		"""
+		'''
 		PaperAuthorAffiliations
 		0	Paper ID
 		1	Author ID
@@ -183,10 +190,11 @@ class MagNormalize():
 		3	Original affiliation name
 		4	Normalized affiliation name
 		5	Author sequence number
-		"""
+		'''
 		with codecs.open(input) as f:
+			output.write('\tPaper ID\tAuthor ID\tAffiliation ID')
 			for line in f:
-				v = line.split('\tPaper ID\tAuthor ID\tAffiliation ID')
+				v = line.split('\t')
 				output.write('\n%s\t%s\t%s' % (int(v[0], 16), int(v[1], 16), int(v[2], 16)))
 		
 	def paper_keywords(self, input, output):
@@ -203,11 +211,11 @@ class MagNormalize():
 					output.write('\n%s\t%s\t%s' % (int(v[0], 16), v[1], int(v[2], 16)))
 
 	def paper_references(self, input, output):
-		"""
+		'''
 		PaperReferences
 		0	Paper ID
 		1	Paper reference ID
-		"""
+		'''
 		with codecs.open(input) as f:
 			output.write('Paper ID\tReference ID')
 			for line in f:
@@ -215,16 +223,14 @@ class MagNormalize():
 				output.write('\n%s\t%s' % (int(v[0], 16), int(v[1], 16)))
 
 	def paper_urls(self, input, output):
-		"""
+		'''
 		PaperUrls
 		0	Paper ID
 		1	URL
-		"""
-		num_lines = 0
+		'''
 		with codecs.open(input) as f:
 			output.write('Paper ID\tURL')
 			for line in f:
-				num_lines += 1
 				v = line.split('\t')
 				if len(v[1]) <= 200:
 					output.write('\n%s\t%s' % (int(v[0], 16), v[1]))

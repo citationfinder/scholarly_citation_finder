@@ -22,7 +22,7 @@ class Conference(models.Model):
     
 
 class ConferenceInstance(models.Model):
-    conference = models.ForeignKey(Conference)
+    conference = models.ForeignKey(Conference, blank=True, null=True)
     short_name = models.CharField(max_length=40)
     name = models.CharField(max_length=250)
     location = models.CharField(max_length=100, blank=True, null=True)
