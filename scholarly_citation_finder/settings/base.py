@@ -30,9 +30,12 @@ PREREQ_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
 )
 PROJECT_APPS = (
+    'scholarly_citation_finder.apps.core',
+    'scholarly_citation_finder.apps.harvester',
+    'scholarly_citation_finder.lib',
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
