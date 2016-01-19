@@ -195,7 +195,9 @@ class MagNormalize():
 			output.write('\tPaper ID\tAuthor ID\tAffiliation ID')
 			for line in f:
 				v = line.split('\t')
-				output.write('\n%s\t%s\t%s' % (int(v[0], 16), int(v[1], 16), int(v[2], 16)))
+				if v[2]:
+					v[2] = int(v[2], 16)
+				output.write('\n%s\t%s\t%s' % (int(v[0], 16), int(v[1], 16), v[2]))
 		
 	def paper_keywords(self, input, output):
 		'''
@@ -239,6 +241,6 @@ class MagNormalize():
 					pass
 
 
-if __name__ == '__main__':
-	a = MagNormalize('E:\_mag\data\Authors')
-	a.run()
+#if __name__ == '__main__':
+#	a = MagNormalize('E:\_mag\data\Authors')
+#	a.run()
