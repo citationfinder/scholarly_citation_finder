@@ -25,7 +25,8 @@ Available environment variables:
 * MAG database: `MAG_DATABASE_NAME`, `MAG_DATABASE_USER`, `MAG_DATABASE_PASSWORD`
 
 Set an environment variable:
-* Linux: `export <variable-name>=<value>` 
+* Linux: `export <variable-name>=<value>`
+** Store it via: `echo "export <variable-name>=<value>" >> ~/.bashrc`
 * Windows: `SET <variable-name>=<value>`
 
 #### Shell
