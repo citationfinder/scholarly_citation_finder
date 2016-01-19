@@ -98,27 +98,27 @@ class MagHarvester(Harvester):
                             table='core_journal',
                             columns='id, name')
 
-    def publications(self, filename):
+    def papers(self, filename):
         return self._database_copy(filename=filename,
                             table='core_publication',
                             columns='id, title, year, date, doi, series, journal_id, conference_id')
 
-    def publication_author_affiliations(self, filename):
+    def paper_author_affiliations(self, filename):
         return self._database_copy(filename=filename,
                             table='core_publicationauthoraffilation',
                             columns='publication_id, author_id, affilation_id')
         
-    def publication_keywords(self, filename):
+    def paper_keywords(self, filename):
         return self._database_copy(filename=filename,
                             table='core_publicationkeyword',
                             columns='publication_id, name, fieldofstudy_id')      
 
-    def publication_references(self, filename):
+    def paper_references(self, filename):
         return self._database_copy(filename=filename,
                             table='core_publicationreference',
                             columns='publication_id, reference_id')
         
-    def publication_urls(self, filename):
+    def paper_urls(self, filename):
         return self._database_copy(filename=filename,
                             table='core_publicationurl',
                             columns='publication_id, url')
