@@ -11,6 +11,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'mag': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('MAG_DATABASE_NAME', 'mag'),
+        'USER': os.getenv('MAG_DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('MAG_DATABASE_PASSWORD', 'root'),
+        'HOST': '127.0.0.1',
     }
 }
 
