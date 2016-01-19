@@ -30,7 +30,7 @@ class MagHarvester(Harvester):
         http://initd.org/psycopg/docs/cursor.html
         """
         try:
-            self.logger.info('harvest {}'.format(filename))
+            self.logger.info('harvest {} ++++++++'.format(filename))
             cur = self.conn.cursor()
             #cur.copy_from(file=filename,
             #              table=table,
@@ -39,11 +39,12 @@ class MagHarvester(Harvester):
             #self.logger.info(query)
             #cur.execute(query)
             query = "COPY {} ({}) FROM STDIN DELIMITER '\t' HEADER CSV;".format(table, columns)
+            self.logger.info(query)
             cur.copy_expert(sql=query,
                             file=open(filename, 'r'))
             self.logger.info(cur.statusmessage)
             self.conn.commit()
-            self.logger.info('end -----------------------------------')
+            self.logger.info('end harvest ++++++++++')
             return True
         except(ProgrammingError, OperationalError, DataError) as e:
             self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
@@ -122,3 +123,6 @@ class MagHarvester(Harvester):
                             table='core_publicationurl',
                             columns='publication_id, url')
         
+#if __name__ == '__main__':
+#    a = MagHarvester()
+#    a.run()
