@@ -1,1 +1,2 @@
 5C126CA8	6E38ECD7	04728696	Quest Diagnostics, Nichols Institute, San Juan Capistrano, California	quest diagnostics	1
+5C126CA9	6E38ECD8		Sample Institute, San Juan Capistrano, California	sample diagnostics	1

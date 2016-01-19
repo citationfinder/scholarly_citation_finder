@@ -5,6 +5,7 @@
 # Temporary files
 /log/
 /downloads/
+/test_data/harvester/mag/*_pre.txt
 
 
 ############
