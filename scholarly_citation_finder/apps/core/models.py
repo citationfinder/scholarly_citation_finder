@@ -99,7 +99,7 @@ class PublicationReference(models.Model):
     publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
     reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
     context = models.TextField(blank=True, null=True)
-    self = models.BooleanField(default=False)
+    self = models.NullBooleanField(default=False)
 
 
 class PublicationUrl(models.Model):
