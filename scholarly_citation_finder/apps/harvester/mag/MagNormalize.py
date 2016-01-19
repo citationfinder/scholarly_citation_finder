@@ -234,7 +234,6 @@ class MagNormalize():
 			output.write('Paper ID\tURL')
 			for line in f:
 				v = line.split('\t')
-				self.logger.warn(v)
 				if len(v[1]) <= 200:
 					output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
 
