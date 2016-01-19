@@ -1,4 +1,5 @@
-import os
+import os.path
+import os.rename
 import codecs
 import psycopg2
 
@@ -6,6 +7,7 @@ import psycopg2
 from ....settings.development import DATABASES
 from psycopg2._psycopg import ProgrammingError, OperationalError, DataError
 from ..Harvester import Harvester
+from scholarly_citation_finder.apps.harvester.mag.normalize_files import MagNormalize
 #from psycopg2._psycopg import DataError, IntegrityError, InternalError
 #from ...core.models import Author
 #from django.db.utils import DataError
@@ -44,27 +46,80 @@ class MagHarvester(Harvester):
             self.logger.info(cur.statusmessage)
             self.conn.commit()
             self.logger.info('end -----------------------------------')
+            return True
         except(ProgrammingError, OperationalError, DataError) as e:
             self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
+            return False
         except(IOError): # by open(<file>)
-            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))            
+            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
+            return False
 
-    def store_publications(self, filename):
-        self._database_copy(filename=filename,
-                            table='core_publication',
-                            columns='id, title, year, doi, series, journal')
+    def run(self):
+        self.logger.info('run -----------------------------')        
+        for name, file in MagNormalize.FILES.iteritems():
+            csv_file = os.path.join(self.download_dir, '{}_pre.txt'.format(file[:-4]))
+            if os.path.isfile(csv_file):
+                #self.logger.info('start store {}'.format(csv_file))
+                if getattr(self, name)(csv_file):
+                    os.rename(csv_file, '~{}'.format(csv_file))
+                else:
+                    pass # exceptions already get logged before this line
+            else:
+                self.logger.info('no file {}'.format(csv_file))
+        self.logger.info('run done ------------------------')
 
-    def store_publicationreferences(self, filename):
-        self._database_copy(filename=filename,
-                            table='core_publicationreference',
-                            columns='publication_id, reference_id')
+    def affiliations(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_affilation',
+                            columns='id, name')
 
-    def store_publication_authors(self, filename):
-        self._database_copy(filename=filename,
-                            table='core_publication_authors',
-                            columns='publication_id, author_id')
-
-    def store_authors(self, filename):
-        self._database_copy(filename,
+    def authors(self, filename):
+        return self._database_copy(filename,
                             table='core_author',
                             columns='id, name')
+        
+    def conferences(self, filename):
+        return self._database_copy(filename,
+                            table='core_conference',
+                            columns='id, short_name, name')
+        
+    def conference_instances(self, filename):
+        return self._database_copy(filename,
+                            table='core_Conferenceinstance',
+                            columns='id, conference_id', 'short_name', 'name', 'location', 'url', 'year')
+
+    def fields_of_study(self, filename):
+        return self._database_copy(filename,
+                            table='core_fieldOfStudy',
+                            columns='id, name')
+
+    def journals(self, filename):
+        return self._database_copy(filename,
+                            table='core_journal',
+                            columns='id, name')
+
+    def publications(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_publication',
+                            columns='id, title, year, date, doi, series, journal_id, conference_id')
+
+    def publication_author_affiliations(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_publicationauthoraffilation',
+                            columns='publication_id, author_id, affilation_id')
+        
+    def publication_keywords(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_publicationkeyword',
+                            columns='publication_id, name, fieldofstudy_id')      
+
+    def publication_references(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_publicationreference',
+                            columns='publication_id, reference_id')
+        
+    def publication_urls(self, filename):
+        return self._database_copy(filename=filename,
+                            table='core_publicationurl',
+                            columns='publication_id, url')
+        
