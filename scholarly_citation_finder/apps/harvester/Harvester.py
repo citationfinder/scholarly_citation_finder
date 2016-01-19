@@ -5,7 +5,7 @@ import logging
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
 
-class Harvester:
+class Harvester(object):
     
     def __init__(self, name):
         self.name = name

@@ -2,16 +2,16 @@ import os
 import codecs
 import logging
 
-#from scholarly_citation_finder import config
+from scholarly_citation_finder import config
 
 class MagNormalize():
 	
 	FILES = {
-		'affiliations': 'Affiliations.txt',
+		#'affiliations': 'Affiliations.txt',
 		'authors': 'Authors.txt',
 		'conferences': 'Conferences.txt',
 		'conferences_instances': 'ConferenceInstances.txt',
-		'fields_of_study': 'FieldsOfStudy.txt',
+		#'fields_of_study': 'FieldsOfStudy.txt',
 		'journals': 'Journals.txt',
 		'papers': 'Papers.txt',
 		'paper_author_affiliations': 'PaperAuthorAffiliations.txt',
@@ -25,7 +25,7 @@ class MagNormalize():
 		self.logger = self.init_logger()
 		
 	def init_logger(self):
-		logging.basicConfig(filename='{}.log'.format(self.__class__.__name__),
+		logging.basicConfig(filename=os.path.join(config.LOG_DIR, '{}.log'.format(self.__class__.__name__)),
 							level=logging.INFO,
 							format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
 		return logging.getLogger()   	
@@ -234,13 +234,10 @@ class MagNormalize():
 			output.write('Paper ID\tURL')
 			for line in f:
 				v = line.split('\t')
+				self.logger.warn(v)
 				if len(v[1]) <= 200:
-					output.write('\n%s\t%s' % (int(v[0], 16), v[1]))
-				else:
-					#print(v[1])
-					pass
-
+					output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
 
 #if __name__ == '__main__':
-#	a = MagNormalize('E:\_mag\data\Authors')
+#	a = MagNormalize(os.path.abspath('/webapps/data'))
 #	a.run()

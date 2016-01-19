@@ -1,5 +1,5 @@
 import os.path
-import os.rename
+import os
 import codecs
 import psycopg2
 
@@ -7,7 +7,7 @@ import psycopg2
 from ....settings.development import DATABASES
 from psycopg2._psycopg import ProgrammingError, OperationalError, DataError
 from ..Harvester import Harvester
-from scholarly_citation_finder.apps.harvester.mag.normalize_files import MagNormalize
+from .MagNormalize import MagNormalize
 #from psycopg2._psycopg import DataError, IntegrityError, InternalError
 #from ...core.models import Author
 #from django.db.utils import DataError
@@ -15,7 +15,7 @@ from scholarly_citation_finder.apps.harvester.mag.normalize_files import MagNorm
 class MagHarvester(Harvester):
     
     def __init__(self):
-        super(Harvester, self).__init__('mag')
+        super(MagHarvester, self).__init__('mag')
         self.conn = self.connect_database()
 
     def connect_database(self):
@@ -26,13 +26,11 @@ class MagHarvester(Harvester):
                                 password=db['PASSWORD'])
 
     def _database_copy(self, filename, table, columns):
-        filename = os.path.join(self.path, filename)
         """
         http://initd.org/psycopg/docs/cursor.html
         """
         try:
-            self.logger.info('start ---------------------------------')
-            self.logger.info(filename)
+            self.logger.info('harvest {}'.format(filename))
             cur = self.conn.cursor()
             #cur.copy_from(file=filename,
             #              table=table,
@@ -57,11 +55,12 @@ class MagHarvester(Harvester):
     def run(self):
         self.logger.info('run -----------------------------')        
         for name, file in MagNormalize.FILES.iteritems():
-            csv_file = os.path.join(self.download_dir, '{}_pre.txt'.format(file[:-4]))
+            file_pre = '{}_pre.txt'.format(file[:-4])
+            csv_file = os.path.join(self.download_dir, file_pre)
             if os.path.isfile(csv_file):
                 #self.logger.info('start store {}'.format(csv_file))
                 if getattr(self, name)(csv_file):
-                    os.rename(csv_file, '~{}'.format(csv_file))
+                    os.rename(csv_file, os.path.join(self.download_dir, '~{}'.format(file_pre)))
                 else:
                     pass # exceptions already get logged before this line
             else:
@@ -86,7 +85,7 @@ class MagHarvester(Harvester):
     def conference_instances(self, filename):
         return self._database_copy(filename,
                             table='core_Conferenceinstance',
-                            columns='id, conference_id', 'short_name', 'name', 'location', 'url', 'year')
+                            columns='id, conference_id, short_name, name, location, url, year')
 
     def fields_of_study(self, filename):
         return self._database_copy(filename,
