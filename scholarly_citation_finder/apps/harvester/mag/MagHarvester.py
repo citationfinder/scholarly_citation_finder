@@ -5,7 +5,8 @@ import psycopg2
 
 
 from ....settings.development import DATABASES
-from psycopg2._psycopg import ProgrammingError, OperationalError, DataError
+from psycopg2._psycopg import ProgrammingError, OperationalError, DataError,\
+    InternalError
 from ..Harvester import Harvester
 from .MagNormalize import MagNormalize
 #from psycopg2._psycopg import DataError, IntegrityError, InternalError
@@ -46,12 +47,14 @@ class MagHarvester(Harvester):
             self.conn.commit()
             self.logger.info('end harvest ++++++++++')
             return True
-        except(ProgrammingError, OperationalError, DataError) as e:
+        except(DataError, InternalError) as e:
+            self.conn.rollback()
             self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
-            return False
+        except(ProgrammingError, OperationalError) as e:
+            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
         except(IOError): # by open(<file>)
             self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
-            return False
+        return False
 
     def run(self):
         self.logger.info('run -----------------------------')        
