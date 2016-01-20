@@ -70,7 +70,7 @@ class Publication(models.Model):
     """
     other
     """
-    source_extracted = models.BooleanField(default=False)
+    source_extracted = models.NullBooleanField(default=False)
     """
     mag only
     """
