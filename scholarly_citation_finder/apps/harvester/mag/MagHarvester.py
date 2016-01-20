@@ -39,7 +39,12 @@ class MagHarvester(Harvester):
             #query = "COPY {} ({}) FROM '{}' DELIMITER '\t' HEADER CSV;".format(table, columns, filename)
             #self.logger.info(query)
             #cur.execute(query)
-            query = "COPY {} ({}) FROM STDIN DELIMITER '\t' HEADER CSV;".format(table, columns)
+            
+            # Workaround: Some strings contain a ", but that is the default quote
+            # character of the PostgreSQL copy function. That is why we specify
+            # the quote character to \b (Backspace), because this should never
+            # be in a string.
+            query = "COPY {} ({}) FROM STDIN DELIMITER E'\t' QUOTE E'\b' HEADER CSV;".format(table, columns)
             self.logger.info(query)
             cur.copy_expert(sql=query,
                             file=open(filename, 'r'))
