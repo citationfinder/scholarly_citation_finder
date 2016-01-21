@@ -10,7 +10,7 @@ class MagNormalize():
 		'affiliations': 'Affiliations.txt',
 		'authors': 'Authors.txt',
 		'conferences': 'Conferences.txt',
-		'conferences_instances': 'ConferenceInstances.txt',
+		'conference_instances': 'ConferenceInstances.txt',
 		'fields_of_study': 'FieldsOfStudy.txt',
 		'journals': 'Journals.txt',
 		'papers': 'Papers.txt',
@@ -47,7 +47,7 @@ class MagNormalize():
 						output_file.close()
 					if os.path.isfile(output):
 						os.remove(output)
-					self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
+					self.logger.warn(e, exc_info=True)
 			else:
 				self.logger.info('skip {}'.format(input))
 		self.logger.info('run done ------------------------')
@@ -97,7 +97,7 @@ class MagNormalize():
 				if len(v[1]) <= 20 and len(v[2]) <= 250:
 					output.write('\n%s\t%s\t%s' % (int(v[0], 16), v[1], v[2].rstrip()))
 	
-	def conferences_instances(self, input, output):
+	def conference_instances(self, input, output):
 		'''
 		0	Conference series ID
 		1	Conference instance ID
@@ -230,16 +230,18 @@ class MagNormalize():
 		0	Paper ID
 		1	URL
 		'''
-		with codecs.open(input) as f:
+		with codecs.open(input, encoding='utf-8') as f:
 			output.write('Paper ID\tURL')
+			count = 0
 			for line in f:
+				count += 1
 				v = line.split('\t')
-				if len(v[1]) <= 200:
-					try:
+				if len(v) == 2 and len(v[1]) <= 200: # given data contains some strange charachters, that's why we don't get always 2 fields
+					# The NULL character (0x00) is in some URLs and can't be insert in Postgres
+					if b'\x00' not in v[1]:
 						output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
-					except(UnicodeDecodeError):
-						# For instance the  NULL character (0x00) is in some URLs and can't be insert in Postgres
-						self.logger.info('url with unsupported characters: {}'.format(v[1].rstrip()))
+					else:
+						self.logger.info('url with unsupported characters in line {}'.format(count))
 #if __name__ == '__main__':
 #	a = MagNormalize(os.path.abspath('/webapps/data'))
 #	a.run()
