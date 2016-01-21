@@ -52,13 +52,11 @@ class MagHarvester(Harvester):
             self.conn.commit()
             self.logger.info('end harvest ++++++++++')
             return True
-        except(DataError, InternalError) as e:
+        except(DataError, InternalError, ProgrammingError, OperationalError) as e: # by psycopg2
             self.conn.rollback()
-            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
-        except(ProgrammingError, OperationalError) as e:
-            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
-        except(IOError): # by open(<file>)
-            self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
+            self.logger.warn(e, exc_info=True)
+        except(IOError) as e: # by open(<file>)
+            self.logger.warn(e, exc_info=True)
         return False
 
     def run(self):
