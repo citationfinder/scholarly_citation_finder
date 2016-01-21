@@ -7,11 +7,11 @@ from scholarly_citation_finder import config
 class MagNormalize():
 	
 	FILES = {
-		#'affiliations': 'Affiliations.txt',
+		'affiliations': 'Affiliations.txt',
 		'authors': 'Authors.txt',
 		'conferences': 'Conferences.txt',
 		'conferences_instances': 'ConferenceInstances.txt',
-		#'fields_of_study': 'FieldsOfStudy.txt',
+		'fields_of_study': 'FieldsOfStudy.txt',
 		'journals': 'Journals.txt',
 		'papers': 'Papers.txt',
 		'paper_author_affiliations': 'PaperAuthorAffiliations.txt',
@@ -37,7 +37,7 @@ class MagNormalize():
 			output = os.path.join(self.path, '{}_pre.txt'.format(file[:-4]))
 			if os.path.isfile(input) and not os.path.isfile(output):
 				try:
-					output_file = codecs.open(output, 'w+')
+					output_file = codecs.open(output, mode='w+', encoding='utf-8')
 					self.logger.info('start normalize {}'.format(input))
 					getattr(self, name)(input, output_file)
 					output_file.close
@@ -235,8 +235,11 @@ class MagNormalize():
 			for line in f:
 				v = line.split('\t')
 				if len(v[1]) <= 200:
-					output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
-
+					try:
+						output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
+					except(UnicodeDecodeError):
+						# For instance the  NULL character (0x00) is in some URLs and can't be insert in Postgres
+						self.logger.info('url with unsupported characters: {}'.format(v[1].rstrip()))
 #if __name__ == '__main__':
 #	a = MagNormalize(os.path.abspath('/webapps/data'))
 #	a.run()
