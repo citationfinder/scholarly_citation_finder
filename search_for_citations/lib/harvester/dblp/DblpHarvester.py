@@ -40,7 +40,11 @@ class DblpHarvester(Harvester):
         super(DblpHarvester, self).__init__('dblp', **kwargs)
     
     def harvest(self, filename, limit=None):
-        self.limit = limit
+        if limit:
+            self.limit = int(limit)
+        else:
+            self.limit = None
+            
         if os.path.isfile(filename):
             context = etree.iterparse(filename, load_dtd=True, html=True)
             self._fast_iter(context)
