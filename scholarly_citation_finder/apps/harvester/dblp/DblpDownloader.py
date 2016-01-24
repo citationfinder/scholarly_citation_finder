@@ -2,17 +2,17 @@ import os.path
 import filecmp
 
 from ....lib.file import download_file, unzip_file
-from scholarly_citation_finder.apps.harvester import Harvester
+from ..Harvester import Harvester
 
 
-class DblpDatabaseDownloader(Harvester):
+class DblpDownloader(Harvester):
     
     DBLP_BASE_URL = 'http://dblp.uni-trier.de/xml/'
     DBLP_FILE_XML_GZ = 'dblp.xml.gz'
     DBLP_FILE_MD5 = 'dblp.xml.gz.md5'
     
-    def __init__(self, download_dir):
-        super(DblpDatabaseDownloader, self).__init__('dblp')
+    def __init__(self):
+        super(DblpDownloader, self).__init__('dblp')
     
     def download(self):
         if self.is_new_data_avaible():

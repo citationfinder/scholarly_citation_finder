@@ -3,10 +3,12 @@
 import os.path
 import logging
 import time
+import hashlib
 
 from magapi import config
 from ..core.models import Author, Publication
 from django.db.utils import DataError
+from .CsvFileWriter import CsvFileWriter
 
 class Parser(object):
     
@@ -38,9 +40,16 @@ class Parser(object):
         self.count_publications = 0
         #self.count_citations = 0
         self.logger.info('start -------------------')
+        
+        self.writer_publication = CsvFileWriter('publication.csv')
+        self.writer_author = CsvFileWriter('author.csv')        
+        self.writer_publication_authors = CsvFileWriter('publication_authors.csv')
 
     def stop_harvest(self):
         self.logger.info('stop')
+        self.writer_publication.close()
+        self.writer_author.close()
+        self.writer_publication_authors.close()
   
     def init_logger(self, name):
         logging.basicConfig(filename=os.path.join(config.LOG_DIR, name + '.log'),
@@ -66,32 +75,42 @@ class Parser(object):
     def check_stop_harvest(self):
         return self.limit and self.count_publications >= self.limit
 
-    def parse_author(self, name):
-        try:
-            author = Author.objects.using(self.name).get(name=name)
-        except(Author.DoesNotExist):
-            author = Author(name=name)
-            author.save()
-        return author
+    #def parse_author(self, name):
+    #    id = hashlib.md5(name.encode('utf-8')).hexdigest()
+    #    id = int(id[0:9], 16)
 
-    def parse_publication(self, entry, check_author=True):
+    #    self.writer_author.write_start_line(id)
+    #    self.writer_author.write_element(name)
+    #    return id
+
+    def parse_publication(self, entry):
         self.count_publications += 1
-        try:
-            publication = Publication()
-            
+        id = self.count_publications
+        self.writer_publication.write_start_line(id) # write ID
+        
+        #try:
+        if True:            
             for field in self.PUBLICATION_ATTRIBUTES:
                 if field in entry:
-                    setattr(publication, field, entry[field])
-            
-            publication.save(using=self.name)     
+                    self.writer_publication.write_element(entry[field])
+                else:
+                    self.writer_publication.write_element()
             
             if 'authors' in entry:
-                for author in entry['authors']:
-                    publication.authors.add(self.parse_author(author))
+                for author_name in entry['authors']:
+                    author_id = hashlib.md5(author_name.encode('utf-8')).hexdigest()
+                    author_id = int(author_id[0:9], 16)
+                    # 
+                    self.writer_author.write_start_line(author_id)
+                    self.writer_author.write_element(author_name)
+                    # 
+                    self.writer_publication_authors.write_start_line(id)
+                    self.writer_publication_authors.write_element(author_id)
             #if 'keywords' in entry:
             #    for keyword in entry['keywords']:
             #        publication.ke
             #        self.xml_writer.write_element('keyword', keyword)
+            """
             if 'urls' in entry:
                 for url in entry['urls']:
                     if isinstance(url, dict):
@@ -101,7 +120,6 @@ class Parser(object):
                         url_value = url
                         url_type = ''
                     publication.publicationurl_set.create(url=url_value, type=url_type)
-        except(DataError) as e:
-            self.logger.warn(str(e))
-        
-        return True
+            """
+        #except(Exception) as e:
+        #    self.logger.warn('{}: {}'.format(type(e).__name__, str(e)))
