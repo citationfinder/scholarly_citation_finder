@@ -23,6 +23,7 @@ Run server: `make run`
 
 Available environment variables:
 * MAG database: `MAG_DATABASE_NAME`, `MAG_DATABASE_USER`, `MAG_DATABASE_PASSWORD`
+* DBLP database: `DBLP_DATABASE_NAME`, `DBLP_DATABASE_USER`, `DBLP_DATABASE_PASSWORD`
 
 Set an environment variable:
 * Linux: `export <variable-name>=<value>`

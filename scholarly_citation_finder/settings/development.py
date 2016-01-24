@@ -12,14 +12,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    #'dblp': {
-    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #    'NAME': os.getenv('DBLP_DATABASE_NAME', 'dblp'),
-    #    'USER': os.getenv('DBLP_DATABASE_USER', 'postgres'),
-    #    'PASSWORD': os.getenv('DBLP_DATABASE_PASSWORD', 'root'),
-    #    'HOST': '127.0.0.1',
-    #    'PORT': '5432'
-    #},             
+    'dblp': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('DBLP_DATABASE_NAME', 'dblp'),
+        'USER': os.getenv('DBLP_DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DBLP_DATABASE_PASSWORD', 'root'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    },             
     'mag': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('MAG_DATABASE_NAME', 'mag'),
