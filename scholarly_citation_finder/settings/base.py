@@ -33,6 +33,7 @@ PREREQ_APPS = (
     'django.contrib.staticfiles',
 )
 PROJECT_APPS = (
+    'rest_framework',
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.harvester',
     'scholarly_citation_finder.lib',
@@ -89,3 +90,11 @@ STATIC_URL = '/static/'
 #STATICFILES_DIRS = (
 #    os.path.join(BASE_DIR, 'static'),
 #)
+
+
+# rest_framework
+#
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}

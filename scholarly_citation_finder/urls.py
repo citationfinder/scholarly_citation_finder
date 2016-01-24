@@ -14,11 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from rest_framework import routers
 
 from .apps.core.admin import default_site, mag_site
+from scholarly_citation_finder.apps.core import views
+
+
+router = routers.DefaultRouter()
+router.register(r'affiliation', views.AffiliationViewSet)
+router.register(r'conference', views.ConferenceViewSet)
+router.register(r'conferenceinstance', views.ConferenceInstanceViewSet)
+router.register(r'fieldofstudy', views.ConferenceInstanceViewSet)
+router.register(r'journal', views.JournalViewSet)
 
 
 urlpatterns = [
+    # admin
     url(r'^admin/default/', include(default_site.urls)),
-    url(r'^admin/mag/', include(mag_site.urls))
+    url(r'^admin/mag/', include(mag_site.urls)),
+    # rest
+    url(r'^api/mag/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
