@@ -5,7 +5,7 @@ subprocess32==3.2.7
 #pyasn1==0.1.9
 #ndg-httpsclient==0.4.0
 
-# xml, oai,
+# xml, oai
 beautifulsoup4==4.4.1
 lxml==3.4.4
 Sickle==0.5

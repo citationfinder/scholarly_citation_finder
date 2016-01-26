@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from models import Affilation
+from models import Affilation, Conference, ConferenceInstance, FieldOfStudy, Journal
 from .serializers import *
 
 DB_NAME = 'mag'
@@ -21,8 +21,8 @@ class ConferenceInstanceViewSet(viewsets.ModelViewSet):
 
 
 class FieldOfStudyViewSet(viewsets.ModelViewSet):
-    queryset = FieldOfStudy.objects.using(DB_NAME).all()
     serializer_class = FieldOfStudySerializer
+    queryset = FieldOfStudy.objects.using(DB_NAME).all()
 
 
 class JournalViewSet(viewsets.ModelViewSet):

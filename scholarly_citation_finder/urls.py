@@ -24,7 +24,7 @@ router = routers.DefaultRouter()
 router.register(r'affiliation', views.AffiliationViewSet)
 router.register(r'conference', views.ConferenceViewSet)
 router.register(r'conferenceinstance', views.ConferenceInstanceViewSet)
-router.register(r'fieldofstudy', views.ConferenceInstanceViewSet)
+router.register(r'fieldofstudy', views.FieldOfStudyViewSet)
 router.register(r'journal', views.JournalViewSet)
 
 
