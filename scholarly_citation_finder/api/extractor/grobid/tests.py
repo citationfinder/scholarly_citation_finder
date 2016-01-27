@@ -8,7 +8,7 @@ from scholarly_citation_finder import config
 from .GrobidExtractor import GrobidExtractor
 from .TeiParser import TeiParser
 
-"""
+
 class GrobidExtractorTest(TestCase):
 
     TEST_PDF = os.path.join(config.TEST_DIR, 'paper', 'OJWT_2014v1i2n02_Kusserow.pdf')
@@ -19,7 +19,6 @@ class GrobidExtractorTest(TestCase):
     def test_extract_from_file(self):
         first = self.extractor.extract_from_file(self.TEST_PDF)
         self.assertEqual(first, True)
-"""
 
 
 class TeiParserTest(TestCase):

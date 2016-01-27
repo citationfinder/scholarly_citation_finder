@@ -1,36 +1,38 @@
 import requests
 
 from scholarly_citation_finder.lib.process import ProcessException
-from ..Extractor import Extractor, get_arguments
-from .TeiParser import TeiParser
+from TeiParser import TeiParser
 
 
-class GrobidExtractor(Extractor):
+class GrobidExtractor(Parser):
     
     # URL to Grobid service
     GROBID_API = 'http://localhost:8080'
     
+
     def __init__(self, **kwargs):
         super(GrobidExtractor, self).__init__('grobid', **kwargs)
         self.teiParser = TeiParser('grobid')
 
-    def extract_from_xml_file(self, filename):
-        super(GrobidExtractor, self).extract_from_xml_file(filename, self.extract_from_file)
 
-    #result_file_name = '.cite.teiEx
-    def extract_from_file(self, filename):
+    def extract_file(self, filename):
+        '''
+        Extract the citations from a provied file.
+        
+        :param filename: Path to PDF file
+        '''
         self.logger.debug('Extract file: {}'.format(filename))
         try:
             self._extract_references(open(filename, 'rb').read())
             return True
         except(IOError, ProcessException) as e:
-            self.logger.warn(str(e))
+            self.logger.warn(e, exc_info=True)
             return False
     
     def _extract_references(self, data, dep_results=None):
         xml = self._call_grobid_method(data, 'processReferences')
-        #return ExtractorResult(xml_result=xml)
-        return self.teiParser.parse(xml=xml, callback_biblstruct=self.parse_publication_reference)
+        return self.teiParser.parse(xml=xml,
+                                    callback_biblstruct=self.parse_publication_reference)
 
     def _call_grobid_method(self, data, method):
         self.logger.debug('Call grobid method: {}'.format(method))
