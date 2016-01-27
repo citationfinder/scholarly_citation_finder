@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from models import *
+from scholarly_citation_finder.apps.core.models import *
 
 class AffilationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

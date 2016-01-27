@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from models import Affilation, Conference, ConferenceInstance, FieldOfStudy, Journal, Publication, PublicationAuthorAffilation, PublicationKeyword, PublicationReference, PublicationUrl
-from .serializers import *
+from scholarly_citation_finder.apps.core.models import Affilation, Conference, ConferenceInstance, FieldOfStudy, Journal, Publication, PublicationAuthorAffilation, PublicationKeyword, PublicationReference, PublicationUrl
+from scholarly_citation_finder.apps.rest.serializers import *
 
 DB_NAME = 'mag'
 

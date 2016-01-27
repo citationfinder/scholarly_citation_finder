@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from rest_framework import routers
 
 from .apps.core.admin import default_site, mag_site
-from scholarly_citation_finder.apps.core import views
+from scholarly_citation_finder.apps.rest import views
 
 
 router = routers.DefaultRouter()
@@ -33,6 +33,5 @@ urlpatterns = [
     url(r'^admin/default/', include(default_site.urls)),
     url(r'^admin/mag/', include(mag_site.urls)),
     # rest
-    url(r'^api/mag/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api/', include('scholarly_citation_finder.apps.rest.urls')),
 ]

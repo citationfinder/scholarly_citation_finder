@@ -31,9 +31,9 @@ PREREQ_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 )
 PROJECT_APPS = (
-    'rest_framework',
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.harvester',
     'scholarly_citation_finder.lib',
