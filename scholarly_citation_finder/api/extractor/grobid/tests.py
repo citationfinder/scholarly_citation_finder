@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*
 import os.path
-from io import BytesIO
 from django.test import TestCase
 
 from scholarly_citation_finder import config
