@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="file:///home/neo/bin/grobid/grobid-home/schemas/rng/Grobid.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader xml:lang="en">
+        <fileDesc>
+            <titleStmt>
+                <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+            </titleStmt>
+            <publicationStmt>
+                <publisher/>
+                <availability status="unknown">
+                    <licence/>
+                </availability>
+                <date type="published" when="2014">2014</date>
+            </publicationStmt>
+            <sourceDesc>
+                <biblStruct>
+                    <analytic>
+                        <author role="corresp">
+                            <persName>
+                                <forename type="first">Arne</forename>
+                                <surname>Kusserow</surname>
+                            </persName>
+                            <email>kusserow@informatik.uni-luebeck.de, groppe@ifis.uni-luebeck.de</email>
+                            <affiliation>
+                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
+                                <orgName type="institution">University of Lübeck</orgName>
+                                <address>
+                                    <addrLine>Ratzeburger Allee 160</addrLine>
+                                    <postCode>D-23562</postCode>
+                                    <settlement>Lübeck</settlement>
+                                    <country key="DE">Germany</country>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <author>
+                            <persName>
+                                <forename type="first">Sven</forename>
+                                <surname>Groppe</surname>
+                            </persName>
+                            <affiliation>
+                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
+                                <orgName type="institution">University of Lübeck</orgName>
+                                <address>
+                                    <addrLine>Ratzeburger Allee 160</addrLine>
+                                    <postCode>D-23562</postCode>
+                                    <settlement>Lübeck</settlement>
+                                    <country key="DE">Germany</country>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+                    </analytic>
+                    <monogr>
+                        <title level="j" type="main">Open Journal of Web Technologies (OJWT)</title>
+                        <imprint>
+                            <biblScope unit="volume">1</biblScope>
+                            <biblScope unit="issue">2</biblScope>
+                            <date type="published" when="2014">2014</date>
+                        </imprint>
+                    </monogr>
+                    <note>This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/).</note>
+                </biblStruct>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <textClass>
+                <keywords>
+                    <term>Research review: Bibliographic Database</term>
+                    <term>Repository</term>
+                    <term>Digital Library</term>
+                    <term>Publishing</term>
+                </keywords>
+            </textClass>
+            <abstract>
+                <p>Every author and publisher is interested in adding their publications to the widely used bibliographic databases freely accessible in the world wide web: This ensures the visibility of their publications and hence of the published research. However, the inclusion requirements of publications in the bibliographic databases are heterogeneous even on the technical side. This survey paper aims in shedding light on the various data formats, protocols and technical requirements of getting indexed by widely used bibliographic databases in the area of computer science and provides hints for maximal database inclusion. Furthermore, we point out the possibilities to utilize the data of bibliographic databases, and describes some personal and institutional research repository systems with special regard to the support of inclusion in bibliographic databases. TYPE OF PAPER AND</p>
+            </abstract>
+        </profileDesc>
+    </teiHeader>
+    <text xml:lang="en"></text>
+</TEI>

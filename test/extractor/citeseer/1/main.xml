@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CSXAPIMetadata>
-<token>tmpgbmhG_</token><file>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/file</file>
-<header>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/header</header>
-<citations>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/citations</citations>
-<keyphrases>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/keyphrases</keyphrases>
-<body>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/body</body>
-<text>http://citeseerextractor.ist.psu.edu:8080/extractor/tmpgbmhG_/text</text>
-</CSXAPIMetadata>

@@ -1,0 +1,2271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="file:///home/neo/bin/grobid/grobid-home/schemas/rng/Grobid.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader xml:lang="en">
+        <fileDesc>
+            <titleStmt>
+                <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+            </titleStmt>
+            <publicationStmt>
+                <publisher/>
+                <availability status="unknown">
+                    <licence/>
+                </availability>
+                <date type="published" when="2014">2014</date>
+            </publicationStmt>
+            <sourceDesc>
+                <biblStruct>
+                    <analytic>
+                        <author role="corresp">
+                            <persName>
+                                <forename type="first">Arne</forename>
+                                <surname>Kusserow</surname>
+                            </persName>
+                            <email>kusserow@informatik.uni-luebeck.de, groppe@ifis.uni-luebeck.de</email>
+                            <affiliation>
+                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
+                                <orgName type="institution">University of Lübeck</orgName>
+                                <address>
+                                    <addrLine>Ratzeburger Allee 160</addrLine>
+                                    <postCode>D-23562</postCode>
+                                    <settlement>Lübeck</settlement>
+                                    <country key="DE">Germany</country>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <author>
+                            <persName>
+                                <forename type="first">Sven</forename>
+                                <surname>Groppe</surname>
+                            </persName>
+                            <affiliation>
+                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
+                                <orgName type="institution">University of Lübeck</orgName>
+                                <address>
+                                    <addrLine>Ratzeburger Allee 160</addrLine>
+                                    <postCode>D-23562</postCode>
+                                    <settlement>Lübeck</settlement>
+                                    <country key="DE">Germany</country>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+                    </analytic>
+                    <monogr>
+                        <title level="j" type="main">Open Journal of Web Technologies (OJWT)</title>
+                        <imprint>
+                            <biblScope unit="volume">1</biblScope>
+                            <biblScope unit="issue">2</biblScope>
+                            <date type="published" when="2014">2014</date>
+                        </imprint>
+                    </monogr>
+                    <note>This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/).</note>
+                </biblStruct>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <textClass>
+                <keywords>
+                    <term>Research review: Bibliographic Database</term>
+                    <term>Repository</term>
+                    <term>Digital Library</term>
+                    <term>Publishing</term>
+                </keywords>
+            </textClass>
+            <abstract>
+                <p>Every author and publisher is interested in adding their publications to the widely used bibliographic databases freely accessible in the world wide web: This ensures the visibility of their publications and hence of the published research. However, the inclusion requirements of publications in the bibliographic databases are heterogeneous even on the technical side. This survey paper aims in shedding light on the various data formats, protocols and technical requirements of getting indexed by widely used bibliographic databases in the area of computer science and provides hints for maximal database inclusion. Furthermore, we point out the possibilities to utilize the data of bibliographic databases, and describes some personal and institutional research repository systems with special regard to the support of inclusion in bibliographic databases. TYPE OF PAPER AND</p>
+            </abstract>
+        </profileDesc>
+    </teiHeader>
+    <text xml:lang="en">
+        <body>
+            <div>
+                <head n="1">MOTIVATION</head>
+                <p>Scholarly bibliographic databases collect information about scientific publications. Scholarly bibliographic databases for computer scientists of databases include commercial (but free to use) search engines like Google Scholar 
+                    <ref type="bibr" target="#b30" coords="1,108.64,602.23,16.60,8.91">[32]</ref> and Microsoft Academic Search 
+                    <ref type="bibr" target="#b56" coords="1,277.43,602.23,19.09,8.91">[59]</ref>.
+                </p>
+                <p>Search engines of associations like the Association for Computing Machinery (ACM) 
+                    <ref type="bibr" target="#b6" coords="1,201.13,626.14,11.62,8.91">[7]</ref> and the Institute of Electrical and Electronics Engineers (IEEE) 
+                    <ref type="bibr">[39]</ref> contain mainly (but not only) the publications of their workshops , conferences and journals. Some scholarly institutions in particular universities maintain also search engines like CiteSeerX 
+                    <ref type="bibr" target="#b45" coords="1,157.62,685.92,34.29,8.91">[48]</ref>
+                    <ref type="bibr" target="#b16" coords="1,157.62,685.92,34.29,8.91">[18]</ref>, DBLP Computer Science Bibliography 
+                    <ref type="bibr" target="#b46" coords="1,128.59,697.87,19.09,8.91">[49]</ref>, Bielefeld Academic Search Engine (BASE) 
+                    <ref type="bibr">[8]</ref>, Arnetminer 
+                    <ref type="bibr">[74]</ref> and arXiv 
+                    <ref type="bibr" target="#b3" coords="1,237.81,709.83,14.11,8.91">[4]</ref>. There are even some special kind of social networks with statistics and recommendation (e.g. Research Gate 
+                    <ref type="bibr" target="#b64" coords="1,262.24,733.74,16.60,8.91">[68]</ref> and Mendeley 
+                    <ref type="bibr" target="#b54" coords="1,115.56,745.69,22.41,8.91">[57]</ref>). Readers can browse and query these collections of bibliographic databases, which provide links to full text pdfs of articles and/or to articles&apos; pages of the publishers. Hence bibliographic databases are the starting point for literature review done by scientists. Scientists wish their work to be visible (at least) inside (but also outside) their scientific community. For this purpose they meet with each other on workshops and conferences in order to present their work, discuss their ideas and build personal networks. After the event (and also for journal articles) it is very important for a scientist that his or her articles can be found in bibliographic databases such that scientists, which have not participated in the event, notice and consider his or her contributions. This is the precondition that his or her articles are cited and that the scientist reaches higher impact factors: The impact factor of a scientist is often measured by the Hirsch index 
+                    <ref type="bibr" target="#b34" coords="1,412.31,721.78,16.60,8.91">[36]</ref> or one of its variants 
+                    <ref type="bibr" target="#b1" coords="1,516.89,721.78,14.11,8.91">[2]</ref>. The Hirsch index is directly based on the citation count of articles and according to 
+                    <ref type="bibr" target="#b34" coords="1,420.51,745.69,16.60,8.91">[36]</ref> defined as: A scientist
+                </p>
+                <figure>
+                    <trash>Arne Kusserow, Sven Groppe: Getting Indexed by Bibliographic Databases in the Area of Computer Science</trash>
+                </figure>
+                <p>has index h if h of his or her N p papers have at least h citations each and the other (N p − h) papers have ≤ h citations each. Not surprisingly the inclusion in bibliographic databases is one of the most important key factors for the success of young publishers. On the other side bibliographic databases aim to include as many articles as possible, but some focus on already successful publishers due to their limited capacities and resources.</p>
+            </div>
+            <div>
+                <head>Some institutional research repositories like PUB 1 at</head>
+                <p>Bielefeld University also prepare metadata of their contained publications for bibliographic databases. Authors using these institutional research repositories are independent from the publisher for the inclusion in bibliographic databases. Once they have added their publication information to their institutional research repository , their publications appear in the supported bibliographic databases after the next crawling turn. This ensures a timely inclusion as well as a higher number of bibliographic databases aware of their publications. However, many bibliographic databases only collect data from publishers and not from institutional or even personal research repositories. Related questions immediately arise: • What are widely used and hence important scholarly bibliographic databases for a specific research area like computer science? • Who can add publication information to these bibliographic databases? • How can publication information be added to bibliographic databases? • What data formats and protocols are used for imand export? • How to utilize and automatically process the information provided by bibliographic databases? This review aims to provide the answers to these questions by analyzing • the basic data formats and protocols for data exchange to and from bibliographic databases</p>
+                <figure>
+                    <trash>in Section 2, • the most important scholarly bibliographic databases for computer scientists in Section 3, • personal and institutional research repository systems in Section 4, and • further related work in Section 5. 1 http://pub.uni-bielefeld.de/en</trash>
+                </figure>
+            </div>
+            <div>
+                <head n="2">DATA FORMATS AND PROTOCOLS</head>
+                <p>This section deals with several bibliographic data formats and protocols. These are used to exchange or embed the metadata of publications, to manage bibliographies or even for describing the formatting and styling of citations.</p>
+            </div>
+            <div>
+                <head n="2.1">BibTeX</head>
+                <p>BibTeX was developed by Oren Patashnik and Leslie Lamport for managing and formatting lists of references [65]. It is typically used together with L A T E X documents but can be used with other software and became a de facto standard to define references. The first release was in 1985 and the latest version is from 2010. A BibTeX file consists of a set of entries each of which represent a reference. There are currently 14 common entry types in BibTeX, for example book, article or incollection. Each of this entry type has required fields and some optional fields, where for example title and author are almost always required. Multiple authors should be separated with an and instead of commas. Further information can be found in the format description [29, 30]. Listing 1 presents an exemplary BibTeX entry and Figure 1 the generated output in the References section for this BibTeX entry. The generated output depends on the used citation style. The one shown here corresponds to the style ieeetrans.</p>
+                <figure>
+                    <trash>@article {kumu14:sample-pub, author = {Arne Kusserow and Max Mustermann}, title = {Researching Something Special}, journal = {Special Research Journal}, number = {1}, volume = {4}, pages = {15--21}, year = {2014}, month = {November} }</trash>
+                    <head>Listing 1:</head>
+                    <figDesc>BibTeX example [1]</figDesc>
+                </figure>
+                <p>A. Kusserow and M. Mustermann, &quot;Researching something special,&quot; Special Research Journal, vol. 4, no. 1, pp. 15-21, November 2014.</p>
+                <figure>
+                    <head>Figure 1:</head>
+                    <figDesc>Generated output in the References section for the BibTeX entry of Listing 1</figDesc>
+                </figure>
+                <p>Each entry must have a citation key, which is later used as a reference to this entry within the L A T E X document . This key must be unique within a BibTeX file and is ideally easy recognizable. When the L A T E X document is compiled, BibTeX generates the list of references from the given BibTeX entries using the template for a selected citation style. A BibTeX file is a plain text file that can be edited with any text editor, but there is also software (for example BibDesk 2 , JabRef 3 or Bibfilex 4 ) that can manage whole bibliographies in one big file, offering a graphical user interface, search and sort features and auto-generation of the citation keys following a predefined or user-defined pattern as well as managing associated PDF files or URLs.</p>
+                <figure>
+                    <trash>2.2 Dublin Core The Dublin Core Metadata Initivative (DCMI) [24]</trash>
+                </figure>
+                <p>has developed a common system for using metadata to describe web resources at a conference at Dublin/Ohio in the mid 1990s. This system is known as Dublin Core Metadata and was meant to allow the authors of websites to describe their content in a way it could be discovered by keyword-based search engines.</p>
+                <figure>
+                    <trash>&lt;dc:title&gt; Researching Something Special &lt;/dc:title&gt; &lt;dc:type&gt;Text&lt;/dc:type&gt; &lt;dc:creator&gt;Kusserow, A&lt;/dc:creator&gt; &lt;dc:creator&gt;Mustermann, M&lt;/dc:creator&gt; &lt;dcterms:issued&gt; 2014-11-15 &lt;/dcterms:issued&gt; &lt;dcterms:bibliographicCitation&gt; Special Research Journal 4(1), 15-21. (2014) &lt;/dcterms:bibliographicCitation&gt;</trash>
+                    <head>Listing 2: Dublin Core example</head>
+                </figure>
+                <p>Nowadays though most of the leading search engines ignore most of the metadata of websites because there was an extensive misuse and spamming with metadata in the past. Practical benefits of the use of metadata remain only in fields where the search engines can trust the data and thus consider it. That is why the Dublin Core Metadata, although originally conceived for all kinds of content, is now primarily used in the library world [72]. But even there Google claims that &quot;they work poorly for journal papers because Dublin Core doesn&apos;t have unambiguous fields for journal title, volume, issue, and page numbers&quot;. 5 Instead, a complete bibliographic citation including for example the journal, volume, issue and page numbers can and is recommended to be given in the bibliographicCitation field [3]. Dublin Core Metadata can be presented in RDF/XML or embedded in the head section of HTML documents in &lt;meta&gt; tags. There are 15 core elements and some more additional elements in Dublin Core. All elements are optional , can be repeated and can be in any order. We refer the interested reader to the format description [23, 24] for more details. Listing 2 shows an exemplary Dublin Core entry.</p>
+            </div>
+            <div>
+                <head n="2.3">Highwire Press Tags</head>
+                <p>Highwire Press Tags is a meta tag format developed by HighWire. To the best of our knowledge there is no official documentation or format description about these tags available online. However, the Google Scholar Inclusion Guidelines for Webmasters (see Section 3.1) [33] describe the usage of these tags. Highwire Press Tags can be embedded in the head section of HTML documents in &lt;meta&gt; tags.</p>
+                <figure>
+                    <trash>&lt;meta name=&quot;citation_title&quot; content=&quot;Researching Something Special&quot;/&gt; &lt;meta name=&quot;citation_author&quot; content=&quot;Kusserow, A.&quot;/&gt; &lt;meta name=&quot;citation_author&quot; content=&quot;Mustermann, M.&quot;/&gt; &lt;meta name=&quot;citation_publication_date&quot; content=&quot;2014&quot;/&gt; &lt;meta name=&quot;citation_journal_title&quot; content=&quot;Special Research Journal&quot;/&gt; &lt;meta name=&quot;citation_volume&quot; content=&quot;4&quot;/&gt; &lt;meta name=&quot;citation_issue&quot; content=&quot;1&quot;/&gt; &lt;meta name=&quot;citation_firstpage&quot; content=&quot;15&quot;/&gt; &lt;meta name=&quot;citation_lastpage&quot; content=&quot;21&quot;/&gt; &lt;meta name=&quot;citation_pdf_url&quot; content=&quot; http://www.example.com/full.pdf&quot;/&gt; Listing 3: Highwire Press Tags example</trash>
+                    <head>Listing 3 presents an exemplary entry using Highwire Press Tags.</head>
+                    <figDesc>Google Scholar requires the minimum of citation_title, one citation_author tag for every author and the citation_publication_date in order to properly index the content. A link to the PDF file</figDesc>
+                    <trash>Arne Kusserow, Sven Groppe: Getting Indexed by Bibliographic Databases in the Area of Computer Science</trash>
+                </figure>
+                <p>with the full text should ideally be supplied, too [33]. Presumably it is the best to include as many meta tags as reasonably possible.</p>
+                <figure>
+                    <trash>2.4 Publishing Requirements for Industry Standard Metadata (PRISM)</trash>
+                </figure>
+                <p>PRISM is developed by the PRISM Metadata Initiative and was first released in 2001. The current version is 3.0 from 2012. It specifies an XML/RDF element set for storing and interchanging metadata that describes resources or their relationship to other resources and incorporates Dublin Core elements (see Section 2.2) [37]. Listing 4 contains an example of PRISM meta tags. Although initially developed with the needs of publishers in mind and focused on handling print content like magazines or journals, its newer version is not limited to bibliographic usage but can describe many types of content. PRISM can also define property rights or usage permissions . The official PRISM introduction document [38] contains further information.</p>
+                <figure>
+                    <trash>&lt;meta name=&quot;prism.title&quot; content=&quot;Researching Something Special&quot;/&gt; &lt;meta name=&quot;prism.publicationYear&quot; content=&quot;2014&quot;/&gt; &lt;meta name=&quot;prism.publicationDate&quot; content=&quot;2014-11-15&quot;/&gt; &lt;meta name=&quot;prism.publicationName&quot; content=&quot;Special Research Journal&quot;/&gt; &lt;meta name=&quot;prism.volume&quot; content=&quot;4&quot;/&gt; &lt;meta name=&quot;prism.number&quot; content=&quot;1&quot;/&gt; &lt;meta name=&quot;prism.startingPage&quot; content=&quot;15&quot;/&gt; &lt;meta name=&quot;prism.endingPage&quot; content=&quot;21&quot;/&gt; &lt;meta name=&quot;prism.url&quot; content=&quot;http://www .example.com/full.pdf&quot;/&gt; Listing 4: PRISM Tags example 2.5 Metadata Object Description Schema (MODS)</trash>
+                </figure>
+                <p>The Metadata Object Description Schema (MODS) was developed in 2002 by the Network Development and MARC Standards Office of The United States Library of Congress [83]. The current version is 3.5 from 2013. It is an XML format schema originally intended for use in library applications. MODS is a derivative of the MARC21 format (see Section 2.12), designed to be less detailed, more simple and more human readable with less abbreviations or coded values [54]. MODS offers 19 top-levelelements and several sub-elements. All elements except titleInfo are optional and all but recordInfo are repeatable . According to [34], MODS is intended to offer an alternative or complement between too simple metadata formats and too complex, feature-rich ones.</p>
+                <figure>
+                    <trash>2.6 Journal Article Tag Suite (JATS) JATS is an XML format schema developed by the National Information Standards Organization (NISO) for exchanging</trash>
+                </figure>
+                <p>the metadata and content of scholarly journals [62]. It is not intended to be used for books, magazines , reviews or any other type of publication. JATS comes with three different tag sets for the purposes of archiving, publishing and authoring, each defining numerous XML elements and attributes. We refer the interested reader to the official document from NISO [62] for more information.</p>
+            </div>
+            <div>
+                <head n="2.7">Open Archives Initiative Protocol for Metadata Harvesting</head>
+                <p>The Open Archives Initiative (OAI) developed an interoperable standard for gathering, exchanging and processing metadata of publications scattered across many services or repositories [47, 60]. This standard is referred to as the Open Archives Initiative Protocol for Metadata Harvesting (or abbreviated as OAI-PMH).</p>
+                <p>The protocol differentiates between Data Providers and Service Providers [47]. Data Providers provide the metadata and Service Providers use and process that data, for example for offering a search engine. It is possible to register as an official Data Provider [85] but there is no need to register in order to access data as a Service Provider. There is a list with all registered Data Providers available. 6 The protocol is based on HTTP Requests and XML.</p>
+                <p>The request for data is send via a HTTP GET or POST request to the repository&apos;s web server, which then processes this request and responds with an XML output.</p>
+                <p>The metadata format of the response can be chosen from a list of formats that the current repository has implemented . All repositories must at least implement the Dublin Core format (see Section 2.2). Further information can be found in the official protocol description [47] and the appended implementation guidelines. There is also a list available with existing tools for implementing an OAI-PMH interface. 7</p>
+                <p>Listing 5 presents an exemplary OAI-PMH request that requests the metadata (in Dublin Core format) of a record with the given identifier and Listing 6 shows the corresponding response.</p>
+                <figure>
+                    <trash>http://oai.sample-repository.org?verb= GetRecord&amp;metadataPrefix=oai_dc&amp; identifier=oai.sample-repository.org: id5 Listing 5: OAI-PMH request example &lt;OAI-PMH xsi:schemaLocation=&quot;http://www. openarchives.org/OAI/2.0/ http://www. openarchives.org/OAI/2.0/OAI-PMH.xsd&quot;&gt; &lt;responseDate&gt;2015-02-17&lt;/responseDate&gt; &lt;request verb=&quot;GetRecord&quot; identifier=&quot;oai. sample-repository.org:id5&quot; metadataPrefix=&quot;oai_dc&quot;&gt;http://oai. sample-repository.org&lt;/request&gt; &lt;GetRecord&gt; &lt;record&gt; &lt;header&gt; &lt;identifier&gt;oai.sample-repository.org: id5&lt;/identifier&gt; &lt;datestamp&gt;2014-11-21&lt;/datestamp&gt; &lt;setSpec&gt;gmd&lt;/setSpec&gt; &lt;/header&gt; &lt;metadata&gt; &lt;oai_dc:dc xsi:schemaLocation=&quot;http:// www.openarchives.org/OAI/2.0/oai_dc / http://www.openarchives.org/OAI /2.0/oai_dc.xsd&quot;&gt; &lt;dc:title&gt;Researching Something Special&lt;/dc:title&gt; ... &lt;/oai_dc:dc&gt; &lt;/metadata&gt; &lt;/record&gt; &lt;/GetRecord&gt; &lt;/OAI-PMH&gt; Listing 6: OAI-PMH response example 2.8 DBLP XML/Submission Format</trash>
+                </figure>
+                <p>The DBLP XML format is a special XML format developed by the DBLP Computer Science Bibliography. It can be concisely described as BibTeX written in XML. Like BibTeX, a DBLP XML file consists of one or multiple entries. Each entry has an entry type and some tags associated. The entry types are the same as specified in BibTeX but limited to article, inproceedings, proceedings, book, incollection, phdthesis and masterthesis. As an addition, there is the entry type www which is not present in BibTeX and is used for author homepages. The tags are also the same but the only tag required is the title tag, all others are optional. Another difference is that in DBLP XML each author gets his own tag, sorted by the order of their appearance on the publication. Additionally there are tags for the last modification date, for the URL to the publisher&apos;s website and for the URL to the table of contents of the book or conference the entry is a part of. Finally, all entries have a unique key generated by a specific pattern, similar to the cite key known from BibTeX. Further information can be found in [49].</p>
+                <figure>
+                    <figDesc>Listing 7 shows an exemplary DBLP XML entry.</figDesc>
+                    <trash>&lt;?xml version=&quot;1.0&quot;?&gt; &lt;article key=&quot;journals/sjans/kusserow&quot; mdate=&quot;2014-11-19&quot;&gt; &lt;author&gt;Arne Kusserow&lt;/author&gt; &lt;author&gt;Max Mustermann&lt;/author&gt; &lt;title&gt; Researching Something Special &lt;/title&gt; &lt;pages&gt;15-21&lt;/pages&gt; &lt;year&gt;2014&lt;/year&gt; &lt;volume&gt;4&lt;/volume&gt; &lt;journal&gt; Special Research Journal &lt;/journal&gt; &lt;number&gt;1&lt;/number&gt; &lt;ee&gt;http://doi.acm.org/...&lt;/ee&gt; &lt;url&gt;http://www.example.com/full.pdf &lt;/url&gt; &lt;/article&gt; Listing 7: DBLP XML example</trash>
+                </figure>
+                <p>The DBLP Submission Format has high similarities with DBLP XML but is intended only for letting publishers submit metadata to the DBLP Computer Science Bibliography. Detailed information about the submission format can be found in [82]</p>
+                <figure>
+                    <figDesc>.</figDesc>
+                    <trash>2.9 Research Information Systems (RIS) The Research Information Systems (RIS) format was developed by Thomson Reuters mainly for allowing users of their applications EndNote 8 and ReferenceManager 9</trash>
+                </figure>
+                <p>to import bibliographic metadata from websites or export data [88].</p>
+                <figure>
+                    <trash>Arne Kusserow, Sven Groppe: Getting Indexed by Bibliographic Databases in the Area of Computer Science TY -JOUR AU -Kusserow, Arne AU -Mustermann, Max TI -Researching Something Special AB -Abstract of this publication... T2 -Special Research Journal PY -2014/11/15 IS -1 VL -4 SP -15 EP -21 UR -http://www.example.com/pub_id5 L1 -http://www.example.com/full.pdf ER</trash>
+                    <head>Listing 8:</head>
+                    <figDesc>RIS example</figDesc>
+                </figure>
+                <p>A RIS file is a plain text file that contains one or multiple entries. Each entry consists of several fields, which are composed of a tag indicating the field type followed by two whitespaces, a single dash, another whitespace and finally the content of that field. Each field must be on a separate line. They can be in any order with the exception of the first field TY (the reference type, similar to BibTeX but with many more types) and the last field ER (end of reference). Authors&apos; names must be in the format Surname, Forename and every author gets his own AU field. Authors can also be represented as primary, secondary , etc., using A1, A2, A3, A4. A full list of all supported tags, reference types and other format specifications can be found in the format description [88]. Listing 8 shows an exemplary RIS entry. When a website offers export to the RIS format, sending the MIME type application/x-research-infosystems along with the exported data will automatically open up EndNote or ReferenceManager on the user&apos;s system and import it to the user&apos;s library [88]</p>
+                <figure>
+                    <figDesc>.</figDesc>
+                </figure>
+            </div>
+            <div>
+                <head n="2.10">Citation Style Language (CSL)</head>
+                <p>The Citation Style Language (CSL) is an open standard for describing the formatting and styling of citations in an XML-based format. It was initially created by Bruce D&apos;Arcus and is maintained by many contributors [96]. It offers about 7000 free crowdsources citation styles and is used by many commercial or open source projects. There are CSL processors (known as citeproc&apos;s) available for several programming languages. They can create correctly formatted citations from given publication metadata using the CSL styles. Citeproc-js, a well-known CSL processor for JavaScript, introduced a JSON 10 schema called CSL-JSON to handle the bibliographic metadata. It is not an official standard but it&apos;s 10 http://json.org/ used by other CSL tools, too. The schema is described on the CSL project&apos;s GitHub page. 11 The project&apos;s website [96] describes more details of CSL. Listing 9 presents an exemplary CSL-JSON entry.</p>
+                <figure>
+                    <trash>[{ &quot;author&quot;: [ { &quot;family&quot;: &quot;Kusserow&quot;, &quot;given&quot;: &quot;Arne&quot;, }, { &quot;family&quot;: &quot;Mustermann&quot;, &quot;given&quot;: &quot;Max&quot;, } ], &quot;container-title&quot;: &quot;Special Research Journal&quot;, &quot;id&quot;: &quot;5&quot;, &quot;issued&quot;: { &quot;date-parts&quot;: [ [&quot;2014&quot;, &quot;11&quot;, &quot;15&quot;] ] }, &quot;page&quot;: &quot;15-21&quot;, &quot;title&quot;: &quot;Researching Something Special&quot;, &quot;type&quot;: &quot;article-journal&quot;, &quot;volume&quot;: &quot;4&quot; }] Listing 9: CSL-JSON example 2.11 Digital Object Identifier (DOI)</trash>
+                </figure>
+                <p>A digital object identifier (DOI) is used to identify an object unrelated to its current location and thus providing persistence when referencing to it [40]. Metadata and location can be stored together with the DOI but the identifier will remain fixed even when the data changes. That is why a DOI provides a great benefit when linking to publications. When the location of the document has changed and the location data of the identifier was updated accordingly, the linking via the DOI will stay valid. If a DOI was not used, all links to the publication would become invalid and would need to get updated with the new location of the document. The standardized DOI system is developed and controlled by the International DOI Foundation (IDF) [42].</p>
+                <figure>
+                    <trash>Several Registration Agencies 12 provide the necessary Open Journal of Web Technologies (OJWT), Volume 1, Issue 2, 2014</trash>
+                </figure>
+                <p>infrastructure for registering DOI names and maintaining the data. Each Registration Agency is allowed to offer its own business model, so the cost of registering new DOI&apos;s can vary. An example for prices can be seen in [22].</p>
+                <figure>
+                    <figDesc>Resolving an existing DOI is free. Exemplary DOI&apos;s would be 10.1.1.102.0815 or 10.3390/jsan2020172. More information about the DOI Format can be found in [41].</figDesc>
+                </figure>
+            </div>
+            <div>
+                <head n="2.12">Other Data Formats</head>
+                <p>The EPrints repository software (see Section 4.2) has its own meta tag format and the Berkeley Electronic Press has developed the meta tag format BE Press Tags for its repository software (see Section 4.3). MARC21 is a meta data format designed for carrying bibliographic information [84]. Due to its numeric field names and coded values it is rather unintuitive and hard to read (see some examples 13 ). More information about the format can be found in [84]. CSV is the abbrevation for Comma-seperated values which is not really a bibliographic data format, but a widely used plain text format that can store tabular data. It can have any number of records separated by line breaks. Each line shares an often identical series of fields which are separated by a character, commonly the comma. YAML is a markup and data serialization language with high similarities to JSON (see CSL-JSON in Section 2.10) [11]. In fact JSON is a subset of YAML. The author of [31] suggests the usage of YAML together with CSL (see Section 2.10) because of the balance between human and machine readability.</p>
+            </div>
+            <div>
+                <head n="2.13">Overview of Data Formats</head>
+                <p>After introducing these formats and protocols it is now important to find out how widely each of them is used. As a reference, the usage of these formats by the bibliographic databases introduced in Section 3 has been con- sidered. Table 1 gives an overview of the formats that the bibliographic databases offer their users to export the metadata of publications. The user can import this exported data in his or her favorite software to create and manage citation lists or bibliographies. In this case BibTeX is by far the most frequently offered format, which perfectly makes sense since it is the most widely accepted bibliographic metadata format in general. Following at a distance is RIS and then some other formats. 13 http://www.loc.gov/marc/bibliographic/examples. html DOIs are also widely used among the examined databases. Almost all of them show and use the DOI to provide a permanent link to the full text document. It is also interesting to take a look at the import and export formats used on the backend of the databases. This will be further analyzed in Section 3.12 and Section 3.13 after the databases have been introduced.</p>
+            </div>
+            <div>
+                <head n="3">SCHOLARLY BIBLIOGRAPHIC DATABASES FOR COMPUTER SCIENTISTS</head>
+                <p>This section deals with several established bibliographic databases and search engines for scholarly publications which are most important for computer scientists. These services provide information to the users about publications , authors, journals or conferences and much more. Some also offer detailed statistics and visualizations about the data. Each of these services has been examined on how to add data to their index or collect data from them.</p>
+            </div>
+            <div>
+                <head n="3.1">Google Scholar</head>
+                <p>In 2004, Google released a search engine designed for scholarly publications called Google Scholar [32]. Beside the information on publications it provides author profiles and citation statistics. It also offers full-textindexing of the publications. Google Scholar uses a crawler to autonomously search the web for new data. The indexed data gets evaluated and ranked by computer algorithms. Google neither gives details about these algorithms nor any information on when this crawling happens or why it might have failed. But they have published detailed guidelines how the data should be presented to get added to the index successfully [33]. Google Scholar can index and extract information from PDF files and HTML pages [33]. Each page must contain the meta information of no more than one publication . They recommend to use HTML meta tags and support Highwire Press (see Section 2.3), Eprints, BE Press, PRISM and Dublin Core tags (see Section 2.2).</p>
+                <p>The usage of Dublin Core tags is not recommended because they &quot;work poorly for journal papers&quot;. 14 Google uses Highwire Press tags in all its given examples. In addition to that or if there are no meta tags present, Google Scholar can also consider the structure of the HTML page or PDF file and its elements and thus try to identify the metadata. Every page or file of a website must be reachable from within a maximum of ten links down from the starting page. That is why larger databases are recommended to provide listings of all entries grouped</p>
+                <figure>
+                    <trash>Arne Kusserow, Sven Groppe: Getting Indexed by Bibliographic Databases in the Area of Computer Science Database Front End Export Formats Google Scholar BibTeX, RIS, EndNote, CSV CiteSeerX BibTeX BASE BibTeX, RIS, RDF (Dublin Core), EndNote, JSON, MARC, YAML MAS BibTeX, RIS Arnetminer BibTeX DBLP BibTeX, RIS, DBLP XML CCSB BibTeX arXiv none ResearchGate none Mendeley BibTeX, RIS, EndNote XML</trash>
+                    <head>Table 1:</head>
+                    <figDesc>Front end export formats offered by the databases by for example the year of publication. Also, offering a list of recently added entries is highly recommended because this smaller list can be crawled more frequently. There seems to be no way of getting or accessing data from Google Scholar except just linking to it. Google does not offer an API nor interface to access its data.</figDesc>
+                </figure>
+            </div>
+            <div>
+                <head n="3.2">CiteSeerX</head>
+                <p>CiteSeerX is a scientific literature search engine and database with focus on computer sciences. Its former version, CiteSeer, was first developed in 1997 but couldn&apos;t stand the extended tasks any longer after about ten years. It was then redeveloped and became Cite- SeerX [18]. CiteSeer was the first to provide autonomous citation indexing, what means that it automatically extracts and indexes citations from publications for better search results and for evaluational or statistical usage [48]. It also offers full-text-indexing of the publica- tions.</p>
+                <p>CiteSeerX uses a focused crawler to get new data. This crawler doesn&apos;t search the whole web but only sites from a crawl list [16]. There is a form that allows to submit URL&apos;s for crawling, but it states it only searches for PDF files (and some other) to a depth of one [19]. There is no validation taking place to verify the content or the author of the found publications.</p>
+                <p>The data from CiteSeerX is freely available for access via an OAI-PMH interface. The full data can also be downloaded, but this requires getting in further contact with the team of CiteSeerX [17].</p>
+                <p>They also offer an extractor which is open source and can extract metadata and citations from documents and return it in several different formats, for example BibTeX or XML [15]</p>
+                <figure>
+                    <figDesc>.</figDesc>
+                </figure>
+            </div>
+            <div>
+                <head n="3.3">DBLP Computer Science Bibliography</head>
+                <p>The DBLP Computer Science Bibliography is a web service of the Schloss Dagstuhl -Leibniz-Zentrum für Informatik GmbH and the University of Trier [49]. In 2009 it contained more than 1.2 million indexed publications and about 700,000 authors. Today there are even more than 2.6 million publications listed [80]. A direct input of data into the DBLP Computer Science Bibliography is not possible for everyone [81]. The DBLP automatically indexes the table of contents of complete proceedings or journals provided by the major publishers. If there is no metadata provided, conference chairmen or journal editors can provide the metadata using the DBLP Submission format [82].</p>
+                <figure>
+                    <figDesc>All indexed data of the DBLP is offered for download as a single XML file using the DBLP XML format (see Section 2.8) [49]</figDesc>
+                </figure>
+                <p>. Additionally there is the possibility to access specific data via an API that returns data in the DBLP-XML format.</p>
+                <p>Using crawlers to get data from the DBLP website is currently allowed, but there is a notice that &quot;this feature will change in the near future&quot; [79]. It is recommended to use the offered API. Whether crawling or API calling, the scripts should be able to react correctly to timeouts and must not perform a more than reasonable amount of data requests per minute. If a lot of data is needed, one is advised to use the complete XML file instead [79]</p>
+                <figure>
+                    <figDesc>.</figDesc>
+                    <trash>3.4 The Collection of Computer Science Bibli- ographies</trash>
+                </figure>
+            </div>
+            <div>
+                <head>Founded in 1993, the Collection of Computer Science</head>
+                <p>Bibliographies gets and merges data from now more than 1500 individual bibliographic databases. It covers most aspects of computer sciences and has currently more than 3 million references to scientific publications. Some major sources are for example CiteSeer, DBLP and arXiv. But there are also much smaller author-, subject-or conference-specific databases that contribute. The data from these sources gets updated weekly [75, 78].</p>
+                <p>The Collection of Computer Science Bibliographies offers the possibility to add own data via a direct input of single BibTeX entries which will then take a week to appear on the site [76]. Or one could add a whole new source collection if certain criteria are fulfilled. In order to do this, the bibliography needs to have a single compressed plain text file with a fixed name containing all data as BibTeX entries, accessible via HTTP or FTP. This file will then be mirrored and automatically kept upto-date . A submitted bibliography should cover either a specific subject area, a complete journal or conference or all publications of a specific institution or publisher [77]. There seems to be no way of getting or accessing data except just linking to it or manually downloading single BibTeX files. It is possible to become a mirror site that copies the whole collection, but this won&apos;t serve the purpose of accessing particular data.</p>
+            </div>
+            <div>
+                <head n="3.5">Microsoft Academic Search</head>
+                <p>Microsoft Academic Research is an experimental search engine and research service by Microsoft Research [59]. It is not intended for production use and can be taken offline once its project goals are fulfilled. In addition to the indexing of publications it offers detailed statistics about the publications, citations and the relationship between subjects and authors. It also offers extensive author profile pages and many visualizations. There is a full list of data providers available online . 15 It includes for example arXiv, BASE, CiteSeer and DBLP. If one has another content source that could be added, he or she is encouraged to contact Microsoft Research. Registered users can also submit a PDF file or a BibTeX file to add a single publication to an author profile [59]. Microsoft Academic Research offers an API to access its data, but in order to use this one has to be a registered user and request an AppID, wherefore the desired application must met certain criteria [59]. Anyway it is possible for everyone to embed the author profiles using JavaScript.</p>
+            </div>
+            <div>
+                <head n="3.6">Bielefeld Academic Search Engine (BASE)</head>
+                <p>The Bielefeld Academic Search Engine (BASE) is a search engine for academic open access documents by the Bielefeld University Library [8]. It contains data about more than 60 million documents from more than 3000 indexed sources using the Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH). BASE 15 http://academic.research.microsoft.com/About/Help. htm#5 claims that it intellectually selects and evaluates these sources before indexing them. BASE is a registered Open Archives Initiative Service Provider (see Section 2.7) [8]. It is possible to suggest a new data source for inclusion if this source has a correctly implemented OAI-PMH interface providing the data [10], but if the source is a registered OAI Data Provider it should already be included [9]. BASE offers an OAI-PMH Validity Checker to verify if the OIA-PMH interface is working correctly. Besides that, the intellectual criteria used to select the sources are not really specified . The data from the selected sources gets updated every weekend [9]. BASE also provides access to its own data via a HTTP interface or an OAI-PMH interface that returns data in the Dublin Core format or an extended Dublin Core format with extra elements by BASE [8]. In order to get access to these interfaces, one needs to register its IP- address.</p>
+            </div>
+            <div>
+                <head n="3.7">Mendeley</head>
+                <p>Mendeley is a web service with associated desktop and mobile applications for managing, sharing and citing scientific publications. It offers author profiles, a kindof social network, statistics and recommendations [57]. Mendeley is accessible for registered users only. The registration is free. Mendeley gets its data from external sources, among others from Google Scholar and arXiv [56]. Also, webmasters can add an import button to their websites with publications. If a users clicks that button, Mendeley will import the publication to this user&apos;s collection. It recognizes many HTML meta tag formats and recommends to stick to the Google Scholar Inclusion Guidelines for Webmasters (see Section 3.1). In addition to that, registered users can directly submit single publications. There is an API that offers developers the possibility to develop own applications extending or using Mendeley&apos;s features [58]. But this does not seem to serve the purpose of accessing or embedding particular data from Mendeley for use in an external service.</p>
+            </div>
+            <div>
+                <head n="3.8">Arnetminer</head>
+                <p>Arnetminer is a search engine for scientific publications and authors which was developed in 2006 by Professor Jie Tang from the Tsinghua University, China [74]. It aims to create extensive author profiles by extracting information and integrating academic data from various sources and analyzing the created author&apos;s social network . It offers a large amount of statistics and visualizations about authors and had 3.2 million publications and 700,000 authors listed in the year 2010.</p>
+                <p>According to the authors of [50], Arnetminer fetches data on researchers and authors by using a search engine (Google API) to find relevant websites and then extracts information from these. Additionally, it integrates the publication data from existing online sources, in particular from the DBLP Computer Science Bibliography (see Section 3.3). There seems to be no way to input data directly.</p>
+                <p>Arnetminer offers an API for searching or accessing data, even the author profiles can be accessed. When sending a request using a HTTP request, the server will answer with a formatted output of the data. It is possible to search for publications, conferences and experts on a subject by a keyword and for author profiles by name or id. Further information can be found in [35]</p>
+                <figure>
+                    <figDesc>.</figDesc>
+                </figure>
+            </div>
+            <div>
+                <head n="3.9">arXiv</head>
+                <p>In 1991, arXiv started as xxx.lanl.gov, a server for exchanging and archiving articles about physics before they got printed [4]. Today it is maintained by the Cornell University Library and contains about 989,000 open access documents about physics, mathematics, computer sciences and other areas. Submitting single articles is only possible for registered authors which therefore have to grant arXiv the license to distribute their work [6].</p>
+                <figure>
+                    <figDesc>The submitted work should ideally be a L A T E X file or a PDF file instead if the author does not use L A T E X.</figDesc>
+                </figure>
+                <p>Accessing data by crawling the sites is not allowed and will be blocked by the server if noticed [5]. One is advised to use the offered API or OAI-PMH interface instead.</p>
+            </div>
+            <div>
+                <head n="3.10">Research Gate</head>
+                <p>Founded in 2008 in Hannover and Boston, ResearchGate rather is a kind of social network for scientists than a pure bibliographic database [68]. It currently has about 67 million publications and more than 5 million members, which can collaborate together, share publications and get statistics about their work. The most important part of ResearchGate is its author profiles. ResearchGate is accessible for registered users only and the registration is free. According to [67], ResearchGate gets its publication and author data from other bibliographic databases, such as, in terms of computer sciences, CiteSeer (see Section 3.2). Additionally, registered users can upload publications to their profiles. There seems to be no way to access the data from ResearchGate.</p>
+            </div>
+            <div>
+                <head n="3.11">Other Databases or Services</head>
+                <p>The ACM Digital Library is a bibliographic database that provides subscription based full text document access to all publications of the Association for Computing Machinery (ACM) and access to bibliographic citations from other major publishers [7]. It offers analyzation of references and citations and exports metadata to BibTeX and EndNote. IEEE Xplore is a bibliographic database that provides access to more than 3 million publications on electrical engineering, computer science and electronics [39]. It mainly covers documents published by the Institute of Electrical and Electronics Engineers (IEEE) and its partners and offers a subscription model for accessing full text documents. IEEE Xplore also offers analyzation of references and citations and exports meta data to BibTeX and RIS. Web of Science (WoS) (former known as Web of Knowledge) is a subscription-based interdisciplinary bibliographic database from Thomson Reuters stating that it is &quot;the world&apos;s largest collection of research data&quot; and the &quot;only true citation index&quot; [86]. It also claims that it objectively evaluates and selects its data sources. It is possible to suggest a repository for indexing. More information on the selection process can be found in [87]. The Directory of Open Access Journals (DOAJ) is a database that indexes open access, peer-reviewed journals [28]. It states that it uses a quality control system for its content and offers a quite sophisticated application form for journal publishers. CiteULike is a bookmarking web-service for creating and sharing bibliographies [20]. It can import data from various sources (see [20] for a full list of currently supported sources) and allows the user to organize or share its bibliography with other users. CiteULike can also import BibTeX files and export the user&apos;s bibliography to BibTeX or RIS. BibSonomy is a bookmarking web-service for creating and sharing bibliographies [13]. It can import data from various sites. 16 It offers a great amount of export formats, including but not limited to BibTeX, CSL- JSON, EndNote, DBLP XML, RIS and several plain text citations.</p>
+            </div>
+            <div>
+                <head n="3.12">Overview of Indexing Requirements</head>
+                <p>After introducing these bibliographic databases, it is now important to summarize what to do in order to get publications indexed by the examined databases. Table 2 shows that there is a wide variety of ways to get publications indexed by the databases. Some offer Open Journal of Web Technologies (OJWT), Volume 1, Issue 2, 2014 Database How to get indexed Supported formats Google Scholar by getting crawled HTML Meta tags (Highwire, Dublin Core and others), HTML structure, PDF CiteSeerX by submitting a URL for crawling PDF BASE by being a OAI Data Provider or registering as a source OAI-PMH MAS by submitting single files (only registered users) or being indexed by one of the data sources PDF, BibTeX</p>
+                <p>Arnetminer by being indexed by DBLP or getting crawled unknown DBLP only publishers or conference chairmen can submit data DBLP Submission Format CCSB by submitting single files, registering as a source or being indexed by one of the data sources BibTeX arXiv by submitting single files (only registered users) PDF, LaTeX ResearchGate by submitting single files (only registered users) or being indexed by one of the data sources BibTeX, RIS, MODS, DBLP- XML, PDF and others Mendeley by being indexed by one of the data sources or import button on website HTML Meta tags, PDF Table 2: How to get indexed by the databases automatic ways like getting crawled or offering an OAI- PMH interface, but most of them want a manually uploaded file or a submitted URL. If you are an individual author submitting single files may be sufficient for you, but if you own a repository with many publications the automatic ways are the most interesting ones. Another important factor to consider is the exchange of information that takes place between the databases. Almost all of the examined databases harvest data from other sources or distribute their own information to others . Figure 2 gives an overview of known relationships between the databases.</p>
+                <figure>
+                    <trash>Google Scholar CiteSeerX BASE MAS Arnetminer DBLP CCSB arXiv ResearchGate Mendeley OAI Data Provider</trash>
+                    <head>Figure 2:</head>
+                    <figDesc>Known relationships between the databases</figDesc>
+                </figure>
+                <p>Please note that although Figure 2 may create the impression that these are &quot;push&quot; operations, they really are &quot;pull&quot; operations instead. The databases do not actively distribute their data to others, their data is accessed by others. The three databases whose data is accessed most are CiteSeerX, arXiv and the DBLP Computer Science Bibliography . Unfortunately, getting CiteSeerX to index a lot of publications is a little bit difficult, because one has to manually submit a URL to every single PDF file to get crawled. And submitting publications to arXiv is still more difficult, as arXiv only accepts manual uploads of single PDF files. At least there is no need to take care of the DBLP Computer Science Bibliography if you are an author, because if your publication was published by a major publisher or is part of a big conference it should be already indexed. If not, you will most certainly not be able to change this.</p>
+                <p>Getting indexed by these three databases should cover all other examined databases with the exception of Google Scholar. But it can be assumed that Google&apos;s crawler will catch the information from one of the other covered databases anyway. Also, it should be easy to get crawled by Google Scholar with adding the required meta tags to the publication pages and following their guidelines (see Section 3.1). As CiteSeerX and arXiv are registered OAI Data Providers, their data will be distributed among other OAI Service Providers. Unfortunately, BASE is the only officially registered OAI Service Provider of the examined databases, but there are others outside the scope of this paper. Providing an OAI-PMH interface may be a wise idea anyway, as it is a good way for others to get access to your data. So if you want a lot of publications to get indexed, a reasonable approach requiring the least manual effort would be to follow the guidelines of Google Scholar, provide an OAI-PMH interface, register as an official OAI Data Provider and maybe register as a data source for BASE and the Collection of Computer Science Bibliographies . To cover everything you would need to find a way to automatically submit single URL&apos;s or files to the other databases.</p>
+            </div>
+            <div>
+                <head n="3.13">Overview of Crawling Possibilities</head>
+                <p>Another interesting aspect to summarize is how the data of the bibliographic databases can be accessed or harvested in order to embed their data into your repository. Table 3 gives an overview of how to access data. It shows that popular ways to offer access are to provide an API or an OAI-PMH interface. In general, only information and metadata of the publications are accessible, but Microsoft Academic Search is an exception because it provides the greatest amount of accessible information and also offers the possibility to easily embed data on your own website via JavaScript. Others, like for example Google Scholar or the Collection of Computer Science Bibliographies, offer no way to access their data. Table 3 also shows that half of the examined databases disallow the crawling of their sites for information. When also taking into account the fact that developing a good crawler is not an easy task, crawling becomes an even less recommendable approach to access data from these bibliographic databases.</p>
+            </div>
+            <div>
+                <head n="4">PERSONAL AND INSTITUTIONAL RE- SEARCH REPOSITORY SYSTEMS</head>
+                <p>This section describes some widely used existing bibliographic repository systems that can manage or provide access to publication metadata and are intended to be used by individuals, small groups or whole institutions. Note that the list is not exhaustive and the focus lies on repository systems and not on management systems that guide through the whole process of submission, review and publication of manuscripts.</p>
+            </div>
+            <div>
+                <head n="4.1">Open Harvester Systems</head>
+                <p>The Public Knowledge Project develops a free open source metadata indexing system called Open Harvester Systems (OHS) [66]. It is designed to index and expose all publications of an institution. It allows to harvest metadata from OAI-compliant databases, perform changes or normalization on the harvested data and index the resulting information in order to expose it using a customizable user interface. It also offers browsing and has a simple or advanced search interface. It requires an Apache web server with PHP and MySQL or PostgreSQL installed. OHS is released under an open source license and is available for free. The Public Knowledge Project also offers Open Journal Systems (OJS) 17 , Open Conference Systems (OCS) 18 and Open Monograph Press (OMP) 19 which are designed to help managing a journal, conference or book production , to assist with the submission of manuscripts and the publishing process and to expose the publications to the web.</p>
+            </div>
+            <div>
+                <head n="4.2">Eprints</head>
+                <p>EPrints is a well-known software for building OAIcompliant bibliographic repositories developed by the School of Electronics and Computer Science at the University of Southampton [91]. It is released under an open source license and is available for free. EPrints offers a customizable user interface that allows browsing by subject, division, author and year and has a simple or advanced search function. It also shows download statistics and lists of most downloaded items or top authors [91]. Users can register for an account in order to save search results or add and edit own publications. When adding a new entry, duplicate avoidance is used and files can be uploaded. Each publication can have multiple associated files including images, audio or video. A publication page includes meta tags for Google Scholar, metadata of the publication, the abstract and contact information of the author. Publications or even whole publication lists can be exported to Dublin Core, Bib- TeX, EndNote, RIS, HTML, plain text or as a RSS feed. EPrints also provides an OAI-PMH interface for accessing data [91]. Furthermore, its own meta tags format can be directly crawled by Google Scholar.</p>
+            </div>
+            <div>
+                <head n="4.3">Digital Commons</head>
+                <p>Digital Commons [12] is a hosted open access institutional repository software for universities, colleges, law schools, and research centers. Furthermore, it combines traditional institutional repository features with tools for peer-reviewed journal publishing, Content to Digital Commons can be uploaded in batch, by linking to external sites, or via a manual submit form. Digital Commons integrates user notification tools and social sharing. These include RSS feeds and automatic email alerts of new publications, mailing list manager to announce new publications and social</p>
+                <figure>
+                    <trash>Database How to access data Crawling Google Scholar not possible no (according to Terms of Service)</trash>
+                    <figDesc>CiteSeerX by OAI-PMH or full download yes (according to robots.txt) BASE by OAI-PMH (need to register) no (according to robots.txt) MAS by API (need to register) or JavaScript unknown Arnetminer by API yes (according to robots.txt) DBLP by API or full download (DBLP XML) currently yes (according to FAQ) CCSB can only become mirror site yes (according to robots.txt) arXiv by API or OAI-PMH no (according to Help Site) ResearchGate unknown no (registration needed) Mendeley not possible no (registration needed)</figDesc>
+                    <head>Table 3:</head>
+                </figure>
+                <figure>
+                    <figDesc>How to access data from the databases ing buttons. Digital Commons also collects and presents statistics about individual readership. Digital Commons supports an OAI-PMH interface. Its own meta tags format called BE Press tags (named after the academic software firm</figDesc>
+                    <trash>Berkeley Electronic Press developing Digital Commons) is directly supported by Google Scholar. 4.4 Publications at Bielefeld University (PUB)</trash>
+                </figure>
+                <p>Publications at Bielefeld University (PUB) is a repository for all publications of the university available in German and English [89]. It claims that it is optimized for search engines like Google, Bing and Google Scholar and regularly imports from other databases, for example arXiv. PUB is also a data provider for other databases, as for example BASE. PUB offers a search API and an OAI-PMH interface to access data. It also provides the export of metadata to Dublin Core, BibTeX and many more. Authors can embed a list of their publications in their own website [89, 90]. PUB is not a system that can be downloaded and installed on your own web server, but it is a good example for an institutional repository.</p>
+            </div>
+            <div>
+                <head n="5">FURTHER RELATED WORK</head>
+                <p>Research in digital libraries is an active field. [43] addresses the challenges in digital library informationtechnology infrastructures. Besides the already described commercial or open source repository systems (see Section 4), some research prototypes like [61, 44] have been developed to maintain and manipulate bibliographies as well as to manage and share resources and knowledge. Also, [27] describes ways to optimize the visibilty of publications for search engine crawlers. Research was also done on extracting information from publications. [48] contains research results on extracting citation information, [50] on extracting researcher profiles and [95] describes the development of an information extractor for scholarly PDF documents. Much has been researched to utilize the OAI-PMH framework: Many publications like [25, 46, 92, 1, 53, 51, 64] deal with resource harvesting and further analysis of the data like co-authorship networks [71]. Other contributions like [26] show that OAI-PMH data providers can enhance their repository with simple user interfaces on top of the OAI-PMH interface. [70, 45] discuss the benefits of integrating different protocols and standards with OAI. Some contributions [14, 21, 69] describe the easy integration of different data sources like relational databases or data crawled from webpages in the OAI- PMH framework. [52] describes an implementation for OAI data/service provider of individuals as well as institutional repositories. [63, 55] demonstrate the relative effectiveness of a range of search tools (some of which utilize OAI as well) in finding open access versions of peer reviewed academic articles on the world wide web. [93, 94] analyze the problems occurring during the OAI data-provider registration and validation service process. [73] gives an overview over the developments and trends of the OAI protocol.</p>
+            </div>
+            <div>
+                <head n="6">SUMMARY AND CONCLUSIONS</head>
+                <p>This review provides an overview on popular data formats for exchanging bibliographic data about scientific publications in the computer science area. Furthermore, it analyzes bibliographic databases with special regard to their indexing requirements on one side and the possibilities to retrieve publication information from them on the other side. Finally we investigate personal and institutional research repository systems for their support to get their contained publications easily indexed by the previously described bibliographic databases. Hence this review helps authors and publishers to find ways to increase the visibility of their (published) research . This goal can be achieved by maximizing the inclusion of their publications in bibliographic databases, such that their contributions is easily found and cannot be overseen by other researchers. Future work covers the implementation of institutional repository systems especially designed for the maximum inclusion in bibliographic databases and the analysis and presentation of the data accessible from bibliographic databases in new forms. Besides obvious issues like the support of widely used data formats and protocols for inclusion in bibliographic databases we want to address special functionalities like the (semi-) automatic filling of web forms of some of these bibliographic databases, such that publications can be quickly registered. There could be first an automatic search in these databases to register only those publications which are still missing. On the other hand we want to investigate how to provide a statistics page with deeper analysis also on the level of an author or institutional repository system. For this purpose we want to include information from other bibliographic databases like the citations of publications, which are included in our developed repository system. Also a systematic and targeted search for those publications citing the publications included in our repository system is a promising new research direction.</p>
+                <figure>
+                    <trash>Arne Kusserow, Sven Groppe: Getting Indexed by Bibliographic Databases in the Area of Computer Science AUTHOR BIOGRAPHIES Arne Kusserow was born in Hildesheim, Germany in 1991. He currently studies Informatik (Computer Science) at the University of Lübeck and writes his bachelor thesis about Online Indexing of Scholarly Publica- tions</trash>
+                </figure>
+                <p>in which he also develops a web application for exposing scholarly publications to the web and to other bibliographic databases.</p>
+                <figure>
+                    <trash>Dr. Sven Groppe earned his diploma degree in Informatik (Computer Science) in 2002 and his Doctor degree in 2005 from the University of Paderborn. He earned his habilitation degree in 2011 from the University of Lübeck. He worked in the European projects B2B-ECOM, MEMPHIS, ASG and TripCom.</trash>
+                </figure>
+                <p>He was a member of the DAWG W3C Working Group, which developed SPARQL. He was the project leader of the DFG project LUPOSDATE, and is currently the project leader of two research projects, which research on FPGA acceleration of relational and Semantic Web databases. His research interests include Semantic Web, query and rule processing and optimization, Cloud Computing, peer-topeer (P2P) networks, Internet of Things, data visualization and visual query languages.</p>
+            </div>
+            <note place="foot">c | 2014 by the authors; licensee RonPub, Lübeck, Germany. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/).</note>
+            <note place="foot" n="2"> http://bibdesk.sourceforge.net/ 3 http://jabref.sourceforge.net/ 4 https://sites.google.com/site/bibfilex/</note>
+            <note place="foot" n="5"> http://scholar.google.com/intl/en/scholar/ inclusion.html#indexing</note>
+            <note place="foot" n="6"> http://www.openarchives.org/Register/BrowseSites 7 http://www.openarchives.org/pmh/tools/tools.php</note>
+            <note place="foot" n="8"> http://endnote.com/ 9 http://www.refman.com/</note>
+            <note place="foot" n="11"> https://github.com/citation-style-language/schema 12 http://www.doi.org/registration_agencies.html</note>
+            <note place="foot" n="14"> http://scholar.google.com/intl/en/scholar/ inclusion.html#indexing</note>
+            <note place="foot" n="16"> http://www.bibsonomy.org/scraperinfo</note>
+            <note place="foot" n="17"> https://pkp.sfu.ca/ojs/ 18 https://pkp.sfu.ca/ocs/ 19 https://pkp.sfu.ca/omp/</note>
+        </body>
+        <back>
+            <div type="references">
+                <listBibl>
+                    <biblStruct xml:id="b0">
+                        <analytic>
+                            <title level="a" type="main">An adaptive synchronization policy for harvesting OAI-PMH repositories</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">N</forename>
+                                    <surname>Adly</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">The First International Conference on Advances in Databases, Knowledge, and Data Applications</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Gosier, Guadeloupe , France</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2009" />
+                                <biblScope unit="page" from="161" to="168" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b1">
+                        <analytic>
+                            <title level="a" type="main">h-index: A review focused in its variants , computation and standardization for different scientific fields</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Alonso</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">F</forename>
+                                    <surname>Cabrerizo</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">E</forename>
+                                    <surname>Herrera-Viedma</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">F</forename>
+                                    <surname>Herrera</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Journal of Informetrics</title>
+                            <imprint>
+                                <biblScope unit="volume">3</biblScope>
+                                <biblScope unit="issue">4</biblScope>
+                                <biblScope unit="page" from="273" to="289" />
+                                <date type="published" when="2009" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b2">
+                        <monogr>
+                            <title level="m" type="main">Guidelines for encoding bibliographic citation information in dublin core metadata</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Apps</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2005-06" />
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b3">
+                        <monogr>
+                            <title level="m" type="main">General information about arXiv</title>
+                            <author>
+                                <persName>
+                                    <surname>Arxiv</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b4">
+                        <monogr>
+                            <title level="m" type="main">Robots beware</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b5">
+                        <monogr>
+                            <title level="m" type="main">To submit an article</title>
+                            <author>
+                                <persName>
+                                    <surname>Arxiv</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b6">
+                        <analytic>
+                            <title level="a" type="main">ACM digital library</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Assocation</forename>
+                                    <surname>For</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">Computing</forename>
+                                    <surname>Machinery</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">About BASE</title>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b7">
+                        <analytic>
+                            <title/>
+                        </analytic>
+                        <monogr>
+                            <title level="j">BASE</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b8">
+                        <monogr>
+                            <title level="m" type="main">Suggest repository</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b9">
+                        <monogr>
+                            <title level="m" type="main">YAML ain&apos;t markup language version 1.2</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">O</forename>
+                                    <surname>Ben-Kiki</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <surname>Evans</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">I</forename>
+                                    <surname>Net</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2009-10" />
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b10">
+                        <monogr>
+                            <title level="m" type="main">Digital commons -open access institutional repository software</title>
+                            <imprint>
+                                <publisher>Berkeley Electronic Press</publisher>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b11">
+                        <monogr>
+                            <title level="m" type="main">Getting started with BibSonomy</title>
+                            <author>
+                                <persName>
+                                    <surname>Bibsonomy</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b12">
+                        <analytic>
+                            <title level="a" type="main">Oaizer: Configurable OAI exports over relational databases</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Bruzzo</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Manghi</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Bardi</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">7th Research Conference o Metadata and Semantics Research</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Thessaloniki, Greece</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2013" />
+                                <biblScope unit="page" from="35" to="47" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b13">
+                        <monogr>
+                            <title level="m" type="main">CiteSeerExtractor -A RESTful API for extracting information from scholarly documents</title>
+                            <author>
+                                <persName>
+                                    <surname>Citeseerx</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b14">
+                        <monogr>
+                            <title level="m" type="main">CiteSeerX crawler</title>
+                            <author>
+                                <persName>
+                                    <surname>Citeseerx</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b15">
+                        <monogr>
+                            <title level="m" type="main">CiteSeerX data</title>
+                            <author>
+                                <persName>
+                                    <surname>Citeseerx</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b16">
+                        <monogr>
+                            <title level="m" type="main">History</title>
+                            <author>
+                                <persName>
+                                    <surname>Citeseerx</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b17">
+                        <monogr>
+                            <title level="m" type="main">Submit documents</title>
+                            <author>
+                                <persName>
+                                    <surname>Citeseerx</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b18">
+                        <monogr>
+                            <title level="m" type="main">Frequently asked questions</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Citeulike</forename>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b19">
+                        <monogr>
+                            <title level="m" type="main">Integration of non-oai resources for federated searching in dlist, an eprints repository</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Coleman</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <forename type="middle">J</forename>
+                                    <surname>Bracke</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Karthik</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2004" />
+                                <publisher>D-Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b20">
+                        <monogr>
+                            <title level="m" type="main">Publisher fees</title>
+                            <author>
+                                <persName>
+                                    <surname>Crossref</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b21">
+                        <monogr>
+                            <title level="m" type="main">Creating metadata</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dcmi</forename>
+                                    <surname>Wiki</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                                <pubPlace>User_Guide/ Creating_Metadata, accessed</pubPlace>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b22">
+                        <monogr>
+                            <title level="m" type="main">User guide</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dcmi</forename>
+                                    <surname>Wiki</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                                <pubPlace>User_Guide, accessed</pubPlace>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b23">
+                        <monogr>
+                            <title level="m" type="main">Resource harvesting within the oaipmh framework</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <forename type="middle">V</forename>
+                                    <surname>De Sompel</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Nelson</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <surname>Lagoze</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Warner</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2004" />
+                                <publisher>D-Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b24">
+                        <monogr>
+                            <title level="m" type="main">Using the OAI-PMH ... differently</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <forename type="middle">V</forename>
+                                    <surname>De Sompel</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">A</forename>
+                                    <surname>Young</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">T</forename>
+                                    <forename type="middle">B</forename>
+                                    <surname>Hickey</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2003" />
+                                <publisher>D-Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b25">
+                        <monogr>
+                            <title level="m" type="main">Googlizing a digital library The Code4Lib Journal</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Deridder</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2008" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b26">
+                        <analytic>
+                            <title level="a" type="main">Directory of open access journals -about</title>
+                        </analytic>
+                        <monogr>
+                            <title level="j">DOAJ</title>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b27">
+                        <monogr>
+                            <title level="m" type="main">Bibtex format description</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Feder</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2006" />
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b28">
+                        <monogr>
+                            <title level="m" type="main">Bibtex special symbols</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Feder</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2006" />
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b29">
+                        <monogr>
+                            <title level="m" type="main">Citeproc YAML for bibliographies</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Fenner</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2013-07" />
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b30">
+                        <monogr>
+                            <title level="m" type="main">About google scholar</title>
+                            <author>
+                                <persName>
+                                    <surname>Google</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2015" />
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b31">
+                        <monogr>
+                            <title level="m" type="main">Inclusion guidelines for webmasters</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Google</forename>
+                                    <surname>Scholar</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b32">
+                        <analytic>
+                            <title level="a" type="main">New metadata standards for digital resources: Mods and mets</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">R</forename>
+                                    <surname>Guenther</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Mccallum</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Bulletin of the American Society for Information Science and Technology</title>
+                            <imprint>
+                                <biblScope unit="volume">29</biblScope>
+                                <biblScope unit="issue">2</biblScope>
+                                <biblScope unit="page" from="12" to="15" />
+                                <date type="published" when="2003" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b33">
+                        <monogr>
+                            <title level="m" type="main">How to use RESTful services on arnetminer</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <surname>Guo</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b34">
+                        <analytic>
+                            <title level="a" type="main">An index to quantify an individual&apos;s scientific research output</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">E</forename>
+                                    <surname>Hirsch</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Proceedings of the National Academy of Sciences of the United States of America PRISM faq</title>
+                            <imprint>
+                                <biblScope unit="volume">102</biblScope>
+                                <biblScope unit="issue">46</biblScope>
+                                <biblScope unit="page" from="16" to="569" />
+                                <date type="published" when="2005" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b35">
+                        <monogr>
+                            <title level="m" type="main">PRISM introduction</title>
+                            <author>
+                                <persName>
+                                    <surname>Idealliance</surname>
+                                </persName>
+                            </author>
+                            <imprint/>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b36">
+                        <monogr>
+                            <title level="m" type="main">About IEEE xplore digital library</title>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b37">
+                        <monogr>
+                            <title level="m" type="main">DOI handbook -introduction</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Doi</forename>
+                                    <surname>International</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Foundation</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b38">
+                        <monogr>
+                            <title level="m" type="main">DOI handbook numbering</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Doi</forename>
+                                    <surname>International</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Foundation</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b39">
+                        <monogr>
+                            <title level="m" type="main">FAQ</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Doi</forename>
+                                    <surname>International</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Foundation</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b40">
+                        <analytic>
+                            <title level="a" type="main">Digital library information-technology infrastructures</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Y</forename>
+                                    <forename type="middle">E</forename>
+                                    <surname>Ioannidis</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">D</forename>
+                                    <surname>Maier</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Abiteboul</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Buneman</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <forename type="middle">B</forename>
+                                    <surname>Davidson</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">E</forename>
+                                    <forename type="middle">A</forename>
+                                    <surname>Fox</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <forename type="middle">Y</forename>
+                                    <surname>Halevy</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <forename type="middle">A</forename>
+                                    <surname>Knoblock</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">F</forename>
+                                    <surname>Rabitti</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <surname>Schek</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">G</forename>
+                                    <surname>Weikum</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Int. J. on Digital Libraries</title>
+                            <imprint>
+                                <biblScope unit="volume">5</biblScope>
+                                <biblScope unit="issue">4</biblScope>
+                                <biblScope unit="page" from="266" to="274" />
+                                <date type="published" when="2005" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b41">
+                        <analytic>
+                            <title level="a" type="main">The multi-faceted use of the OAI- PMH in the lanl repository</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <forename type="middle">N</forename>
+                                    <surname>Jerez</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">X</forename>
+                                    <surname>Liu</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Hochstenbach</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <forename type="middle">V</forename>
+                                    <surname>De Sompel</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">ACM/IEEE Joint Conference on Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Tucson, AZ, USA</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2004" />
+                                <biblScope unit="page" from="11" to="20" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b42">
+                        <analytic>
+                            <title level="a" type="main">A statewide metasearch service using OAI-PMH and Z39</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Kaczmarek</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <forename type="middle">C</forename>
+                                    <surname>Naun</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Library Hi Tech</title>
+                            <imprint>
+                                <biblScope unit="volume">50</biblScope>
+                                <biblScope unit="issue">23 4</biblScope>
+                                <biblScope unit="page" from="576" to="586" />
+                                <date type="published" when="2005" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b43">
+                        <analytic>
+                            <title level="a" type="main">Similarity and duplicate detection system for an OAI compliant federated digital library</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <forename type="middle">M</forename>
+                                    <surname>Khan</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Maly</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Zubair</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">9th European Conference on Research and Advanced Technology for Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Vienna, Austria</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2005" />
+                                <biblScope unit="page" from="531" to="532" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b44">
+                        <monogr>
+                            <title level="m" type="main">The open archives initiative protocol for metadata harvesting</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <surname>Lagoze</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <surname>Van De Sompel</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Nelson</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Warner</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2008" />
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b45">
+                        <analytic>
+                            <title level="a" type="main">Digital libraries and autonomous citation indexing</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Lawrence</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Giles</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Bollacker</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">IEEE Computer</title>
+                            <imprint>
+                                <biblScope unit="volume">32</biblScope>
+                                <biblScope unit="issue">6</biblScope>
+                                <biblScope unit="page" from="67" to="71" />
+                                <date type="published" when="1999" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b46">
+                        <analytic>
+                            <title level="a" type="main">DBLP: some lessons learned</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Ley</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">Proceedings of the VLDB Endowment</title>
+                            <meeting>the VLDB Endowment</meeting>
+                            <imprint>
+                                <date type="published" when="2009" />
+                                <biblScope unit="page" from="1493" to="1500" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b47">
+                        <analytic>
+                            <title level="a" type="main">Arnetminer: expertise oriented search using social networks</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Li</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Tang</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Zhang</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">Q</forename>
+                                    <surname>Luo</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">Y</forename>
+                                    <surname>Liu</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Hong</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Frontiers of Computer Science in China</title>
+                            <imprint>
+                                <biblScope unit="volume">2</biblScope>
+                                <biblScope unit="issue">1</biblScope>
+                                <biblScope unit="page" from="94" to="105" />
+                                <date type="published" when="2008" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b48">
+                        <monogr>
+                            <title level="m" type="main">Arc -an OAI service provider for digital library federation</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">X</forename>
+                                    <surname>Liu</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Maly</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Zubair</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Nelson</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2001" />
+                                <publisher>D-Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b49">
+                        <monogr>
+                            <title level="m" type="main">Kepler -an OAI data/service provider for the individual</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Maly</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Zubair</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">X</forename>
+                                    <surname>Liu</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2001" />
+                                <publisher>D- Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b50">
+                        <monogr>
+                            <title level="m" type="main">Realizing and maintaining aggregative digital library systems: D-NET software toolkit and oaister system</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Manghi</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Mikulicic</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">L</forename>
+                                    <surname>Candela</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">D</forename>
+                                    <surname>Castelli</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Pagano</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2010" />
+                                <publisher>Lib Magazine</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b51">
+                        <analytic>
+                            <title level="a" type="main">An introduction to the metadata object description schema (MODS)</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <forename type="middle">H</forename>
+                                    <surname>Mccallum</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Library Hi Tech</title>
+                            <imprint>
+                                <biblScope unit="volume">22</biblScope>
+                                <biblScope unit="issue">1</biblScope>
+                                <biblScope unit="page" from="82" to="88" />
+                                <date type="published" when="2004" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b52">
+                        <analytic>
+                            <title level="a" type="main">Search engine coverage of the OAI-PMH corpus</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">F</forename>
+                                    <surname>Mccown</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">X</forename>
+                                    <surname>Liu</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Nelson</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Zubair</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">IEEE Internet Computing</title>
+                            <imprint>
+                                <biblScope unit="volume">10</biblScope>
+                                <biblScope unit="issue">2</biblScope>
+                                <biblScope unit="page" from="66" to="73" />
+                                <date type="published" when="2006" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b53">
+                        <monogr>
+                            <title level="m" type="main">Information for publishers</title>
+                            <author>
+                                <persName>
+                                    <surname>Mendeley</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b54">
+                        <monogr>
+                            <title level="m" type="main">What is mendeley</title>
+                            <author>
+                                <persName>
+                                    <surname>Mendeley</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b55">
+                        <monogr>
+                            <title level="m" type="main">Why use the platform</title>
+                            <author>
+                                <persName>
+                                    <surname>Mendeley</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b56">
+                        <monogr>
+                            <title level="m" type="main">About microsoft academic search</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Microsoft</forename>
+                                    <surname>Research</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b57">
+                        <monogr>
+                            <title level="m" type="main">OAI for beginners -the open archives forum online tutorial</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">U</forename>
+                                    <surname>Müller</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Powell</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Cliff</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2003" />
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b58">
+                        <analytic>
+                            <title level="a" type="main">Papyres: A research paper management system</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Naak</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">H</forename>
+                                    <surname>Hage</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">E</forename>
+                                    <surname>Aïmeur</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">10th IEEE International Conference on E-Commerce Technology / 5th IEEE International Conference on Enterprise Computing, E-Commerce and E-Services</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Washington, DC, USA</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2008" />
+                                <biblScope unit="page" from="201" to="208" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b59">
+                        <monogr>
+                            <title level="m" type="main">JATS: Journal article tag suite</title>
+                            <imprint>
+                                <publisher>NISO</publisher>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b60">
+                        <analytic>
+                            <title level="a" type="main">Finding open access articles using google, google scholar, oaister and opendoar</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Norris</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <surname>Oppenheim</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">F</forename>
+                                    <surname>Rowland</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Online Information Review</title>
+                            <imprint>
+                                <biblScope unit="volume">32</biblScope>
+                                <biblScope unit="issue">6</biblScope>
+                                <biblScope unit="page" from="709" to="715" />
+                                <date type="published" when="2008" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b61">
+                        <analytic>
+                            <title level="a" type="main">Collection understanding for OAI-PMH compliant repositories</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">T</forename>
+                                    <surname>Ong</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">J</forename>
+                                    <surname>Leggett</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">ACM/IEEE Joint Conference on Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Denver, CO, USA</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2005" />
+                                <biblScope unit="page" from="258" to="259" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b62">
+                        <monogr>
+                            <title level="m" type="main">BibTEX yesterday, today, and tomorrow Open harvester systems</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">O</forename>
+                                    <surname>Patashnik</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2003" />
+                                <publisher>66] Public Knowledge Project</publisher>
+                                <biblScope unit="page" from="25" to="30" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b63">
+                        <monogr>
+                            <title level="m" type="main">Adding publications</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Researchgate</forename>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <publisher>Adding+publications</publisher>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b64">
+                        <monogr>
+                            <title level="m" type="main">Researchgate -who we are</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Researchgate</forename>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b65">
+                        <analytic>
+                            <title level="a" type="main">Dynamic generation of OAI servers</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">A</forename>
+                                    <surname>Sánchez</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Razo</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">M</forename>
+                                    <surname>Córdova</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Villegas</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">ACM/IEEE Joint Conference on Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Chapel Hill, NC, USA</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2006" />
+                                <biblScope unit="page" from="258" to="259" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b66">
+                        <monogr>
+                            <title level="m" type="main">SRW/U with OAI: expected and unexpected synergies</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">R</forename>
+                                    <surname>Sanderson</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Young</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">R</forename>
+                                    <surname>Levan</surname>
+                                </persName>
+                            </author>
+                            <editor>D- Lib Magazine</editor>
+                            <imprint>
+                                <date type="published" when="2005" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b67">
+                        <monogr>
+                            <title level="m" type="main">An oai-pmh-based web service for the generation of co-author networks</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Schaer</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">T</forename>
+                                    <surname>Lüke</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Mayr</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Mutschke</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="1301" />
+                                <biblScope unit="page">7443</biblScope>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b68">
+                        <monogr>
+                            <title level="m" type="main">Meta-angaben nach dublin core</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Selfhtml</forename>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b69">
+                        <analytic>
+                            <title level="a" type="main">Current developments and future trends for the OAI protocol for metadata harvesting Arnetminer: search and mining of academic social networks</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <forename type="middle">L</forename>
+                                    <surname>Shreeves</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">T</forename>
+                                    <forename type="middle">G</forename>
+                                    <surname>Habing</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Hagedorn</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <forename type="middle">A</forename>
+                                    <surname>Young</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="j">Library Trends</title>
+                            <imprint>
+                                <biblScope unit="volume">53</biblScope>
+                                <biblScope unit="issue">4</biblScope>
+                                <biblScope unit="page" from="576" to="589" />
+                                <date type="published" when="2005" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b70">
+                        <monogr>
+                            <title level="m" type="main">About the collection</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b71">
+                        <monogr>
+                            <title level="m" type="main">Add references to the computer science bibliography collection</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b72">
+                        <monogr>
+                            <title level="m" type="main">Adding a complete bibliography to the computer science bibliography collection</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b73">
+                        <monogr>
+                            <title level="m" type="main">Introduction</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b74">
+                        <monogr>
+                            <title level="m" type="main">Am i allowed to crawl the dblp website</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dblp</forename>
+                                    <surname>The</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Team</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b75">
+                        <monogr>
+                            <title level="m" type="main">The DBLP computer science bibliography</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dblp</forename>
+                                    <surname>The</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Team</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b76">
+                        <monogr>
+                            <title level="m" type="main">How can i enter my publications to dblp</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dblp</forename>
+                                    <surname>The</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Team</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b77">
+                        <monogr>
+                            <title level="m" type="main">How can i submit meta data for a complete journal or conference</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Dblp</forename>
+                                    <surname>The</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <surname>Team</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b78">
+                        <analytic>
+                            <title level="a" type="main">MODS: Uses and features</title>
+                        </analytic>
+                        <monogr>
+                            <title level="m">The Library of Congress</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b79">
+                        <analytic>
+                            <title level="a" type="main">MARC21 format for bibliographic data -introduction</title>
+                        </analytic>
+                        <monogr>
+                            <title level="m">The Library of Congress</title>
+                            <imprint>
+                                <date type="published" when="2006-10" />
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b80">
+                        <monogr>
+                            <title level="m" type="main">The Open Archives Initiative Data provider validation and registration</title>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b81">
+                        <monogr>
+                            <title level="m" type="main">The citaton connection -real facts</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Thomson</forename>
+                                    <surname>Reuters</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b82">
+                        <monogr>
+                            <title level="m" type="main">The repository selection process</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Thomson</forename>
+                                    <surname>Reuters</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b83">
+                        <monogr>
+                            <title level="m" type="main">RIS&quot; format documentation</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">Thomson</forename>
+                                    <surname>Reuters</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="11" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b84">
+                        <monogr>
+                            <title level="m" type="main">PUB developer 2.0 documentation</title>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b85">
+                        <monogr>
+                            <title level="m" type="main">EPrints -Digital Repository Software</title>
+                            <imprint>
+                                <biblScope unit="page" from="2015" to="02" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b86">
+                        <analytic>
+                            <title level="a" type="main">Hierarchical classification of OAI metadata using the DDC taxonomy</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">U</forename>
+                                    <surname>Waltinger</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">A</forename>
+                                    <surname>Mehler</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Lösch</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">W</forename>
+                                    <surname>Horstmann</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">Workshop on Advanced Language Technologies for Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Viareggio, Italy</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2009-06-15" />
+                                <biblScope unit="page" from="29" to="40" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b87">
+                        <monogr>
+                            <title level="m" type="main">The OAI data-provider registration and validation service</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Warner</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <date type="published" when="2005" />
+                                <biblScope unit="page">0506010</biblScope>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b88">
+                        <analytic>
+                            <title level="a" type="main">The OAI data-provider registration and validation service</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">S</forename>
+                                    <surname>Warner</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">9th European Conference on Research and Advanced Technology for Digital Libraries</title>
+                            <meeting>
+                                <address>
+                                    <addrLine>Vienna, Austria</addrLine>
+                                </address>
+                            </meeting>
+                            <imprint>
+                                <date type="published" when="2005" />
+                                <biblScope unit="page" from="491" to="492" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b89">
+                        <analytic>
+                            <title level="a" type="main">A web service for scholarly big data information extraction</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">K</forename>
+                                    <surname>Williams</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">L</forename>
+                                    <surname>Li</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">M</forename>
+                                    <surname>Khabsa</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">J</forename>
+                                    <surname>Wu</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">P</forename>
+                                    <surname>Shih</surname>
+                                </persName>
+                            </author>
+                            <author>
+                                <persName>
+                                    <forename type="first">C</forename>
+                                    <surname>Giles</surname>
+                                </persName>
+                            </author>
+                        </analytic>
+                        <monogr>
+                            <title level="m">Conference on Web Services</title>
+                            <imprint>
+                                <date type="published" when="2014-06" />
+                                <biblScope unit="page" from="105" to="112" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                    <biblStruct xml:id="b90">
+                        <monogr>
+                            <title level="m" type="main">CSL home</title>
+                            <author>
+                                <persName>
+                                    <forename type="first">R</forename>
+                                    <surname>Zelle</surname>
+                                </persName>
+                            </author>
+                            <imprint>
+                                <biblScope unit="page" from="2014" to="12" />
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                </listBibl>
+            </div>
+        </back>
+    </text>
+</TEI>
