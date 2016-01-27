@@ -4,7 +4,7 @@ import os.path
 from io import BytesIO
 from django.test import TestCase
 
-from search_for_citations import config
+from scholarly_citation_finder import config
 from .GrobidExtractor import GrobidExtractor
 from .TeiParser import TeiParser
 
