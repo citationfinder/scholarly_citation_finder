@@ -1,6 +1,5 @@
 from rest_framework import viewsets
-
-from models import Affilation, Conference, ConferenceInstance, FieldOfStudy, Journal
+from models import Affilation, Conference, ConferenceInstance, FieldOfStudy, Journal, Publication, PublicationAuthorAffilation, PublicationKeyword, PublicationReference, PublicationUrl
 from .serializers import *
 
 DB_NAME = 'mag'

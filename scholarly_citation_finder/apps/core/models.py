@@ -4,6 +4,9 @@ from django.db import models
 class Affilation(models.Model):
     name = models.CharField(max_length=150)
 
+    def __unicode__(self):
+        return unicode(self.name)
+
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
@@ -36,10 +39,15 @@ class ConferenceInstance(models.Model):
 class FieldOfStudy(models.Model):
     name = models.CharField(max_length=100)
     
+    def __unicode__(self):
+        return unicode(self.name)
+    
     
 class Journal(models.Model):
     name = models.CharField(max_length=250)
     
+    def __unicode__(self):
+        return unicode(self.name)
 
 class Publication(models.Model):
     """

@@ -5,7 +5,6 @@ from models import *
 class AffilationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Affilation
-        #fields = ('id', 'name')
 
 
 class ConferenceSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,3 +25,28 @@ class FieldOfStudySerializer(serializers.HyperlinkedModelSerializer):
 class JournalSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Journal
+
+
+class PublicationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Publication
+        
+        
+class PublicationAuthorAffilationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PublicationAuthorAffilation
+
+
+class PublicationKeywordSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PublicationKeyword
+        
+
+class PublicationReferencePublicationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PublicationReference
+        
+
+class PublicationUrlSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PublicationUrl
