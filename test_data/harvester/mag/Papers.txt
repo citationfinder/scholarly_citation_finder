@@ -1,0 +1,2 @@
+02670325	Incremental self-improvement for life-time multi-agent reinforcement learning	incremental self improvement for life time multi agent reinforcement learning	1996			Simulation of Adaptive Behavior	sab		42B9FC1C	16515
+5BE761FA	Adaptive Generation of Dilemma-based Interactive Narratives	adaptive generation of dilemma based interactive narratives	2007	2007	10.1007/978-3-540-72705-7_2	Simulation of Adaptive Behavior	sab		42B9FC1C	19509

@@ -7,6 +7,7 @@
 # Temporary files
 /log/
 /downloads/
+/test_data/harvester/mag/*_pre.txt
 
 
 ############
@@ -20,7 +21,7 @@ __pycache__/
 ############
 ## Eclipse PyDev
 ############
- 
+
 .settings/
 #.project
 #.pydevproject

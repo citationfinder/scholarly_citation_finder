@@ -1,0 +1,106 @@
+- fields: {app_label: admin, model: logentry}
+  model: contenttypes.contenttype
+  pk: 1
+- fields: {app_label: auth, model: permission}
+  model: contenttypes.contenttype
+  pk: 2
+- fields: {app_label: auth, model: group}
+  model: contenttypes.contenttype
+  pk: 3
+- fields: {app_label: auth, model: user}
+  model: contenttypes.contenttype
+  pk: 4
+- fields: {app_label: contenttypes, model: contenttype}
+  model: contenttypes.contenttype
+  pk: 5
+- fields: {app_label: sessions, model: session}
+  model: contenttypes.contenttype
+  pk: 6
+- fields: {app_label: core, model: affilation}
+  model: contenttypes.contenttype
+  pk: 7
+- fields: {app_label: core, model: author}
+  model: contenttypes.contenttype
+  pk: 8
+- fields: {app_label: core, model: conference}
+  model: contenttypes.contenttype
+  pk: 9
+- fields: {app_label: core, model: conferenceinstance}
+  model: contenttypes.contenttype
+  pk: 10
+- fields: {app_label: core, model: fieldofstudy}
+  model: contenttypes.contenttype
+  pk: 11
+- fields: {app_label: core, model: journal}
+  model: contenttypes.contenttype
+  pk: 12
+- fields: {app_label: core, model: publication}
+  model: contenttypes.contenttype
+  pk: 13
+- fields: {app_label: core, model: publicationauthoraffilation}
+  model: contenttypes.contenttype
+  pk: 14
+- fields: {app_label: core, model: publicationkeyword}
+  model: contenttypes.contenttype
+  pk: 15
+- fields: {app_label: core, model: publicationreference}
+  model: contenttypes.contenttype
+  pk: 16
+- fields: {app_label: core, model: publicationurl}
+  model: contenttypes.contenttype
+  pk: 17
+- fields: {name: IBM}
+  model: core.affilation
+  pk: 1
+- fields: {name: "University of L\xFCbeck"}
+  model: core.affilation
+  pk: 2
+- fields: {name: "Tom M\xF6ller"}
+  model: core.author
+  pk: 1
+- fields: {name: "Miri Schr\xF6der"}
+  model: core.author
+  pk: 2
+- fields: {name: Micro Action G Conference, short_name: MAG}
+  model: core.conference
+  pk: 1
+- fields: {conference: null, location: "L\xFCbeck, Germany", name: Micro Action G
+      Conference 2016, short_name: MAG16, url: 'http://example.org', year: 2016}
+  model: core.conferenceinstance
+  pk: 1
+- fields: {name: Signal processing}
+  model: core.fieldofstudy
+  pk: 1
+- fields: {name: Journal of Arts}
+  model: core.journal
+  pk: 1
+- fields: {name: Journal of Yolo}
+  model: core.journal
+  pk: 2
+- fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
+    isbn: '', journal: 1, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source_extracted: false, title: Exemplary Publication with a Title,
+    type: '', volume: '', year: 2015}
+  model: core.publication
+  pk: 1
+- fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
+    isbn: '', journal: 2, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source_extracted: false, title: Another Publication Hello World, type: '',
+    volume: '', year: 2013}
+  model: core.publication
+  pk: 2
+- fields: {affilation: 1, author: 1, publication: 1}
+  model: core.publicationauthoraffilation
+  pk: 1
+- fields: {affilation: 2, author: 1, publication: 2}
+  model: core.publicationauthoraffilation
+  pk: 2
+- fields: {fieldofstudy: 1, name: Signal wave, publication: 1}
+  model: core.publicationkeyword
+  pk: 1
+- fields: {context: '', publication: 1, reference: 2, self: false}
+  model: core.publicationreference
+  pk: 1
+- fields: {publication: 1, type: null, url: 'http://example.org/paper.pdf'}
+  model: core.publicationurl
+  pk: 1

@@ -1,0 +1,2 @@
+0000530F	effective diffusion coefficient	04389499
+000055A0	human factors	09F03076
