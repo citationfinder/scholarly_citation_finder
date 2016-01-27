@@ -1,6 +1,7 @@
 import requests
 
 from scholarly_citation_finder.lib.process import ProcessException
+from scholarly_citation_finder.api.Parser import Parser
 from TeiParser import TeiParser
 
 
