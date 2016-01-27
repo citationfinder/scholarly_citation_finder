@@ -1,13 +1,16 @@
 # Generated files
 /doc/
 /lib/
-*.sqlite3
-*.sqlite3-journal
 
 # Temporary files
 /log/
 /downloads/
 /test_data/harvester/mag/*_pre.txt
+
+# Localfiles
+Makefile
+*.sqlite3
+*.sqlite3-journal
 
 
 ############
@@ -23,5 +26,5 @@ __pycache__/
 ############
 
 .settings/
-#.project
-#.pydevproject
+.project
+.pydevproject
