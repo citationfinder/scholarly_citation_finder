@@ -1,7 +1,7 @@
 import os.path
 from django.test import TestCase
 
-from search_for_citations import config
+from scholarly_citation_finder import config
 from .DblpHarvester import DblpHarvester
 
 

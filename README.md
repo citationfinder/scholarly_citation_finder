@@ -36,7 +36,7 @@ Available environment variables:
 
 Set an environment variable:
 * Linux: `export <variable-name>=<value>`
-** Store it via: `echo "export <variable-name>=<value>" >> ~/.bashrc`
+    * Store it via: `echo "export <variable-name>=<value>" >> ~/.bashrc`
 * Windows: `SET <variable-name>=<value>`
 
 #### Shell

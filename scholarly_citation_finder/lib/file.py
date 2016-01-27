@@ -5,6 +5,17 @@ from requests.exceptions import ConnectionError, InvalidSchema
 
 from process import external_process, ProcessException
 
+import gzip
+import os.path
+import requests
+import shutil
+import logging
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+from requests.exceptions import ConnectionError, InvalidSchema
+from requests.packages.urllib3.connectionpool import HTTPConnectionPool
+
+logger = logging.getLogger()
 
 def create_dir(path):
     '''
@@ -46,6 +57,10 @@ def extract_file_process(file, cwd):
     return True
 
 
+def download_file_pdf(url, **kwargs):
+    return download_file(url, expected_content_type='application/pdf', **kwargs)
+
+
 def download_file(url, path=None, name=None, expected_content_type=None):
     '''
     Downloads a single file. Can handle large files.
@@ -72,6 +87,29 @@ def download_file(url, path=None, name=None, expected_content_type=None):
         raise e
 
 
+def upload_file(url, filename, status_code=201):
+    logger.debug('Upload {} [{}]'.format(filename, url))
+    if not os.path.isfile(filename):
+        logger.debug('{} is not a file'.format(filename))
+        return False
+    
+    try:
+        files = {'myfile': open(filename, 'rb')}
+        r = requests.post(url, files=files)
+        if r.status_code == status_code:
+            return str(r.text)
+        else:
+            logger.warn('expected {} as status code, but was {}'.format(status_code, r.status_code))
+    except(ConnectionError):
+        logger.debug('Connection to {} failed'.format(url))
+        return False
+    
+    #if os.path.isfile(filename):
+    #else:
+    #    logger.debug("%s is not a file" % filename)
+    #return False
+    
+
 def unzip_file(filename, huge_file=True):
     if os.path.isfile(filename):
         outfilename = filename[:-3]
@@ -90,3 +128,19 @@ def unzip_file(filename, huge_file=True):
         return outfilename
     else:
         raise Exception('{} is not a file (to unzip)'.format(filename))
+    
+
+def url_exits(url, check_exists=False):
+    #validate = URLValidator(verify_exists=True)
+    try:
+        validate = URLValidator()
+        validate(url)
+        if check_exists:
+            response = requests.get(url)
+            return response.status_code < 400
+        else:
+            return True
+    except(ValidationError):
+        return False
+    except(ConnectionError, InvalidSchema):
+        return False
