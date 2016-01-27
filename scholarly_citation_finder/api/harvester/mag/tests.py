@@ -9,6 +9,7 @@ from .MagHarvester import MagHarvester
 
 MAG_TEST_DIR = path=os.path.join(config.TEST_DIR, 'harvester', 'mag')
 
+
 class TestMagNormalize(TestCase):
 
     def setUp(self):

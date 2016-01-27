@@ -4,16 +4,16 @@ import codecs
 import psycopg2
 
 
-from ....settings.development import DATABASES
+from scholarly_citation_finder.settings.development import DATABASES
 from psycopg2._psycopg import ProgrammingError, OperationalError, DataError,\
     InternalError
-from ..Harvester import Harvester
+from scholarly_citation_finder.api.Process import Process
 from .MagNormalize import MagNormalize
 #from psycopg2._psycopg import DataError, IntegrityError, InternalError
 #from ...core.models import Author
 #from django.db.utils import DataError
 
-class MagHarvester(Harvester):
+class MagHarvester(Process):
     
     def __init__(self):
         super(MagHarvester, self).__init__('mag')
