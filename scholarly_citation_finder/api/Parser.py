@@ -101,49 +101,51 @@ class Parser(Process):
                 return self.cursor.fetchone()[0]
             else:
                 raise DataError
-    def parse_publication(self, entry):
+
+    def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference=None):
+        if title and len(title) <= 250:
+            if booktitle and len(booktitle) > 200:
+                booktitle = None
+            if series and len(series) > 200:
+                series = None
+            if publisher and len(publisher) > 150:
+                publisher = None
+            if isbn and len(isbn) > 50:
+                isbn = None
+            if doi and len(doi) > 50:
+                doi = None
+            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference))
+            return self.cursor.fetchone()[0]
+        else:
+            raise DataError
+
+    def parse_entry(self, publication, journal=None, authors=None, keywords=None, urls=None):
         self.count_publications += 1
         try:
-            if 'journal' in entry:
+            if journal:
                 try:
-                    entry['journal'] = self.parse_author(entry['journal'])
+                    journal_id = self.parse_author(journal)
                 except(DataError) as e:
                     self.logger.warn(e, exc_info=True)                
-                    del entry['journal']
+                    journal_id = None
 
-            fields = ''
-            values = ''
-            for field in self.PUBLICATION_ATTRIBUTES:
-                if field in entry:
-                    fields += ", " + field
-                    values += ", '"+entry[field]+"'"
-
-            fields = fields[2:]
-            values = values[2:]
-            
-            print(fields)
-            print(values)
-            
-            query = "INSERT INTO core_publication ("+fields+") VALUES ("+values+") RETURNING id"
-            self.logger.info(query)
-            self.cursor.execute(query)
-            publication_id = self.cursor.fetchone()[0]
-                        
-            if 'authors' in entry:
-                for author in entry['authors']:
+            publication_id = self.parse_publication(journal=journal_id,
+                                                    **publication)
+            if authors:
+                for author in authors:
                     try:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", (publication_id, self.parse_author(author)))
                     except(DataError) as e:
                         self.logger.warn(e, exc_info=True)
-            if 'keywords' in entry:
-                for keyword in entry['keywords']:
+            if keywords:
+                for keyword in keywords:
                     try:
                         if len(keyword) <= 100:
-                            self.cursor.execute("INSERT INTO core_publicationurl (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
+                            self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
                     except(DataError) as e:
                         self.logger.warn(e, exc_info=True)
-            if 'urls' in entry:
-                for url in entry['urls']:
+            if urls:
+                for url in urls:
                     url_type = None
                     if isinstance(url, dict):
                         url_type = url.type
