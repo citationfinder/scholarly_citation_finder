@@ -2,6 +2,7 @@ import getopt
 import sys
 
 from ..Parser import Parser
+from psycopg2._psycopg import IntegrityError
 
 
 def get_arguments(argv):
@@ -36,8 +37,12 @@ class Harvester(Parser):
         
     def stop_harvest(self):
         self.logger.info('stop')
-        self.conn.commit()
-        #self.conn.close()
+        try:
+            self.conn.commit()
+        except(IntegrityError) as e:
+            self.logger.error(e, exc_info=True)
+            self.conn.rollback()
+        self.conn.close()
     
     def check_stop_harvest(self):
         return self.limit and self.count_publications >= self.limit

@@ -1,14 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os.path
 import psycopg2
+from psycopg2._psycopg import DataError
 
-
-from scholarly_citation_finder import config
 from scholarly_citation_finder.settings.development import DATABASES
 from Process import Process
-from scholarly_citation_finder.apps.core.models import Author, Journal, Publication
-from psycopg2._psycopg import DataError
 
 
 class Parser(Process):
@@ -79,7 +75,7 @@ class Parser(Process):
                 self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
-                raise DataError
+                raise DataError('Author name is too long')
 
     def parse_journal(self, name):
         '''
@@ -100,7 +96,7 @@ class Parser(Process):
                 self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
-                raise DataError
+                raise DataError('Journal name is too long')
 
     def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference=None):
         if title and len(title) <= 250:
@@ -117,33 +113,31 @@ class Parser(Process):
             self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference))
             return self.cursor.fetchone()[0]
         else:
-            raise DataError
+            raise DataError('Title does not exists or is too long')
 
-    def parse_entry(self, publication, journal=None, authors=None, keywords=None, urls=None):
+    def parse(self, publication, journal=None, authors=None, keywords=None, urls=None):
         self.count_publications += 1
         try:
+            
             if journal:
                 try:
-                    journal_id = self.parse_author(journal)
+                    journal = self.parse_journal(journal)
                 except(DataError) as e:
-                    self.logger.warn(e, exc_info=True)                
-                    journal_id = None
+                    journal = None
+                    self.logger.warn(str(e))
 
-            publication_id = self.parse_publication(journal=journal_id,
+            publication_id = self.parse_publication(journal=journal,
                                                     **publication)
             if authors:
                 for author in authors:
                     try:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", (publication_id, self.parse_author(author)))
                     except(DataError) as e:
-                        self.logger.warn(e, exc_info=True)
+                        self.logger.warn(str(e))
             if keywords:
                 for keyword in keywords:
-                    try:
-                        if len(keyword) <= 100:
-                            self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
-                    except(DataError) as e:
-                        self.logger.warn(e, exc_info=True)
+                    if len(keyword) <= 100:
+                        self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
             if urls:
                 for url in urls:
                     url_type = None
@@ -151,16 +145,15 @@ class Parser(Process):
                         url_type = url.type
                         url = url.value
                         
-                    try:
-                        if len(url) <= 200:
-                            self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
-                    except(DataError) as e:
-                        self.logger.warn(e, exc_info=True)
+                    if len(url) <= 200:
+                        self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
+
+            return True
+        except(DataError) as e:
+            self.logger.warn(str(e))
         except(Exception) as e:
             self.logger.warn(e, exc_info=True)
-            return False
-        
-        return True
+        return False
     
     
     """

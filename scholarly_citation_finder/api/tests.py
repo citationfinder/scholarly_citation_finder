@@ -31,13 +31,13 @@ class ParserTest(TestCase):
         id = self.parser.parse_publication(title=u'Na éäüö')
         self.assertTrue(id > 0)
         
-    def test_parse_entry(self):
-        first = self.parser.parse_entry(publication={'title':u'Title of my paper is éäüö',
+    def test_parse(self):
+        first = self.parser.parse(publication={'title':u'Title of my paper is éäüö',
                                                      'year': 2006},
                                         journal=u'Journél üf Example',
-                                        authors=('Jonny', 'Kelly'),
-                                        keywords=('Web', 'XML'),
-                                        urls=('http://example.org', 'http://ex.ample'))
+                                        authors=['Jonny', 'Kelly'],
+                                        keywords=['Web', 'XML'],
+                                        urls=['http://example.org', 'http://ex.ample'])
         self.assertTrue(first)
 
 """        
