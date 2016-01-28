@@ -165,8 +165,8 @@ class Parser(Process):
                 for url in urls:
                     url_type = None
                     if isinstance(url, dict):
-                        url_type = url.type
-                        url = url.value
+                        url_type = url['type']
+                        url = url['value']
                         
                     if len(url) <= 200:
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))

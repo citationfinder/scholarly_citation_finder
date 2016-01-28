@@ -107,3 +107,8 @@ class CiteseerxHarvester(Harvester):
         except(AttributeError, NoRecordsMatch) as e:
             self.logger.error(e, exc_info=True)
             return False
+        
+
+#if __name__ == '__main__':
+#    harvester = CiteseerxHarvester()
+#    harvester.harvest(limit=10)
