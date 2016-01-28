@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import psycopg2
-from psycopg2._psycopg import DataError, ProgrammingError
+from psycopg2._psycopg import DataError, ProgrammingError, IntegrityError
 
 from scholarly_citation_finder.settings.development import DATABASES
 from Process import Process
@@ -55,8 +55,17 @@ class Parser(Process):
     #    self.parse_publication(type, title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, arxiv_id, extractor, source)
     #    self.xml_writer.write_close_tag('reference')
 
-    def check_stop_harvest(self):
-        return self.limit and self.count_publications >= self.limit
+    def commit(self):
+        '''
+        :raise ParserRollbackError When a problems occurred, that required to do a rollback
+        '''
+        try:
+            self.logger.info('commit')
+            self.conn.commit()
+        except(IntegrityError) as e:
+            self.logger.error(e, exc_info=True)
+            self.conn.rollback()
+            raise ParserRollbackError               
 
     def parse_author(self, name):
         '''

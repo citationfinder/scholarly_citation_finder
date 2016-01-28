@@ -16,3 +16,6 @@ psycopg2==2.6.1
 # rest
 Markdown==2.6.5
 djangorestframework==3.3.2
+
+# debug only
+django-extensions==1.6.1

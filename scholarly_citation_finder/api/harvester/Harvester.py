@@ -32,6 +32,8 @@ def get_arguments(argv):
 
 class Harvester(Parser):
     
+    COMMIT_AFTER_NUM_PUBLICATIONS = 200000
+
     def __init__(self, name):
         super(Harvester, self).__init__(name)
         
@@ -40,18 +42,10 @@ class Harvester(Parser):
         self.logger.info('start {} harvester'.format(self.name))        
         
     def stop_harvest(self):
-        '''
-        :raise ParserRollbackError When a problems occurred, that required to do a rollback
-        '''
-        
         self.logger.info('stop parsed {} entries'.format(self.count_publications))
-        try:
-            self.conn.commit()
-        except(IntegrityError) as e:
-            self.logger.error(e, exc_info=True)
-            self.conn.rollback()
-            raise ParserRollbackError
-        #self.conn.close()
+        self.commit()
     
     def check_stop_harvest(self):
+        if (self.count_publications % self.COMMIT_AFTER_NUM_PUBLICATIONS) == 0:
+            self.commit()
         return self.limit and self.count_publications >= self.limit
