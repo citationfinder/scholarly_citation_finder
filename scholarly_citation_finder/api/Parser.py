@@ -75,9 +75,12 @@ class Parser(Process):
         if result:
             return result[0]
         else:
-            self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
-            return self.cursor.fetchone()[0]
-    
+            if len(name) <= 100:
+                self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
+                return self.cursor.fetchone()[0]
+            else:
+                raise DataError
+
     def parse_journal(self, name):
         '''
         If the journal with the given name already exists, the ID of that journal is returned.
@@ -93,9 +96,11 @@ class Parser(Process):
         if result:
             return result[0]
         else:
-            self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
-            return self.cursor.fetchone()[0]
-
+            if len(name) <= 250:
+                self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
+                return self.cursor.fetchone()[0]
+            else:
+                raise DataError
     def parse_publication(self, entry):
         self.count_publications += 1
         try:
@@ -133,7 +138,8 @@ class Parser(Process):
             if 'keywords' in entry:
                 for keyword in entry['keywords']:
                     try:
-                        self.cursor.execute("INSERT INTO core_publicationurl (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
+                        if len(keyword) <= 100:
+                            self.cursor.execute("INSERT INTO core_publicationurl (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
                     except(DataError) as e:
                         self.logger.warn(e, exc_info=True)
             if 'urls' in entry:
@@ -144,7 +150,8 @@ class Parser(Process):
                         url = url.value
                         
                     try:
-                        self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
+                        if len(url) <= 200:
+                            self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
                     except(DataError) as e:
                         self.logger.warn(e, exc_info=True)
         except(Exception) as e:
