@@ -1,11 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os.path
-from django.db.utils import DataError
+import psycopg2
+
 
 from scholarly_citation_finder import config
+from scholarly_citation_finder.settings.development import DATABASES
 from Process import Process
 from scholarly_citation_finder.apps.core.models import Author, Journal, Publication
+from psycopg2._psycopg import DataError
 
 
 class Parser(Process):
@@ -15,7 +18,7 @@ class Parser(Process):
         'title',
         'date',
         'booktitle'
-        'journal',
+        #'journal',
         'volume',
         'number',
         'pages_from',
@@ -25,18 +28,23 @@ class Parser(Process):
         'isbn',
         'doi',
         'abstract',
-        'copyright',
-        'citeseerx_id',
-        'dblp_id',
-        'arxiv_id',
-        'extractor'
+        'copyright'
     ]
 
     def __init__(self, name):
         super(Parser, self).__init__(name)
+        self.conn = self.get_database_connection(name)
+        self.cursor = self.conn.cursor()
         self.count_publications = 0
         #self.count_citations = 0
         self.logger.info('start -------------------')
+
+    def get_database_connection(self, name='default'):
+        db = DATABASES[name]
+        return psycopg2.connect(host=db['HOST'],
+                                dbname=db['NAME'],
+                                user=db['USER'],
+                                password=db['PASSWORD'])
 
     def stop_harvest(self):
         self.logger.info('stop')
@@ -49,61 +57,99 @@ class Parser(Process):
     #    self.parse_publication(type, title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, arxiv_id, extractor, source)
     #    self.xml_writer.write_close_tag('reference')
 
-    #def _parse_publication_urls(self, urls):
-    #    for url in urls:
-    #        if isinstance(url, dict):
-    #            self.xml_writer._write_line('<%s type="%s">%s</%s>' % ('url', url['type'], url['value'], 'url'))
-    #        else:
-    #            self.xml_writer.write_element('url', url)
-
     def check_stop_harvest(self):
         return self.limit and self.count_publications >= self.limit
 
     def parse_author(self, name):
-        try:
-            author = Author.objects.using(self.name).get(name=name)
-        except(Author.DoesNotExist):
-            author = Author(name=name)
-            author.save()
-        return author
+        '''
+        If the author with the given name already exists, the ID of that author is returned.
+        Otherwise a new author gets created.
+        
+        :param name: Name of the author
+        :return: ID of the author
+        :raise DataError: When the name is too long
+        '''
+        self.cursor.execute("SELECT id FROM core_author WHERE name = %s LIMIT 1", (name,))
+        result = self.cursor.fetchone()
+        
+        if result:
+            return result[0]
+        else:
+            self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
+            return self.cursor.fetchone()[0]
     
     def parse_journal(self, name):
-        try:
-            journal = Journal.objects.using(self.name).get(name=name)
-        except(Journal.DoesNotExist):
-            journal = Journal(name=name)
-            journal.save()
-        return journal        
+        '''
+        If the journal with the given name already exists, the ID of that journal is returned.
+        Otherwise a new journel gets created.
+        
+        :param name: Name of the journal
+        :return: ID of the journal
+        :raise DataError: When the name is too long
+        '''
+        self.cursor.execute("SELECT id FROM core_journal WHERE name = %s LIMIT 1", (name,))
+        result = self.cursor.fetchone()
+        
+        if result:
+            return result[0]
+        else:
+            self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
+            return self.cursor.fetchone()[0]
 
-    def parse_publication(self, entry, check_author=True):
+    def parse_publication(self, entry):
         self.count_publications += 1
         try:
-            publication = Publication()
-            
+            if 'journal' in entry:
+                try:
+                    entry['journal'] = self.parse_author(entry['journal'])
+                except(DataError) as e:
+                    self.logger.warn(e, exc_info=True)                
+                    del entry['journal']
+
+            fields = ''
+            values = ''
             for field in self.PUBLICATION_ATTRIBUTES:
                 if field in entry:
-                    setattr(publication, field, entry[field])
+                    fields += ", " + field
+                    values += ", '"+entry[field]+"'"
+
+            fields = fields[2:]
+            values = values[2:]
             
-            publication.save(using=self.name)     
+            print(fields)
+            print(values)
             
+            query = "INSERT INTO core_publication ("+fields+") VALUES ("+values+") RETURNING id"
+            self.logger.info(query)
+            self.cursor.execute(query)
+            publication_id = self.cursor.fetchone()[0]
+                        
             if 'authors' in entry:
                 for author in entry['authors']:
-                    publication.authors.add(self.parse_author(author))
-            #if 'keywords' in entry:
-            #    for keyword in entry['keywords']:
-            #        publication.ke
-            #        self.xml_writer.write_element('keyword', keyword)
+                    try:
+                        self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", (publication_id, self.parse_author(author)))
+                    except(DataError) as e:
+                        self.logger.warn(e, exc_info=True)
+            if 'keywords' in entry:
+                for keyword in entry['keywords']:
+                    try:
+                        self.cursor.execute("INSERT INTO core_publicationurl (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
+                    except(DataError) as e:
+                        self.logger.warn(e, exc_info=True)
             if 'urls' in entry:
                 for url in entry['urls']:
+                    url_type = None
                     if isinstance(url, dict):
-                        url_value = url.value
                         url_type = url.type
-                    else:
-                        url_value = url
-                        url_type = ''
-                    publication.publicationurl_set.create(url=url_value, type=url_type)
-        except(DataError) as e:
-            self.logger.warn(str(e))
+                        url = url.value
+                        
+                    try:
+                        self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
+                    except(DataError) as e:
+                        self.logger.warn(e, exc_info=True)
+        except(Exception) as e:
+            self.logger.warn(e, exc_info=True)
+            return False
         
         return True
     

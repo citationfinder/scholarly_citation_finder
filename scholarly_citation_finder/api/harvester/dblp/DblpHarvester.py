@@ -22,7 +22,7 @@ class DblpHarvester(Harvester):
         'title': 'title',
         'author': 'authors',
         'editor': 'authors',
-        'year': 'date',
+        'year': 'year',
         'booktitle': 'booktitle',
         'journal': 'journal',
         'volume': 'volume',
@@ -39,7 +39,10 @@ class DblpHarvester(Harvester):
     def __init__(self, **kwargs):
         super(DblpHarvester, self).__init__('dblp', **kwargs)
     
-    def harvest(self, filename, limit=None):
+    def harvest(self, filename=None, limit=None):
+        if filename is None:
+            filename = os.path.join(self.download_dir, 'dblp.xml')
+        
         if limit:
             self.limit = int(limit)
         else:
@@ -100,13 +103,12 @@ class DblpHarvester(Harvester):
                 result_entry[self.FIELD_MAPPING[elem.tag]] = elem.text
             # collaboration
             elif elem.tag in self.COLLABORATIONS:
-                self.open_split_file()
                 
                 result_entry['type'] = elem.tag
                 result_entry['dblp_id'] = elem.get('key')
 
                 # store and clear entry afterwards
-                self.parse_publication2(result_entry, check_author=False)
+                self.parse_publication(result_entry)
                 result_entry.clear()
                 
                 # Check, if break harvest loop

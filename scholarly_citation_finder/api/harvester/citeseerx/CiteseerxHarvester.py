@@ -19,7 +19,7 @@ class CiteseerxHarvester(Harvester):
     }
     
     def __init__(self, **kwargs):
-        super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
+        super(CiteseerxHarvester, self).__init__('dblp', **kwargs)
     
     def harvest(self, limit=None, _from=None, until=None):
         self.limit = limit
@@ -53,7 +53,7 @@ class CiteseerxHarvester(Harvester):
                     <dc:date>1998</dc:date>
                     '''
                     if len(date) == 4:
-                        result_entry['date'] = date
+                        result_entry['year'] = date
                 if 'source' in metadata:
                     url = metadata['source'][0]
                     if 'format' in metadata:
@@ -72,9 +72,8 @@ class CiteseerxHarvester(Harvester):
                     'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
                     'type': 'application/pdf'
                 })
-                    
-                self.open_split_file()
-                self.parse_publication2(result_entry)
+
+                self.parse_publication(result_entry)
                     
                 if self.check_stop_harvest():
                     break

@@ -36,6 +36,8 @@ class Harvester(Parser):
         
     def stop_harvest(self):
         self.logger.info('stop')
+        self.conn.commit()
+        #self.conn.close()
     
     def check_stop_harvest(self):
         return self.limit and self.count_publications >= self.limit

@@ -43,6 +43,8 @@ class ArxivHarvester(Harvester):
                     result_entry['authors'] = metadata['creator']
                 if 'subject' in metadata:
                     result_entry['keywords'] = metadata['subject']
+                # TODO: -------------------------------------------------------------------------<<<<<<<<<<<<<<<<
+                # check year or data
                 if 'date' in metadata:
                     result_entry['date'] = metadata['date'][-1]
                 if 'identifier' in metadata:
@@ -61,7 +63,7 @@ class ArxivHarvester(Harvester):
                 })
                 
                 self.open_split_file()
-                self.parse_publication2(result_entry)
+                self.parse_publication(result_entry)
 
                 if self.check_stop_harvest():
                     break
