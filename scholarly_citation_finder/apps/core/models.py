@@ -122,7 +122,7 @@ class PublicationUrl(models.Model):
 
     publication = models.ForeignKey(Publication)
     url = models.URLField(max_length=200)
-    type = models.CharField(max_length=20, default='', choices=MIME_TYPES, blank=True, null=True)
+    type = models.CharField(max_length=30, default='', choices=MIME_TYPES, blank=True, null=True)
     
     def __unicode__(self):
         return unicode(self.url)

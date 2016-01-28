@@ -73,7 +73,7 @@ class Parser(Process):
         if result:
             return result[0]
         else:
-            if len(name) <= 100:
+            if name and len(name) <= 100:
                 self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
@@ -94,7 +94,7 @@ class Parser(Process):
         if result:
             return result[0]
         else:
-            if len(name) <= 250:
+            if name and len(name) <= 250:
                 self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
@@ -159,7 +159,7 @@ class Parser(Process):
                         self.logger.warn(str(e))
             if keywords:
                 for keyword in keywords:
-                    if len(keyword) <= 100:
+                    if keyword and len(keyword) <= 100:
                         self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
             if urls:
                 for url in urls:
@@ -168,13 +168,15 @@ class Parser(Process):
                         url_type = url['type']
                         url = url['value']
                         
-                    if len(url) <= 200:
+                    if url and len(url) <= 200:
+                        if url_type and len(url_type) >= 30:
+                            url_type = None
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
 
             return True
         except(ParserDataError) as e:
-            self.logger.warn(str(e))
-            return True
+            #self.logger.warn(str(e))
+            return False
         except(ProgrammingError, DataError) as e:
             self.logger.error(e, exc_info=True)
             self.conn.rollback()

@@ -54,13 +54,13 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.abspath(os.path.join(BASE_DIR, '../log', 'debug.log')),
             'formatter': 'verbose'
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
@@ -74,7 +74,7 @@ LOGGING = {
         '': {
             'formatter': 'verbose',
             'handlers': ['console', 'file'],
-            'level': 'DEBUG'
+            'level': 'INFO'
         }
     },
 }
