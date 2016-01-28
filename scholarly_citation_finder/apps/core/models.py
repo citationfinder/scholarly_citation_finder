@@ -78,6 +78,7 @@ class Publication(models.Model):
     """
     other
     """
+    source = models.CharField(blank=True, null=True, max_length=100)
     source_extracted = models.NullBooleanField(default=False)
     """
     mag only

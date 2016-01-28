@@ -19,7 +19,15 @@ DATABASES = {
         'PASSWORD': os.getenv('DBLP_DATABASE_PASSWORD', 'root'),
         'HOST': '127.0.0.1',
         'PORT': '5432'
-    },             
+    },
+    'citeseerx': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('CITESEERX_DATABASE_NAME', 'citeseerx'),
+        'USER': os.getenv('CITESEERX_DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('CITESEERX_DATABASE_PASSWORD', 'root'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    },
     'mag': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('MAG_DATABASE_NAME', 'mag'),

@@ -55,6 +55,7 @@ class DblpHarvester(Harvester):
             
 
         if os.path.isfile(filename):
+            self.start_harevest()
             context = etree.iterparse(filename, load_dtd=True, html=True)
             num_publications = self._fast_iter(context)
             self.stop_harvest()
@@ -114,7 +115,7 @@ class DblpHarvester(Harvester):
             elif elem.tag in self.COLLABORATIONS:
                 
                 publication['type'] = elem.tag
-                #result_entry['dblp_id'] = elem.get('key')
+                publication['source'] = 'dbpl:'+elem.get('key')
 
                 # store and clear entry afterwards
                 self.parse(publication, journal, authors, None, urls)
@@ -136,6 +137,6 @@ class DblpHarvester(Harvester):
         
         return self.count_publications
 
-if __name__ == '__main__':
-    harvester = DblpHarvester()
-    harvester.harvest(limit=100000)
+#if __name__ == '__main__':
+#    harvester = DblpHarvester()
+#    harvester.harvest(limit=100000)

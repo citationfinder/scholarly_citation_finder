@@ -19,9 +19,17 @@ class CiteseerxHarvester(Harvester):
     }
     
     def __init__(self, **kwargs):
-        super(CiteseerxHarvester, self).__init__('dblp', **kwargs)
+        super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
     
     def harvest(self, limit=None, _from=None, until=None):
+        '''
+        
+        :param limit: Number of maximum publications to parse
+        :param _from: OAI-PHM from date YYYY-MM-DD
+        :param until: OAI-PHM until date YYYY-MM-DD
+        :return: Number of parsed publications        
+        '''
+        
         self.limit = limit
 
         list_records_options = {
@@ -31,20 +39,37 @@ class CiteseerxHarvester(Harvester):
             list_records_options['from'] = _from
         if until:
             list_records_options['until'] = until
+            
+        self.start_harevest()
+        num_publications = self.harvest_oai_phm(list_records_options)
+        self.stop_harvest()
+        return num_publications
+        
+    def harvest_oai_phm(self, list_records_options):
+        '''
+        
+        :param list_records_options: List records option for Sickle
+        :return: Number of parsed publications or False
+        :raise ParserRollbackError: see Parser.parse
+        '''
+        
         
         client = Sickle(self.OAI_PHM_URL)
         records = client.ListRecords(**list_records_options)
         try:
             for record in records:
                 metadata = record.metadata
-                result_entry = {
-                    'urls': []
-                }
+                
+                publication = {}
+                journal = None
+                authors = []
+                keywords = []
+                urls = []
             
                 if 'creator' in metadata:
-                    result_entry['authors'] = metadata['creator']
+                    authors = metadata['creator']
                 if 'subject' in metadata:
-                    result_entry['keywords'] = metadata['subject']
+                    keywords = metadata['subject']
                 if 'date' in metadata:
                     date = metadata['date'][-1]
                     '''
@@ -53,7 +78,7 @@ class CiteseerxHarvester(Harvester):
                     <dc:date>1998</dc:date>
                     '''
                     if len(date) == 4:
-                        result_entry['year'] = date
+                        publication['year'] = date
                 if 'source' in metadata:
                     url = metadata['source'][0]
                     if 'format' in metadata:
@@ -61,23 +86,24 @@ class CiteseerxHarvester(Harvester):
                             'value': url,
                             'type': metadata['format'][0]
                         }
-                    result_entry['urls'].append(url)
+                    urls.append(url)
                 for field in self.FIELD_MAPPING:
                     if field in metadata:
-                        result_entry[self.FIELD_MAPPING[field]] = metadata[field][0]
+                        publication[self.FIELD_MAPPING[field]] = metadata[field][0]
                     
                 # <identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>
-                result_entry['citeseerx_id'] = string.replace(record.header.identifier, 'oai:CiteSeerX.psu:', '')
-                result_entry['urls'].append({
-                    'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
-                    'type': 'application/pdf'
-                })
+                publication['source'] = 'citeseerx:'+string.replace(record.header.identifier, 'oai:CiteSeerX.psu:', '')
+                #urls.append({
+                #    'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
+                #    'type': 'application/pdf'
+                #})
 
-                self.parse_publication(result_entry)
+                self.parse(publication, journal, authors, keywords, urls)
                     
                 if self.check_stop_harvest():
                     break
+                
+            return self.count_publications
         except(AttributeError, NoRecordsMatch) as e:
-            self.logger.warn(str(e))
-        finally:
-            self.stop_harvest()
+            self.logger.error(e, exc_info=True)
+            return False

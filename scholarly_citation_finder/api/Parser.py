@@ -1,11 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import psycopg2
-from psycopg2._psycopg import DataError
+from psycopg2._psycopg import DataError, ProgrammingError
 
 from scholarly_citation_finder.settings.development import DATABASES
 from Process import Process
 
+class ParserDataError(Exception):
+    pass
+
+class ParserRollbackError(Exception):
+    pass
 
 class Parser(Process):
     
@@ -42,9 +47,6 @@ class Parser(Process):
                                 user=db['USER'],
                                 password=db['PASSWORD'])
 
-    def stop_harvest(self):
-        self.logger.info('stop')
-  
     #def parse_publication_reference(self, context=None, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
     #    self.count_citations += 1
     #    
@@ -75,7 +77,7 @@ class Parser(Process):
                 self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
-                raise DataError('Author name is too long')
+                raise ParserDataError('Author name is too long')
 
     def parse_journal(self, name):
         '''
@@ -96,12 +98,22 @@ class Parser(Process):
                 self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", (name,))
                 return self.cursor.fetchone()[0]
             else:
-                raise DataError('Journal name is too long')
+                raise ParserDataError('Journal name is too long')
 
-    def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference=None):
+    def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference=None, source=None):
         if title and len(title) <= 250:
+            if date and len(date) > 50:
+                date = None
             if booktitle and len(booktitle) > 200:
                 booktitle = None
+            if volume and len(volume) > 20:
+                volume = None
+            if number and len(number) > 20:
+                number = None
+            if pages_from and len(pages_from) > 5:
+                pages_from = None
+            if pages_to and len(pages_to) > 5:
+                pages_to = None
             if series and len(series) > 200:
                 series = None
             if publisher and len(publisher) > 150:
@@ -110,12 +122,23 @@ class Parser(Process):
                 isbn = None
             if doi and len(doi) > 50:
                 doi = None
-            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference))
+            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference, source))
             return self.cursor.fetchone()[0]
         else:
-            raise DataError('Title does not exists or is too long')
+            raise ParserDataError('Title does not exists or is too long')
 
     def parse(self, publication, journal=None, authors=None, keywords=None, urls=None):
+        '''
+        
+        :param publication: Publication dictonary
+        :param journal: Journal name
+        :param authors: Authors name array
+        :param keywords: Keywords array
+        :param urls: Url array
+        :return: True, if entry was successfully parsed
+        :raise ParserRollbackError: When a problems occurred, that required to do a rollback
+        '''
+        
         self.count_publications += 1
         try:
             
@@ -149,12 +172,13 @@ class Parser(Process):
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
 
             return True
-        except(DataError) as e:
+        except(ParserDataError) as e:
             self.logger.warn(str(e))
-        except(Exception) as e:
-            self.logger.warn(e, exc_info=True)
-        return False
-    
+            return True
+        except(ProgrammingError, DataError) as e:
+            self.logger.error(e, exc_info=True)
+            self.conn.rollback()
+            raise ParserRollbackError(str(e))
     
     """
         def check_author_name(self, name):
