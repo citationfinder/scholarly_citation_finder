@@ -3,6 +3,8 @@ from sickle import Sickle
 from sickle.oaiexceptions import NoRecordsMatch
 
 from ..Harvester import Harvester
+from scholarly_citation_finder.api.Parser import ParserRollbackError, ParserConnectionError
+from requests.exceptions import ChunkedEncodingError
 
 
 class CiteseerxHarvester(Harvester):
@@ -39,10 +41,19 @@ class CiteseerxHarvester(Harvester):
             list_records_options['from'] = _from
         if until:
             list_records_options['until'] = until
-            
-        self.start_harevest()
-        num_publications = self.harvest_oai_phm(list_records_options)
-        self.stop_harvest()
+        
+        # TODO: move to parent class
+        try:    
+            self.start_harevest()
+            num_publications = self.harvest_oai_phm(list_records_options)
+            self.stop_harvest()
+        except(ParserConnectionError) as e:
+            self.logger.warn(str(e))
+            self.stop_harvest() # commit results
+            # TODO: restart
+        except(ParserRollbackError) as e:
+            # TODO: rollback already happend, restart from last point
+            pass
         return num_publications
         
     def harvest_oai_phm(self, list_records_options):
@@ -104,9 +115,16 @@ class CiteseerxHarvester(Harvester):
                     break
                 
             return self.count_publications
+        # sickle errors => oai-phm errors
         except(AttributeError, NoRecordsMatch) as e:
             self.logger.error(e, exc_info=True)
             return False
+        # requests (part of sickle) errors => connection errors
+        except(ChunkedEncodingError) as e: # incorrect chunked encoding
+            raise ParserConnectionError(str(e))
+        # database errors
+        except(ParserRollbackError) as e:
+            raise e
         
 
 #if __name__ == '__main__':

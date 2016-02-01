@@ -12,6 +12,9 @@ class ParserDataError(Exception):
 class ParserRollbackError(Exception):
     pass
 
+class ParserConnectionError(Exception):
+    pass
+
 class Parser(Process):
     
     PUBLICATION_ATTRIBUTES = [
