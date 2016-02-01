@@ -98,7 +98,7 @@
 - fields: {fieldofstudy: 1, name: Signal wave, publication: 1}
   model: core.publicationkeyword
   pk: 1
-- fields: {context: '', publication: 1, reference: 2, self: false}
+- fields: {context: '', publication: 1, reference: 2}
   model: core.publicationreference
   pk: 1
 - fields: {publication: 1, type: null, url: 'http://example.org/paper.pdf'}
