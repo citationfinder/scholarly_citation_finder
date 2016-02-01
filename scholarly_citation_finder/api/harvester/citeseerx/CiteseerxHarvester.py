@@ -4,7 +4,7 @@ from sickle.oaiexceptions import NoRecordsMatch
 
 from ..Harvester import Harvester
 from scholarly_citation_finder.api.Parser import ParserRollbackError, ParserConnectionError
-from requests.exceptions import ChunkedEncodingError
+from requests.exceptions import ChunkedEncodingError, ConnectionError
 
 
 class CiteseerxHarvester(Harvester):
@@ -50,7 +50,7 @@ class CiteseerxHarvester(Harvester):
         except(ParserConnectionError) as e:
             self.logger.warn(str(e))
             self.stop_harvest() # commit results
-            # TODO: restart
+            # TODO: restart, if it was not a: requests.exceptions.ConnectionError: ('Connection aborted.', error(104, 'Connection reset by peer'))
         except(ParserRollbackError) as e:
             # TODO: rollback already happend, restart from last point
             pass
@@ -120,7 +120,7 @@ class CiteseerxHarvester(Harvester):
             self.logger.error(e, exc_info=True)
             return False
         # requests (part of sickle) errors => connection errors
-        except(ChunkedEncodingError) as e: # incorrect chunked encoding
+        except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
             raise ParserConnectionError(str(e))
         # database errors
         except(ParserRollbackError) as e:
