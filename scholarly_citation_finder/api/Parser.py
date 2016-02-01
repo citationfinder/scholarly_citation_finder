@@ -41,14 +41,7 @@ class Parser(Process):
         self.cursor = self.conn.cursor()
         self.count_publications = 0
         #self.count_citations = 0
-        self.logger.info('start -------------------')
-
-    def get_database_connection(self, name='default'):
-        db = DATABASES[name]
-        return psycopg2.connect(host=db['HOST'],
-                                dbname=db['NAME'],
-                                user=db['USER'],
-                                password=db['PASSWORD'])
+        self.logger.info('init -------------------')
 
     #def parse_publication_reference(self, context=None, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
     #    self.count_citations += 1
