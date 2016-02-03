@@ -34,13 +34,20 @@ class CitationFinder(Process):
         self.logger.info('set {} publications as search set'.format(len(publication_search_set)))
         self.publication_search_set = publication_search_set
         
-    def set_author(self, name):
+    def set_author(self, name=None, id=None):
         '''
         
         :param name: Name of the author
+        :param id: ID of the author
+        :return: True, if author was found in database
         '''
         try:
-            author = Author.objects.using(self.database_name).get(name=name)
+            query = Author.objects.using(self.database_name)
+            if id:
+                author = query.get(id=id)
+            else:
+                author = query.get(name=name)
+                
             self.logger.warn(self.output.open(name=author.id))
             #author_publication = PublicationAuthorAffilation.objects.using(self.database_name).filter(author=author)
             #Publication.objects.using(self.database_name).filter()
