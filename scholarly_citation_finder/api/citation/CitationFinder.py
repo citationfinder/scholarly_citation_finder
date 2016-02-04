@@ -8,6 +8,7 @@ from scholarly_citation_finder.api.Process import Process
 from scholarly_citation_finder.apps.core.models import Author,\
     PublicationAuthorAffilation, Publication
 from scholarly_citation_finder.api.citation.EvaluationWriter import EvaluationWriter
+from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 
 class CitationFinder(Process):
         
@@ -19,9 +20,10 @@ class CitationFinder(Process):
         
         self.output = EvaluationWriter(path=self.download_dir)
         
-        self.publication_search_set = None
+        self.publication_set = PublicationSet()
         self.publicationreferences_result_set = []        
-        
+    
+    """    
     def _array2sqllist(self, list):
         #return ','.join([str(i) for i in list])
         return '('+str(list)[1:-1]+')'
@@ -29,64 +31,21 @@ class CitationFinder(Process):
     def _sqllist2array(self, sqllist):
         #result = '('+','.join([item[0] for item in sqllist])+')'
         return [item[0] for item in sqllist]
+    """
     
-    def set_publication_search_set(self, publication_search_set):
-        self.logger.info('set {} publications as search set'.format(len(publication_search_set)))
-        self.publication_search_set = publication_search_set
-        
-    def set_author(self, name=None, id=None):
-        '''
-        
-        :param name: Name of the author
-        :param id: ID of the author
-        :return: True, if author was found in database
-        '''
+    def set_by_author(self, name=None, id=None):
         try:
-            query = Author.objects.using(self.database_name)
-            if id:
-                author = query.get(id=id)
-            else:
-                author = query.get(name=name)
-                
-            self.logger.info(self.output.open(name=author.id))
-            #author_publication = PublicationAuthorAffilation.objects.using(self.database_name).filter(author=author)
-            #Publication.objects.using(self.database_name).filter()
-            self.set_publication_search_set(Publication.objects.using(self.database_name).filter(publicationauthoraffilation__author=author))
-            return True
+            author, length_publication_set = self.publication_set.set_by_author(name, id)
+            filename = self.output.open(name=author.id)
+            self.logger.info('set {} publications by author {} ({}), file {}'.format(length_publication_set, author.name, author.id, filename))
         except(ObjectDoesNotExist):
-            self.logger.info('search author "{}", found nothing'.format(name))
-        return False 
-        
-        
-        """    
-        self.cursor.execute("SELECT id FROM core_author WHERE name LIKE %s LIMIT 1", (name,))
-        result = self.cursor.fetchone()
-        
-        if result:
-            id = result[0]
-            self._open_output_file(id)
-            self.logger.info('search author "{}", found author id: {}'.format(name, id))
-            self.cursor.execute("SELECT publication_id FROM core_publicationauthoraffilation WHERE author_id = %s", (id,))
-            self.set_publication_search_set(self._sqllist2array(self.cursor.fetchall()))
-            return True
-        else:
-            self.logger.info('search author "{}", found nothing'.format(name))
-        return False     
-        """     
-    
-    def set_journal(self, journal_name):
-        # SQL -> get papers and call set_publication_search_set
-        pass
-    
-    #def __get_references(self):
-    #    
+            self.logger.info('search author "{}", found nothing'.format(name))            
 
     def run(self, publication_limit=None, time_limit=None):
-        if self.publication_search_set:
+        if self.publication_set.is_set():
             self.logger.info('run {} with publication_limit={} and time_limit={}'.format(self.name, publication_limit, time_limit))
         else:
             raise Exception('publication_search_set not set')
-        #raise Exception('Implement run method')
         
     
     def run_done(self):

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from CitationFinder import CitationFinder
+from ..CitationFinder import CitationFinder
 from scholarly_citation_finder.apps.core.models import Journal, Publication,\
     PublicationReference
 
@@ -16,7 +16,7 @@ class JournalStrategy(CitationFinder):
         citing_papers = PublicationReference.objects.using(self.database_name).filter(reference__in=self.publication_search_set)
         
     
-        journals = self.__find_journals()
+        journals = self.publication_set.get_journals()
         self.logger.info('found {} journals in search set'.format(len(journals)))
         for journal in journals:
             journal_publications = self.__find_journal_publications(journal.id)            
@@ -29,17 +29,6 @@ class JournalStrategy(CitationFinder):
             self.output.write_values(len(journal_publications), len(self.publicationreferences_result_set))
         self.run_done()
         
-    def __find_journals(self):
-        '''
-        Find all journals (precise journal IDs) of the given publication search set.
-        
-        :param publications_ids:
-        :return: Array of journal IDs ordered descending by frequency
-        '''
-        #self.cursor.execute("SELECT journal_id, COUNT(journal_id) as num FROM core_publication WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY journal_id ORDER BY num DESC")
-        #return self._sqllist2array(self.cursor.fetchall())
-        return Journal.objects.using(self.database_name).filter(publication__in=self.publication_search_set).distinct()
-    
     def __find_journal_publications(self, journal_id):
         #self.cursor.execute("SELECT publication_id FROM core_publication WHERE journal_id IN "+self._array2sqllist(journal_ids))
         #return self._sqllist2array(self.cursor.fetchall())

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from CitationFinder import CitationFinder
+from ..CitationFinder import CitationFinder
 from scholarly_citation_finder.apps.core.models import Author, Publication, PublicationReference
 
 class AuthorStrategy(CitationFinder):
@@ -17,7 +17,7 @@ class AuthorStrategy(CitationFinder):
 
 
         #CitationFinder.run(self, publication_limit=publication_limit, time_limit=time_limit)
-        authors = self.__find_authors()
+        authors = self.publication_set.get_authors()
         self.logger.info('found {} author in the search set'.format(len(authors)))
         for author in authors:
             author_publications = self.__find_author_publications(author.id)
@@ -30,19 +30,7 @@ class AuthorStrategy(CitationFinder):
             self.output.write_values(len(author_publications), len(self.publicationreferences_result_set))
         self.run_done()
             
-    def __find_min_publication_year(self, publications_ids):
-        pass
 
-    def __find_authors(self):
-        '''
-        Find all authors (precise author IDs) of the given publication search set.
-        
-        :param publications_ids:
-        :return: Array of author IDs ordered descending by frequency
-        '''
-        #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY author_id ORDER BY num DESC")
-        #return self._sqllist2array(self.cursor.fetchall())
-        return Author.objects.using(self.database_name).filter(publicationauthoraffilation__publication__in=self.publication_search_set).distinct()
     
     def __find_author_publications(self, author_id):
         #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation LEFT JOIN publicationreference ON publicationreference.publication_id =  WHERE publication_id IN %s GROUP BY author_id ORDER BY num DESC", (publications_authors,))
