@@ -74,9 +74,6 @@ class PublicationSet:
         :param publications_ids:
         :return: Array of author IDs ordered descending by frequency
         '''
-        #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY author_id ORDER BY num DESC")
-        #return self._sqllist2array(self.cursor.fetchall())
-        
         if ordered:
             return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
         else:
@@ -85,7 +82,7 @@ class PublicationSet:
     def get_conferences(self):
         return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
 
-    def get_journals(self):
+    def get_journals(self, ordered=None):
         '''
         Find all journals (precise journal IDs) of the given publication search set.
         
@@ -94,7 +91,10 @@ class PublicationSet:
         '''
         #self.cursor.execute("SELECT journal_id, COUNT(journal_id) as num FROM core_publication WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY journal_id ORDER BY num DESC")
         #return self._sqllist2array(self.cursor.fetchall())
-        return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
+        if ordered:
+            return list(Author.objects.using(self.database).raw("SELECT journal_id AS id as num FROM core_publication WHERE publication_id IN ("+self.publications_idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
+        else:
+            return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
     def get_fieldofstudies(self):
         return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()

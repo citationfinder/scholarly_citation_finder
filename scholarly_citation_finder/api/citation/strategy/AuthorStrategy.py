@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from ..CitationFinder import CitationFinder
-from scholarly_citation_finder.apps.core.models import Author, Publication, PublicationReference
+from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
 
 class AuthorStrategy(CitationFinder):
 

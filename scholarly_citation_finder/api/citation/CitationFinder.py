@@ -10,7 +10,7 @@ from scholarly_citation_finder.api.citation.CitationSet import CitationSet
 class CitationFinder(Process):
         
     def __init__(self, name, database_name='mag'):
-        super(CitationFinder, self).__init__(name)
+        super(CitationFinder, self).__init__('strategy/{}'.format(name))
         self.database_name = database_name
         self.cursor = connections[self.database_name].cursor()
         
