@@ -75,7 +75,7 @@ class PublicationSet:
         if ordered:
             return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY num DESC"))
         else:
-            Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
+            return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
     def get_conferences(self):
         return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
