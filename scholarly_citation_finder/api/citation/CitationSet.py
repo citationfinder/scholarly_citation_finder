@@ -23,14 +23,13 @@ class CitationSet:
     def close(self):
         self.writer.close()
     
-    def add(self, publications):
+    def add(self, citations, num_inspected_publications):
         # add
-        for publication in publications:
-            if publication not in self.citations:
-                self.citations.append(publication)
+        for citation in citations:
+            if citation not in self.citations:
+                self.citations.append(citation)
         # output
-        self.num_inspected_publications += len(publications)
-        num_citations = len(self.citations)
-        self.writer.write_values(self.num_inspected_publications, num_citations)
+        self.num_inspected_publications += num_inspected_publications
+        self.writer.write_values(self.num_inspected_publications, len(self.citations))
 
     

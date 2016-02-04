@@ -20,7 +20,7 @@ class ConferenceStrategy(Strategy):
             conference_publications_citing = citing_papers.filter(publication__in=conference_publications)
             self.logger.info('conference "{}": found {} publications, {} citations'.format(conference, len(conference_publications), len(conference_publications_citing)))
             
-            citation_set.add(conference_publications_citing)        
+            citation_set.add(conference_publications_citing, len(conference_publications))        
     
     def __find_conference_publications(self, conference_id):
         return Publication.objects.using(self.database).filter(conference_id=conference_id)

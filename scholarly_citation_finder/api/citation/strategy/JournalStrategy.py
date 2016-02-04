@@ -24,7 +24,7 @@ class JournalStrategy(Strategy):
             journal_publications_citing = citing_papers.filter(publication__in=journal_publications)
             self.logger.info('journal "{}": found {} publications, {} citations'.format(journal.id, len(journal_publications), len(journal_publications_citing)))
             
-            citation_set.add(journal_publications_citing)
+            citation_set.add(journal_publications_citing, len(journal_publications))
         
     def __find_journal_publications(self, journal_id):
         #self.cursor.execute("SELECT publication_id FROM core_publication WHERE journal_id IN "+self._array2sqllist(journal_ids))

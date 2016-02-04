@@ -24,7 +24,7 @@ class AuthorStrategy(Strategy):
             author_publications_citing = citing_papers.filter(publication_id__in=author_publications)
             self.logger.info('author "{}": found {} publications, {} citations'.format(author.id, len(author_publications), len(author_publications_citing)))
 
-            citation_set.add(author_publications_citing)         
+            citation_set.add(author_publications_citing, len(author_publications))         
     
     def __find_author_publications(self, author_id):
         #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation LEFT JOIN publicationreference ON publicationreference.publication_id =  WHERE publication_id IN %s GROUP BY author_id ORDER BY num DESC", (publications_authors,))

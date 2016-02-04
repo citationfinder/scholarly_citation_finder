@@ -20,7 +20,7 @@ class FieldofstudyStrategy(Strategy):
             fieldofstudy_publications_citing = citing_papers.filter(publication__in=fieldofstudy_publications)
             self.logger.info('field of study "{}": found {} publications, {} citations'.format(fieldofstudy, len(fieldofstudy_publications), len(fieldofstudy_publications_citing)))
             
-            citation_set.add(fieldofstudy_publications_citing)
+            citation_set.add(fieldofstudy_publications_citing, len(fieldofstudy_publications))
         
     def __find_fieldofstudy_publications(self, fieldofstudy_id):
         return Publication.objects.using(self.database).raw('SELECT publication_id AS id from core_publicationkeyword WHERE fieldofstudy_id=%s', [fieldofstudy_id])
