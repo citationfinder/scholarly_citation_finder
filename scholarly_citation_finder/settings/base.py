@@ -35,8 +35,10 @@ PREREQ_APPS = (
     'rest_framework',
 )
 PROJECT_APPS = (
-    'scholarly_citation_finder.api.harvester',
+    'scholarly_citation_finder.api.citation',
+    'scholarly_citation_finder.api.crawler',
     'scholarly_citation_finder.api.extractor',
+    'scholarly_citation_finder.api.harvester',
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.frontend',
     'scholarly_citation_finder.apps.rest',
