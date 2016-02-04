@@ -10,7 +10,7 @@ class ConferenceStrategy(Strategy):
         super(ConferenceStrategy, self).__init__(name='conference')
         
     def run(self, publication_set, citation_set):
-        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set)
+        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
         
     
         conferences = publication_set.get_conferences()

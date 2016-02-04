@@ -22,7 +22,7 @@ class AuthorStrategy(Strategy):
         for author in authors:
             author_publications = self.__find_author_publications(author.id)
             author_publications_citing = citing_papers.filter(publication_id__in=author_publications)
-            self.logger.info('author "{}": found {} publications, {} citations'.format(author, len(author_publications), len(author_publications_citing)))
+            self.logger.info('author "{}": found {} publications, {} citations'.format(author.id, len(author_publications), len(author_publications_citing)))
 
             citation_set.add(author_publications_citing)         
     

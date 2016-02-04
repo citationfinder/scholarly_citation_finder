@@ -14,7 +14,7 @@ class JournalStrategy(Strategy):
         self.ordered = ordered
         
     def run(self, publication_set, citation_set):
-        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set)
+        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
         
     
         journals = publication_set.get_journals(ordered=self.ordered)
@@ -22,7 +22,7 @@ class JournalStrategy(Strategy):
         for journal in journals:
             journal_publications = self.__find_journal_publications(journal.id)            
             journal_publications_citing = citing_papers.filter(publication__in=journal_publications)
-            self.logger.info('journal "{}": found {} publications, {} citations'.format(journal, len(journal_publications), len(journal_publications_citing)))
+            self.logger.info('journal "{}": found {} publications, {} citations'.format(journal.id, len(journal_publications), len(journal_publications_citing)))
             
             citation_set.add(journal_publications_citing)
         

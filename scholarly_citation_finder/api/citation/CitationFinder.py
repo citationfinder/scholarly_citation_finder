@@ -7,6 +7,7 @@ from django.db import connections
 from scholarly_citation_finder.api.Process import Process
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from scholarly_citation_finder.api.citation.CitationSet import CitationSet
+from scholarly_citation_finder.lib.file import create_dir
 
 class CitationFinder(Process):
         
@@ -40,8 +41,9 @@ class CitationFinder(Process):
         if self.publication_set.is_set():
             strategy.setup(logger=self.logger,
                            database=self.database)
-            filename = self.citation_set.open(filename=os.path.join(self.download_dir, strategy.name, '{}.csv'.format(self.publication_set.name)))      
-            self.logger.info('run strategy: {}; file: {}'.format(strategy, filename))            
+            output_path = create_dir(os.path.join(self.download_dir, strategy.name))
+            output_filename = self.citation_set.open(filename=os.path.join(output_path, '{}.csv'.format(self.publication_set.name)))      
+            self.logger.info('run strategy: {}; file: {}'.format(strategy.name, output_filename))            
             strategy.run(self.publication_set, self.citation_set)
             self.citation_set.close()
             self.logger.info('done')  

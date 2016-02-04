@@ -10,7 +10,7 @@ class FieldofstudyStrategy(Strategy):
         super(FieldofstudyStrategy, self).__init__(name='fieldofstudy')
         
     def run(self, publication_set, citation_set):
-        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set)
+        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
         
     
         fieldofstudies = publication_set.get_fieldofstudies()
