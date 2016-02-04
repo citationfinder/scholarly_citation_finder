@@ -1,14 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os.path
 
 class CsvFileWriter:
     
-    def __init__(self, path):
-        self.path = path
+    def __init__(self):
         self.num_total_inspected_publications = 0
         self.output = None
         
-    def open(self, name):
-        filename = os.path.join(self.path, '{}.csv'.format(name))
+    def open(self, path, name):
+        filename = os.path.join(path, '{}.csv'.format(name))
         self.output = open(filename, 'w+')
         return filename
         

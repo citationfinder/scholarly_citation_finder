@@ -30,8 +30,8 @@ class CitationFinder(Process):
     def set_by_author(self, name=None, id=None):
         try:
             author, length_publication_set = self.publication_set.set_by_author(name, id)
-            filename = self.citation_set.open(name=author.id)
-            self.logger.info('set {} publications by author {} ({}), file {}'.format(length_publication_set, author.name, author.id, filename))
+            filename = self.citation_set.open(path=self.download_dir, name=author.id)
+            self.logger.info('set {} publications by author {}, file {}'.format(length_publication_set, author.id, filename))
         except(ObjectDoesNotExist):
             self.logger.info('search author "{}", found nothing'.format(name))            
 

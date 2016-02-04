@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from scholarly_citation_finder.apps.core.models import Author, Publication, PublicationReference,\
     Conference, Journal, FieldOfStudy
 from django.core.exceptions import ObjectDoesNotExist
@@ -16,7 +18,7 @@ class PublicationSet:
     
     def set(self, publications):
         self.publications = publications
-        self.publications_idstring = ','.join([publication.id for publication in self.publications])
+        self.publications_idstring = ','.join([str(publication.id) for publication in self.publications])
         return len(self.publications)
 
     def set_by_author(self, name=None, id=None):
@@ -27,15 +29,15 @@ class PublicationSet:
         :return: Author, if author was found in database otherwise False
         '''
         try:
-            query = Author.objects.using(self.database_name)
+            query = Author.objects.using(self.database)
             if id:
                 author = query.get(id=id)
             else:
                 author = query.get(name=name)
                 
-            #author_publication = PublicationAuthorAffilation.objects.using(self.database_name).filter(author=author)
-            #Publication.objects.using(self.database_name).filter()
-            num_publications = self.set(Publication.objects.using(self.database_name).filter(publicationauthoraffilation__author=author))
+            #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
+            #Publication.objects.using(self.database).filter()
+            num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author))
             return (author, num_publications)
         except(ObjectDoesNotExist) as e:
             raise e
@@ -59,6 +61,9 @@ class PublicationSet:
     def set_by_journal(self, name=None, id=None):
         pass
 
+    def get(self):
+        return self.publications
+
     def get_min_publication_year(self, publications_ids):
         pass
 
@@ -73,7 +78,7 @@ class PublicationSet:
         #return self._sqllist2array(self.cursor.fetchall())
         
         if ordered:
-            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY num DESC"))
+            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
         else:
             return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
@@ -92,5 +97,5 @@ class PublicationSet:
         return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
     def get_fieldofstudies(self):
-        return FieldOfStudy.objects.using(self.database_name).filter(publicationkeyword__publication__in=self.publications).distinct()
+        return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()
     

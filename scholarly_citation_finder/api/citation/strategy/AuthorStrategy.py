@@ -13,10 +13,10 @@ class AuthorStrategy(CitationFinder):
         super(AuthorStrategy, self).run(publication_limit=publication_limit, time_limit=time_limit)
         
         
-        citing_papers = PublicationReference.objects.using(self.database_name).filter(reference__in=self.publication_search_set)
+        citing_papers = PublicationReference.objects.using(self.database_name).filter(reference__in=self.publication_set.get())
 
 
-        authors = self.publication_set.get_authors()
+        authors = self.publication_set.get_authors(ordered=True)
         self.logger.info('found {} author in the search set'.format(len(authors)))
         for author in authors:
             author_publications = self.__find_author_publications(author.id)
