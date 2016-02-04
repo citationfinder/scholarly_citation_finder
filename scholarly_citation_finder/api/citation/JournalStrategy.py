@@ -11,8 +11,7 @@ class JournalStrategy(CitationFinder):
         super(JournalStrategy, self).__init__(name='journal_strategy')
         
     def run(self, publication_limit=None, time_limit=None):
-        super(JournalStrategy, self).run(self, publication_limit=publication_limit, time_limit=time_limit)
-
+        CitationFinder.run(self, publication_limit=publication_limit, time_limit=time_limit)
 
         citing_papers = PublicationReference.objects.using(self.database_name).filter(reference__in=self.publication_search_set)
         

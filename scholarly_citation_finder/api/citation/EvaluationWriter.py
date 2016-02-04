@@ -10,6 +10,7 @@ class EvaluationWriter:
     def open(self, name):
         filename = os.path.join(self.path, '{}.csv'.format(name))
         self.output = open(filename, 'w+')
+        self.write_values(0, 0)
         return filename
         
     def close(self):

@@ -48,7 +48,7 @@ class CitationFinder(Process):
             else:
                 author = query.get(name=name)
                 
-            self.logger.warn(self.output.open(name=author.id))
+            self.logger.info(self.output.open(name=author.id))
             #author_publication = PublicationAuthorAffilation.objects.using(self.database_name).filter(author=author)
             #Publication.objects.using(self.database_name).filter()
             self.set_publication_search_set(Publication.objects.using(self.database_name).filter(publicationauthoraffilation__author=author))
