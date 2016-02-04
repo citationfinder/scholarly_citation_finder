@@ -22,10 +22,7 @@ class FieldofstudyStrategy(CitationFinder):
             fieldofstudy_publications_citing = citing_papers.filter(publication__in=fieldofstudy_publications)
             self.logger.info('field of study "{}": found {} publications, {} citations'.format(fieldofstudy, len(fieldofstudy_publications), len(fieldofstudy_publications_citing)))
             
-            for publicationReference in fieldofstudy_publications_citing:
-                if publicationReference not in self.publicationreferences_result_set:
-                    self.publicationreferences_result_set.append(publicationReference)
-            self.output.write_values(len(fieldofstudy_publications), len(self.publicationreferences_result_set))
+            self.citation_set.add(fieldofstudy_publications_citing)
         self.run_done()
         
     def __find_fieldofstudy_publications(self, fieldofstudy_id):

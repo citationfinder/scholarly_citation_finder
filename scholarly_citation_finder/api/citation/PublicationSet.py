@@ -62,7 +62,7 @@ class PublicationSet:
     def get_min_publication_year(self, publications_ids):
         pass
 
-    def get_authors(self):
+    def get_authors(self, ordered=None):
         '''
         Find all authors (precise author IDs) of the given publication search set.
         
@@ -72,8 +72,10 @@ class PublicationSet:
         #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY author_id ORDER BY num DESC")
         #return self._sqllist2array(self.cursor.fetchall())
         
-        #return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
-        return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY num DESC"))
+        if ordered:
+            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY num DESC"))
+        else:
+            Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
     def get_conferences(self):
         return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()

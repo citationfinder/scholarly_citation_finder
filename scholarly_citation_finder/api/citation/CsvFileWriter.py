@@ -1,6 +1,6 @@
 import os.path
 
-class EvaluationWriter:
+class CsvFileWriter:
     
     def __init__(self, path):
         self.path = path
@@ -10,7 +10,6 @@ class EvaluationWriter:
     def open(self, name):
         filename = os.path.join(self.path, '{}.csv'.format(name))
         self.output = open(filename, 'w+')
-        self.write_values(0, 0)
         return filename
         
     def close(self):
@@ -22,6 +21,5 @@ class EvaluationWriter:
     def write_header(self, string):
         self.write_line('# ' + string)
     
-    def write_values(self, num_inspected_publications, num_total_citations):
-        self.num_total_inspected_publications += num_inspected_publications
-        self.write_line('{}, {}'.format(self.num_total_inspected_publications, num_total_citations))
+    def write_values(self, column1, column2):
+        self.write_line('{}, {}'.format(column1, column2))

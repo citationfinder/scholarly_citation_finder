@@ -23,10 +23,7 @@ class ConferenceStrategy(CitationFinder):
             conference_publications_citing = citing_papers.filter(publication__in=conference_publications)
             self.logger.info('conference "{}": found {} publications, {} citations'.format(conference, len(conference_publications), len(conference_publications_citing)))
             
-            for publicationReference in conference_publications_citing:
-                if publicationReference not in self.publicationreferences_result_set:
-                    self.publicationreferences_result_set.append(publicationReference)
-            self.output.write_values(len(conference_publications), len(self.publicationreferences_result_set))
+            self.citation_set.add(conference_publications_citing)
         self.run_done()
         
     

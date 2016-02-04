@@ -23,10 +23,7 @@ class JournalStrategy(CitationFinder):
             journal_publications_citing = citing_papers.filter(publication__in=journal_publications)
             self.logger.info('journal "{}": found {} publications, {} citations'.format(journal, len(journal_publications), len(journal_publications_citing)))
             
-            for publicationReference in journal_publications_citing:
-                if publicationReference not in self.publicationreferences_result_set:
-                    self.publicationreferences_result_set.append(publicationReference)
-            self.output.write_values(len(journal_publications), len(self.publicationreferences_result_set))
+            self.citation_set.add(journal_publications_citing)
         self.run_done()
         
     def __find_journal_publications(self, journal_id):
