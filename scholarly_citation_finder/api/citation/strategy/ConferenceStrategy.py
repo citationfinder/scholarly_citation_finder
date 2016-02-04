@@ -1,31 +1,26 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from ..CitationFinder import CitationFinder
-from scholarly_citation_finder.apps.core.models import Conference, Publication,\
-    PublicationReference
+from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
+from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 
-class ConferenceStrategy(CitationFinder):
+class ConferenceStrategy(Strategy):
 
 
     def __init__(self):
-        super(ConferenceStrategy, self).__init__(name='conference_strategy')
+        super(ConferenceStrategy, self).__init__(name='conference')
         
-    def run(self, publication_limit=None, time_limit=None):
-        CitationFinder.run(self, publication_limit=publication_limit, time_limit=time_limit)
-
-        citing_papers = PublicationReference.objects.using(self.database_name).filter(reference__in=self.publication_search_set)
+    def run(self, publication_set, citation_set):
+        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set)
         
     
-        conferences = self.publication_set.get_conferences()
+        conferences = publication_set.get_conferences()
         self.logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:
             conference_publications = self.__find_conference_publications(conference.id)            
             conference_publications_citing = citing_papers.filter(publication__in=conference_publications)
             self.logger.info('conference "{}": found {} publications, {} citations'.format(conference, len(conference_publications), len(conference_publications_citing)))
             
-            self.citation_set.add(conference_publications_citing)
-        self.run_done()
-        
+            citation_set.add(conference_publications_citing)        
     
     def __find_conference_publications(self, conference_id):
-        return Publication.objects.using(self.database_name).filter(conference_id=conference_id)
+        return Publication.objects.using(self.database).filter(conference_id=conference_id)

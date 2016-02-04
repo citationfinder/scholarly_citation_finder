@@ -7,17 +7,18 @@ from django.core.exceptions import ObjectDoesNotExist
 class PublicationSet:
     
     publications = None
+    name = None
     publications_idstring = ''
     
     def __init__(self, database='mag'):
         self.database = database
-        pass
 
     def is_set(self):
         return self.publications is not None
     
-    def set(self, publications):
+    def set(self, publications, name):
         self.publications = publications
+        self.name = name
         self.publications_idstring = ','.join([str(publication.id) for publication in self.publications])
         return len(self.publications)
 
@@ -37,7 +38,8 @@ class PublicationSet:
                 
             #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
             #Publication.objects.using(self.database).filter()
-            num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author))
+            num_publications = self.set(publications=Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),
+                                        name=author.id)
             return (author, num_publications)
         except(ObjectDoesNotExist) as e:
             raise e

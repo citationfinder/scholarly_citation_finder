@@ -5,12 +5,18 @@ from scholarly_citation_finder.api.citation.CsvFileWriter import CsvFileWriter
 class CitationSet:
 
     writer = None    
-    citations = []
-    num_inspected_publications = 0
+    citations = None
+    num_inspected_publications = None
     
-    def open(self, path, name):
+    def __init__(self):
         self.writer = CsvFileWriter()        
-        filename = self.writer.open(path, name)
+    
+    def open(self, filename):
+        # reset
+        self.num_inspected_publications = 0
+        self.citations = []
+        #
+        self.writer.open(filename)
         self.writer.write_values(0, 0)
         return filename
     

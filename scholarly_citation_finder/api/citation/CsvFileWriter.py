@@ -4,14 +4,10 @@ import os.path
 
 class CsvFileWriter:
     
-    def __init__(self):
-        self.num_total_inspected_publications = 0
-        self.output = None
+    output = None
         
-    def open(self, path, name):
-        filename = os.path.join(path, '{}.csv'.format(name))
+    def open(self, filename):
         self.output = open(filename, 'w+')
-        return filename
         
     def close(self):
         self.output.close()
