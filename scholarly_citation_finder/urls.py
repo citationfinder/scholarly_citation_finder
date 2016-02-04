@@ -34,4 +34,6 @@ urlpatterns = [
     url(r'^admin/mag/', include(mag_site.urls)),
     # rest
     url(r'^rest/', include('scholarly_citation_finder.apps.rest.urls')),
+    #
+    url(r'^api/', include('scholarly_citation_finder.api.urls')),
 ]
