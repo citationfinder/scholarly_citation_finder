@@ -69,7 +69,7 @@ class PublicationSet:
     def get_min_publication_year(self, publications_ids):
         pass
 
-    def get_authors(self, ordered=None):
+    def get_authors(self, ordered=False):
         '''
         Find all authors (precise author IDs) of the given publication search set.
         
@@ -81,20 +81,21 @@ class PublicationSet:
         else:
             return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
-    def get_conferences(self):
-        return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
+    def get_conferences(self, ordered=False):
+        if ordered:
+            return list(Conference.objects.using(self.database).raw("SELECT conference_id AS id FROM core_publication WHERE conference_id IS NOT NULL AND id IN ("+self.publications_idstring+") GROUP BY conference_id ORDER BY COUNT(conference_id) DESC"))
+        else:
+            return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
 
-    def get_journals(self, ordered=None):
+    def get_journals(self, ordered=False):
         '''
         Find all journals (precise journal IDs) of the given publication search set.
         
         :param publications_ids:
         :return: Array of journal IDs ordered descending by frequency
         '''
-        #self.cursor.execute("SELECT journal_id, COUNT(journal_id) as num FROM core_publication WHERE publication_id IN "+self._array2sqllist(publication_search_set)+" GROUP BY journal_id ORDER BY num DESC")
-        #return self._sqllist2array(self.cursor.fetchall())
         if ordered:
-            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE id IN ("+self.publications_idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
+            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE journal_id IS NOT NULL AND id IN ("+self.publications_idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
         else:
             return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     

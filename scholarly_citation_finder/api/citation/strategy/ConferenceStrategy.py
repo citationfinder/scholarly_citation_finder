@@ -6,14 +6,18 @@ from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 class ConferenceStrategy(Strategy):
 
 
-    def __init__(self):
-        super(ConferenceStrategy, self).__init__(name='conference')
+    def __init__(self, ordered=False):
+        name = 'conference'
+        if ordered:
+            name += '_ordered'
+        super(ConferenceStrategy, self).__init__(name=name)
+        self.ordered = ordered
         
     def run(self, publication_set, citation_set):
         citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
         
     
-        conferences = publication_set.get_conferences()
+        conferences = publication_set.get_conferences(ordered=self.ordered)
         self.logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:
             conference_publications = self.__find_conference_publications(conference.id)            

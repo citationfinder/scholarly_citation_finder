@@ -6,7 +6,7 @@ from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 class JournalStrategy(Strategy):
 
 
-    def __init__(self, ordered):
+    def __init__(self, ordered=False):
         name = 'journal'
         if ordered:
             name += '_ordered'
