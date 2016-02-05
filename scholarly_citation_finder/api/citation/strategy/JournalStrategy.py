@@ -9,7 +9,7 @@ class JournalStrategy(Strategy):
     def __init__(self, ordered=False):
         name = 'journal'
         if ordered:
-            name += '_ordered'
+            name += '-ordered'
         super(JournalStrategy, self).__init__(name=name)
         self.ordered = ordered
         

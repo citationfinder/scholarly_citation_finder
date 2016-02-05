@@ -9,7 +9,7 @@ class ConferenceStrategy(Strategy):
     def __init__(self, ordered=False):
         name = 'conference'
         if ordered:
-            name += '_ordered'
+            name += '-ordered'
         super(ConferenceStrategy, self).__init__(name=name)
         self.ordered = ordered
         

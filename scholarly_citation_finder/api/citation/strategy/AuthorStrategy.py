@@ -9,7 +9,7 @@ class AuthorStrategy(Strategy):
     def __init__(self, ordered=False):
         name = 'author'
         if ordered:
-            name += '_ordered'
+            name += '-ordered'
         super(AuthorStrategy, self).__init__(name=name)
         self.ordered = ordered
         
