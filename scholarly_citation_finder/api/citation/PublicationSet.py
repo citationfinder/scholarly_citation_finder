@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Min
+
 from scholarly_citation_finder.apps.core.models import Author, Publication, PublicationReference,\
     Conference, Journal, FieldOfStudy
-from django.core.exceptions import ObjectDoesNotExist
+
 
 class PublicationSet:
     
@@ -10,6 +13,8 @@ class PublicationSet:
     name = None
     publications_idstring = ''
     
+    min_year = None
+
     def __init__(self, database='mag'):
         self.database = database
 
@@ -66,8 +71,8 @@ class PublicationSet:
     def get(self):
         return self.publications
 
-    def get_min_publication_year(self, publications_ids):
-        pass
+    def get_min_year(self):
+        return self.min_year if self.min_year else self.publications.aggregate(Min('year'))['year__min']
 
     def get_authors(self, ordered=False):
         '''

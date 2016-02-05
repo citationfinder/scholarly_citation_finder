@@ -20,12 +20,12 @@ class FieldofstudyStrategy(Strategy):
         fieldofstudies = publication_set.get_fieldofstudies(self.ordered)
         self.logger.info('found {} field of studies in search set'.format(len(fieldofstudies)))
         for fieldofstudy in fieldofstudies:
-            fieldofstudy_publications = self.__find_fieldofstudy_publications(fieldofstudy.id)            
+            fieldofstudy_publications = self.__find_fieldofstudy_publications(fieldofstudy.id, publication_set.get_min_year())            
             fieldofstudy_publications_citing = citing_papers.filter(publication__in=fieldofstudy_publications)
-            self.logger.info('field of study "{}": found {} publications, {} citations'.format(fieldofstudy, len(fieldofstudy_publications), len(fieldofstudy_publications_citing)))
+            self.logger.info('field of study "{}": found {} publications (year >= {}), {} citations'.format(fieldofstudy, len(fieldofstudy_publications), publication_set.get_min_year(), len(fieldofstudy_publications_citing)))
             
             citation_set.add(fieldofstudy_publications_citing, len(fieldofstudy_publications))
         
-    def __find_fieldofstudy_publications(self, fieldofstudy_id):
-        return list(Publication.objects.using(self.database).raw('SELECT DISTINCT publication_id AS id from core_publicationkeyword WHERE fieldofstudy_id=%s', [fieldofstudy_id]))
-        #return Publication.objects.using(self.database).filter(publicationkeyword__fieldofstudy_id=fieldofstudy_id)
+    def __find_fieldofstudy_publications(self, fieldofstudy_id, min_year):
+        #return list(Publication.objects.using(self.database).raw("SELECT DISTINCT publication_id AS id from core_publicationkeyword WHERE fieldofstudy_id=%s", [fieldofstudy_id]))
+        return Publication.objects.using(self.database).filter(publicationkeyword__fieldofstudy_id=fieldofstudy_id).filter(year__gte=min_year).distinct()
