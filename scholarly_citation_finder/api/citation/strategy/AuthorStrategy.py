@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
+from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 
 class AuthorStrategy(Strategy):
 
@@ -26,13 +27,18 @@ class AuthorStrategy(Strategy):
         
         if self.recursive:
             authors_level2 = []
-            for author in citation_set.get_authors(ordered=True):
+            
+            citation_set_publications = PublicationSet()
+            citation_set_publications.publications_idstring = ','.join([str(citation.publication_id) for citation in citation_set.get()])
+            
+            for author in citation_set_publications.get_authors(ordered=True):
                 if author not in authors:
                     authors_level2.append(author)
                     
             self._run_for_author(publication_set, citation_set, authors_level2)
 
     def _run_for_author(self, publication_set, citation_set, authors):
+        self.logger.info('authors: {}, citation set: {}'.format(len(authors), len(citation_set)))
         citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
 
 

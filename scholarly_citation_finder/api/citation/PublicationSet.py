@@ -7,7 +7,7 @@ from scholarly_citation_finder.apps.core.models import Author, Publication, Publ
     Conference, Journal, FieldOfStudy
 
 
-class PublicationSet(object):
+class PublicationSet:
     
     publications = []
     name = None
@@ -17,6 +17,9 @@ class PublicationSet(object):
 
     def __init__(self, database='mag'):
         self.database = database
+
+    def __len__(self):
+        return len(self.publications)
 
     def is_set(self):
         return self.publications is not None
@@ -68,12 +71,12 @@ class PublicationSet(object):
     def set_by_journal(self, name=None, id=None):
         pass
     
-    def add(self, publication):
-        self.publications.append(publication)
-        if self.publications_idstring:
-            self.publications_idstring = ','.join(str(publication.id))
-        else:
-            self.publications_idstring = str(publication.id)
+    #def add(self, publication):
+    #    self.publications.append(publication)
+    #    if self.publications_idstring:
+    #        self.publications_idstring = ','.join(str(publication.id))
+    #    else:
+    #        self.publications_idstring = str(publication.id)
 
     def get(self):
         return self.publications
