@@ -7,9 +7,9 @@ from scholarly_citation_finder.apps.core.models import Author, Publication, Publ
     Conference, Journal, FieldOfStudy
 
 
-class PublicationSet:
+class PublicationSet(object):
     
-    publications = None
+    publications = []
     name = None
     publications_idstring = ''
     
@@ -67,6 +67,13 @@ class PublicationSet:
 
     def set_by_journal(self, name=None, id=None):
         pass
+    
+    def add(self, publication):
+        self.publications.append(publication)
+        if self.publications_idstring:
+            self.publications_idstring = ','.join(str(publication.id))
+        else:
+            self.publications_idstring = str(publication.id)
 
     def get(self):
         return self.publications

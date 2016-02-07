@@ -5,20 +5,37 @@ from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 
 class AuthorStrategy(Strategy):
 
+    ordered = None
+    recursive = None
 
-    def __init__(self, ordered=False):
+    def __init__(self, ordered=False, recursive=False):
         name = 'author'
         if ordered:
             name += '-ordered'
+        if recursive:
+            name += '-recursive'            
         super(AuthorStrategy, self).__init__(name=name)
         self.ordered = ordered
+        self.recursive = recursive
         
-    def run(self, publication_set, citation_set):        
+    def run(self, publication_set, citation_set):
+        authors = publication_set.get_authors(ordered=self.ordered)
+        self.logger.info('found {} author in the search set'.format(len(authors)))
+        
+        self._run_for_author(publication_set, citation_set, authors)
+        
+        if self.recursive:
+            authors_level2 = []
+            for author in citation_set.get_authors(ordered=True):
+                if author not in authors:
+                    authors_level2.append(author)
+                    
+            self._run_for_author(publication_set, citation_set, authors_level2)
+
+    def _run_for_author(self, publication_set, citation_set, authors):
         citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
 
 
-        authors = publication_set.get_authors(ordered=self.ordered)
-        self.logger.info('found {} author in the search set'.format(len(authors)))
         for author in authors:
             author_publications = self.__find_author_publications(author.id)
             author_publications_citing = citing_papers.filter(publication_id__in=author_publications)
