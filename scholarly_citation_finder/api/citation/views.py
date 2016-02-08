@@ -19,11 +19,12 @@ def index(request):
         #citation_finder.run(AuthorStrategy(ordered=True, recursive=True))
         #citation_finder.run(JournalStrategy())
         #citation_finder.run(JournalStrategy(ordered=True))
-        citation_finder.run(JournalStrategy(ordered=True, min_year=True))
+        #citation_finder.run(JournalStrategy(ordered=True, min_year=True))
         #citation_finder.run(ConferenceStrategy())
         #citation_finder.run(ConferenceStrategy(ordered=True))
         #citation_finder.run(FieldofstudyStrategy())
         #citation_finder.run(FieldofstudyStrategy(ordered=True))
+        citation_finder.run(FieldofstudyStrategy(ordered=True, limit=5))
         return HttpResponse('Done')
     else:
         return HttpResponse('Nothing to do. Usage: ?author_name=<name> or ?author_id=<id>')
