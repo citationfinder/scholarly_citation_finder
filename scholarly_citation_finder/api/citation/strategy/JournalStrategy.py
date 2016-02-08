@@ -6,7 +6,7 @@ from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 class JournalStrategy(Strategy):
 
 
-    def __init__(self, ordered=False, min_year=True):
+    def __init__(self, ordered=False, min_year=False):
         name = 'journal'
         if ordered:
             name += '-ordered'
@@ -23,9 +23,10 @@ class JournalStrategy(Strategy):
         journals = publication_set.get_journals(ordered=self.ordered)
         self.logger.info('found {} journals in search set'.format(len(journals)))
         for journal in journals:
-            journal_publications = self.__find_journal_publications(journal.id, publication_set.get_min_year() if self.min_year else None)            
+            min_year = publication_set.get_min_year() if self.min_year else None
+            journal_publications = self.__find_journal_publications(journal.id, min_year)            
             journal_publications_citing = citing_papers.filter(publication__in=journal_publications)
-            self.logger.info('journal "{}": found {} publications, {} citations'.format(journal.id, len(journal_publications), len(journal_publications_citing)))
+            self.logger.info('journal "{}": found {} publications (year>={}), {} citations'.format(journal.id, len(journal_publications), min_year, len(journal_publications_citing)))
             
             citation_set.add(journal_publications_citing, len(journal_publications))
         
@@ -34,7 +35,7 @@ class JournalStrategy(Strategy):
         #return self._sqllist2array(self.cursor.fetchall())
         query = Publication.objects.using(self.database).filter(journal_id=journal_id)
         if min_year:
-            query.filter(year__gte=min_year)
+            query = query.filter(year__gte=min_year)
         return query
     
     def __find_journals_citation(self, journal_publications):
