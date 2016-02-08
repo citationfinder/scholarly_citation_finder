@@ -17,6 +17,11 @@ class ParserConnectionError(Exception):
 
 class Parser(Process):
     
+    #conn = None
+    #cursor = None
+    #count_publications = None
+    #logger = None
+
     PUBLICATION_ATTRIBUTES = [
         'type',
         'title',

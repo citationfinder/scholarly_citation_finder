@@ -21,6 +21,7 @@ class ArxivHarvester(Harvester):
         super(ArxivHarvester, self).__init__('arxiv', **kwargs)
     
     def harvest(self, limit=None, _from=None, until=None):
+        self.start_harevest()
         self.limit = limit
 
         list_records_options = {

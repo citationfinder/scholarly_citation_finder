@@ -24,6 +24,7 @@ class CiteseerxHarvester(Harvester):
         super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
     
     def harvest(self, limit=None, _from=None, until=None):
+        self.start_harevest()
         '''
         
         :param limit: Number of maximum publications to parse
