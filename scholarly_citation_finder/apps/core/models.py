@@ -17,8 +17,8 @@ class Author(models.Model):
 
 
 class Conference(models.Model):
-    short_name = models.CharField(max_length=20)
-    name = models.CharField(max_length=250)
+    short_name = models.CharField(max_length=20, blank=True, null=True)
+    name = models.CharField(max_length=250, blank=True, null=True)
     
     def __unicode__(self):
         return unicode(self.short_name)
