@@ -1,20 +1,23 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os.path
 from lxml import etree
 
 from ..Harvester import Harvester
+from scholarly_citation_finder.api.citation.CsvFileWriter import CsvFileWriter
 
 
 class DblpHarvester(Harvester):
     
     COLLABORATIONS = [
         'article',
-        'inproceedings',
+        #'inproceedings',
         'proceedings',
         'book',
-        'incollection',
+        #'incollection',
         'phdthesis',
         'mastersthesis',
-        'www'
+        #'www'
     ]
 
     # Furher avaible tags:  address|month|url|cdrom|cite|note|crossref|school|chapter
@@ -71,11 +74,15 @@ class DblpHarvester(Harvester):
         :param context:
         :return: The number of parsed publications
         '''
+        cite_writer = CsvFileWriter()
+        cite_writer.open(os.path.join(self.download_dir, 'cite.csv'))
         
         publication = {}
-        journal = None
+        conference_short_name = None
+        journal_name = None
         authors = []
         urls = []
+        citations = []
         
         #read chunk line by line
         #we focus author and title
@@ -105,24 +112,48 @@ class DblpHarvester(Harvester):
 
                 if 'http://dx.doi.org/' in elem.text:
                     publication['doi'] = elem.text.replace('http://dx.doi.org/', '')
-            # journal
+            # crossref
+            elif elem.tag == 'crossref' and elem.text:
+                conference_short_name = elem.text.split('/')[1] # 'conf/naa/2008' -> 'naa'
+            elif elem.tag == 'cite' and elem.text:
+                if elem.text != '...':
+                    citations.append(elem.text)
+            # journal_name
             elif elem.tag == 'journal' and elem.text:
-                journal = elem.text
+                journal_name = elem.text
             # other
             elif elem.tag in self.FIELD_MAPPING and elem.text:
                 publication[self.FIELD_MAPPING[elem.tag]] = elem.text
+            elif elem.tag in ('inproceedings', 'incollection', 'www'):
+                publication.clear()
+                conference_short_name = None
+                journal_name = None
+                authors = []
+                urls = []
+                citations = []           
             # collaboration
             elif elem.tag in self.COLLABORATIONS:
                 
                 publication['type'] = elem.tag
                 publication['source'] = 'dbpl:'+elem.get('key')
 
+
                 # store and clear entry afterwards
-                self.parse(publication, journal, authors, None, urls)
+                publication_id = self.parse(publication,
+                                            conference_short_name=conference_short_name,
+                                            journal_name=journal_name,
+                                            authors=authors,
+                                            urls=urls)
+                if publication_id:
+                    for citation in citations:
+                        cite_writer.write_values(publication_id, citation)
+                publication_id = None
                 publication.clear()
-                journal = None
+                conference_short_name = None
+                journal_name = None
                 authors = []
                 urls = []
+                citations = []
                 
                 # Check, if break harvest loop
                 if self.check_stop_harvest():
