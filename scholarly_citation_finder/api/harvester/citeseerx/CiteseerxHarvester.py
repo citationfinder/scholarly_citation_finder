@@ -73,7 +73,6 @@ class CiteseerxHarvester(Harvester):
                 metadata = record.metadata
                 
                 publication = {}
-                journal = None
                 authors = []
                 keywords = []
                 urls = []
@@ -110,7 +109,10 @@ class CiteseerxHarvester(Harvester):
                 #    'type': 'application/pdf'
                 #})
 
-                self.parse(publication, journal, authors, keywords, urls)
+                self.parse(publication,
+                           authors=authors,
+                           keywords=keywords,
+                           urls=urls)
                     
                 if self.check_stop_harvest():
                     break

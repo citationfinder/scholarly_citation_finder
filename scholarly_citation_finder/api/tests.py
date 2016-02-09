@@ -33,11 +33,12 @@ class ParserTest(TestCase):
         
     def test_parse(self):
         first = self.parser.parse(publication={'title':u'Title of my paper is éäüö',
-                                                     'year': 2006},
-                                        journal=u'Journél üf Example',
-                                        authors=['Jonny', 'Kelly'],
-                                        keywords=['Web', 'XML'],
-                                        urls=['http://example.org', 'http://ex.ample'])
+                                               'year': 2006},
+                                  conference_short_name=u'Conference é Cat'
+                                  journal_name=u'Journél üf Example',
+                                  authors=['Jonny', 'Kelly'],
+                                  keywords=['Web', 'XML'],
+                                  urls=['http://example.org', 'http://ex.ample'])
         self.assertTrue(first)
 
 """        

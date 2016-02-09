@@ -110,7 +110,20 @@ class Parser(Process):
             else:
                 raise ParserDataError('Journal name is too long')
 
-    def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference=None, source=None):
+    def parse_conference(self, short_name):
+        self.cursor.execute("SELECT id FROM core_conference WHERE short_name = %s LIMIT 1", (short_name,))
+        result = self.cursor.fetchone()
+        
+        if result:
+            return result[0]
+        else:
+            if short_name and len(short_name) <= 20:
+                self.cursor.execute("INSERT INTO core_conference (short_name) VALUES (%s) RETURNING id", (short_name,))
+                return self.cursor.fetchone()[0]
+            else:
+                raise ParserDataError('Conference short name is too long')        
+
+    def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal_id=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference_id=None, source=None):
         if title and len(title) <= 250:
             if date and len(date) > 50:
                 date = None
@@ -132,34 +145,44 @@ class Parser(Process):
                 isbn = None
             if doi and len(doi) > 50:
                 doi = None
-            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference, source))
+            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source))
             return self.cursor.fetchone()[0]
         else:
             raise ParserDataError('Title does not exists or is too long')
 
-    def parse(self, publication, journal=None, authors=None, keywords=None, urls=None):
+    def parse(self, publication, conference_short_name=None, journal_name=None, authors=None, keywords=None, urls=None):
         '''
         
         :param publication: Publication dictonary
-        :param journal: Journal name
+        :param conference_short_name: Conference short name
+        :param journal_name: Journal name
         :param authors: Authors name array
         :param keywords: Keywords array
         :param urls: Url array
-        :return: True, if entry was successfully parsed
+        :return: Publication ID, if entry was successfully parsed; False otherwise
         :raise ParserRollbackError: When a problems occurred, that required to do a rollback
         '''
         
         self.count_publications += 1
         try:
             
-            if journal:
+            conference_id = None
+            journal_id = None
+
+            if conference_short_name:
                 try:
-                    journal = self.parse_journal(journal)
+                    conference_id = self.parse_conference(conference_short_name)
                 except(DataError) as e:
-                    journal = None
                     self.logger.warn(str(e))
 
-            publication_id = self.parse_publication(journal=journal,
+            if journal_name:
+                try:
+                    journal_id = self.parse_journal(journal_name)
+                except(DataError) as e:
+                    self.logger.warn(str(e))
+
+            publication_id = self.parse_publication(conference_id=conference_id,
+                                                    journal_id=journal_id,
                                                     **publication)
             if authors:
                 for author in authors:
@@ -183,9 +206,9 @@ class Parser(Process):
                             url_type = None
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
 
-            return True
+            return publication_id
         except(ParserDataError) as e:
-            #self.logger.warn(str(e))
+            self.logger.warn(str(e))
             return False
         except(ProgrammingError, DataError) as e:
             self.logger.error(e, exc_info=True)
