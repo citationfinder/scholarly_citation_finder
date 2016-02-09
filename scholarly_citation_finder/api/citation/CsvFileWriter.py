@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os.path
+import codecs
 
 class CsvFileWriter:
     
     output = None
         
-    def open(self, filename):
-        self.output = open(filename, 'w+')
+    def open(self, filename, encoding='utf-8'):
+        self.output = codecs.open(filename, 'w+', encoding=encoding)
         
     def close(self):
         self.output.close()
