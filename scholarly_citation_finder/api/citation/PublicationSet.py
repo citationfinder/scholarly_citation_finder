@@ -97,7 +97,10 @@ class PublicationSet:
             else:
                 idstring = self.publications_idstring
 
-            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
+            if idstring:
+                return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
+            else:
+                return []
         else:
             return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         

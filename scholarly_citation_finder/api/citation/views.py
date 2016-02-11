@@ -16,7 +16,7 @@ def index(request):
         
         #citation_finder.run(AuthorStrategy())
         #citation_finder.run(AuthorStrategy(ordered=True))
-        citation_finder.run([AuthorStrategy(ordered=True, recursive=True),
+        citation_finder.run([AuthorStrategy(ordered=True, recursive=True, min_year=True),
                              JournalStrategy(ordered=True, min_year=True)])
         #citation_finder.run(JournalStrategy())
         #citation_finder.run(JournalStrategy(ordered=True))

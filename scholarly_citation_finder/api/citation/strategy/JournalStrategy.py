@@ -5,6 +5,8 @@ from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 
 class JournalStrategy(Strategy):
 
+    ordered = None
+    min_year = None
 
     def __init__(self, ordered=False, min_year=False):
         name = 'journal'
