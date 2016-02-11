@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
+from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 
 class FieldofstudyStrategy(Strategy):
@@ -16,16 +16,13 @@ class FieldofstudyStrategy(Strategy):
         self.ordered = ordered
         self.limit = limit
         
-    def run(self, publication_set, citation_set):
-        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
-        
-    
-        fieldofstudies = publication_set.get_fieldofstudies(self.ordered, self.limit)
+    def run(self, publication_set, _, callback):
+        fieldofstudies = publication_set.get_fieldofstudies(self.ordered)
+        if self.limit > 0:
+            fieldofstudies = fieldofstudies[:self.limit]
         self.logger.info('found {} (limit: {}) field of studies in search set'.format(len(fieldofstudies), self.limit))
         fieldofstudies_publications = self.__find_fieldofstudies_publications(fieldofstudies, publication_set.get_min_year())
-        fieldofstudies_publications_citing = citing_papers.filter(publication__in=fieldofstudies_publications)
-        self.logger.info('field of studies: found {} publications (year >= {}), {} citations'.format(len(fieldofstudies_publications), publication_set.get_min_year(), len(fieldofstudies_publications_citing)))  
-        citation_set.add(fieldofstudies_publications_citing, len(fieldofstudies_publications))
+        callback(fieldofstudies_publications, 'field of studies')
         #for fieldofstudy in fieldofstudies:
         #    fieldofstudy_publications = self.__find_fieldofstudy_publications(fieldofstudy.id, publication_set.get_min_year())
         #    fieldofstudy_publications_citing = citing_papers.filter(publication__in=fieldofstudy_publications)

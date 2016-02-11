@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
+from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 
@@ -19,36 +19,30 @@ class AuthorStrategy(Strategy):
         self.ordered = ordered
         self.recursive = recursive
         
-    def run(self, publication_set, citation_set):
+    def run(self, publication_set, _, callback):
         authors = publication_set.get_authors(ordered=self.ordered)
         self.logger.info('found {} author in the search set'.format(len(authors)))
         
-        self._run_for_author(publication_set, citation_set, authors)
+        self._run_for_author(publication_set, callback, authors)
         
         if self.recursive:
+            
+            #citation_set_publications = PublicationSet()
+            #citation_set_publications.publications_idstring = ','.join([str(citation.publication_id) for citation in citation_set.get()])
+            #self.logger.warn(citation_set_publications.publications_idstring)
             authors_level2 = []
-            
-            citation_set_publications = PublicationSet()
-            citation_set_publications.publications_idstring = ','.join([str(citation.publication_id) for citation in citation_set.get()])
-            
-            for author in citation_set_publications.get_authors(ordered=True):
+            for author in publication_set.get_authors(ordered=True, only_additionals=True):
                 if author not in authors:
                     authors_level2.append(author)
                     
-            self._run_for_author(publication_set, citation_set, authors_level2)
+            self._run_for_author(publication_set, callback, authors_level2)
 
-    def _run_for_author(self, publication_set, citation_set, authors):
-        self.logger.info('authors: {}, citation set: {}'.format(len(authors), len(citation_set)))
-        citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=publication_set.get())
-
-
+    def _run_for_author(self, publication_set, callback, authors):
+        self.logger.info('authors: {}'.format(len(authors)))
         for author in authors:
             author_publications = self.__find_author_publications(author.id)
-            author_publications_citing = citing_papers.filter(publication_id__in=author_publications)
-            self.logger.info('author "{}": found {} publications, {} citations'.format(author.id, len(author_publications), len(author_publications_citing)))
+            callback(author_publications, 'author "{}"'.format(author.id))
 
-            citation_set.add(author_publications_citing, len(author_publications))         
-    
     def __find_author_publications(self, author_id):
         #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation LEFT JOIN publicationreference ON publicationreference.publication_id =  WHERE publication_id IN %s GROUP BY author_id ORDER BY num DESC", (publications_authors,))
         #return self.cursor.fetchall()

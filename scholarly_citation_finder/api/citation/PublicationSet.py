@@ -13,6 +13,8 @@ class PublicationSet:
     name = None
     publications_idstring = ''
     
+    additional_publications_idstring = ''
+
     min_year = None
 
     def __init__(self, database='mag'):
@@ -71,12 +73,10 @@ class PublicationSet:
     def set_by_journal(self, name=None, id=None):
         pass
     
-    #def add(self, publication):
-    #    self.publications.append(publication)
-    #    if self.publications_idstring:
-    #        self.publications_idstring = ','.join(str(publication.id))
-    #    else:
-    #        self.publications_idstring = str(publication.id)
+    def add(self, publication_id):
+        if not self.publications.filter(id=publication_id):
+            #self.additional_publications.append(publication)
+            self.additional_publications_idstring += ',' + str(publication_id)
 
     def get(self):
         return self.publications
@@ -84,7 +84,7 @@ class PublicationSet:
     def get_min_year(self):
         return self.min_year if self.min_year else self.publications.aggregate(Min('year'))['year__min']
 
-    def get_authors(self, ordered=False):
+    def get_authors(self, ordered=False, only_additionals=False):
         '''
         Find all authors (precise author IDs) of the given publication search set.
         
@@ -92,7 +92,12 @@ class PublicationSet:
         :return: Array of author IDs ordered descending by frequency
         '''
         if ordered:
-            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.publications_idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
+            if only_additionals:
+                idstring = self.additional_publications_idstring[1:]
+            else:
+                idstring = self.publications_idstring
+
+            return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
         else:
             return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
@@ -102,7 +107,7 @@ class PublicationSet:
         else:
             return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
 
-    def get_journals(self, ordered=False):
+    def get_journals(self, ordered=False, plus_additionals=False):
         '''
         Find all journals (precise journal IDs) of the given publication search set.
         
@@ -110,20 +115,18 @@ class PublicationSet:
         :return: Array of journal IDs ordered descending by frequency
         '''
         if ordered:
-            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE journal_id IS NOT NULL AND id IN ("+self.publications_idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
+            if plus_additionals:
+                idstring = self.publications_idstring + self.additional_publications_idstring
+            else:
+                idstring = self.publications_idstring
+            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE journal_id IS NOT NULL AND id IN ("+idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
         else:
             return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
-    def get_fieldofstudies(self, ordered=False, limit=None):
+    def get_fieldofstudies(self, ordered=False):
         if ordered:
             query = "SELECT fieldofstudy_id AS id FROM core_publicationkeyword WHERE publication_id IN ("+self.publications_idstring+") GROUP BY fieldofstudy_id ORDER BY COUNT(fieldofstudy_id) DESC"
-            if limit > 0:
-                query += ' LIMIT {}'.format(limit)
-            print(query)
             return list(FieldOfStudy.objects.using(self.database).raw(query))
         else:
-            query = FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()
-            if limit > 0:
-                query = query[:limit]
-            return query
+            return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()
     

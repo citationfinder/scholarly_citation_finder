@@ -9,7 +9,8 @@ class CitationSet:
     writer = None
     num_inspected_publications = 0
     
-    def __init__(self):
+    def __init__(self, publication_set):
+        self.publication_set = publication_set
         self.writer = CsvFileWriter()
     
     def __len__(self):
@@ -38,6 +39,8 @@ class CitationSet:
         for citation in citations:
             if citation not in self.citations:
                 self.citations.append(citation)
+                self.publication_set.add(citation.publication_id)
+
         # output
         self.num_inspected_publications += num_inspected_publications
         self.writer.write_values(self.num_inspected_publications, len(self.citations))
