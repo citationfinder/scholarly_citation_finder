@@ -38,21 +38,27 @@ class CitationFinder(Process):
         except(ObjectDoesNotExist):
             self.logger.info('search author "{}", found nothing'.format(name))            
 
-    def run(self, strategy):
-        self.citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
-        
-        if self.publication_set.is_set():
-            strategy.setup(logger=self.logger,
-                           database=self.database)
-            output_path = create_dir(os.path.join(self.download_dir, strategy.name))
-            output_filename = self.citation_set.open(filename=os.path.join(output_path, '{}.csv'.format(self.publication_set.name)))      
-            self.logger.info('run strategy: {}; file: {}'.format(strategy.name, output_filename))            
-            strategy.run(self.publication_set, self.citation_set, self.inspect_publications)
-            self.citation_set.close()
-            self.logger.info('done')  
-        else:
+    def run(self, strategies):
+        if not self.publication_set.is_set():
             raise Exception('publication_search_set not set')
-        
+
+        self.citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
+            
+        #
+        strategies_name = '+'.join([strategy.name for strategy in strategies])
+        output_path = create_dir(os.path.join(self.download_dir, strategies_name))
+        output_filename = self.citation_set.open(filename=os.path.join(output_path, '{}.csv'.format(self.publication_set.name)))      
+        self.logger.info('run strategy: {}; file: {}'.format(strategies_name, output_filename))            
+
+        #
+        for strategy in strategies:
+            self.logger.info('run {}'.format(strategy.name))
+            strategy.setup(logger=self.logger, database=self.database)
+            strategy.run(self.publication_set, self.inspect_publications)
+            
+        self.citation_set.close()
+        self.logger.info('done')
+
     def inspect_publications(self, publications, string=''):
         publications_citing = self.citing_papers.filter(publication__in=publications)
 
