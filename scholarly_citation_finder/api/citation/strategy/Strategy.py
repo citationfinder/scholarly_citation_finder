@@ -12,5 +12,5 @@ class Strategy(object):
         self.logger = logger
         self.database = database
     
-    def run(self, publication_set, _, callback):
+    def run(self, publication_set, callback):
         raise Exception('Implement this method')

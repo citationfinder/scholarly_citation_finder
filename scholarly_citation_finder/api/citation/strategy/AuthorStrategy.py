@@ -19,17 +19,13 @@ class AuthorStrategy(Strategy):
         self.ordered = ordered
         self.recursive = recursive
         
-    def run(self, publication_set, _, callback):
+    def run(self, publication_set, callback):
         authors = publication_set.get_authors(ordered=self.ordered)
         self.logger.info('found {} author in the search set'.format(len(authors)))
         
         self._run_for_author(publication_set, callback, authors)
         
         if self.recursive:
-            
-            #citation_set_publications = PublicationSet()
-            #citation_set_publications.publications_idstring = ','.join([str(citation.publication_id) for citation in citation_set.get()])
-            #self.logger.warn(citation_set_publications.publications_idstring)
             authors_level2 = []
             for author in publication_set.get_authors(ordered=True, only_additionals=True):
                 if author not in authors:
@@ -50,7 +46,3 @@ class AuthorStrategy(Strategy):
         #self.cursor.execute("SELECT publication_id FROM core_publicationauthoraffilation WHERE author_id = %s", (author_id,))
         #return self._sqllist2array(self.cursor.fetchall())
         return Publication.objects.using(self.database).filter(publicationauthoraffilation__author_id=author_id)
-    
-    #def __find_citations_in_authors_publications(self, publication_search_set, authors_publications):
-    #    self.cursor.execute("SELECT publication_id as num FROM core_publicationreference WHERE publication_id IN "+self._array2sqllist(authors_publications)+" and reference_id IN "+self._array2sqllist(publication_search_set))
-    #    return self._sqllist2array(self.cursor.fetchall())

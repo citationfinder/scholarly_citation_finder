@@ -16,8 +16,8 @@ class JournalStrategy(Strategy):
         self.ordered = ordered
         self.min_year = min_year
         
-    def run(self, publication_set, _, callback):
-        journals = publication_set.get_journals(ordered=self.ordered)
+    def run(self, publication_set, callback):
+        journals = publication_set.get_journals(ordered=self.ordered, plus_additionals=True)
         self.logger.info('found {} journals in search set'.format(len(journals)))
         for journal in journals:
             min_year = publication_set.get_min_year() if self.min_year else None

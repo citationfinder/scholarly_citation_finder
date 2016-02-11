@@ -13,7 +13,7 @@ class ConferenceStrategy(Strategy):
         super(ConferenceStrategy, self).__init__(name=name)
         self.ordered = ordered
         
-    def run(self, publication_set, _, callback):
+    def run(self, publication_set, callback):
         conferences = publication_set.get_conferences(ordered=self.ordered)
         self.logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:

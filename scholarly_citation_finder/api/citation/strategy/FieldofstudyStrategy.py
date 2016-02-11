@@ -16,7 +16,7 @@ class FieldofstudyStrategy(Strategy):
         self.ordered = ordered
         self.limit = limit
         
-    def run(self, publication_set, _, callback):
+    def run(self, publication_set, callback):
         fieldofstudies = publication_set.get_fieldofstudies(self.ordered)
         if self.limit > 0:
             fieldofstudies = fieldofstudies[:self.limit]
