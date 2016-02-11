@@ -30,7 +30,7 @@ class CiteseerxHarvester(Harvester):
         :param limit: Number of maximum publications to parse
         :param _from: OAI-PHM from date YYYY-MM-DD
         :param until: OAI-PHM until date YYYY-MM-DD
-        :return: Number of parsed publications        
+        :return: Number of parsed publications or False    
         '''
         
         self.limit = limit
@@ -48,14 +48,15 @@ class CiteseerxHarvester(Harvester):
             self.start_harevest()
             num_publications = self.harvest_oai_phm(list_records_options)
             self.stop_harvest()
+            return num_publications
         except(ParserConnectionError) as e:
             self.logger.warn(str(e))
             self.stop_harvest() # commit results
             # TODO: restart, if it was not a: requests.exceptions.ConnectionError: ('Connection aborted.', error(104, 'Connection reset by peer'))
+            return False
         except(ParserRollbackError) as e:
             # TODO: rollback already happend, restart from last point
-            pass
-        return num_publications
+            return False
         
     def harvest_oai_phm(self, list_records_options):
         '''
@@ -124,6 +125,7 @@ class CiteseerxHarvester(Harvester):
             return False
         # requests (part of sickle) errors => connection errors
         except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
+            self.logger.info(e, exc_info=True)
             raise ParserConnectionError(str(e))
         # database errors
         except(ParserRollbackError) as e:
@@ -132,4 +134,4 @@ class CiteseerxHarvester(Harvester):
 
 #if __name__ == '__main__':
 #    harvester = CiteseerxHarvester()
-#    harvester.harvest(limit=10)
+#    harvester.harvest(_from='2008-01-01', until='2008-12-31')
