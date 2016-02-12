@@ -6,8 +6,8 @@ class CsvFileWriter:
     
     output = None
         
-    def open(self, filename, encoding='utf-8'):
-        self.output = codecs.open(filename, 'w+', encoding=encoding)
+    def open(self, filename, encoding='utf-8', mode='w+'):
+        self.output = codecs.open(filename, mode=mode, encoding=encoding)
         
     def close(self):
         self.output.close()

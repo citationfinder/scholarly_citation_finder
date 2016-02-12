@@ -75,7 +75,7 @@ class DblpHarvester(Harvester):
         :return: The number of parsed publications
         '''
         cite_writer = CsvFileWriter()
-        cite_writer.open(os.path.join(self.download_dir, 'cite.csv'))
+        cite_writer.open(os.path.join(self.download_dir, 'cite.csv'), mode='a+')
         
         publication = {}
         conference_short_name = None
