@@ -1,3 +1,4 @@
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os.path
@@ -35,14 +36,22 @@ class CitationFinder(Process):
         try:
             author, length_publication_set = self.publication_set.set_by_author(name, id)
             self.logger.info('set {} publications by author {}'.format(length_publication_set, author.id))
+
+
+            self.citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
+            
+            
+            return length_publication_set
         except(ObjectDoesNotExist):
-            self.logger.info('search author "{}", found nothing'.format(name))            
+            self.logger.info('search author "{}", found nothing'.format(name))
+        return False
 
     def run(self, strategies):
         if not self.publication_set.is_set():
             raise Exception('publication_search_set not set')
 
-        self.citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
+        # reset
+        self.publication_set.additional_publications_idstring = ''
             
         #
         strategies_name = '+'.join([strategy.name for strategy in strategies])
