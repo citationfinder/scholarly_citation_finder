@@ -7,6 +7,10 @@ from scholarly_citation_finder.apps.core.models import Author, Publication, Publ
     Conference, Journal, FieldOfStudy
 
 
+class EmptyIdstringException(Exception):
+    pass
+
+
 class PublicationSet:
     
     publications = []
@@ -92,21 +96,16 @@ class PublicationSet:
         :return: Array of author IDs ordered descending by frequency
         '''
         if ordered:
-            if only_additionals:
-                idstring = self.additional_publications_idstring[1:]
-            else:
-                idstring = self.publications_idstring
-
-            if idstring:
-                return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+idstring+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
-            else:
+            try:
+                return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.__get_idstring(only_additionals=only_additionals)+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
+            except(EmptyIdstringException):
                 return []
         else:
             return Author.objects.using(self.database).filter(publicationauthoraffilation__publication__in=self.publications).distinct()
         
-    def get_conferences(self, ordered=False):
+    def get_conferences(self, ordered=False, plus_additionals=False):
         if ordered:
-            return list(Conference.objects.using(self.database).raw("SELECT conference_id AS id FROM core_publication WHERE conference_id IS NOT NULL AND id IN ("+self.publications_idstring+") GROUP BY conference_id ORDER BY COUNT(conference_id) DESC"))
+            return list(Conference.objects.using(self.database).raw("SELECT conference_id AS id FROM core_publication WHERE conference_id IS NOT NULL AND id IN ("+self.__get_idstring(plus_additionals=plus_additionals)+") GROUP BY conference_id ORDER BY COUNT(conference_id) DESC"))
         else:
             return Conference.objects.using(self.database).filter(publication__in=self.publications).distinct()
 
@@ -118,11 +117,7 @@ class PublicationSet:
         :return: Array of journal IDs ordered descending by frequency
         '''
         if ordered:
-            if plus_additionals:
-                idstring = self.publications_idstring + self.additional_publications_idstring
-            else:
-                idstring = self.publications_idstring
-            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE journal_id IS NOT NULL AND id IN ("+idstring+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
+            return list(Journal.objects.using(self.database).raw("SELECT journal_id AS id FROM core_publication WHERE journal_id IS NOT NULL AND id IN ("+self.__get_idstring(plus_additionals=plus_additionals)+") GROUP BY journal_id ORDER BY COUNT(journal_id) DESC"))
         else:
             return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
@@ -133,3 +128,15 @@ class PublicationSet:
         else:
             return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()
     
+    def __get_idstring(self, only_additionals=False, plus_additionals=False):
+            if plus_additionals:
+                idstring = self.publications_idstring + self.additional_publications_idstring
+            elif only_additionals:
+                idstring = self.additional_publications_idstring
+            else:
+                idstring = self.publications_idstring
+            
+            if idstring:
+                return idstring
+            else:
+                raise EmptyIdstringException('ID-String is empty')
