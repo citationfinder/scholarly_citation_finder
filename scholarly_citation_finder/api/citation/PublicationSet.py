@@ -132,7 +132,7 @@ class PublicationSet:
             if plus_additionals:
                 idstring = self.publications_idstring + self.additional_publications_idstring
             elif only_additionals:
-                idstring = self.additional_publications_idstring
+                idstring = self.additional_publications_idstring[1:]
             else:
                 idstring = self.publications_idstring
             
