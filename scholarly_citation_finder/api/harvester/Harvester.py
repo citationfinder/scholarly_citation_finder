@@ -37,9 +37,12 @@ class Harvester(Parser):
     def __init__(self, name):
         super(Harvester, self).__init__(name)
         
-    def start_harevest(self):
+    def start_harevest(self, logger_string=''):
+        '''        
+        :param logger_string: Optional string that get written into the log, e.g. parameters of the harvest run
+        '''
         self.count_publications = 0
-        self.logger.info('start {} harvester'.format(self.name))        
+        self.logger.info('start {} harvester ({})'.format(self.name, logger_string))        
         
     def stop_harvest(self):
         self.logger.info('stop parsed {} entries'.format(self.count_publications))

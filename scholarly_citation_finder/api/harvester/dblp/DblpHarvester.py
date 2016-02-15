@@ -59,7 +59,7 @@ class DblpHarvester(Harvester):
             
 
         if os.path.isfile(filename):
-            self.start_harevest()
+            self.start_harevest(logger_string='limit={}, from={}'.format(limit, _from))
             context = etree.iterparse(filename, load_dtd=True, html=True)
             num_publications = self._fast_iter(context, _from=_from)
             self.stop_harvest()
