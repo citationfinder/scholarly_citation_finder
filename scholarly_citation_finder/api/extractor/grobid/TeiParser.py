@@ -43,7 +43,7 @@ class TeiParser:
                     publication['pages_to'] = elem.attrib.get('to')
             elif elem.tag == 'date' and 'when' in elem.attrib:
                 if 'type' in elem.attrib and elem.attrib['type'] == 'published':
-                    publication['date'] = elem.attrib['when']
+                    publication['year'] = elem.attrib['when']
             elif elem.tag == 'publisher':
                 publication['publisher'] = elem.text
 
