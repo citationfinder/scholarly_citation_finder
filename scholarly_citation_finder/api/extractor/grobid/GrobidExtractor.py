@@ -9,12 +9,10 @@ class GrobidExtractor(Parser):
     
     # URL to Grobid service
     GROBID_API = 'http://localhost:8080'
-    
 
     def __init__(self, **kwargs):
         super(GrobidExtractor, self).__init__('grobid', **kwargs)
         self.teiParser = TeiParser('grobid')
-
 
     def extract_file(self, filename):
         '''
@@ -43,8 +41,8 @@ class GrobidExtractor(Parser):
     
         try:
             resp = requests.post(url, files=files, data=vars)
-        except (requests.exceptions.RequestException) as ex:
-            raise ProcessException('Request to Grobid server failed')
+        except (requests.exceptions.RequestException) as e:
+            raise ProcessException('Request to Grobid server failed: {}'.format(e))
     
         if resp.status_code != 200:
             raise ProcessException('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
