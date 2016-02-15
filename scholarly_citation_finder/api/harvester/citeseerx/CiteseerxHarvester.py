@@ -130,8 +130,3 @@ class CiteseerxHarvester(Harvester):
         # database errors
         except(ParserRollbackError) as e:
             raise e
-        
-
-#if __name__ == '__main__':
-#    harvester = CiteseerxHarvester()
-#    harvester.harvest(_from='2008-01-01', until='2008-12-31')

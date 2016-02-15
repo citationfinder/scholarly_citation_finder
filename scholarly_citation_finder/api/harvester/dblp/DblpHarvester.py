@@ -173,7 +173,3 @@ class DblpHarvester(Harvester):
         # clear chunks
         
         return self.count_publications
-
-#if __name__ == '__main__':
-#    harvester = DblpHarvester()
-#    harvester.harvest(_from='journals/jlp/Winter08')
