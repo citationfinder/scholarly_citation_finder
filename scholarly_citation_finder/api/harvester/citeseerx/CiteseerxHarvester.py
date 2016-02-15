@@ -23,25 +23,28 @@ class CiteseerxHarvester(Harvester):
     def __init__(self, **kwargs):
         super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
     
-    def harvest(self, limit=None, _from=None, until=None, _from_id=None):
+    def harvest(self, limit=None, _from=None, until=None, _from_id=None, resumptionToken=None):
         '''
         
         :param limit: Number of maximum publications to parse
         :param _from: OAI-PHM from date YYYY-MM-DD
         :param until: OAI-PHM until date YYYY-MM-DD
         :param _from_id: Last stored (!) identifier, e.g. '10.1.1.1.1519'
+        :param resumptionToken: OAI-PHM resumption token, e.g. '10.1.1.102.634-467085-20500-oai_dc'
         :return: Number of parsed publications or False    
         '''
         
         self.limit = limit
 
-        list_records_options = {
-            'metadataPrefix': 'oai_dc'
-        }
-        if _from:
-            list_records_options['from'] = _from
-        if until:
-            list_records_options['until'] = until
+        list_records_options = {}
+        if resumptionToken is not None:
+            list_records_options['resumptionToken'] = resumptionToken
+        else:
+            list_records_options['metadataPrefix'] = 'oai_dc'
+            if _from:
+                list_records_options['from'] = _from
+            if until:
+                list_records_options['until'] = until
         
         # TODO: move to parent class
         try:    
