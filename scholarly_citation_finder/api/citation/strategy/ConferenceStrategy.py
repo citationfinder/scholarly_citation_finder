@@ -19,7 +19,7 @@ class ConferenceStrategy(Strategy):
         self.min_year = min_year
         
     def run(self, publication_set, callback):
-        conferences = publication_set.get_conferences(ordered=self.ordered)
+        conferences = publication_set.get_conferences(ordered=self.ordered, plus_additionals=True)
         self.logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:
             conference_publications = self.__find_conference_publications(conference.id)
