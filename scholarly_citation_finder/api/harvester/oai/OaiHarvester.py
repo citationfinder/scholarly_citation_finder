@@ -1,27 +1,28 @@
-import string
 from sickle import Sickle
 from sickle.oaiexceptions import NoRecordsMatch
-
-from ..Harvester import Harvester
-from scholarly_citation_finder.api.Parser import ParserRollbackError, ParserConnectionError
 from requests.exceptions import ChunkedEncodingError, ConnectionError
 
+from scholarly_citation_finder.api.harvester.Harvester import Harvester
+from scholarly_citation_finder.api.Parser import ParserConnectionError,\
+    ParserRollbackError
 
-class CiteseerxHarvester(Harvester):
-    
-    OAI_PHM_URL = 'http://citeseerx.ist.psu.edu/oai2'
+
+class OaiHarvester(Harvester):
     
     FIELD_MAPPING = {
         'title': 'title',
-        #'creator': 'authors',
         'description': 'abstract',
         'publisher': 'publisher',
-        'rights': 'copyright'
-        #'subject': 'keywords'
-    }
+        'rights': 'copyright' # <- citeseerx only
+    }    
     
-    def __init__(self, **kwargs):
-        super(CiteseerxHarvester, self).__init__('citeseerx', **kwargs)
+    oai_url = None
+    oai_identifier = None
+    
+    def __init__(self, name, oai_url, oai_identifier, **kwargs):
+        super(OaiHarvester, self).__init__(name, **kwargs)
+        self.oai_url = oai_url
+        self.oai_identifier = oai_identifier     
     
     def harvest(self, limit=None, _from=None, until=None, _from_id=None, resumptionToken=None):
         '''
@@ -71,12 +72,12 @@ class CiteseerxHarvester(Harvester):
         '''
 
         try:
-            client = Sickle(self.OAI_PHM_URL)
+            client = Sickle(self.oai_url)
             records = client.ListRecords(**list_records_options)
 
             for record in records:
                 # '<identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>' -> '10.1.1.1.1519'
-                identifier = string.replace(record.header.identifier, 'oai:CiteSeerX.psu:', '')
+                identifier = record.header.identifier.replace(self.oai_identifier, '')
                 if _from_id is not None:
                     if _from_id == identifier:
                         _from_id = None
@@ -94,14 +95,19 @@ class CiteseerxHarvester(Harvester):
                 if 'subject' in metadata:
                     keywords = metadata['subject']
                 if 'date' in metadata:
-                    date = metadata['date'][-1]
-                    '''
-                    <dc:date>2009-04-19</dc:date>
-                    <dc:date>2007-11-19</dc:date>
-                    <dc:date>1998</dc:date>
-                    '''
-                    if len(date) == 4:
-                        publication['year'] = date
+                    if self.name == 'citeseerx':
+                        date = metadata['date'][-1]
+                        '''
+                        <dc:date>2009-04-19</dc:date>
+                        <dc:date>2007-11-19</dc:date>
+                        <dc:date>1998</dc:date>
+                        '''
+                        if len(date) == 4:
+                            publication['year'] = date
+                        del date
+                    elif self.name == 'arxiv':
+                        publication['year'] = metadata['date'][0][:4]
+                # citeseerx only
                 if 'source' in metadata:
                     url = metadata['source'][0]
                     if 'format' in metadata:
@@ -110,15 +116,18 @@ class CiteseerxHarvester(Harvester):
                             'type': metadata['format'][0]
                         }
                     urls.append(url)
+                    del url
+                # arxiv only
+                if 'identifier' in metadata:
+                    doi = metadata['identifier'][-1]
+                    if 'doi:' in doi:
+                        publication['doi'] = doi.replace('doi:', '')
+                    del doi
                 for field in self.FIELD_MAPPING:
                     if field in metadata:
                         publication[self.FIELD_MAPPING[field]] = metadata[field][0]
 
-                publication['source'] = 'citeseerx:'+identifier
-                #urls.append({
-                #    'value': 'http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&amp;rep=rep1&amp;type=pdf'.format(result_entry['citeseerx_id']),
-                #    'type': 'application/pdf'
-                #})
+                publication['source'] = self.name+':'+identifier
 
                 self.parse(publication,
                            authors=authors,
@@ -132,9 +141,6 @@ class CiteseerxHarvester(Harvester):
         # sickle errors => oai-phm errors
         except(NoRecordsMatch) as e:
             return False
-        #except(AttributeError) as e:
-        #    self.logger.error(e, exc_info=True)
-        #    return False
         # requests (part of sickle) errors => connection errors
         except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
             self.logger.info(e, exc_info=True)
