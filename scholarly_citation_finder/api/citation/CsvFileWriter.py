@@ -19,4 +19,4 @@ class CsvFileWriter:
         self.write_line('# ' + string)
     
     def write_values(self, column1, column2):
-        self.write_line('{}, {}'.format(column1, column2))
+        self.write_line('{},{}'.format(column1, column2))
