@@ -11,8 +11,8 @@ class DblpHarvester(Harvester):
     
     COLLABORATIONS = [
         'article',
-        #'inproceedings',
-        'proceedings',
+        'inproceedings',
+        #'proceedings',
         'book',
         #'incollection',
         'phdthesis',
@@ -22,9 +22,9 @@ class DblpHarvester(Harvester):
 
     # Furher avaible tags:  address|month|url|cdrom|cite|note|crossref|school|chapter
     FIELD_MAPPING = {
-        'title': 'title',
-        'author': 'authors',
-        'editor': 'authors',
+        #'title': 'title',
+        #'author': 'authors',
+        #'editor': 'authors',
         'year': 'year',
         'booktitle': 'booktitle',
         'journal': 'journal',
@@ -36,7 +36,7 @@ class DblpHarvester(Harvester):
         'isbn': 'isbn',
         # doi
         # abstract
-        'ee': 'urls'
+        #'ee': 'urls'
     }
     
     def __init__(self, **kwargs):
@@ -60,19 +60,18 @@ class DblpHarvester(Harvester):
 
         if os.path.isfile(filename):
             self.start_harevest(logger_string='limit={}, from={}'.format(limit, _from))
-            context = etree.iterparse(filename, load_dtd=True, html=True)
-            num_publications = self._fast_iter(context, _from=_from)
+            num_publications = self._fast_iter(filename, _from=_from)
             self.stop_harvest()
             return num_publications
         else:
             raise IOError('File {} not found'.format(filename))
 
-    def _fast_iter(self, context, _from=None):
+    def _fast_iter(self, filename, _from=None):
         '''
         @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
         @param context : iterparsed (chunk of xml) data
         
-        :param context:
+        :param filename:
         :param _from: Last stored (!) DBLP key, e.g. 'journals/jlp/Winter08'
         :return: The number of parsed publications
         '''
@@ -86,9 +85,44 @@ class DblpHarvester(Harvester):
         urls = []
         citations = []
         
+        context = etree.iterparse(filename, load_dtd=True, html=True)
         for _, elem in context:
-            if elem.tag == 'html' or elem.tag == 'body':
+            if elem.tag in ('html', 'body'):
                 continue
+            # collaboration
+            elif elem.tag in self.COLLABORATIONS:
+                key = elem.get('key')
+                if _from is not None:
+                    # Stop skipping, if the key was found
+                    if _from == key:
+                        _from = None
+                else:
+                    publication['type'] = elem.tag
+                    publication['source'] = 'dbpl:'+key
+    
+                    # store and clear entry afterwards
+                    publication_id = self.parse(publication,
+                                                conference_short_name=conference_short_name,
+                                                journal_name=journal_name,
+                                                authors=authors,
+                                                urls=urls)
+                    if publication_id:
+                        for citation in citations:
+                            cite_writer.write_values(publication_id, citation)
+                    publication_id = None
+                    publication.clear()
+                    conference_short_name = None
+                    journal_name = None
+                    authors = []
+                    urls = []
+                    citations = []
+                    
+                    # http://pranavk.github.io/python/parsing-xml-efficiently-with-python/
+                    #
+                    # Check, if break harvest loop
+                    if self.check_stop_harvest():
+                        break
+                del key
             # If from is not None, skip all these steps
             elif _from is None:
                 # title
@@ -97,6 +131,7 @@ class DblpHarvester(Harvester):
                     if title.endswith('.'):
                         title = title[:-1]
                     publication['title'] = title
+                    del title
                 # author and editor
                 elif elem.tag in ('author', 'editor') and elem.text:
                     authors.append(elem.text)
@@ -106,12 +141,15 @@ class DblpHarvester(Harvester):
                     publication['pages_from'] = pages[0]
                     if len(pages) > 1:
                         publication['pages_to'] = pages[1]
+                    del pages
                 # ee
                 elif elem.tag == 'ee' and elem.text:
-                    urls.append(elem.text)
                     # doi
                     if 'http://dx.doi.org/' in elem.text:
                         publication['doi'] = elem.text.replace('http://dx.doi.org/', '')
+                    # url
+                    else:
+                        urls.append(elem.text)
                 # crossref
                 elif elem.tag == 'crossref' and elem.text:
                     conference_short_name = elem.text.split('/')[1] # 'conf/naa/2008' -> 'naa'
@@ -125,46 +163,14 @@ class DblpHarvester(Harvester):
                 elif elem.tag in self.FIELD_MAPPING and elem.text:
                     publication[self.FIELD_MAPPING[elem.tag]] = elem.text
                 #
-                elif elem.tag in ('inproceedings', 'incollection', 'www'):
+                elif elem.tag in ('proceedings', 'incollection', 'www'):
                     publication.clear()
                     conference_short_name = None
                     journal_name = None
                     authors = []
                     urls = []
-                    citations = []           
-            # collaboration
-            if elem.tag in self.COLLABORATIONS:
-                key = elem.get('key')
-                if _from is not None:
-                    # Stop skipping, if the key was found
-                    if _from == key:
-                        _from = None
-                    continue
-                
-                publication['type'] = elem.tag
-                publication['source'] = 'dbpl:'+key
+                    citations = []
 
-                # store and clear entry afterwards
-                publication_id = self.parse(publication,
-                                            conference_short_name=conference_short_name,
-                                            journal_name=journal_name,
-                                            authors=authors,
-                                            urls=urls)
-                if publication_id:
-                    for citation in citations:
-                        cite_writer.write_values(publication_id, citation)
-                publication_id = None
-                publication.clear()
-                conference_short_name = None
-                journal_name = None
-                authors = []
-                urls = []
-                citations = []
-                
-                # Check, if break harvest loop
-                if self.check_stop_harvest():
-                    break
-     
             # Clear element
             elem.clear()
             while elem.getprevious() is not None:
@@ -172,4 +178,5 @@ class DblpHarvester(Harvester):
         del context
         # clear chunks
         
+        cite_writer.close()
         return self.count_publications

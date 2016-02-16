@@ -32,7 +32,7 @@ def get_arguments(argv):
 
 class Harvester(Parser):
     
-    COMMIT_AFTER_NUM_PUBLICATIONS = 200000
+    COMMIT_AFTER_NUM_PUBLICATIONS = 100000
 
     def __init__(self, name):
         super(Harvester, self).__init__(name)

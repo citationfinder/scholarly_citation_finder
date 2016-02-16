@@ -169,31 +169,39 @@ class Parser(Process):
             conference_id = None
             journal_id = None
 
+            # conference
             if conference_short_name:
                 try:
                     conference_id = self.parse_conference(conference_short_name)
                 except(DataError) as e:
                     self.logger.warn(str(e))
-
+                del conference_short_name
+            # journal
             if journal_name:
                 try:
                     journal_id = self.parse_journal(journal_name)
                 except(DataError) as e:
                     self.logger.warn(str(e))
-
+                del journal_name
+            # publication
             publication_id = self.parse_publication(conference_id=conference_id,
                                                     journal_id=journal_id,
                                                     **publication)
+            # authors
             if authors:
                 for author in authors:
                     try:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", (publication_id, self.parse_author(author)))
                     except(DataError) as e:
                         self.logger.warn(str(e))
+                del authors
+            # keywords
             if keywords:
                 for keyword in keywords:
                     if keyword and len(keyword) <= 100:
                         self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", (publication_id, keyword))
+                del keywords
+            # urls
             if urls:
                 for url in urls:
                     url_type = None
@@ -205,10 +213,10 @@ class Parser(Process):
                         if url_type and len(url_type) >= 30:
                             url_type = None
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", (publication_id, url, url_type))
-
+                del urls
             return publication_id
         except(ParserDataError) as e:
-            self.logger.warn(str(e))
+            #self.logger.warn(str(e))
             return False
         except(ProgrammingError, DataError) as e:
             self.logger.error(e, exc_info=True)
@@ -232,43 +240,4 @@ class Parser(Process):
     
     def _check_publication_is_valid(self, entry):
         return 'title' in entry and 'authors' in entry
-    
-    def parse_publication(self, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
-    
-        if title and authors:
-
-            self.count_publications += 1
-                
-            #if date and pages and (booktitle or (journal and volume)):
-            self.xml_writer.write_start_tag('publication')
-            self.xml_writer.write_element('type', type)
-            self.xml_writer.write_element('title', title)
-            self.xml_writer.write_element('date', date)
-            self.xml_writer.write_element('booktitle', booktitle)
-            self.xml_writer.write_element('journal', journal)
-            self.xml_writer.write_element('volume', volume)
-            self.xml_writer.write_element('pages', pages)
-            self.xml_writer.write_element('number', number)
-            self.xml_writer.write_element('publisher', publisher)
-            self.xml_writer.write_element('abstract', abstract, is_cdata=True)
-            self.xml_writer.write_element('doi', doi)
-            self.xml_writer.write_element('citeseerx_id', citeseerx_id)
-            self.xml_writer.write_element('dblp_id', dblp_id)
-            self.xml_writer.write_element('arxiv_id', arxiv_id)
-            self.xml_writer.write_element('extractor', extractor)
-            self.xml_writer.write_element('source', source)
-
-            for author in authors:
-                author = self.check_author_name(author)
-                if author:
-                    self.xml_writer.write_element('author', author)
-                else:
-                    self.logger.warn('Not an author name: %s' % author)
-            
-            self.xml_writer.write_close_tag('publication')
-            return True
-        else:
-            self.logger.warn('No title (%s) or authors' % title)
-            #print('no title or authors')
-            return False
     """

@@ -21,13 +21,13 @@ class DblpHarvesterTest(TestCase):
 
     def test_harvest_success(self):
         first = self.harvester.harvest(filename=self.TEST_XML)
-        self.assertEqual(first, 5, 'Assert 5 publications to be parsed, but is {}'.format(first))
+        self.assertEqual(first, 6, 'Assert 6 publications to be parsed, but is {}'.format(first))
 
     def test_harvest_success_limit(self):
         first = self.harvester.harvest(filename=self.TEST_XML, limit=2)
         self.assertEqual(first, 2, 'Assert 2 publications to be parsed, but is {}'.format(first))
 
     def test_harvest_success_from(self):
-        first = self.harvester.harvest(filename=self.TEST_XML, _from='journals/cg/RodriguesSNGR07')
+        first = self.harvester.harvest(filename=self.TEST_XML, _from='journals/puc/ZhouGPRYS11')
         self.assertEqual(first, 3, 'Assert 3 publications to be parsed, but is {}'.format(first))
         

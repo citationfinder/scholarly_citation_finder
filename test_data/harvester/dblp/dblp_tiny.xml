@@ -38,31 +38,64 @@
 		<pages>291-303</pages>
 		<year>2011</year>
 		<volume>15</volume>
-		<journal>Personal and Ubiquitous Computing</journal>
+		<journal>Computers &amp; Graphics</journal>
 		<number>3</number>
-		<ee>http://dx.doi.org/10.1007/s00779-010-0333-5</ee>
+		<ee>http://example.org/10.1007/s00779-010-0333-5</ee>
 		<url>db/journals/puc/puc15.html#ZhouGPRYS11</url>
 	</article>
-	<article mdate="2005-10-31" key="journals/cg/Encarnacao83b">
-	<author>Jos&eacute; L. Encarna&ccedil;&atilde;o</author>
-		<title>Introduction.</title>
-		<pages>93-</pages>
-		<year>1983</year>
-		<volume>7</volume>
-		<journal>Computers &amp; Graphics</journal>
-		<number>1</number>
-		<ee>http://dx.doi.org/10.1016/0097-8493(83)90051-1</ee>
-		<url>db/journals/cg/cg7.html#Encarnacao83b</url>
-	</article>
-	<proceedings mdate="2003-01-21" key="journals/lncs/1994-910">
-		<editor>Andreas Podelski</editor>
-		<title>Constraint Programming: Basics and Trends, Ch&acirc;tillon Spring School, Ch&acirc;tillon-sur-Seine, France, May 16 - 20, 1994, Selected Papers</title>
-		<booktitle>Constraint Programming</booktitle>
-		<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
-		<volume>910</volume>
-		<publisher>Springer</publisher>
-		<year>1995</year>
+	<inproceedings mdate="2015-05-05" key="journals/procedia/JahanshahlooS11">
+		<author>L. Jahanshahloo</author>
+		<author>S. Salahshour</author>
+		<title>Fuzzy effects of urban landscapes on land prices.</title>
+		<pages>595-599</pages>
+		<year>2011</year>
+		<crossref>conf/wcit/2010</crossref>
+		<booktitle>WCIT</booktitle>
+		<ee>http://dx.doi.org/10.1016/j.procs.2010.12.099</ee>
+		<url>db/journals/procedia/procedia3.html#JahanshahlooS11</url>
+	</inproceedings>
+	<proceedings mdate="2015-05-11" key="conf/wcit/2010">
+		<editor>Adem Karahoca</editor>
+		<editor>Sezer Kanbul</editor>
+		<title>First World Conference on Information Technology, WCIT 2010, Istanbul, Turkey, October 6-10, 2010</title>
+		<booktitle>WCIT</booktitle>
+		<year>2010</year>
 		<isbn>3-540-59155-9</isbn>
-		<url>db/journals/lncs/lncs910.html</url>
+		<series href="db/series/procedia/index.html">Procedia Computer Science</series>
+		<volume>3</volume>
+		<publisher>Elsevier</publisher>
+		<ee>http://www.sciencedirect.com/science/journal/18770509/3</ee>
+		<url>db/journals/procedia/procedia3.html</url>
 	</proceedings>
+	<www mdate="2015-07-24" key="homepages/96/10487">
+		<author>Matthew T. West</author>
+		<title>Home Page</title>
+		<note type="affiliation">Lewis &amp; Clark College, Portland, OR, USA</note>
+	</www>
+	<incollection mdate="2011-11-25" key="reference/crypt/Just11" publtype="encyclopedia entry">
+		<author>Mike Just</author>
+		<title>Challenge-Response Identification.</title>
+		<pages>198-199</pages>
+		<year>2011</year>
+		<booktitle>Encyclopedia of Cryptography and Security (2nd Ed.)</booktitle>
+		<ee>http://dx.doi.org/10.1007/978-1-4419-5906-5_73</ee>
+		<crossref>reference/crypt/2011</crossref>
+		<url>db/reference/crypt/crypt2011.html#Just11</url>
+	</incollection>
+	<book mdate="2011-04-12" key="books/daglib/0024695">
+		<author>Christopher B. Jones</author>
+		<title>Geographical Information Systems and Computer Cartography.</title>
+		<pages>I-XV, 1-319</pages>
+		<publisher>Prentice Hall</publisher>
+		<year>1997</year>
+		<isbn>978-0-582-04439-5</isbn>
+		<ee>http://vig.pearsoned.co.uk/catalog/academic/product/0,1144,0582044391,00.html</ee>
+	</book>
+	<phdthesis mdate="2011-03-23" key="books/daglib/0069674">
+		<author>Ernst Gschwind</author>
+		<title>Generation of solid models from cross sections.</title>
+		<pages>I, 1-83</pages>
+		<school>Universit&auml;t Warmbronn/Kaiserslautern</school>
+		<year>1992</year>
+	</phdthesis>
 </dblp>
