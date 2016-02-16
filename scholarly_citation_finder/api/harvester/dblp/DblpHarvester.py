@@ -100,6 +100,9 @@ class DblpHarvester(Harvester):
                     publication['type'] = elem.tag
                     publication['source'] = 'dbpl:'+key
     
+                    if conference_short_name and 'booktitle' in publication:
+                        del publication['booktitle']
+    
                     # store and clear entry afterwards
                     publication_id = self.parse(publication,
                                                 conference_short_name=conference_short_name,
@@ -152,7 +155,10 @@ class DblpHarvester(Harvester):
                         urls.append(elem.text)
                 # crossref
                 elif elem.tag == 'crossref' and elem.text:
-                    conference_short_name = elem.text.split('/')[1] # 'conf/naa/2008' -> 'naa'
+                    split = elem.text.split('/')
+                    if len(split) > 2 and split[0] == 'conf':
+                        conference_short_name = split[1] # 'conf/naa/2008' -> 'naa'
+                    del split
                 elif elem.tag == 'cite' and elem.text:
                     if elem.text != '...':
                         citations.append(elem.text)
