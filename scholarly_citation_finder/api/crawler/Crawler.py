@@ -1,19 +1,24 @@
-from scholarly_citation_finder.apps.core.models import Publication,\
-    PublicationUrl
 import logging
 from django.core.exceptions import ObjectDoesNotExist
-from scholarly_citation_finder.api.crawler.PdfFinder import PdfFinder
+from requests.exceptions import ConnectionError
+
+from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
+from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParser, HtmlParserUnkownHeaderType
+from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo, DuckduckgoResponseException
+
 
 logger = logging.getLogger(__name__)
 
 class Crawler:
     
     database = None
-    pdfFinder = None
+    html_parser = None
+    search_engine = None
     
     def __init__(self):
         self.database = 'mag'
-        self.pdfFinder = PdfFinder()
+        self.html_parser = HtmlParser()
+        self.search_engine = Duckduckgo()
     
     def run(self, publication):
         if publication.source_extracted:
@@ -31,7 +36,7 @@ class Crawler:
         for url in urls:
             if url.type in (None, PublicationUrl.MIME_TYPE_HTML):
                 logger.info('{}'.format(url.url))
-            #self.pdfFinder.find_pdf(url.url)
+            #self.html_parser.find_pdf(url.url)
                 # if that was successful, replace current URL with that one
                 # for unsupported type, store that type?
             #else:
@@ -54,5 +59,37 @@ class Crawler:
         
     def extract_pdf(self, publication, url):
         pass
+
+    def use_html_page_to_find_pdf(self, url):
+        try:
+            hyperrefs = self.html_parser.find_pdf_hyperrefs(url)
+            for link in hyperrefs:
+                if link.endswith('.pdf') or link.endswith('/pdf'):
+                    return link
+            return hyperrefs[-1]
+            
+        except(HtmlParserUnkownHeaderType, ConnectionError) as e:
+            logger.warn(e, exc_info=True)
+        return False
+
+    def use_search_engine_to_find_pdf(self, title):
+        try:
+            results = self.search_engine.query(keywords=title, filetype='pdf', limit=2)
+            if len(results) >= 1:
+                result = results[0]
+                if self.__match_title(title, result['title_matching']):
+                    return result['url'], result['type']
+        except(DuckduckgoResponseException, ConnectionError) as e:
+            logger.warn(e, exc_info=True)
+        return False, None
     
-    
+    def __match_title(self, original_title, found_title_matching, max_num_words_difference=2):
+        '''
+        
+        :param original_title:
+        :param found_title_matching:
+        '''
+        
+        num_words_orignal = len(original_title[:58].split(' '))
+        num_words_found = len(found_title_matching.split(' '))
+        return abs(num_words_orignal-num_words_found) <= max_num_words_difference

@@ -7,8 +7,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+class HtmlParserUnkownHeaderType(Exception):
+    pass
 
-class PdfFinder:
+class HtmlParser:
     '''
     Module to find a or multiple PDFs files on a HTML page.
     '''
@@ -16,49 +18,37 @@ class PdfFinder:
     MIMETYPE_PDF = 'application/pdf'
     MIMETYPE_HTML = 'text/html'
 
-    def find_pdf(self, url):
-        '''
-        Looks for PDFs files on the provided website.
-        
-        :param url: HTML page
-        '''
-        hyperrefs = self.find_hyperrefs(url)
-        if hyperrefs:
-            for link in hyperrefs:
-                if link.endswith('.pdf') or link.endswith('/pdf'):
-                    return link
-            return hyperrefs[-1]
-        return False
-
-    def find_hyperrefs(self, url):
+    def find_pdf_hyperrefs(self, url):
         '''
         Looks for hyperrefs to PDFs file on the provided website.
         
         :param url: HTML page
+        :raise PdfFinderUnkownHeaderType:
+        :raise ConnectionError:
         '''
         try:
             r = requests.get(url)
             r_type = r.headers.get('content-type')
 
             # the URL is already a PDF
-            if r_type in self.MIMETYPE_PDF:
+            if self.MIMETYPE_PDF in r_type:
                 return url
             # the URL is a HTML page
-            elif r_type in self.MIMETYPE_HTML:
-                return self.find_hyperrefs_from_html(r.text, url)
+            elif self.MIMETYPE_HTML in r_type:
+                return self.__find_hyperrefs(r.text, url=url, search_pattern='(.*)pdf(.*)')
             else:
-                logger.debug('Unknown header type: {}'.format(r_type))
+                raise HtmlParserUnkownHeaderType('Unknown header type: {}'.format(r_type))
         except(ConnectionError) as e:
-            logger.info(e, exc_info=True)
+            raise e
 
-        return False
-
-    def find_hyperrefs_from_html(self, html, url):
+    def __find_hyperrefs(self, html, url, search_pattern='(.*)'):
         '''
         Looks for hyperrefs to PDFs file in the provided HTML string.
         
         :param html: HTML string
         :param url: URL the HTML was downloaded from. It is used to convert relative URLs to absolute ones
+        :param search_pattern: Search pattern for re.compile
+        :return 
         '''
         result = []
         parsed_uri = urlparse(url)
@@ -66,10 +56,10 @@ class PdfFinder:
 
         soup = BeautifulSoup(html, 'lxml')
         # Get all links, which contains the string 'pdf'
-        for link in soup.findAll('a', attrs={'href': re.compile('(.*)pdf(.*)')}):
+        for link in soup.findAll('a', attrs={'href': re.compile(search_pattern)}):
             href = link.get('href')
             # Convert relativ urls to absolute url
-            if href.startswith(('http://', 'https://')):
+            if href.startswith(('http://', 'https://', 'ftp://')):
                 pass
             elif href.startswith('/'):
                 href = url_domain + href
