@@ -24,15 +24,37 @@ class Crawler:
         if publication.source_extracted:
             logger.info('publication {} already extracted'.format(publication.id))
             return
+        if not publication.title:
+            logger.info('publication {} has no title'.format(publication.id))
+            return
             
         # 1. Get stored URLs of this publications
         urls = PublicationUrl.objects.using(self.database).filter(publication=publication)
             
         # 1.1 First check URLs of type PDF
         for url in urls.filter(type=PublicationUrl.MIME_TYPE_PDF):
-            logger.info('PDF: {}'.format(url.url))
+            self.extract_pdf(publication, url.url)
+            # --> store result
+            # --> in success case stop
 
-        # 1.2 Check URLs with oter types
+        # 1.2
+        # search for pdf
+        tmp_url, tmp_url_type = self.use_search_engine_to_find_pdf(publication.title)
+        if tmp_url:
+            if tmp_url_type == Duckduckgo.API_PARAM_FILETYPE_PDF:
+                self.extract_pdf(publication, tmp_url)
+                # --> in success case: store url
+                pass
+            elif tmp_url_type is None:
+                # --> call use_html_page_to_find_pdf
+                pass
+
+        # 1.3 Check URLs with oter types
+        if 'citeseerx:' in publication.source:
+            self.extract_pdf(publication, url='http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&rep=rep1&type=pdf'.format(publication.source.replace('citeseerx:', '')))
+                    
+        if publication.doi:
+            urls.append(PublicationUrl(url='http://dx.doi.org/{}'.format(publication.doi), type=None))
         for url in urls:
             if url.type in (None, PublicationUrl.MIME_TYPE_HTML):
                 logger.info('{}'.format(url.url))
@@ -41,15 +63,7 @@ class Crawler:
                 # for unsupported type, store that type?
             #else:
             #    logger.info('unsupported format {}: {}'.format(url.type, url.url))
-            return
-        
-        # 1.3
-        # Check source, if CiteSeerX download it from there
-        # Check DOI(!)
-        
-        # 1.4
-        # search for pdf
-            
+
     
     def run_by_id(self, publication_id):
         try:
@@ -58,6 +72,7 @@ class Crawler:
             return False
         
     def extract_pdf(self, publication, url):
+        logger.info('PDF: {}'.format(url))
         pass
 
     def use_html_page_to_find_pdf(self, url):
@@ -74,9 +89,8 @@ class Crawler:
 
     def use_search_engine_to_find_pdf(self, title):
         try:
-            results = self.search_engine.query(keywords=title, filetype='pdf', limit=2)
-            if len(results) >= 1:
-                result = results[0]
+            results = self.search_engine.query(keywords=title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2)
+            for result in results:
                 if self.__match_title(title, result['title_matching']):
                     return result['url'], result['type']
         except(DuckduckgoResponseException, ConnectionError) as e:
@@ -89,7 +103,6 @@ class Crawler:
         :param original_title:
         :param found_title_matching:
         '''
-        
         num_words_orignal = len(original_title[:58].split(' '))
         num_words_found = len(found_title_matching.split(' '))
         return abs(num_words_orignal-num_words_found) <= max_num_words_difference

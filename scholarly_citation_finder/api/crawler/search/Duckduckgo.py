@@ -12,6 +12,7 @@ class Duckduckgo:
     API_URL = 'https://duckduckgo.com/html/'
     
     API_PARAM_QUERY = 'q'
+    API_PARAM_FILETYPE_PDF = 'pdf'
 
     CSS_RESULT_ELEMENT = 'a'
     CSS_RESULT_ELEMENT_CLASS = 'large'
