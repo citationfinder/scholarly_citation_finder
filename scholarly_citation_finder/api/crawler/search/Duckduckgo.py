@@ -73,4 +73,5 @@ class Duckduckgo:
             if type:
                 type = type.text
                 title = title.replace(type + ' ', '')
-        return {'url': url, 'title': title, 'type': type.lower(), 'title_matching': title_matching}
+                type = type.lower()
+        return {'url': url, 'title': title, 'type': type, 'title_matching': title_matching}

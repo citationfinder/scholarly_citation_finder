@@ -1,18 +1,36 @@
 from django.http import HttpResponse
+from requests.exceptions import ConnectionError
 
-from .PdfFinder import PdfFinder
+from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParser
+from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo,\
+    DuckduckgoResponseException
 from scholarly_citation_finder.api.crawler.Crawler import Crawler
+from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParserUnkownHeaderType
 
 
-def pdffinder_index(request):
+def htmlparser(request):
     url = request.GET.get('url', None)
-
     if url:
-        finder = PdfFinder()
-        pdf = finder.get_pdf(url)
-        return HttpResponse(pdf)
+        html_parser = HtmlParser()
+        try:
+            return HttpResponse(html_parser.find_pdf_hyperrefs(url))
+        except(ConnectionError, HtmlParserUnkownHeaderType) as e:
+            return HttpResponse(str(e))
     else:
         return HttpResponse('Nothing do to. Usage: ?url=url')
+
+
+def duckduckgo(request):
+    keywords = request.GET.get('keywords', None)
+    if keywords:
+        search_engine = Duckduckgo()
+        try:
+            return HttpResponse(search_engine.query(keywords, filetype='pdf', limit=2))
+        except(ConnectionError, DuckduckgoResponseException) as e:
+            return HttpResponse(str(e))
+    else:
+        return HttpResponse('Nothing do to. Usage: ?keywords=keywords')        
+
 
 def crawler_index(request):
     
