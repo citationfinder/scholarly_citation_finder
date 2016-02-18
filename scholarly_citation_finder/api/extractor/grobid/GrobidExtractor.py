@@ -1,11 +1,11 @@
 import requests
 
 from scholarly_citation_finder.lib.process import ProcessException
-from scholarly_citation_finder.api.Parser import Parser
+from scholarly_citation_finder.api.Process import Process
 from TeiParser import TeiParser
 
 
-class GrobidExtractor(Parser):
+class GrobidExtractor(Process):
     
     # URL to Grobid service
     GROBID_API = 'http://localhost:8080'
@@ -22,18 +22,17 @@ class GrobidExtractor(Parser):
         '''
         self.logger.debug('Extract file: {}'.format(filename))
         try:
-            self._extract_references(open(filename, 'rb').read())
-            return True
+            return self.__extract_references(open(filename, 'rb').read())
         except(IOError, ProcessException) as e:
             self.logger.warn(e, exc_info=True)
             return False
     
-    def _extract_references(self, data, dep_results=None):
-        xml = self._call_grobid_method(data, 'processReferences')
+    def __extract_references(self, data):
+        xml = self.__call_grobid_method(data, 'processReferences')
         return self.teiParser.parse(xml=xml,
-                                    callback_biblstruct=self.parse_publication_reference)
+                                    callback_biblstruct=None)
 
-    def _call_grobid_method(self, data, method):
+    def __call_grobid_method(self, data, method):
         self.logger.debug('Call grobid method: {}'.format(method))
         url = '{0}/{1}'.format(self.GROBID_API, method)
         files = {'input': data}

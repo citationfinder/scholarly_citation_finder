@@ -9,9 +9,11 @@ class TeiParser:
 
     def parse(self, xml, callback_biblstruct):
         context = etree.iterparse(BytesIO(xml), html=True)
-        self.fast_iter(context, callback_biblstruct)
+        return self.fast_iter(context, callback_biblstruct)
       
-    def fast_iter(self, context, callback_biblstruct):
+    def fast_iter(self, context, callback_biblstruct=None):
+        results = []
+        
         publication = {}
         journal_name = None
         authors = []
@@ -49,14 +51,20 @@ class TeiParser:
 
             # citation
             elif elem.tag == 'biblstruct':
-                publication['source'] = self.name
                 
-                callback_biblstruct(
-                    context=elem.attrib.get('xml:id'),
-                    publication=publication,
-                    journal_name=journal_name,
-                    authors=authors,
-                )
+                if 'title' in publication:
+                    publication['source'] = self.name
+    
+                    results.append({'context': elem.attrib.get('xml:id'),
+                                   'publication': publication.copy(),
+                                   'journal_name': journal_name,
+                                   'authors': authors })
+                #callback_biblstruct(
+                #    context=elem.attrib.get('xml:id'),
+                #    publication=publication,
+                #    journal_name=journal_name,
+                #    authors=authors,
+                #)
                 
                 publication.clear()
                 journal_name = None
@@ -67,3 +75,5 @@ class TeiParser:
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
+        print(results)
+        return results

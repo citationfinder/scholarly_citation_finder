@@ -22,6 +22,7 @@ function routing($stateProvider, $urlRouterProvider) {
 	})
 	.state('extract-pdf', {
 		url: '/extract-pdf',
+		controller: require('../controller/state/ExtractPdfController'),
 		template: require('../view/state/extract-pdf.html')
 	})
 	;		

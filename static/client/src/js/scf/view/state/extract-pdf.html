@@ -3,8 +3,19 @@
 </div>
 
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Enter a URL to a PDF file" aria-describedby="basic-addon1">
+	<input ng-model="extractFileUrl"
+		   type="text" class="form-control" placeholder="Enter a URL to a PDF file" aria-describedby="basic-addon1">
          <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Extract</button>
-      </span>
+        <button ng-click="extractFile(extractFileUrl)"
+				class="btn btn-primary" type="button">Extract</button>
+	</span>
 </div>
+
+<h5>Results (<a ng-click="extractFileResult = ''" href="">Clear</a>)</h5>
+
+<ol>
+	<li ng-repeat="item in extractFileResult">
+		<i>{{item.publication.title}} </i>({{item.publication.year}}, {{item.journal_name}})<br>
+		<span ng-repeat="author in item.authors">{{author}} &middot; </span>
+	</li>
+</ol>

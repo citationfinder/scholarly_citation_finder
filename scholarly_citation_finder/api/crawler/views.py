@@ -15,9 +15,9 @@ def htmlparser(request):
         try:
             return JsonResponse({'items': html_parser.find_pdf_hyperrefs(url)})
         except(ConnectionError, HtmlParserUnkownHeaderType) as e:
-            return JsonResponse({'msg': str(e)}, status=503)
+            return HttpResponse(str(e), status=503)
     else:
-        return JsonResponse({'msg': 'Nothing do to. Usage: ?url=url'}, status=400)
+        return HttpResponse('Nothing do to. Usage: ?url=url', status=400)
 
 
 def duckduckgo(request):
@@ -27,9 +27,9 @@ def duckduckgo(request):
         try:
             return JsonResponse({'items': search_engine.query(keywords, filetype='pdf', limit=2)})
         except(ConnectionError, DuckduckgoResponseException) as e:
-            return JsonResponse({'msg': str(e)}, status=503)
+            return HttpResponse(str(e), status=503)
     else:
-        return HttpResponse({'msg': 'Nothing do to. Usage: ?keywords=keywords'}, status=400)
+        return HttpResponse('Nothing do to. Usage: ?keywords=keywords', status=400)
 
 
 def crawler_index(request):

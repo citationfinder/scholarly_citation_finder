@@ -17,6 +17,10 @@ from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
 logger = logging.getLogger()
 
+class UnexpectedContentTypeException(Exception):
+    pass
+
+
 def create_dir(path):
     '''
     Creates the given path, if it does not already exists
@@ -64,6 +68,9 @@ def download_file_pdf(url, **kwargs):
 def download_file(url, path=None, name=None, expected_content_type=None):
     '''
     Downloads a single file. Can handle large files.
+    
+    :raise ConnectionError:
+    :raise InvalidSchema:
     '''
     if name:
         local_filename = os.path.join(path, name)
@@ -73,8 +80,8 @@ def download_file(url, path=None, name=None, expected_content_type=None):
         # NOTE the stream=True parameter
         r = requests.get(url, stream=True)
         r_content_type = r.headers['content-type']
-        if expected_content_type and expected_content_type is not r_content_type:
-            raise Exception('expected content-type {}, but was {}'.format(expected_content_type, r_content_type))
+        if expected_content_type and (expected_content_type != r_content_type):
+            raise UnexpectedContentTypeException('expected content-type {}, but was {}'.format(expected_content_type, r_content_type))
         with open(local_filename, 'wb') as f:
             #total_length = int(r.headers.get('content-length'))
             #for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length/1024) + 1):
