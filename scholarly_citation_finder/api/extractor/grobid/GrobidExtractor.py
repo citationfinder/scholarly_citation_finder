@@ -41,7 +41,7 @@ class GrobidExtractor(Process):
         try:
             resp = requests.post(url, files=files, data=vars)
         except (requests.exceptions.RequestException) as e:
-            raise ProcessException('Request to Grobid server failed: {}'.format(e))
+            raise ProcessException(e)
     
         if resp.status_code != 200:
             raise ProcessException('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
