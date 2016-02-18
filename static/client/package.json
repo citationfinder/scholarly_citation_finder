@@ -1,0 +1,22 @@
+{
+  "name": "scf_client",
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "browser-sync": "*",
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-less": "*",
+    "gulp-load-plugins": "*",
+    "gulp-notify": "*",
+    "gulp-rename": "*",	
+    "gulp-size": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "require-dir": "*",
+	 
+	"webpack": "*",
+	"html-loader": "*"
+  }
+}
