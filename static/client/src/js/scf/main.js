@@ -11,4 +11,7 @@ angular.module('scf', ['ui.router', 'restangular', 'ui.bootstrap'])
 	.config(require('./config/api'))
 	.config(require('./config/routing'))
 
+	// controller
+	.controller('mainController', require('./controller/MainController'))
+
 ;

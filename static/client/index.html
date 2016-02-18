@@ -16,7 +16,7 @@
 	</style>
 	
 </head>
-<body ng-app="scf">
+<body ng-app="scf" ng-controller="mainController">
 	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container">
@@ -47,6 +47,9 @@
 	</nav>	
 	
 	<div class="container" role="main">
+		<span>
+			<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>			
+		</span>
 		<div ui-view></div>		
 	</div>
 </body>

@@ -13,6 +13,8 @@
 
 <h5>Results (<a ng-click="extractFileResult = ''" href="">Clear</a>)</h5>
 
+<div ng-show="showProgress" class="col-sm-4"><uib-progressbar class="progress-striped active"><i>Extracting</i></uib-progressbar></div>
+
 <ol>
 	<li ng-repeat="item in extractFileResult">
 		<i>{{item.publication.title}} </i>({{item.publication.year}}, {{item.journal_name}})<br>

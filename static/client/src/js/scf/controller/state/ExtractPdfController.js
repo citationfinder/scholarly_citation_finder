@@ -1,13 +1,13 @@
 function ExtractPdfController($scope, Restangular) {
-	console.log('yolo');
-	
 	$scope.extractFile = function(url) {
+		$scope.showProgress = true;
 		Restangular.all('extractor').getList({url: url}).then(function(items) {
 			$scope.extractFileResult = items;
+			$scope.showProgress = false;
 		}, function(data) {
-			console.log('error');
-			$scope.extractFileResult = data;
+			$scope.showProgress = false;
 			console.warn(data);
+			$scope.addAlert(data.data);
 		});
 	};
 }

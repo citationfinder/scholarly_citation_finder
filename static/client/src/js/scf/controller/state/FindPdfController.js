@@ -4,8 +4,8 @@ function FindPdfController($scope, Restangular) {
 		Restangular.all('crawler/htmlparser').getList({url: url}).then(function(items) {
 			$scope.htmlParserResult = items;
 		}, function(data) {
-			console.warn('error');
 			console.warn(data);
+			$scope.addAlert(data.data);
 		});
 	};
 	
@@ -13,8 +13,8 @@ function FindPdfController($scope, Restangular) {
 		Restangular.all('crawler/duckduckgo').getList({keywords: keywords}).then(function(items) {
 			$scope.searchEngineResult = items;
 		}, function(data) {
-			console.warn('error');
 			console.warn(data);
+			$scope.addAlert(data.data);
 		});
 		
 	};
