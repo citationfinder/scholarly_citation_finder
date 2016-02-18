@@ -4,18 +4,28 @@
 
 <h3>Find PDFs on a HTML page</h3>
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Enter a URL" aria-describedby="basic-addon1">
-         <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search</button>
-      </span>
+	<input ng-model="htmlParserUrl"
+		   type="text" class="form-control" placeholder="Enter a URL" aria-describedby="basic-addon1">
+		<span class="input-group-btn">
+			<button ng-click="htmlParser(htmlParserUrl)"
+					class="btn btn-primary" type="button">Search</button>
+    </span>
 </div>
+<ul>
+	<li ng-repeat="item in htmlParserResult"><a ng-href="{{item}}" href="" target="_blank">{{item}}</a></li>
+</ul>
 
 
 <h3>Find PDF on the web</h3>
-
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Enter title of the publication" aria-describedby="basic-addon1">
+	<input ng-model="searchEngineKeywords"
+		   type="text" class="form-control" placeholder="Enter title of the publication" aria-describedby="basic-addon1">
         <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search</button>
-      </span>
+        <button ng-click="searchEngine(searchEngineKeywords)"
+				class="btn btn-primary" type="button">Search</button>
+    </span>
 </div>
+<ul>
+	<li ng-repeat="item in searchEngineResult"><span ng-if="item.type">{{item.type | uppercase}}</span> <a ng-href="{{item.url}}" href="" target="_blank">{{item.title}}</a><br>
+		Matching keywords: {{item.title_matching}}</li>
+</ul>

@@ -17,6 +17,7 @@ function routing($stateProvider, $urlRouterProvider) {
 	})
 	.state('find-pdf', {
 		url: '/find-pdf',
+		controller: require('../controller/state/FindPdfController'),
 		template: require('../view/state/find-pdf.html')
 	})
 	.state('extract-pdf', {

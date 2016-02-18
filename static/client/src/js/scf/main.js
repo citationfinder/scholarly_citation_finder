@@ -1,10 +1,12 @@
 require('angular');
 require('angular-ui-router'); // exports: ui.router ($stateProvider, $urlRouterProvider)
-//require('restangular');
+require('lodash')
+require('restangular');
 
-angular.module('scf', ['ui.router'])
+angular.module('scf', ['ui.router', 'restangular'])
 	
 	// config
-	.config(require('./config/routing'));
+	.config(require('./config/api'))
+	.config(require('./config/routing'))
 
 ;

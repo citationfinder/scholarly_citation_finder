@@ -5,7 +5,7 @@ module.exports = {
 	},
 	watch: {
 		webpack: ['src/js/**/*.js', 'src/js/**/*.html'],
-		reload: ['index.html', 'dist/scf.min.js']
+		reload: 'dist/scf.min.js'
 	},
 	webpack: {
 		src: '../../webpack.config.js'
