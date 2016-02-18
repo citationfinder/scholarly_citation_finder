@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from requests.exceptions import ConnectionError
 
 from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParser
@@ -13,11 +13,11 @@ def htmlparser(request):
     if url:
         html_parser = HtmlParser()
         try:
-            return HttpResponse(html_parser.find_pdf_hyperrefs(url))
+            return JsonResponse({'items': html_parser.find_pdf_hyperrefs(url)})
         except(ConnectionError, HtmlParserUnkownHeaderType) as e:
-            return HttpResponse(str(e))
+            return JsonResponse({'msg': str(e)}, status=503)
     else:
-        return HttpResponse('Nothing do to. Usage: ?url=url')
+        return JsonResponse({'msg': 'Nothing do to. Usage: ?url=url'}, status=400)
 
 
 def duckduckgo(request):
@@ -25,11 +25,11 @@ def duckduckgo(request):
     if keywords:
         search_engine = Duckduckgo()
         try:
-            return HttpResponse(search_engine.query(keywords, filetype='pdf', limit=2))
+            return JsonResponse({'items': search_engine.query(keywords, filetype='pdf', limit=2)})
         except(ConnectionError, DuckduckgoResponseException) as e:
-            return HttpResponse(str(e))
+            return JsonResponse({'msg': str(e)}, status=503)
     else:
-        return HttpResponse('Nothing do to. Usage: ?keywords=keywords')        
+        return HttpResponse({'msg': 'Nothing do to. Usage: ?keywords=keywords'}, status=400)
 
 
 def crawler_index(request):
