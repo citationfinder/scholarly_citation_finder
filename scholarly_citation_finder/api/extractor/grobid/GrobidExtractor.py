@@ -3,6 +3,7 @@ import requests
 from scholarly_citation_finder.lib.process import ProcessException
 from scholarly_citation_finder.api.Process import Process
 from TeiParser import TeiParser
+from requests.exceptions import RequestException
 
 
 class GrobidExtractor(Process):
@@ -40,8 +41,8 @@ class GrobidExtractor(Process):
     
         try:
             resp = requests.post(url, files=files, data=vars)
-        except (requests.exceptions.RequestException) as e:
-            raise ProcessException('Request to Grobid server failed: {}'.format(str(e)))
+        except (RequestException) as e:
+            raise ProcessException('Request to Grobid server failed: {}'.format(e))
     
         if resp.status_code != 200:
             raise ProcessException('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))

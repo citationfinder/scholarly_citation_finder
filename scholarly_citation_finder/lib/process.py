@@ -28,7 +28,7 @@ def external_process(process_args, input_data='', timeout=None, cwd=None):
                                cwd=cwd)
     try:
         (stdout, stderr) = process.communicate(input_data, timeout)
-    except subprocess.TimeoutExpired as e:
+    except (subprocess.TimeoutExpired) as e:
         # cleanup process
         # see https://docs.python.org/3.3/library/subprocess.html?highlight=subprocess#subprocess.Popen.communicate
         process.kill()
