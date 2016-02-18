@@ -13,12 +13,13 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import include, url
 from rest_framework import routers
 
 from .apps.core.admin import default_site, mag_site
 from scholarly_citation_finder.apps.rest import views
-
 
 router = routers.DefaultRouter()
 router.register(r'affiliation', views.AffiliationViewSet)
@@ -34,6 +35,6 @@ urlpatterns = [
     url(r'^admin/mag/', include(mag_site.urls)),
     # rest
     url(r'^rest/', include('scholarly_citation_finder.apps.rest.urls')),
-    #
+    # api
     url(r'^api/', include('scholarly_citation_finder.api.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
