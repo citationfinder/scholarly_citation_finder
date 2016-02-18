@@ -33,7 +33,6 @@ def duckduckgo(request):
 
 
 def crawler_index(request):
-    
     publication_id = request.GET.get('id', None)
     if publication_id:
         crawler = Crawler()
