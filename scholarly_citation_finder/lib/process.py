@@ -1,6 +1,6 @@
 import subprocess32 as subprocess
 
-def ProcessException(Exception):
+class ProcessException(Exception):
     pass
 
 
