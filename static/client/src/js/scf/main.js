@@ -1,3 +1,4 @@
+require('angular');
 require('angular-ui-router'); // exports: ui.router ($stateProvider, $urlRouterProvider)
 //require('restangular');
 

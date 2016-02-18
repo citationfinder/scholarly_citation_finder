@@ -2,9 +2,6 @@
 ## Custom
 ############
 
-# Local build
-dist/
-
 # Local Node and Bower directory 
 node_modules/
 bower_components/

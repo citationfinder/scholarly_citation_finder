@@ -2,7 +2,6 @@
   "name": "scf_client",
   "dependencies": {
     "angular-ui-router": "~0.2.18",
-	"bootstrap": "~3.3.6",
     "restangular": "~1.5.2"
   },
   "devDependencies": {
