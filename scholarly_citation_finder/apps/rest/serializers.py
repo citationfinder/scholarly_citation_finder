@@ -33,7 +33,7 @@ class PublicationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Publication
-        fields = ('type', 'title', 'booktitle', 'publisher', 'year', 'volume', 'pages_from', 'pages_to', 'number', 'series', 'abstract', 'copyright', 'journal_name', 'conference_name')       
+        fields = ('id', 'type', 'title', 'booktitle', 'publisher', 'year', 'volume', 'pages_from', 'pages_to', 'number', 'series', 'abstract', 'copyright', 'journal_name', 'conference_name')       
 
         
 class PublicationAuthorAffilationSerializer(serializers.HyperlinkedModelSerializer):
