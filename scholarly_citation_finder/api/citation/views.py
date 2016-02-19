@@ -9,8 +9,6 @@ from scholarly_citation_finder.api.citation.strategy.FieldofstudyStrategy import
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from docutils.nodes import status
-from django.core import serializers
 
 
 def index(request):
