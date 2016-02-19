@@ -9,6 +9,7 @@ from scholarly_citation_finder.api.citation.strategy.FieldofstudyStrategy import
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from scholarly_citation_finder.apps.core.models import Author
 
 
 def index(request):
@@ -40,10 +41,8 @@ def author_detail(request):
     author_name = request.GET.get('author_name', None)
     if author_name:
         try:
-            authors_publications = PublicationSet()
-            authors_publications.set_by_author(name=author_name)            
-            return JsonResponse({'min_year': authors_publications.get_min_year(),
-                                 'authors': __serialize(authors_publications.get_authors())})
+            authors = Author.objects.using('mag').filter(name__contains=author_name)
+            return JsonResponse({'items': __serialize(authors)})
         except(ObjectDoesNotExist) as e:
             return HttpResponse(str(e), status=400)
         
