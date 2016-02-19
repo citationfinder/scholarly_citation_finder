@@ -75,7 +75,7 @@ class Parser(Process):
         
         :param name: Name of the author
         :return: ID of the author
-        :raise DataError: When the name is too long
+        :raise ParserDataError: When the name is too long
         '''
         self.cursor.execute("SELECT id FROM core_author WHERE name = %s LIMIT 1", (name,))
         result = self.cursor.fetchone()
@@ -96,7 +96,7 @@ class Parser(Process):
         
         :param name: Name of the journal
         :return: ID of the journal
-        :raise DataError: When the name is too long
+        :raise ParserDataError: When the name is too long
         '''
         self.cursor.execute("SELECT id FROM core_journal WHERE name = %s LIMIT 1", (name,))
         result = self.cursor.fetchone()
@@ -192,7 +192,7 @@ class Parser(Process):
                 for author in authors:
                     try:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", (publication_id, self.parse_author(author)))
-                    except(DataError) as e:
+                    except(ParserDataError) as e:
                         self.logger.warn(str(e))
                 del authors
             # keywords
