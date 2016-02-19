@@ -6,10 +6,6 @@ from scholarly_citation_finder.api.citation.strategy.JournalStrategy import Jour
 from scholarly_citation_finder.api.citation.strategy.ConferenceStrategy import ConferenceStrategy
 from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
 from scholarly_citation_finder.api.citation.strategy.FieldofstudyStrategy import FieldofstudyStrategy
-from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
-from django.http.response import JsonResponse
-from django.core.exceptions import ObjectDoesNotExist
-from scholarly_citation_finder.apps.core.models import Author
 
 
 def index(request):
@@ -36,7 +32,7 @@ def index(request):
     else:
         return HttpResponse('Nothing to do. Usage: ?author_name=<name> or ?author_id=<id>')
 
-
+"""
 def author_detail(request):
     author_name = request.GET.get('author_name', None)
     if author_name:
@@ -51,3 +47,4 @@ def __serialize(array):
     for item in array:
         result.append({'id': item.id, 'name': item.name})
     return result;
+"""
