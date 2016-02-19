@@ -25,10 +25,10 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/ExtractPdfController'),
 		template: require('../view/state/extract-pdf.html')
 	})
-	.state('author', {
-		url: '/author',
-		controller: require('../controller/state/AuthorController'),
-		template: require('../view/state/author.html')
+	.state('find-citations', {
+		url: '/find-citations',
+		controller: require('../controller/state/FindCitationsController'),
+		template: require('../view/state/find-citations.html')
 	})
 	;		
 }
