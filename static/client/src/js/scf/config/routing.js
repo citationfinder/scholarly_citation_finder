@@ -25,6 +25,11 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/ExtractPdfController'),
 		template: require('../view/state/extract-pdf.html')
 	})
+	.state('author', {
+		url: '/author',
+		controller: require('../controller/state/AuthorController'),
+		template: require('../view/state/author.html')
+	})
 	;		
 }
 

@@ -1,0 +1,18 @@
+<div class="page-header">
+  <h1>Author</h1>
+</div>
+
+<div class="input-group">
+	<input ng-model="authorName"
+		   type="text" class="form-control" placeholder="Enter a name of an author" aria-describedby="basic-addon1">
+         <span class="input-group-btn">
+        <button ng-click="getAuthor(authorName)"
+				class="btn btn-primary" type="button">Search</button>
+	</span>
+</div>
+
+<p ng-if="authorResult.min_year">Since: {{authorResult.min_year}}</p>
+
+<ol>
+	<li ng-repeat="coauthor in authorResult.authors">{{coauthor.name}} ({{coauthor.id}})</li>
+</ol>

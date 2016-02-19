@@ -6,6 +6,7 @@ from extractor import views as extractor_views
 
 urlpatterns = [
     url(r'^citation/$', citation_views.index, name='citation_index'),
+    url(r'^citation/author/$', citation_views.author_detail, name='citation_author_detail'),
     url(r'^crawler/htmlparser/$', crawler_views.htmlparser, name='crawler_htmlparser'),
     url(r'^crawler/duckduckgo/$', crawler_views.duckduckgo, name='crawler_duckduckgo'),
     url(r'^crawler/$', crawler_views.crawler_index, name='crawler_index'),
