@@ -28,9 +28,13 @@ class JournalSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PublicationSerializer(serializers.HyperlinkedModelSerializer):
+    conference_name = serializers.StringRelatedField(source='conference', read_only=True)
+    journal_name = serializers.StringRelatedField(source='journal', read_only=True)
+
     class Meta:
         model = Publication
-        
+        fields = ('type', 'title', 'booktitle', 'publisher', 'year', 'volume', 'pages_from', 'pages_to', 'number', 'series', 'abstract', 'copyright', 'journal_name', 'conference_name')       
+
         
 class PublicationAuthorAffilationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

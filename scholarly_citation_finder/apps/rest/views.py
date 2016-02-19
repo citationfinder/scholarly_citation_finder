@@ -27,3 +27,8 @@ class FieldOfStudyViewSet(viewsets.ModelViewSet):
 class JournalViewSet(viewsets.ModelViewSet):
     queryset = Journal.objects.using(DB_NAME).all()
     serializer_class = JournalSerializer
+
+
+class PublicationViewSet(viewsets.ModelViewSet):
+    queryset = Publication.objects.using(DB_NAME).all()
+    serializer_class = PublicationSerializer
