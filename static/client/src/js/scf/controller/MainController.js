@@ -1,4 +1,4 @@
-function MainController($scope, Restangular) {
+function MainController($scope) {
 	$scope.alerts = [];
 	
 	$scope.addAlert = function(msg) {
