@@ -85,12 +85,12 @@ class DblpHarvester(Harvester):
         urls = []
         citations = []
         
-        context = etree.iterparse(filename, load_dtd=True, html=True)
+        context = etree.iterparse(filename, load_dtd=True, html=False)
         for _, elem in context:
-            if elem.tag in ('html', 'body'):
-                continue
+            #if elem.tag in ('html', 'body'):
+            #    continue
             # collaboration
-            elif elem.tag in self.COLLABORATIONS:
+            if elem.tag in self.COLLABORATIONS:
                 key = elem.get('key')
                 if _from is not None:
                     # Stop skipping, if the key was found
