@@ -5,9 +5,15 @@ from lxml import etree
 
 from ..Harvester import Harvester
 from scholarly_citation_finder.api.citation.CsvFileWriter import CsvFileWriter
+from scholarly_citation_finder.apps.core.models import Publication,\
+    PublicationReference
+from django.core.exceptions import ObjectDoesNotExist
+import csv
 
 
 class DblpHarvester(Harvester):
+    
+    FILENAME_CITE = 'cite.csv'
     
     COLLABORATIONS = [
         'article',
@@ -76,7 +82,7 @@ class DblpHarvester(Harvester):
         :return: The number of parsed publications
         '''
         cite_writer = CsvFileWriter()
-        cite_writer.open(os.path.join(self.download_dir, 'cite.csv'), mode='a+')
+        cite_writer.open(os.path.join(self.download_dir, self.FILENAME_CITE), mode='a+')
         
         publication = {}
         conference_short_name = None
@@ -186,3 +192,22 @@ class DblpHarvester(Harvester):
         
         cite_writer.close()
         return self.count_publications
+    
+    def parse_citations(self):
+        try:
+            filename = os.path.join(self.download_dir, self.FILENAME_CITE)
+            with open(filename) as input:
+                reader = csv.reader(input)
+                for line in reader:
+                    if len(line) == 2:
+                        self.__parse_citation(int(line[0]), line[1])
+        except(IOError) as e:
+            raise e
+        
+    def __parse_citation(self, publication_id, reference_dblp_key):
+        try:
+            reference = Publication.objects.using(self.name).get(source='{}:{}'.format(self.name, reference_dblp_key))
+            PublicationReference.objects.using(self.name).get_or_create(publication_id=publication_id,
+                                                                        reference=reference)
+        except(ObjectDoesNotExist) as e:
+            self.logger.info(str(e))

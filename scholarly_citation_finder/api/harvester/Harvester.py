@@ -2,8 +2,6 @@ import getopt
 import sys
 
 from ..Parser import Parser
-from psycopg2._psycopg import IntegrityError
-from scholarly_citation_finder.api.Parser import ParserRollbackError
 
 
 def get_arguments(argv):
