@@ -206,8 +206,8 @@ class DblpHarvester(Harvester):
         
     def __parse_citation(self, publication_id, reference_dblp_key):
         try:
-            reference = Publication.objects.using(self.name).get(source='{}:{}'.format(self.name, reference_dblp_key))
+            reference = Publication.objects.using(self.name).get(source='{}:{}'.format('dbpl', reference_dblp_key))
             PublicationReference.objects.using(self.name).get_or_create(publication_id=publication_id,
                                                                         reference=reference)
         except(ObjectDoesNotExist) as e:
-            self.logger.info(str(e))
+            self.logger.info('{},{} - {}'.format(publication_id, reference_dblp_key, str(e)))
