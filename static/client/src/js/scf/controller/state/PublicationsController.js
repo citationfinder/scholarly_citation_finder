@@ -13,7 +13,9 @@ function PublicationsController($scope, $stateParams, Restangular) {
 	
 	
 	// Get routing params
-	$scope.getPublication($stateParams.id);
+	if ($stateParams.id) {
+		$scope.getPublication($stateParams.id);
+	}
 
 }
 

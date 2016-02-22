@@ -2,12 +2,13 @@
 	<h1>Publications</h1>
 </div>
 
-<h4>{{publicationResult.title}}</h4>
-<button type="button" class="btn btn-primary btn-sm" ng-click="isCollapsed = !isCollapsed">Export as SCF-JSON</button>
-<br>
-<br>
-<div uib-collapse="isCollapsed">
-	<textarea class="form-control" rows="20">
+<div ng-show="publicationResult">
+	<h4>{{publicationResult.title}}</h4>
+	<button type="button" class="btn btn-primary btn-sm" ng-click="isCollapsed = !isCollapsed">Export as SCF-JSON</button>
+	<br>
+	<br>
+	<div uib-collapse="isCollapsed">
+		<textarea class="form-control" rows="20">
 {
 	"type": "{{publicationResult.type}}"
 	"title": "{{publicationResult.title}}"
@@ -25,5 +26,6 @@
 	"doi": "{{publicationResult.doi}}"
 	"isbn": "{{publicationResult.isbn}}"
 }
-	</textarea>
+		</textarea>
+	</div>
 </div>
