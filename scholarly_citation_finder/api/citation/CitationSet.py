@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from scholarly_citation_finder.api.citation.CsvFileWriter import CsvFileWriter
+from scholarly_citation_finder.lib import CsvFileWriter.CsvFileWriter
 
 class CitationSet:
 
