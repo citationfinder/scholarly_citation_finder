@@ -4,9 +4,8 @@ import os.path
 from lxml import etree
 
 from ..Harvester import Harvester
-from scholarly_citation_finder.lib import CsvFileWriter.CsvFileWriter
-from scholarly_citation_finder.apps.core.models import Publication,\
-    PublicationReference
+from scholarly_citation_finder.lib.CsvFileWriter import CsvFileWriter
+from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
 from django.core.exceptions import ObjectDoesNotExist
 import csv
 
