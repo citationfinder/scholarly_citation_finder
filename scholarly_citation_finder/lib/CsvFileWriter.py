@@ -8,6 +8,7 @@ class CsvFileWriter:
         
     def open(self, filename, encoding='utf-8', mode='w+'):
         self.output = codecs.open(filename, mode=mode, encoding=encoding)
+        return filename
         
     def close(self):
         self.output.close()
@@ -17,6 +18,12 @@ class CsvFileWriter:
         
     def write_header(self, string):
         self.write_line('# ' + string)
+        
+    def write_header2(self, *args):
+        self.write_header(','.join([str(column) for column in args]))        
     
     def write_values(self, column1, column2):
         self.write_line('{},{}'.format(column1, column2))
+
+    def write_values2(self, *args):
+        self.write_line(','.join([str(column) for column in args]))
