@@ -34,3 +34,8 @@ class Process(object):
                                 dbname=db['NAME'],
                                 user=db['USER'],
                                 password=db['PASSWORD'])
+"""
+    def get_database_connection_django(self, name='default'):
+        from django.db import connections
+        return connections[name]
+"""
