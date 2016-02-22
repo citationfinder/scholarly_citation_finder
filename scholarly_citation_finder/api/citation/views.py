@@ -6,7 +6,33 @@ from scholarly_citation_finder.api.citation.strategy.JournalStrategy import Jour
 from scholarly_citation_finder.api.citation.strategy.ConferenceStrategy import ConferenceStrategy
 from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
 from scholarly_citation_finder.api.citation.strategy.FieldofstudyStrategy import FieldofstudyStrategy
+from django.utils.html import escape
+import os.path
+from scholarly_citation_finder import config
+from scholarly_citation_finder.lib.process import external_process,\
+    ProcessException
 
+def _tail_file(filename, num_lines=10):
+    try:
+        exit_status, stdout, stderr = external_process(['tail', '-n', str(num_lines), filename])
+        if exit_status == 0:
+            return HttpResponse(escape(stdout))
+        else:
+            return HttpResponse(stderr, status=503)
+    except(ProcessException) as e:
+        return HttpResponse(str(e), status=503)    
+
+def evaluation_status(request, name):
+    filename = os.path.join(config.DOWNLOAD_DIR, 'evaluation', name, 'info.log')
+    if not os.path.isfile(filename):
+        return HttpResponse('evaluation with name {} does not exists'.format(name), status=404)
+    return _tail_file(filename, 5)
+
+def evaluation_authors(request, name):
+    filename = os.path.join(config.DOWNLOAD_DIR, 'evaluation', name, 'authors.csv')
+    if not os.path.isfile(filename):
+        return HttpResponse('evaluation with name {} does not exists'.format(name), status=404)
+    return _tail_file(filename, 105)
 
 def index(request):
     author_name = request.GET.get('author_name', None)
