@@ -11,7 +11,7 @@
 Makefile
 *.sqlite3
 *.sqlite3-journal
-scholarly_citation_finder/static/
+static/
 
 
 ############
