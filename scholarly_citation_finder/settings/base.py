@@ -10,18 +10,30 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+###############################################################################
+# Basic settings
+###############################################################################
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+ROOT_URLCONF = 'scholarly_citation_finder.urls'
+WSGI_APPLICATION = 'scholarly_citation_finder.wsgi.application'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'e5zjfb$nbtq(u(go5q9etj^t@mhl2kr&w_np%3_zq+g4rx1n!l')
 
+# Internationalization
+LANGUAGE_CODE = 'en-gb'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = False
+
+
+###############################################################################
+# Applications and middleware classes
+###############################################################################
 
 # Application definition
 PREREQ_APPS = (
@@ -57,7 +69,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.security.SecurityMiddleware'
 )
 
-ROOT_URLCONF = 'scholarly_citation_finder.urls'
+
+###############################################################################
+# Templates and static files
+###############################################################################
 
 TEMPLATES = [
     {
@@ -75,26 +90,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scholarly_citation_finder.wsgi.application'
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-LANGUAGE_CODE = 'en-gb'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = False
-
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static'))
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../public'),
 ]
 
-# Celery settings.
+
+###############################################################################
+# Celery
+###############################################################################
+
+# Celery settings
 BROKER_URL = os.getenv('BROKER_URL', 'amqp://guest:guest@localhost//')
 #CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'amqp')

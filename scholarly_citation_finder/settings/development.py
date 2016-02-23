@@ -2,11 +2,13 @@ from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+###############################################################################
+# Database settings
+###############################################################################
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -39,8 +41,10 @@ DATABASES = {
 }
 
 
+###############################################################################
 # Logging
-# http://ianalexandr.com/blog/getting-started-with-django-logging-in-5-minutes.html
+###############################################################################
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -80,8 +84,10 @@ LOGGING = {
 }
 
 
-# rest_framework
-#
+###############################################################################
+# Rest frameworks
+###############################################################################
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
     'PAGE_SIZE': 10
