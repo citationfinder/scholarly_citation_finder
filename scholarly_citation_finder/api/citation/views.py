@@ -12,6 +12,12 @@ from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.process import external_process,\
     ProcessException
 
+import tasks
+
+def evaluation_create(request):
+    tasks.create_evaluation.delay('fu', 2, 0)
+    return HttpResponse('started')
+
 def _tail_file(filename, num_lines=10):
     try:
         exit_status, stdout, stderr = external_process(['tail', '-n', str(num_lines), filename])
