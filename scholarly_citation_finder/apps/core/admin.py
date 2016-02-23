@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import *
+from .models import Affilation, Author, Conference, ConferenceInstance, FieldOfStudy, Journal, Publication, PublicationAuthorAffilation, PublicationKeyword,PublicationReference, PublicationUrl
 
 class MultiDBModelAdmin(admin.ModelAdmin):
     # A handy constant for the name of the alternate database.

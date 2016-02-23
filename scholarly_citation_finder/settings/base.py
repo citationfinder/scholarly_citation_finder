@@ -24,7 +24,7 @@ WSGI_APPLICATION = 'scholarly_citation_finder.wsgi.application'
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'e5zjfb$nbtq(u(go5q9etj^t@mhl2kr&w_np%3_zq+g4rx1n!l')
 
 # Internationalization
-LANGUAGE_CODE = 'en-gb'
+LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
