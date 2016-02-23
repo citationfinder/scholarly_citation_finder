@@ -47,6 +47,11 @@ default_site.register(PublicationKeyword)
 default_site.register(PublicationReference)
 default_site.register(PublicationUrl)
 
+from djcelery.models import TaskMeta
+class TaskMetaAdmin(admin.ModelAdmin):
+    readonly_fields = ('result',)    
+default_site.register(TaskMeta, TaskMetaAdmin)
+
 
 '''
 Register 'mag'

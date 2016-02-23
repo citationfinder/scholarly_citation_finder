@@ -45,6 +45,7 @@ PREREQ_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'djcelery',
 )
 PROJECT_APPS = (
     'scholarly_citation_finder.api.citation',
@@ -104,4 +105,4 @@ STATICFILES_DIRS = [
 
 # Celery settings
 BROKER_URL = os.getenv('BROKER_URL', 'amqp://guest:guest@localhost//')
-#CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'amqp')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'djcelery.backends.database:DatabaseBackend')

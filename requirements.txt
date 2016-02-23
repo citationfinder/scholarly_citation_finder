@@ -19,6 +19,7 @@ djangorestframework==3.3.2
 
 # asyn tasks
 celery==3.1.20
+django-celery==3.1.17
 
 # debug only
 django-extensions==1.6.1
