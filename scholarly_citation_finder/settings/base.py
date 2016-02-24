@@ -49,6 +49,7 @@ PREREQ_APPS = (
 )
 PROJECT_APPS = (
     'scholarly_citation_finder.api.citation',
+    'scholarly_citation_finder.api.citation.mag', # required for celery
     'scholarly_citation_finder.api.crawler',
     'scholarly_citation_finder.api.extractor',
     'scholarly_citation_finder.api.harvester',

@@ -5,7 +5,7 @@ from djcelery.models import TaskMeta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import JsonResponse
 
-import tasks
+from scholarly_citation_finder.api.citation.mag import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 
 
@@ -21,11 +21,14 @@ def index(request):
     else:
         response_items = []
         for task in Task.objects.filter(type=Task.TYPE_CITATION_MAG):
-            taskmeta = TaskMeta.objects.get(task_id=task.taskmeta_id)
-            response_items.append({'id': task.id,
-                           'starttime': task.starttime,
-                           'status': taskmeta.status,
-                           'traceback': taskmeta.traceback})
+            try:
+                taskmeta = TaskMeta.objects.get(task_id=task.taskmeta_id)
+                response_items.append({'id': task.id,
+                               'starttime': task.starttime,
+                               'status': taskmeta.status,
+                               'traceback': taskmeta.traceback})
+            except(ObjectDoesNotExist):
+                pass
         return JsonResponse({'items': response_items})
 
 
