@@ -1,8 +1,0 @@
-<p><a href="/frontend/publications/{{item.id}}">{{item.title}}</a>
-<br>
-{{item.date}}
-<i>{{item.journal}}</i>
-{% for author in item.authors.all %}
-	<a href="/frontend/authors/{{author.id}}">{{author.last_name}}</a>,
-{% endfor %}
-</p>
