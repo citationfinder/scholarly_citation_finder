@@ -14,6 +14,14 @@ from scholarly_citation_finder.lib.process import external_process,\
 
 import tasks
 
+def mag_authors_citations(request):
+    author_id = request.GET.get('author_id', None)
+    if author_id:
+        tasks.mag_authors_citations.deplay(author_id)
+        return HttpResponse('started')
+    else:
+        return HttpResponse('Nothing to do. Usage: ?author_id=<id>', status=400)
+
 def evaluation_create(request):
     tasks.create_evaluation.delay('fu', 2, 0)
     return HttpResponse('started')
@@ -62,7 +70,7 @@ def index(request):
         #citation_finder.run(FieldofstudyStrategy(ordered=True, limit=5))
         return HttpResponse('Done')
     else:
-        return HttpResponse('Nothing to do. Usage: ?author_name=<name> or ?author_id=<id>')
+        return HttpResponse('Nothing to do. Usage: ?author_name=<name> or ?author_id=<id>', status=400)
 
 """
 def author_detail(request):

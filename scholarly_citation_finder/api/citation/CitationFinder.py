@@ -44,6 +44,7 @@ class CitationFinder:
         return strategies_name, self.evaluation_result
 
     def inspect_publications(self, publications, string=''):
+        # <----- remove
         publications_citing = self.citing_papers.filter(publication__in=publications)
 
         #self.logger.info('{}: found {} publications, {} citations'.format(string, len(publications), len(publications_citing)))
@@ -57,3 +58,7 @@ class CitationFinder:
         if self.evaluation:
             self.evaluation_result.append([len(publications), len(self.citations)])
         
+    def store(self):
+        pass
+        #self.publication_set.get()
+        #self.citations

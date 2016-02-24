@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^evaluation/create/$', views.evaluation_create),
     url(r'^evaluation/job/(?P<name>.*)/status/$', views.evaluation_status),
     url(r'^evaluation/job/(?P<name>.*)/authors/$', views.evaluation_authors),
-    #url(r'^$', views.index, name='index'),
 ]
