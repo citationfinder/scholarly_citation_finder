@@ -40,8 +40,7 @@ def mag_authors_citations(author_id):
     
         # -> convert result
         output_path = create_dir(os.path.join(config.DOWNLOAD_DIR, 'mag'))
-        citationfinder.store(filename=os.path.join(output_path, '{}.json'.format(author_id)))
-        return True
+        return citationfinder.store(filename=os.path.join(output_path, '{}.json'.format(author_id)))
     except(ObjectDoesNotExist) as e:
         logger.info(str(e))
 

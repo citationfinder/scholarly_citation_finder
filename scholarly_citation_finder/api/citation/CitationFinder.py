@@ -68,6 +68,7 @@ class CitationFinder:
 
         with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
             output_file.write(json.dumps(results, indent=4))
+        return filename
 
     def __serialze(self, publication, citations=None):
         result = {'type': 'article',

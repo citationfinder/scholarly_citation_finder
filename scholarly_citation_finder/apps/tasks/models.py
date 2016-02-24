@@ -10,4 +10,4 @@ class Task(models.Model):
     
     type = models.CharField(max_length=30, choices=TYPES)
     starttime = models.DateTimeField(auto_now_add=True)
-    taskmeta = models.ForeignKey(TaskMeta)
+    taskmeta_id = models.CharField(max_length=100)
