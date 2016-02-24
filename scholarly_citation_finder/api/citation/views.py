@@ -16,17 +16,26 @@ import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import JsonResponse
-import StringIO
 
 def mag_authors_citations(request):
+    author_name = request.GET.get('author_name', None)
     author_id = request.GET.get('author_id', None)
-    if author_id:
-        asyncresult = tasks.mag_authors_citations.delay(author_id)
+    if author_name or author_id:
+        asyncresult = tasks.mag_authors_citations.delay(author_name=author_name, author_id=author_id)
         task = Task.objects.create(type=Task.TYPE_CITATION_MAG, taskmeta_id=asyncresult.id)
         return JsonResponse({'id': task.id,
-                             'url': '/api/citation/mag/authors-citations/{}/'.format(task.id)})
+                             'url': '/api/citation/mag/authors-citations/{}/'.format(task.id),
+                             'starttime': task.starttime})
     else:
-        return HttpResponse('Nothing to do. Usage: ?author_id=id', status=400)
+        result = []
+        for task in Task.objects.filter(type=Task.TYPE_CITATION_MAG):
+            taskmeta = TaskMeta.objects.get(task_id=task.taskmeta_id)
+            result.append({'id': task.id,
+                           'starttime': task.starttime,
+                           'status': taskmeta.status,
+                           'traceback': taskmeta.traceback})
+        return JsonResponse({'items': result})
+        #return HttpResponse('Nothing to do. Usage: ?author_id=id', status=400)
 
 def mag_authors_citations_result(request, id):
     try:
@@ -34,7 +43,7 @@ def mag_authors_citations_result(request, id):
         tastmeta = TaskMeta.objects.get(task_id=taskmeta_id)
         with open(tastmeta.result) as result_file:
             return HttpResponse(result_file, content_type="application/json")
-        return JsonResponse({'state': tastmeta.status,
+        return JsonResponse({'status': tastmeta.status,
                             'traceback': tastmeta.traceback,
                             'result': tastmeta.result,
                             'date_done': tastmeta.date_done})
