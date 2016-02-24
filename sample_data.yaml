@@ -1,106 +1,176 @@
-- fields: {app_label: admin, model: logentry}
-  model: contenttypes.contenttype
+- fields: {name: "university of l\xFCbeck"}
+  model: core.affilation
   pk: 1
-- fields: {app_label: auth, model: permission}
-  model: contenttypes.contenttype
+- fields: {name: google}
+  model: core.affilation
   pk: 2
-- fields: {app_label: auth, model: group}
-  model: contenttypes.contenttype
+- fields: {name: ibm}
+  model: core.affilation
   pk: 3
-- fields: {app_label: auth, model: user}
-  model: contenttypes.contenttype
+- fields: {name: university of copenhagen}
+  model: core.affilation
   pk: 4
-- fields: {app_label: contenttypes, model: contenttype}
-  model: contenttypes.contenttype
-  pk: 5
-- fields: {app_label: sessions, model: session}
-  model: contenttypes.contenttype
-  pk: 6
-- fields: {app_label: core, model: affilation}
-  model: contenttypes.contenttype
-  pk: 7
-- fields: {app_label: core, model: author}
-  model: contenttypes.contenttype
-  pk: 8
-- fields: {app_label: core, model: conference}
-  model: contenttypes.contenttype
-  pk: 9
-- fields: {app_label: core, model: conferenceinstance}
-  model: contenttypes.contenttype
-  pk: 10
-- fields: {app_label: core, model: fieldofstudy}
-  model: contenttypes.contenttype
-  pk: 11
-- fields: {app_label: core, model: journal}
-  model: contenttypes.contenttype
-  pk: 12
-- fields: {app_label: core, model: publication}
-  model: contenttypes.contenttype
-  pk: 13
-- fields: {app_label: core, model: publicationauthoraffilation}
-  model: contenttypes.contenttype
-  pk: 14
-- fields: {app_label: core, model: publicationkeyword}
-  model: contenttypes.contenttype
-  pk: 15
-- fields: {app_label: core, model: publicationreference}
-  model: contenttypes.contenttype
-  pk: 16
-- fields: {app_label: core, model: publicationurl}
-  model: contenttypes.contenttype
-  pk: 17
-- fields: {name: IBM}
-  model: core.affilation
-  pk: 1
-- fields: {name: "University of L\xFCbeck"}
-  model: core.affilation
-  pk: 2
-- fields: {name: "Tom M\xF6ller"}
+- fields: {name: "tom m\xFCller"}
   model: core.author
   pk: 1
-- fields: {name: "Miri Schr\xF6der"}
+- fields: {name: jimmy schneider}
   model: core.author
   pk: 2
-- fields: {name: Micro Action G Conference, short_name: MAG}
+- fields: {name: "miri schr\xF6der"}
+  model: core.author
+  pk: 3
+- fields: {name: aron track}
+  model: core.author
+  pk: 4
+- fields: {name: example computer conference, short_name: ecc}
   model: core.conference
   pk: 1
-- fields: {conference: null, location: "L\xFCbeck, Germany", name: Micro Action G
-      Conference 2016, short_name: MAG16, url: 'http://example.org', year: 2016}
+- fields: {name: electronic confernce, short_name: ec}
+  model: core.conference
+  pk: 2
+- fields: {conference: 1, location: "l\xFCbeck, germany", name: example conference
+      2015, short_name: ecc15, url: 'http://example.org', year: 2015}
   model: core.conferenceinstance
   pk: 1
-- fields: {name: Signal processing}
+- fields: {conference: 2, location: 'copenhagen, denmark', name: electronic conference
+      14, short_name: ec14, url: '', year: 2014}
+  model: core.conferenceinstance
+  pk: 2
+- fields: {name: artificial intelligence}
   model: core.fieldofstudy
   pk: 1
-- fields: {name: Journal of Arts}
+- fields: {name: semantic web}
+  model: core.fieldofstudy
+  pk: 2
+- fields: {name: control engineering}
+  model: core.fieldofstudy
+  pk: 3
+- fields: {name: journal of control engineering}
   model: core.journal
   pk: 1
-- fields: {name: Journal of Yolo}
+- fields: {name: journal of semantic web}
   model: core.journal
   pk: 2
-- fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
-    isbn: '', journal: 1, number: '', pages_from: '', pages_to: '', publisher: '',
-    series: '', source_extracted: false, title: Exemplary Publication with a Title,
-    type: '', volume: '', year: 2015}
+- fields: {name: ai journal}
+  model: core.journal
+  pk: 3
+- fields: {abstract: '', booktitle: '', conference: null, copyright: '', date: '',
+    doi: '', isbn: '', journal: 2, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source: '', source_extracted: null, title: new semantic web 3.0, type: '',
+    volume: '', year: null}
   model: core.publication
   pk: 1
+- fields: {abstract: '', booktitle: '', conference: 2, copyright: '', date: '', doi: '',
+    isbn: '', journal: 1, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source: '', source_extracted: false, title: control loop xtds, type: '',
+    volume: '', year: 2016}
+  model: core.publication
+  pk: 2
+- fields: {abstract: '', booktitle: '', conference: null, copyright: '', date: '2014',
+    doi: '', isbn: '', journal: 3, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source: '', source_extracted: null, title: artificial intelligence
+      goes web, type: '', volume: '', year: null}
+  model: core.publication
+  pk: 3
 - fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
     isbn: '', journal: 2, number: '', pages_from: '', pages_to: '', publisher: '',
-    series: '', source_extracted: false, title: Another Publication Hello World, type: '',
+    series: '', source: '', source_extracted: false, title: semantic goes web, type: '',
     volume: '', year: 2013}
   model: core.publication
-  pk: 2
+  pk: 4
+- fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
+    isbn: '', journal: null, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source: '', source_extracted: false, title: semantic xml engine, type: '',
+    volume: '', year: 2015}
+  model: core.publication
+  pk: 5
+- fields: {abstract: '', booktitle: '', conference: 1, copyright: '', date: '', doi: '',
+    isbn: '', journal: 2, number: '', pages_from: '', pages_to: '', publisher: '',
+    series: '', source: '', source_extracted: false, title: semantic hyper loop, type: '',
+    volume: '', year: 2016}
+  model: core.publication
+  pk: 6
 - fields: {affilation: 1, author: 1, publication: 1}
   model: core.publicationauthoraffilation
   pk: 1
-- fields: {affilation: 2, author: 1, publication: 2}
+- fields: {affilation: 1, author: 2, publication: 1}
   model: core.publicationauthoraffilation
   pk: 2
-- fields: {fieldofstudy: 1, name: Signal wave, publication: 1}
+- fields: {affilation: 2, author: 1, publication: 2}
+  model: core.publicationauthoraffilation
+  pk: 3
+- fields: {affilation: 4, author: 3, publication: 2}
+  model: core.publicationauthoraffilation
+  pk: 4
+- fields: {affilation: 3, author: 2, publication: 3}
+  model: core.publicationauthoraffilation
+  pk: 5
+- fields: {affilation: 2, author: 3, publication: 3}
+  model: core.publicationauthoraffilation
+  pk: 6
+- fields: {affilation: 1, author: 3, publication: 4}
+  model: core.publicationauthoraffilation
+  pk: 7
+- fields: {affilation: 2, author: 3, publication: 5}
+  model: core.publicationauthoraffilation
+  pk: 8
+- fields: {affilation: 3, author: 3, publication: 5}
+  model: core.publicationauthoraffilation
+  pk: 9
+- fields: {affilation: 1, author: 1, publication: 5}
+  model: core.publicationauthoraffilation
+  pk: 10
+- fields: {affilation: 1, author: 2, publication: 6}
+  model: core.publicationauthoraffilation
+  pk: 11
+- fields: {affilation: 4, author: 1, publication: 6}
+  model: core.publicationauthoraffilation
+  pk: 12
+- fields: {fieldofstudy: 2, name: semantic web, publication: 1}
   model: core.publicationkeyword
   pk: 1
-- fields: {context: '', publication: 1, reference: 2}
+- fields: {fieldofstudy: 2, name: semantic web, publication: 4}
+  model: core.publicationkeyword
+  pk: 2
+- fields: {fieldofstudy: 2, name: semantic web, publication: 6}
+  model: core.publicationkeyword
+  pk: 3
+- fields: {fieldofstudy: 1, name: ai, publication: 3}
+  model: core.publicationkeyword
+  pk: 4
+- fields: {fieldofstudy: 1, name: ai, publication: 1}
+  model: core.publicationkeyword
+  pk: 5
+- fields: {fieldofstudy: 3, name: engineering, publication: 2}
+  model: core.publicationkeyword
+  pk: 6
+- fields: {fieldofstudy: 2, name: xml, publication: 5}
+  model: core.publicationkeyword
+  pk: 7
+- fields: {context: '', publication: 1, reference: 4}
   model: core.publicationreference
   pk: 1
-- fields: {publication: 1, type: null, url: 'http://example.org/paper.pdf'}
+- fields: {context: '', publication: 1, reference: 5}
+  model: core.publicationreference
+  pk: 2
+- fields: {context: '', publication: 5, reference: 6}
+  model: core.publicationreference
+  pk: 3
+- fields: {context: '', publication: 2, reference: 3}
+  model: core.publicationreference
+  pk: 4
+- fields: {context: '', publication: 3, reference: 6}
+  model: core.publicationreference
+  pk: 5
+- fields: {publication: 1, type: application/pdf, url: 'http://example.org/paper.pdf'}
   model: core.publicationurl
   pk: 1
+- fields: {publication: 1, type: null, url: 'http://example.org/paper-v2.pdf'}
+  model: core.publicationurl
+  pk: 2
+- fields: {publication: 5, type: null, url: 'http://example.org/paper-sem.html'}
+  model: core.publicationurl
+  pk: 3
+- fields: {publication: 2, type: null, url: 'http://example.org/paper-c2.pdf'}
+  model: core.publicationurl
+  pk: 4
