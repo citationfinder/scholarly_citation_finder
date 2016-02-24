@@ -4,13 +4,13 @@ from django.test import TestCase
 import os.path
 
 from scholarly_citation_finder import config
-from scholarly_citation_finder.api.citation.evaluation.Evaluation import Evaluation
+from RandomAuthorSet import RandomAuthorSet
 
 """
 class EvaluationAuthorSetTest(TestCase):
 
     def setUp(self):
-        self.author_set = Evaluation('run_a')
+        self.author_set = RandomAuthorSet('run_a')
         
     def test_run(self):
         self.author_set.run(2)

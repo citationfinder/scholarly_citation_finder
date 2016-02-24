@@ -3,8 +3,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Min
 
-from scholarly_citation_finder.apps.core.models import Author, Publication, PublicationReference,\
-    Conference, Journal, FieldOfStudy
+from scholarly_citation_finder.apps.core.models import Author, Publication, Conference, Journal, FieldOfStudy
 
 
 class EmptyIdstringException(Exception):
@@ -14,7 +13,6 @@ class EmptyIdstringException(Exception):
 class PublicationSet:
     
     publications = []
-    name = None
     publications_idstring = ''
     
     additional_publications_idstring = ''
@@ -27,12 +25,11 @@ class PublicationSet:
     def __len__(self):
         return len(self.publications)
 
-    def is_set(self):
-        return self.publications is not None
+    def is_empty(self):
+        return not self.publications
     
-    def set(self, publications, name):
+    def set(self, publications):
         self.publications = publications
-        self.name = name
         self.publications_idstring = ','.join([str(publication.id) for publication in self.publications])
         return len(self.publications)
 
@@ -52,28 +49,11 @@ class PublicationSet:
                 
             #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
             #Publication.objects.using(self.database).filter()
-            num_publications = self.set(publications=Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),
-                                        name=author.id)
-            return (author, num_publications)
+            num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),)
+            return author.id, num_publications
         except(ObjectDoesNotExist) as e:
             raise e
             
-        """    
-        self.cursor.execute("SELECT id FROM core_author WHERE name LIKE %s LIMIT 1", (name,))
-        result = self.cursor.fetchone()
-        
-        if result:
-            id = result[0]
-            self._open_output_file(id)
-            self.logger.info('search author "{}", found author id: {}'.format(name, id))
-            self.cursor.execute("SELECT publication_id FROM core_publicationauthoraffilation WHERE author_id = %s", (id,))
-            self.set_publication_search_set(self._sqllist2array(self.cursor.fetchall()))
-            return True
-        else:
-            self.logger.info('search author "{}", found nothing'.format(name))
-        return False     
-        """    
-
     def set_by_journal(self, name=None, id=None):
         pass
     
