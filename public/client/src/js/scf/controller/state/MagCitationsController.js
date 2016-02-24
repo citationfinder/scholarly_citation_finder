@@ -5,7 +5,7 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	$scope.isCollapsed = true;
 	
 	$scope.getTasks = function() {
-		Restangular.all('citation/mag/authors-citations').getList().then(function(items) {
+		Restangular.all('citation/mag/').getList().then(function(items) {
 			console.log(items);
 			$scope.tasks = items;
 		}, function(data) {
@@ -17,7 +17,7 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	$scope.getTask = function(index, id) {
 		$scope.task = $scope.tasks[index];
 		if ($scope.task.status == 'SUCCESS') {
-			Restangular.one('citation/mag/authors-citations', id).getList().then(function(items) {
+			Restangular.one('citation/mag/', id).getList().then(function(items) {
 				console.log(items);
 				$scope.task['result'] = items;
 			}, function(data) {
@@ -28,7 +28,7 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	};
 	
 	$scope.submitTask = function(author_name, author_id) {
-		Restangular.all('citation/mag/authors-citations').customGET('', {
+		Restangular.all('citation/mag/').customGET('', {
 			author_name: author_name,
 			author_id: author_id
 		}).then(function(data) {

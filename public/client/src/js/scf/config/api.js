@@ -1,6 +1,6 @@
 function api(RestangularProvider) {
 	// Base URL
-	RestangularProvider.setBaseUrl('https://141.83.150.131/api/');
+	RestangularProvider.setBaseUrl('/api/');
 	
 	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
 		if (operation == "getList") {
