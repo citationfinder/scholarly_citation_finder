@@ -55,6 +55,7 @@ PROJECT_APPS = (
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.frontend',
     'scholarly_citation_finder.apps.rest',
+    'scholarly_citation_finder.apps.tasks',
     'scholarly_citation_finder.lib',
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
