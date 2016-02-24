@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-import os.path
 
 import tasks
+
 
 class TasksTest(TestCase):
     fixtures = ['sample_data']
@@ -16,5 +16,5 @@ class TasksTest(TestCase):
     
     def test_mag_authors_citations(self):
         author_id = 1
-        first = tasks.mag_authors_citations(author_id)
-        self.assertTrue(first)
+        first = tasks.citations(author_id)
+        self.assertIsNotNone(first)

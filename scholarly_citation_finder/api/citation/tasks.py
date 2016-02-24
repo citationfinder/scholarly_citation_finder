@@ -30,21 +30,6 @@ def create_evaluation(name, setsize, num_min_publications):
 """
 
 @shared_task
-def mag_authors_citations(author_name, author_id):
-    try:
-        citationfinder = CitationFinder()
-        author_id, length_publication_set = citationfinder.publication_set.set_by_author(name=author_name, id=author_id)
-        logger.info('set {} publications by author {}'.format(length_publication_set, author_id))
-        citationfinder.hack()
-        citationfinder.citations = citationfinder.citing_papers
-    
-        # -> convert result
-        output_path = create_dir(os.path.join(config.DOWNLOAD_DIR, 'mag'))
-        return citationfinder.store(filename=os.path.join(output_path, '{}.json'.format(author_id)))
-    except(ObjectDoesNotExist) as e:
-        raise e
-
-@shared_task
 def authors_citations(author_id, evaluation=False):
     citationfinder = CitationFinder(evaluation=evaluation)
     try:
