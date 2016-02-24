@@ -1,6 +1,9 @@
 
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import codecs
+import json
+
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
 
@@ -58,7 +61,23 @@ class CitationFinder:
         if self.evaluation:
             self.evaluation_result.append([len(publications), len(self.citations)])
         
-    def store(self):
-        pass
-        #self.publication_set.get()
-        #self.citations
+    def store(self, filename):
+        results = []
+        for publication in self.publication_set.get():
+            results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
+
+        with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
+            output_file.write(json.dumps(results, indent=4))
+
+    def __serialze(self, publication, citations=None):
+        result = {'type': 'article',
+                'title': publication.title,
+                'journal_name': 'journal of example',
+                'year': publication.year,
+                'authors': ["A B", "B C"],
+                'citations': []}
+        if citations:
+            for citation in citations:
+                result['citations'].append(self.__serialze(citation.publication))
+        
+        return result

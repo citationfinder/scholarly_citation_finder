@@ -17,15 +17,15 @@ import tasks
 def mag_authors_citations(request):
     author_id = request.GET.get('author_id', None)
     if author_id:
-        tasks.mag_authors_citations.deplay(author_id)
+        tasks.mag_authors_citations.delay(author_id)
         return HttpResponse('started')
     else:
-        return HttpResponse('Nothing to do. Usage: ?author_id=<id>', status=400)
-
+        return HttpResponse('Nothing to do. Usage: ?author_id=id', status=400)
+"""
 def evaluation_create(request):
     tasks.create_evaluation.delay('fu', 2, 0)
     return HttpResponse('started')
-
+"""
 def _tail_file(filename, num_lines=10):
     try:
         exit_status, stdout, stderr = external_process(['tail', '-n', str(num_lines), filename])
