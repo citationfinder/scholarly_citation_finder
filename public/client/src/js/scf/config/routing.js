@@ -35,6 +35,11 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/PublicationsController'),
 		template: require('../view/state/publications.html')
 	})
+	.state('mag-citations', {
+		url: '/mag-citations',
+		controller: require('../controller/state/MagCitationsController'),
+		template: require('../view/state/mag-citations.html')
+	})
 	;		
 }
 
