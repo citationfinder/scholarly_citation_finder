@@ -5,7 +5,7 @@ from djcelery.models import TaskMeta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import JsonResponse
 
-from scholarly_citation_finder.api.citation import tasks
+import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 
 
