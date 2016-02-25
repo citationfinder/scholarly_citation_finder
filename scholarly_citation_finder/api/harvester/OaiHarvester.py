@@ -35,7 +35,7 @@ class OaiHarvester(Harvester):
         :return: Number of parsed publications or False    
         '''
         
-        self.limit = limit
+        self.limit = int(limit)
 
         list_records_options = {}
         if resumptionToken is not None:

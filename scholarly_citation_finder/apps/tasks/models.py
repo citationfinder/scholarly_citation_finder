@@ -11,10 +11,12 @@ class Task(models.Model):
     
     TYPE_CITATION_MAG = 'citation/mag'
     TYPE_EVALUATION_SET = 'evaluation/set'
+    TYPE_HARVESTER = 'harvester'
     
     TYPES = (
         (TYPE_CITATION_MAG, TYPE_CITATION_MAG),
-        (TYPE_EVALUATION_SET, TYPE_EVALUATION_SET)
+        (TYPE_EVALUATION_SET, TYPE_EVALUATION_SET),
+        (TYPE_HARVESTER, TYPE_HARVESTER)
     )
     
     type = models.CharField(max_length=30, choices=TYPES)
@@ -26,9 +28,9 @@ class Task(models.Model):
                 'starttime': self.starttime}
         
     def result(self):
-        taskmeta = self.taskmeta()
-        if taskmeta['status'] == self.STATUS_SUCCESS:
-            return taskmeta['result'], taskmeta
+        taskmeta = self.get_taskmeta()
+        if taskmeta.status == self.STATUS_SUCCESS:
+            return taskmeta.result, taskmeta
         else:
             return False, taskmeta
     
@@ -69,6 +71,7 @@ class Task(models.Model):
     """
     
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.SerializerMethodField()
     date_done = serializers.SerializerMethodField()
     result = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
@@ -87,7 +90,10 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
         return obj.get_taskmeta().status
     
     def get_traceback(self, obj):
-        return obj.get_taskmeta().traceback   
+        return obj.get_taskmeta().traceback
+
+    def get_id(self, obj):
+        return obj.id
     
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
