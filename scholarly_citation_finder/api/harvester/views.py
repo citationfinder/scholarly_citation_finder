@@ -13,7 +13,8 @@ def oaipmh(request, name):
         oaipmh_provider = OaiPmhProvider.objects.get(name=name)            
         harvest_parameter = {'limit': request.GET.get('limit', None), 
                              '_from': request.GET.get('from', None),
-                             'until': request.GET.get('until', None)}
+                             'until': request.GET.get('until', None),
+                             'resumptiontoken': request.GET.get('resumptiontoken', None)}
         asyncresult = tasks.oaipmh_harvest.delay(name=oaipmh_provider.name,
                                                  oai_url=oaipmh_provider.url,
                                                  oai_identifier=oaipmh_provider.identifier,
