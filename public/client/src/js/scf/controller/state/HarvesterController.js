@@ -12,6 +12,20 @@ function HarvesterController($scope, Restangular) {
 		});
 	};
 	
+	$scope.submitTask = function(name, limit, from, until) {
+		Restangular.all('harvester/oaipmh/').customGET(name, {
+			limit: limit,
+			from: from,
+			until: until
+		}).then(function(data) {
+			console.log(data);
+			//$scope.getTasks();
+		}, function(data) {
+			console.warn(data);
+			$scope.addAlert(data.data);
+		});
+	}
+	
 	
 	$scope.getOaipmhProvider();
 }
