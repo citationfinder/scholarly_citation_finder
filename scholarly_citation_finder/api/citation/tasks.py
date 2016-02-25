@@ -5,7 +5,7 @@ import logging
 import csv
 from django.core.exceptions import ObjectDoesNotExist
 
-from scholarly_citation_finder.api.citation.evaluation import RandomAuthorSet
+from scholarly_citation_finder.api.citation.evaluation.RandomAuthorSet import RandomAuthorSet
 from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
@@ -13,21 +13,21 @@ from scholarly_citation_finder.api.citation.strategy.JournalStrategy import Jour
 
 
 logger = logging.getLogger(__name__)
-"""
+
 @shared_task
-def create_evaluation(name, setsize, num_min_publications):
+def evaluation_create_author_set(name, setsize, num_min_publications):
     dir = create_dir(os.path.join(config.DOWNLOAD_DIR, name))
-    e = RandomAuthorSet(name)
+    author_set = RandomAuthorSet()
     logger.info('{} -- create random author set of size {}'.format(name, setsize))
-    e.create(setsize, num_min_publications)
+    author_set.create(setsize=setsize, num_min_publications=num_min_publications)
     logger.info('{} -- create random author set done'.format(name))
     
-    e.store(path=os.path.join(dir, 'authors.csv'))
-    for author_info in e.get():
-        author_id = author_info['author_id']
-        pass
-    return
-"""
+    filename_author_set = author_set.store(os.path.join(dir, 'authors.csv'))
+    #for author_info in e.get():
+    #    author_id = author_info['author_id']
+    #    pass
+    return filename_author_set
+
 
 @shared_task
 def authors_citations(author_id, evaluation=False):
@@ -38,6 +38,8 @@ def authors_citations(author_id, evaluation=False):
         citationfinder.hack()
         
         logger.info('run')
+        #citation_finder.run([AuthorStrategy(ordered=True, recursive=True, min_year=False),
+        #                     JournalStrategy(ordered=True, min_year=True)])
         strategies_name, evaluation_result = citationfinder.run([JournalStrategy()])
         logger.info('done run strategy: {}'.format(strategies_name))
         if evaluation:
