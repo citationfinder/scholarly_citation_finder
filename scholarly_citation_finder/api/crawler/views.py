@@ -13,7 +13,7 @@ def htmlparser(request):
     if url:
         html_parser = HtmlParser()
         try:
-            return JsonResponse({'items': html_parser.find_pdf_hyperrefs(url)})
+            return JsonResponse({'results': html_parser.find_pdf_hyperrefs(url)})
         except(ConnectionError, HtmlParserUnkownHeaderType) as e:
             return HttpResponse(str(e), status=503)
     else:
@@ -25,7 +25,7 @@ def duckduckgo(request):
     if keywords:
         search_engine = Duckduckgo()
         try:
-            return JsonResponse({'items': search_engine.query(keywords, filetype='pdf', limit=2)})
+            return JsonResponse({'results': search_engine.query(keywords, filetype='pdf', limit=2)})
         except(ConnectionError, DuckduckgoResponseException) as e:
             return HttpResponse(str(e), status=503)
     else:
