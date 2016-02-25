@@ -19,7 +19,8 @@ def evaluation_index(request):
         task = Task.objects.create(type=Task.TYPE_EVALUATION_SET, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:
-        return JsonResponse({'results' : Task.get_tasks(type=Task.TYPE_EVALUATION_SET)})
+        return HttpResponse(status=400)
+
     
 def evaluation_detail(request, id):
     try:

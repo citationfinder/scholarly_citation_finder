@@ -17,7 +17,7 @@ def index(request):
         task = Task.objects.create(type=Task.TYPE_CITATION_MAG, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:
-        return JsonResponse({'results': Task.get_tasks(Task.TYPE_CITATION_MAG)})
+        return HttpResponse(status=400)
 
 
 def task_detail(request, id):

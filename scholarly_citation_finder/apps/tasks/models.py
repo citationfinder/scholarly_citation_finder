@@ -1,6 +1,8 @@
 from django.db import models
 from djcelery.models import TaskMeta
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import serializers, viewsets, generics
+from scholarly_citation_finder.api.harvester.models import OaiPmhProvider
 
 class Task(models.Model):
     
@@ -29,7 +31,16 @@ class Task(models.Model):
             return taskmeta['result'], taskmeta
         else:
             return False, taskmeta
-        
+    
+    def get_taskmeta(self):
+        if not hasattr(self, 'taskmeta'):
+            try:   
+                self.taskmeta = TaskMeta.objects.get(task_id=self.taskmeta_id)
+            except(ObjectDoesNotExist):
+                self.taskmeta = TaskMeta()
+        return self.taskmeta
+
+    """
     def taskmeta(self):
         try:   
             taskmeta = TaskMeta.objects.get(task_id=self.taskmeta_id)
@@ -43,7 +54,8 @@ class Task(models.Model):
         except(ObjectDoesNotExist):
             return {'id': self.id,
                     'starttime': self.starttime,
-                    'status': ''}
+                    'status': '',
+                    'date_done': ''}
     
     @staticmethod
     def get_tasks(type):
@@ -54,3 +66,36 @@ class Task(models.Model):
             except(ObjectDoesNotExist):
                 pass
         return items
+    """
+    
+class TaskSerializer(serializers.HyperlinkedModelSerializer):
+    date_done = serializers.SerializerMethodField()
+    result = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+    traceback = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Task
+        
+    def get_date_done(self, obj):
+        return obj.get_taskmeta().date_done
+    
+    def get_result(self, obj):
+        return str(obj.get_taskmeta().result)
+    
+    def get_status(self, obj):
+        return obj.get_taskmeta().status
+    
+    def get_traceback(self, obj):
+        return obj.get_taskmeta().traceback   
+    
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        type = self.request.query_params.get('type', None)
+        if type:
+            queryset = self.queryset.filter(type=type)
+        return queryset
