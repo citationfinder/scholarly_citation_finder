@@ -15,9 +15,9 @@ from scholarly_citation_finder.api.citation.strategy.JournalStrategy import Jour
 logger = logging.getLogger(__name__)
 
 @shared_task
-def evaluation_create_author_set(name, setsize, num_min_publications):
-    dir = create_dir(os.path.join(config.DOWNLOAD_DIR, name))
-    author_set = RandomAuthorSet()
+def evaluation_create_author_set(name, setsize, num_min_publications, database='mag'): 
+    dir = create_dir(os.path.join(config.DOWNLOAD_DIR, 'evaluation', name))
+    author_set = RandomAuthorSet(database=database)
     logger.info('{} -- create random author set of size {}'.format(name, setsize))
     author_set.create(setsize=setsize, num_min_publications=num_min_publications)
     logger.info('{} -- create random author set done'.format(name))
