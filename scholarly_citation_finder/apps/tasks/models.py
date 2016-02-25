@@ -1,8 +1,8 @@
 from django.db import models
 from djcelery.models import TaskMeta
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import serializers, viewsets, generics
-from scholarly_citation_finder.api.harvester.models import OaiPmhProvider
+from rest_framework import serializers, viewsets
+
 
 class Task(models.Model):
     
@@ -11,11 +11,13 @@ class Task(models.Model):
     
     TYPE_CITATION_MAG = 'citation/mag'
     TYPE_EVALUATION_SET = 'evaluation/set'
+    TYPE_EVALUATION_RUN = 'evaluation/run'
     TYPE_HARVESTER = 'harvester'
     
     TYPES = (
         (TYPE_CITATION_MAG, TYPE_CITATION_MAG),
         (TYPE_EVALUATION_SET, TYPE_EVALUATION_SET),
+        (TYPE_EVALUATION_RUN, TYPE_EVALUATION_RUN),
         (TYPE_HARVESTER, TYPE_HARVESTER)
     )
     

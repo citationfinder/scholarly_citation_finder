@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import json
+import csv
 
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
@@ -14,14 +15,11 @@ class EmptyPublicationSetException(Exception):
 
 class CitationFinder:
 
-    # PublicationReference
-    citations = []
-    evaluation_result = []
-
     def __init__(self, database_name='mag', evaluation=False):
         self.evaluation = evaluation
         self.database = database_name
         self.publication_set = PublicationSet(database=self.database)
+        self.reset()
 
     def hack(self):
         # <----- remove
@@ -41,10 +39,10 @@ class CitationFinder:
         
         for strategy in strategies:
             #self.logger.info('run {}'.format(strategy.name))
-            strategy.setup(logger=self.logger, database=self.database)
+            strategy.setup(database=self.database)
             strategy.run(self.publication_set, self.inspect_publications)
             
-        return strategies_name, self.evaluation_result
+        return strategies_name
 
     def inspect_publications(self, publications, string=''):
         # <----- remove
@@ -62,13 +60,28 @@ class CitationFinder:
             self.evaluation_result.append([len(publications), len(self.citations)])
         
     def store(self, filename):
-        results = []
-        for publication in self.publication_set.get():
-            results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
+        try:
+            results = []
+            for publication in self.publication_set.get():
+                results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
 
-        with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
-            output_file.write(json.dumps(results, indent=4))
-        return filename
+            with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
+                output_file.write(json.dumps(results, indent=4))
+                return filename
+        except(IOError) as e:
+            raise e
+    
+    def store_evaluation(self, filename):
+        try:
+            with open(filename, 'w+') as csvfile:
+                num_inspected_publications = 0
+                writer = csv.writer(csvfile)
+                writer.writerow([0, 0])
+                for result in self.evaluation_result:
+                    num_inspected_publications += result[0]
+                    writer.writerow([num_inspected_publications, result[1]])
+        except(IOError) as e:
+            raise e
 
     def __serialze(self, publication, citations=None):
         result = {'type': 'article',

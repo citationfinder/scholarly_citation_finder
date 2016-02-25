@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
-from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
+
+logger = logging.getLogger(__name__)
+
 
 class AuthorStrategy(Strategy):
 
@@ -25,7 +28,7 @@ class AuthorStrategy(Strategy):
         
     def run(self, publication_set, callback):
         authors = publication_set.get_authors(ordered=self.ordered)
-        self.logger.info('found {} author in the search set'.format(len(authors)))
+        logger.info('found {} author in the search set'.format(len(authors)))
         
         self._run_for_author(publication_set, callback, authors)
         
@@ -38,7 +41,7 @@ class AuthorStrategy(Strategy):
             self._run_for_author(publication_set, callback, authors_level2)
 
     def _run_for_author(self, publication_set, callback, authors):
-        self.logger.info('authors: {}'.format(len(authors)))
+        logger.info('authors: {}'.format(len(authors)))
         for author in authors:
             min_year = publication_set.get_min_year() if self.min_year else None
             callback(self.__find_author_publications(author.id, min_year), 'author "{} (year>={})"'.format(author.id, min_year))

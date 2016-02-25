@@ -1,7 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
+
+logger = logging.getLogger(__name__)
+
 
 class JournalStrategy(Strategy):
 
@@ -20,7 +24,7 @@ class JournalStrategy(Strategy):
         
     def run(self, publication_set, callback):
         journals = publication_set.get_journals(ordered=self.ordered, plus_additionals=True)
-        self.logger.info('found {} journals in search set'.format(len(journals)))
+        logger.info('found {} journals in search set'.format(len(journals)))
         for journal in journals:
             min_year = publication_set.get_min_year() if self.min_year else None
             callback(self.__find_journal_publications(journal.id, min_year), 'journal "{}" (year>={})'.format(journal.id, min_year))

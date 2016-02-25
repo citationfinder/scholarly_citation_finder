@@ -4,6 +4,7 @@ import csv
 import logging
 logger = logging.getLogger(__name__)
 
+
 class RandomAuthorSet:
     
     def __init__(self, database='mag'):
@@ -23,7 +24,7 @@ class RandomAuthorSet:
         authors = Author.objects.using(self.database).all()        
 
         while len(random_nums) < setsize:
-            print(len(random_nums))
+            logger.info('size random set: {}'.format(len(random_nums)))
             # get a random number between 0 and num_stored_authors-1
             random_num = random.randint(0, num_stored_authors-1)
             if random_num in random_nums:
@@ -39,7 +40,6 @@ class RandomAuthorSet:
                 self.random_authors.append({'author_id': author.id,
                                             'num_publications': author_num_publications,
                                             'num_citations': author_num_citations})
-            
                 random_nums.append(random_num)
 
     def load(self, filename):

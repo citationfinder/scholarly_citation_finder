@@ -10,4 +10,5 @@ def get_abspath(path):
 TEST_DIR = get_abspath('../test_data')
 DOWNLOAD_DIR = get_abspath('../downloads')
 DOWNLOAD_TMP_DIR = os.path.join(DOWNLOAD_DIR, 'tmp')
+EVALUATION_DIR = os.path.join(DOWNLOAD_DIR, 'evaluation')
 LOG_DIR = get_abspath('../log')

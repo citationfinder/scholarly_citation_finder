@@ -8,8 +8,7 @@ class Strategy(object):
     def __init__(self, name):
         self.name = name
     
-    def setup(self, logger, database):
-        self.logger = logger
+    def setup(self, database):
         self.database = database
     
     def run(self, publication_set, callback):

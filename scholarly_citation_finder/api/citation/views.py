@@ -1,21 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
-from scholarly_citation_finder.api.citation.strategy.AuthorStrategy import AuthorStrategy
-from scholarly_citation_finder.api.citation.strategy.ConferenceStrategy import ConferenceStrategy
-from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
-import os.path
-from scholarly_citation_finder import config
 from scholarly_citation_finder.api.citation import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 
-def evaluation_index(request):
+def evaluation_create(request, name):
     setsize = request.GET.get('setsize', None)
     num_min_publications = request.GET.get('num_min_publications', 0)
     if setsize:
-        asyncresult = tasks.evaluation_create_author_set.delay(name='yeah', setsize=int(setsize), num_min_publications=int(num_min_publications))
+        asyncresult = tasks.evaluation_create_author_set.delay(name=name, setsize=int(setsize), num_min_publications=int(num_min_publications))
         task = Task.objects.create(type=Task.TYPE_EVALUATION_SET, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:
@@ -34,3 +29,8 @@ def evaluation_detail(request, id):
     except(ObjectDoesNotExist):
         return HttpResponse('Task #{} not found'.format(id), status=404)
 
+
+def evaluation_run(request, name):
+    asyncresult = tasks.evaluation_run.delay(name=name)
+    task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
+    return JsonResponse(task.as_dict())

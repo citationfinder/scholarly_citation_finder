@@ -1,7 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.api.citation.strategy.Strategy import Strategy
+
+logger = logging.getLogger(__name__)
+
 
 class ConferenceStrategy(Strategy):
 
@@ -20,7 +24,7 @@ class ConferenceStrategy(Strategy):
         
     def run(self, publication_set, callback):
         conferences = publication_set.get_conferences(ordered=self.ordered, plus_additionals=True)
-        self.logger.info('found {} conferences in search set'.format(len(conferences)))
+        logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:
             conference_publications = self.__find_conference_publications(conference.id)
             callback(conference_publications, 'conference "{}"'.format(conference))
