@@ -40,6 +40,11 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/MagCitationsController'),
 		template: require('../view/state/mag-citations.html')
 	})
+	.state('harvester', {
+		url: '/harvester',
+		controller: require('../controller/state/HarvesterController'),
+		template: require('../view/state/harvester.html')
+	})	
 	;		
 }
 

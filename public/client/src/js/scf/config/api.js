@@ -5,8 +5,8 @@ function api(RestangularProvider) {
 	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
 		if (operation == "getList") {
 			//response.totalCount = data.total_item_count;
-			if (data.items) {
-				data = data.items;				
+			if (data.results) {
+				data = data.results;				
 			}
 		}
 		return data;
