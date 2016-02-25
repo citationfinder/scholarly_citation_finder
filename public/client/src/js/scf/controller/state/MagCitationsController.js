@@ -4,20 +4,10 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	$scope.tasks = [];
 	$scope.isCollapsed = true;
 	
-	$scope.getTasks = function() {
-		Restangular.all('rest/default/tasks/').getList({type: 'citation/mag'}).then(function(items) {
-			console.log(items);
-			$scope.tasks = items;
-		}, function(data) {
-			console.warn(data);
-			$scope.addAlert(data.data);
-		});
-	};
-	
-	$scope.getTask = function(index, id) {
-		$scope.task = $scope.tasks[index];
+	$scope.getTask = function(item) {
+		$scope.task = item;
 		if ($scope.task.status == 'SUCCESS') {
-			Restangular.one('citation/mag/', id).getList().then(function(items) {
+			Restangular.one('citation/mag/', item.id).getList().then(function(items) {
 				console.log(items);
 				$scope.task['result'] = items;
 			}, function(data) {

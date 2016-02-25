@@ -13,5 +13,10 @@ angular.module('scf', ['ui.router', 'restangular', 'ui.bootstrap'])
 
 	// controller
 	.controller('mainController', require('./controller/MainController'))
-
+	
+	// factory
+	.factory('ApiFactory', require('./factory/ApiFactory'))
+	
+	// directive
+	.directive('listtasks', require('./directive/ListTasks'))
 ;

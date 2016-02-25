@@ -25,20 +25,7 @@
   </div>
 </form>
 
-<h3>Current tasks</h3>
-<p><small>{{tasks.length}} jobs</a> | <a ng-click="getTasks()" href="">Refresh</a></small></p>
-<table class="table table-striped" ng-if="tasks.length > 0">
-	<tr>
-		<th>#</th>
-		<th>Start time</th>
-		<th>Status</th>
-	</tr>
-	<tr ng-repeat="item in tasks">
-		<td>{{item.id}}</td>
-		<td>{{item.starttime}}</td>
-		<td><a ng-click="getTask($index, item.id)" href="">{{item.status}}</a></td>
-	</tr>
-</table>
+<listtasks tasktype="citation/mag" taskstatuscallback="getTask"></listtasks>
 
 <h3>Display task # {{task.id}}</h3>
 
@@ -55,10 +42,10 @@
 	<br>
 	Result:
 	<ol>
-		<li ng-repeat="item in task.result">
+		<li ng-repeat="item in task.result track by $index">
 			<i>{{item.title}}</i>, {{item.year}}
 			<ol>
-				<li ng-repeat="citation in item.citations">
+				<li ng-repeat="citation in item.citations track by $index">
 					<i>{{citation.title}}</i>, {{citation.year}}
 				</li>
 			</ol>
