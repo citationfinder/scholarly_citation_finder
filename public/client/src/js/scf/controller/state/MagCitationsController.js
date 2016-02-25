@@ -5,7 +5,7 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	$scope.isCollapsed = true;
 	
 	$scope.getTasks = function() {
-		Restangular.all('citation/mag/').getList().then(function(items) {
+		Restangular.all('rest/default/tasks/').getList({type: 'citation/mag'}).then(function(items) {
 			console.log(items);
 			$scope.tasks = items;
 		}, function(data) {
