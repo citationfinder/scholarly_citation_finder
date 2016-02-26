@@ -15,7 +15,7 @@ class EmptyPublicationSetException(Exception):
 
 class CitationFinder:
 
-    def __init__(self, database_name='mag', evaluation=False):
+    def __init__(self, database_name='dblp', evaluation=False):
         self.evaluation = evaluation
         self.database = database_name
         self.publication_set = PublicationSet(database=self.database)
