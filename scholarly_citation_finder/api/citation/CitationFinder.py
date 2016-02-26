@@ -84,11 +84,47 @@ class CitationFinder:
             raise e
 
     def __serialze(self, publication, citations=None):
-        result = {'type': 'article',
+        journal_name = None
+        if publication.journal_id:
+            journal_name = publication.journal.name
+            
+        if publication.conference_id:
+            publication.booktitle = publication.conference.name
+        
+        if not publication.type:
+            if publication.conference_id:
+                publication.type = 'inproceedings'
+            if publication.booktitle:
+                publication.type = 'incollection'
+            else:
+                publication.type = 'article'
+        
+        authors = []
+        for item in publication.publicationauthoraffilation_set.all():
+            if item.author_id:
+                authors.append(item.author.name)
+        
+        keywords = []        
+        for keyword in publication.publicationkeyword_set.all():
+            keywords.append(keyword.name)
+        
+        result = {'type': publication.type,
                 'title': publication.title,
-                'journal_name': 'journal of example',
                 'year': publication.year,
-                'authors': ["A B", "B C"],
+                'booktitle': publication.booktitle,
+                'journal_name': journal_name,
+                'volumne': publication.volume,
+                'number': publication.number,
+                'pages_from': publication.pages_from,
+                'pages_to': publication.pages_to,
+                'series': publication.series,
+                'publisher': publication.publisher,
+                'isbn': publication.isbn,
+                'doi': publication.doi,
+                'abstract': publication.abstract,
+                'copyright': publication.copyright,
+                'authors': authors,
+                'keywords': keywords,
                 'citations': []}
         if citations:
             for citation in citations:
