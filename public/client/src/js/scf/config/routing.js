@@ -15,16 +15,18 @@ function routing($stateProvider, $urlRouterProvider) {
 		url: '/home',
 		template: require('../view/state/home.html')
 	})
+	// PDF tools
 	.state('find-pdf', {
 		url: '/find-pdf',
-		controller: require('../controller/state/FindPdfController'),
-		template: require('../view/state/find-pdf.html')
+		controller: require('../controller/state/pdf_tools/FindPdfController'),
+		template: require('../view/state/pdf_tools/find_pdf.html')
 	})
 	.state('extract-pdf', {
 		url: '/extract-pdf',
-		controller: require('../controller/state/ExtractPdfController'),
-		template: require('../view/state/extract-pdf.html')
+		controller: require('../controller/state/pdf_tools/ExtractPdfController'),
+		template: require('../view/state/pdf_tools/extract_pdf.html')
 	})
+	// Other
 	.state('find-citations', {
 		url: '/find-citations',
 		controller: require('../controller/state/FindCitationsController'),
@@ -44,7 +46,12 @@ function routing($stateProvider, $urlRouterProvider) {
 		url: '/harvester',
 		controller: require('../controller/state/HarvesterController'),
 		template: require('../view/state/harvester.html')
-	})	
+	})
+	.state('evaluation', {
+		url: '/evaluation',
+		controller: require('../controller/state/EvaluationController'),
+		template: require('../view/state/evaluation.html')
+	})
 	;		
 }
 

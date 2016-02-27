@@ -1,0 +1,60 @@
+<div class="page-header">
+	<h1>Evaluation</h1>
+</div>
+
+<div>
+	<button type="button" class="btn btn-default btn-sm" ng-click="isCollapsed = !isCollapsed">Create an author set</button>	
+</div>
+<div uib-collapse="isCollapsed">
+	<form class="form-horizontal" ng-submit="submitTask(taskName, taskSetsize, taskNumminpublications)">
+	  <div class="form-group">
+		<label for="num_min_publications" class="col-sm-2 control-label">Name</label>
+		<div class="col-sm-10">
+		  <input ng-model="taskName"
+				 type="text" class="form-control" id="num_min_publications" placeholder="Name of the evaluation [a-z]">
+		</div>
+	  </div>
+	  <div class="form-group">
+		<label for="taskSetsize" class="col-sm-2 control-label">Set size</label>
+		<div class="col-sm-10">
+		  <input ng-model="taskSetsize"
+				type="number" class="form-control" id="taskSetsize" placeholder="Size of th set">
+		</div>
+	  </div>
+	  <div class="form-group">
+		<label for="taskNumminpublications" class="col-sm-2 control-label">Minimum publications</label>
+		<div class="col-sm-10">
+		  <input ng-model="taskNumminpublications"
+				type="number" class="form-control" id="taskNumminpublications" placeholder="Number of minimum publications">
+		</div>
+	  </div>	
+	  <div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+		  <button type="submit" class="btn btn-primary">Create task</button>
+		</div>
+	  </div>
+	</form>
+</div>
+
+
+
+<h3>Author set</h3>
+
+<listtasks tasktype="evaluation/set" taskstatuscallback="getTask"></listtasks>
+
+<div ng-show="task.status">
+	<h3>Display task # {{task.id}}</h3>
+	<ul>
+		<li>{{task.date_done}}</li>
+		<li>{{task.status}}</li>
+		<li>{{task.type}}</li>
+		<li>{{task.starttime}}</li>
+		<li>{{task.taskmeta_id}}</li>
+	</ul>
+	<div ng-show="task.status == 'FAILURE'">
+		<textarea class="form-control" rows="10">{{task.traceback}}</textarea>	
+	</div>
+	<div ng-show="task.status == 'SUCCESS'">
+		<textarea class="form-control" rows="10">{{task.result}}</textarea>
+	</div>
+</div>
