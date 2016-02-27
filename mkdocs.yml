@@ -5,6 +5,7 @@ theme: readthedocs
 site_description: Documentation for Scholarly Citation Finder
 pages:
 - ['index.md', 'Home']
-- ['install.md', 'User manuel', 'Install SCF']
+- ['deployment.md', 'User manuel', 'Deployment']
+- ['setup.md', 'User manuel', 'Setup']
 - ['api.md', 'User manuel', 'API']
 - ['integration.md', 'Extension', 'Integration']

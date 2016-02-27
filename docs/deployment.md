@@ -1,4 +1,4 @@
-<h1>Installation</h1>
+<h1>Deployment</h1>
 
 ## Ansible playbook
 
