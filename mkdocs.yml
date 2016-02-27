@@ -1,0 +1,10 @@
+site_name: Scholarly Citation Finder
+repo_url: https://github.com/citationfinder/scholarly_citation_finder
+repo_name: GitHub
+theme: readthedocs
+site_description: Documentation for Scholarly Citation Finder
+pages:
+- ['index.md', 'Home']
+- ['install.md', 'User manuel', 'Install SCF']
+- ['api.md', 'User manuel', 'API']
+- ['integration.md', 'Extension', 'Integration']
