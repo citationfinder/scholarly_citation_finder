@@ -15,7 +15,7 @@ class EmptyPublicationSetException(Exception):
 
 class CitationFinder:
 
-    def __init__(self, database_name='dblp', evaluation=False):
+    def __init__(self, database_name='mag', evaluation=False):
         self.evaluation = evaluation
         self.database = database_name
         self.publication_set = PublicationSet(database=self.database)
@@ -84,12 +84,19 @@ class CitationFinder:
             raise e
 
     def __serialze(self, publication, citations=None):
+        
+        if self.database == 'mag':
+            publication.title = publication.title.title()
+
         journal_name = None
         if publication.journal_id:
             journal_name = publication.journal.name
             
         if publication.conference_id:
-            publication.booktitle = publication.conference.name
+            if publication.conference.name:
+                publication.booktitle = publication.conference.name
+            else:
+                publication.booktitle = publication.conference.short_name
         
         if not publication.type:
             if publication.conference_id:
@@ -98,6 +105,18 @@ class CitationFinder:
                 publication.type = 'incollection'
             else:
                 publication.type = 'article'
+        
+        if publication.volume:
+            publication.volume = self.__convert_to_integer(publication.volume)
+
+        if publication.number:
+            publication.number = self.__convert_to_integer(publication.number)
+
+        if publication.pages_from:
+            publication.pages_from = self.__convert_to_integer(publication.pages_from)
+
+        if publication.pages_to:
+            publication.pages_to = self.__convert_to_integer(publication.pages_to)
         
         authors = []
         for item in publication.publicationauthoraffilation_set.all():
@@ -126,8 +145,15 @@ class CitationFinder:
                 'authors': authors,
                 'keywords': keywords,
                 'citations': []}
+
         if citations:
             for citation in citations:
                 result['citations'].append(self.__serialze(citation.publication))
         
         return result
+    
+    def __convert_to_integer(self, value):
+        try:
+            return int(value)
+        except(ValueError):
+            return None
