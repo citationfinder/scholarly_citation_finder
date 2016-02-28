@@ -30,7 +30,7 @@ def task_detail(request, id):
             with open(result) as result_file:
                 return HttpResponse(result_file, content_type='application/json')
         elif result:
-            return HttpResponse(str(result))
+            return HttpResponse(result)
         else:
             return JsonResponse(tastmeta)
     except(ObjectDoesNotExist):

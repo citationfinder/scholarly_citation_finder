@@ -29,20 +29,26 @@ class Task(models.Model):
         return {'id': self.id,
                 'starttime': self.starttime}
         
-    def result(self):
-        taskmeta = self.get_taskmeta()
-        if taskmeta.status == self.STATUS_SUCCESS:
-            return taskmeta.result, taskmeta
+    def result(self, as_dict=True):
+        taskmeta = self.get_taskmeta(as_dict=as_dict)
+        if taskmeta['status'] == self.STATUS_SUCCESS:
+            return taskmeta['result'], taskmeta
         else:
             return False, taskmeta
     
-    def get_taskmeta(self):
+    def get_taskmeta(self, as_dict=False):
         if not hasattr(self, 'taskmeta'):
             try:   
                 self.taskmeta = TaskMeta.objects.get(task_id=self.taskmeta_id)
             except(ObjectDoesNotExist):
                 self.taskmeta = TaskMeta()
-        return self.taskmeta
+        if as_dict:
+            return {'date_done': self.taskmeta.date_done,
+                    'result': str(self.taskmeta.result),
+                    'status': self.taskmeta.status,
+                    'traceback': self.taskmeta.traceback}
+        else:
+            return self.taskmeta
 
     """
     def taskmeta(self):
