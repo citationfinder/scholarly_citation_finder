@@ -27,6 +27,7 @@ This call requests SCF. After the task is done, SCF sends the data in [SCF-JSON]
 
 ### Publin URL/data import (method 2)
 
-Request the endpoint `/api/citation/mag/?author_id=<author_id>`, which returns an ID. This ID is the task ID and can be used to request the result at `/api/citation/mag/<task_id>/`. If the task is still running or failed, the meta information of the task will be returned instead. The meta information include among others the current status and when it failed the traceback error message.
+Request the endpoint `/api/citation/mag/?author_id=<author_id>`, which returns an ID. This ID is the task ID and can be used to request the result at `/api/citation/mag/<task_id>/`. If the task is still running or failed, the meta information of the task will be returned instead. The meta information include among others the current status and when it failed the traceback error message
+.
 
 In Publin open the page `/?p=submit&m=bulkimport` and copy and paste the result URL into the input field. Alternative you can manually copy and the past the content from the result URL into the field.
