@@ -5,6 +5,7 @@ from scholarly_citation_finder.api.citation import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+import json
 
 def evaluation_create(request, name):
     setsize = request.GET.get('setsize', None)
@@ -34,3 +35,19 @@ def evaluation_run(request, name):
     asyncresult = tasks.evaluation_run.delay(name=name)
     task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
     return JsonResponse(task.as_dict())
+
+
+def citations(request):
+    author_name = request.GET.get('author_name', None)
+    author_id = request.GET.get('author_id', None)
+    body = json.loads(request.body)
+    if (author_name or author_id) and body:
+        try:
+            strategies = eval(body.strategies)
+            asyncresult = tasks.citations.delay(author_name=author_name, author_id=int(author_id))
+            task = Task.objects.create(type=Task.TYPE_CITATION, taskmeta_id=asyncresult.id)
+            return JsonResponse(task.as_dict())
+        except(AttributeError, SyntaxError, TypeError) as e:
+            return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
+    else:
+        return HttpResponse(status=400)

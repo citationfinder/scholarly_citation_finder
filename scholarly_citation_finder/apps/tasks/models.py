@@ -9,6 +9,7 @@ class Task(models.Model):
     STATUS_SUCCESS = 'SUCCESS'
     STATUS_PENDING = 'PENDING'
     
+    TYPE_CITATION = 'citation'
     TYPE_CITATION_MAG = 'citation/mag'
     TYPE_EVALUATION_SET = 'evaluation/set'
     TYPE_EVALUATION_RUN = 'evaluation/run'
@@ -18,7 +19,8 @@ class Task(models.Model):
         (TYPE_CITATION_MAG, TYPE_CITATION_MAG),
         (TYPE_EVALUATION_SET, TYPE_EVALUATION_SET),
         (TYPE_EVALUATION_RUN, TYPE_EVALUATION_RUN),
-        (TYPE_HARVESTER, TYPE_HARVESTER)
+        (TYPE_HARVESTER, TYPE_HARVESTER),
+        (TYPE_CITATION, TYPE_CITATION)
     )
     
     type = models.CharField(max_length=30, choices=TYPES)

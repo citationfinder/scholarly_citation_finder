@@ -39,18 +39,19 @@ def evaluation_run(name):
         for row in reader:
             if len(row) == 3:
                 try:
-                    authors_citations(author_id=row[0], evaluation=True, evaluation_name=name)
+                    citations(author_id=row[0], evaluation=True, evaluation_name=name)
                 except(EmptyPublicationSetException):
                     continue
     return True
 
 
 @shared_task
-def authors_citations(author_id, evaluation=False, evaluation_name=None):
+def citations(author_id, evaluation=False, evaluation_name=None, strategies=None):
     '''
     
     :param author_id:
     :param evaluation:
+    :raise ObjectDoesNotExits:
     :raise EmptyPublicationSetException: 
     '''
     
@@ -71,6 +72,8 @@ def authors_citations(author_id, evaluation=False, evaluation_name=None):
             citationfinder.store_evaluation(filename=os.path.join(output_path, '{}.csv'.format(author_id)))
         else:
             citationfinder.store()
+    except(ObjectDoesNotExist) as e:
+        raise e
     except(EmptyPublicationSetException) as e:
         raise e
 
