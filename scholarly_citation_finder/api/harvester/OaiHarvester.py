@@ -36,7 +36,7 @@ class OaiHarvester(Harvester):
         '''
         try:
             self.limit = int(limit)
-        except(ValueError):
+        except(TypeError):
             self.limit = None
 
         list_records_options = {}
