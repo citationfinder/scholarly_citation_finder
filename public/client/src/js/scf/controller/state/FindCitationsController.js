@@ -1,24 +1,24 @@
 function FindCitationsController($scope, Restangular) {
 	
-	$scope.jobsResult = [
-		{id: 231, date: '12:00', status: 'running'},
-		{id: 315, date: '12:40', status: 'waiting'},
-		{id: 313, date: '11:40', status: 'done'}		
-	];
+	$scope.isCollapsed = true;
 	
-	$scope.getJobs = function() {
-		// TODO
-	};
-	
-	$scope.getAuthors = function(name) {
-		Restangular.all('citation/author/').getList({author_name: name}).then(function(items) {
-			console.log(items);
-			$scope.authorsResult = items;
+	$scope.submitTask = function(author_name, author_id, strategy) {
+		// POST /accounts/123/messages?param=myParam with the body of name: "My Message"
+		Restangular.all('citation').customPOST({
+			strategy: strategy
+		}, 'find', {
+			author_name: 'author_name',
+			author_id: 'author_id'
+		}, {}).then(function(data) {
+			console.log(data);
+			$scope.addAlert('Create task');
+			$scope.isCollapsed = true;
 		}, function(data) {
 			console.warn(data);
 			$scope.addAlert(data.data);
-		});
+		});		
 	};
+
 }
 
 FindCitationsController.$inject = ['$scope', 'Restangular'];

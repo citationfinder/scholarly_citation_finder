@@ -9,6 +9,8 @@ function EvaluationCitationsController($scope, $stateParams, Restangular) {
 			num_min_publications: num_min_publications
 		}).then(function(data) {
 			console.log(data);
+			$scope.addAlert('Create task');
+			$scope.isCollapsed = true;
 		}, function(data) {
 			console.warn(data);
 			$scope.addAlert(data.data);
