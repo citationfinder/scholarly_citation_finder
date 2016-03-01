@@ -47,7 +47,7 @@ def evaluation_run(request, name):
             asyncresult = tasks.evaluation_run.delay(name=name, strategies=strategies)
             task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
-        except(AttributeError, SyntaxError):
+        except(AttributeError, SyntaxError, TypeError):
             return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
     else:
         return HttpResponse(status=400)
