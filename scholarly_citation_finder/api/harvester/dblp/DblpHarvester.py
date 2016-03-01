@@ -1,13 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os.path
+import logging
+import csv
 from lxml import etree
 
 from ..Harvester import Harvester
 from scholarly_citation_finder.lib.CsvFileWriter import CsvFileWriter
 from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
 from django.core.exceptions import ObjectDoesNotExist
-import csv
+
+logger = logging.getLogger(__name__)
 
 
 class DblpHarvester(Harvester):
@@ -44,8 +47,8 @@ class DblpHarvester(Harvester):
         #'ee': 'urls'
     }
     
-    def __init__(self, **kwargs):
-        super(DblpHarvester, self).__init__('dblp', **kwargs)
+    def __init__(self):
+        super(DblpHarvester, self).__init__(name='dblp', database='dblp')
     
     def harvest(self, filename=None, limit=None, _from=None):
         '''
@@ -109,11 +112,11 @@ class DblpHarvester(Harvester):
                         del publication['booktitle']
     
                     # store and clear entry afterwards
-                    publication_id = self.parse(publication,
-                                                conference_short_name=conference_short_name,
-                                                journal_name=journal_name,
-                                                authors=authors,
-                                                urls=urls)
+                    publication_id = self.parser.parse(publication,
+                                                       conference_short_name=conference_short_name,
+                                                       journal_name=journal_name,
+                                                       authors=authors,
+                                                       urls=urls)
                     if publication_id:
                         for citation in citations:
                             cite_writer.write_values(publication_id, citation)
@@ -190,7 +193,7 @@ class DblpHarvester(Harvester):
         # clear chunks
         
         cite_writer.close()
-        return self.count_publications
+        return self.parser.count_publications
     
     def parse_citations(self):
         try:
@@ -209,4 +212,4 @@ class DblpHarvester(Harvester):
             PublicationReference.objects.using(self.name).get_or_create(publication_id=publication_id,
                                                                         reference=reference)
         except(ObjectDoesNotExist) as e:
-            self.logger.info('{},{} - {}'.format(publication_id, reference_dblp_key, str(e)))
+            logger.info('{},{} - {}'.format(publication_id, reference_dblp_key, str(e)))

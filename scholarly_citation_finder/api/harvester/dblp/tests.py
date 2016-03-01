@@ -13,9 +13,6 @@ class DblpHarvesterTest(TestCase):
     def setUp(self):
         self.harvester = DblpHarvester()
 
-    def tearDown(self):
-        self.harvester.conn.close()
-
     def test_harvest_io_error(self):
         self.assertRaises(IOError, self.harvester.harvest, 'non-existing-file.xml')
 
