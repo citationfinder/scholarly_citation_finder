@@ -20,38 +20,47 @@
 <listtasks tasktype="harvester"></listtasks>
 
 <h3>Create a task</h3>
-<form class="form-horizontal" ng-submit="submitTask('citeseerx', taskLimit, taskFrom, taskUntil, taskResumptiontoken)">
+<form class="form-horizontal" ng-submit="submitTask(taskHarvester, taskLimit, taskFrom, taskUntil, taskResumptiontoken)">
+  <div class="form-group">
+    <label for="taskHarvester" class="col-sm-2 control-label">Harvester</label>
+    <div class="col-sm-10">
+		<select ng-model="taskHarvester"
+				id="taskHarvester" class="form-control">
+			<option ng-repeat="item in oaipmhProvider" value="{{item.name}}">{{item.name}}</option>
+		</select>
+    </div>
+  </div>
   <div class="form-group">
     <label for="taskLimit" class="col-sm-2 control-label">Limit</label>
     <div class="col-sm-10">
-      <input ng-model="taskLimit"
-			 type="number" class="form-control" id="taskLimit" placeholder="Number of maximal parsed publications">
+		<input ng-model="taskLimit"
+			   type="number" class="form-control" id="taskLimit" placeholder="Number of maximal parsed publications">
     </div>
   </div>
   <div class="form-group">
     <label for="taskFrom" class="col-sm-2 control-label">From</label>
     <div class="col-sm-10">
-      <input ng-model="taskFrom"
-			type="text" class="form-control" id="taskFrom" placeholder="OAI-PMH from (YYYY-DD-MM)">
+		<input ng-model="taskFrom"
+			   type="text" class="form-control" id="taskFrom" placeholder="OAI-PMH from (YYYY-DD-MM)">
     </div>
   </div>
   <div class="form-group">
     <label for="taskUntil" class="col-sm-2 control-label">Until</label>
     <div class="col-sm-10">
-      <input ng-model="taskUntil"
-			type="text" class="form-control" id="taskUntil" placeholder="OAI-PMH until (YYYY-DD-MM)">
+		<input ng-model="taskUntil"
+			   type="text" class="form-control" id="taskUntil" placeholder="OAI-PMH until (YYYY-DD-MM)">
     </div>
   </div>
   <div class="form-group">
     <label for="taskUntil" class="col-sm-2 control-label">Resumption token</label>
     <div class="col-sm-10">
-      <input ng-model="taskResumptiontoken"
-			type="text" class="form-control" id="taskUntil" placeholder="OAI-PMH resumption token">
+		<input ng-model="taskResumptiontoken"
+			   type="text" class="form-control" id="taskUntil" placeholder="OAI-PMH resumption token">
     </div>
   </div>	
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">Create task</button>
+		<button type="submit" class="btn btn-primary">Create task</button>
     </div>
   </div>
 </form>
