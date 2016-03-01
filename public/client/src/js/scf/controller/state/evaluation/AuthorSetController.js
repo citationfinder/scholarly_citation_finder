@@ -1,4 +1,4 @@
-function EvaluationCitationsController($scope, $stateParams, Restangular) {
+function AuthorSetController($scope, Restangular) {
 	
 	$scope.isCollapsed = true;
 	$scope.task = {};
@@ -32,6 +32,6 @@ function EvaluationCitationsController($scope, $stateParams, Restangular) {
 
 }
 
-EvaluationCitationsController.$inject = ['$scope', '$stateParams', 'Restangular'];
+AuthorSetController.$inject = ['$scope', 'Restangular'];
 
-module.exports = EvaluationCitationsController;
+module.exports = AuthorSetController;

@@ -47,12 +47,17 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/HarvesterController'),
 		template: require('../view/state/harvester.html')
 	})
-	.state('evaluation', {
+	.state('evaluation-authorset', {
 		url: '/evaluation',
-		controller: require('../controller/state/EvaluationController'),
-		template: require('../view/state/evaluation.html')
+		controller: require('../controller/state/evaluation/AuthorSetController'),
+		template: require('../view/state/evaluation/author_set.html')
 	})
-	;		
+	.state('evaluation-run', {
+		url: '/evaluation',
+		controller: require('../controller/state/evaluation/RunController'),
+		template: require('../view/state/evaluation/run.html')
+	})
+	;
 }
 
 routing.$inject = ['$stateProvider', '$urlRouterProvider'];
