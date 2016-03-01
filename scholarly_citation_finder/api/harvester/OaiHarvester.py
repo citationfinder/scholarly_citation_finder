@@ -1,3 +1,4 @@
+import logging
 from sickle import Sickle
 from sickle.oaiexceptions import NoRecordsMatch
 from requests.exceptions import ChunkedEncodingError, ConnectionError
@@ -5,6 +6,8 @@ from requests.exceptions import ChunkedEncodingError, ConnectionError
 from scholarly_citation_finder.api.harvester.Harvester import Harvester
 from scholarly_citation_finder.api.Parser import ParserConnectionError,\
     ParserRollbackError
+
+logger = logging.getLogger(__name__)
 
 
 class OaiHarvester(Harvester):
@@ -19,8 +22,8 @@ class OaiHarvester(Harvester):
     oai_url = None
     oai_identifier = None
     
-    def __init__(self, name, oai_url, oai_identifier, **kwargs):
-        super(OaiHarvester, self).__init__(name, **kwargs)
+    def __init__(self, name, oai_url, oai_identifier):
+        super(OaiHarvester, self).__init__(name=name, database='citeseerx')
         self.oai_url = oai_url
         self.oai_identifier = oai_identifier     
     
@@ -51,12 +54,12 @@ class OaiHarvester(Harvester):
         
         # TODO: move to parent class
         try:    
-            self.start_harevest(logger_string='limit={}, from={}, until={}, from_id={}'.format(limit, _from, until, _from_id))
+            self.start_harevest(logger_string='limit={}, from={}, until={}, from_id={}, resumptionToken={}'.format(limit, _from, until, _from_id, resumptionToken))
             num_publications = self.harvest_oai_phm(list_records_options, _from_id=_from_id)
             self.stop_harvest()
             return num_publications
         except(ParserConnectionError) as e:
-            self.logger.warn(str(e))
+            logger.warn(str(e))
             self.stop_harvest() # commit results
             # TODO: restart, if it was not a: requests.exceptions.ConnectionError: ('Connection aborted.', error(104, 'Connection reset by peer'))
             return False
@@ -131,21 +134,21 @@ class OaiHarvester(Harvester):
 
                 publication['source'] = self.name+':'+identifier
 
-                self.parse(publication,
-                           authors=authors,
-                           keywords=keywords,
-                           urls=urls)
+                self.parser.parse(publication,
+                                  authors=authors,
+                                  keywords=keywords,
+                                  urls=urls)
                     
                 if self.check_stop_harvest():
                     break
                 
-            return self.count_publications
+            return self.parser.count_publications
         # sickle errors => oai-phm errors
         except(NoRecordsMatch) as e:
             return False
         # requests (part of sickle) errors => connection errors
         except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
-            self.logger.info(e, exc_info=True)
+            logger.info(e, exc_info=True)
             raise ParserConnectionError(str(e))
         # database errors
         except(ParserRollbackError) as e:
