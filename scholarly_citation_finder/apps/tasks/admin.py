@@ -4,8 +4,7 @@ from models import Task
 
 
 class TaskMetaAdmin(admin.ModelAdmin):
-    #readonly_fields = ('result',) <-- deactivated for debug
-    pass
+    readonly_fields = ('result',)
 
     
 # Register 'default'
