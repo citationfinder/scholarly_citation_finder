@@ -99,8 +99,8 @@ REST_FRAMEWORK = {
 ###############################################################################
 
 # Allow requests from localhost. Used for development only!
-#PREREQ_APPS += ('corsheaders',)
-#MIDDLEWARE_CLASSES += ('corsheaders.middleware.CorsMiddleware',)
-#CORS_ORIGIN_WHITELIST = ('localhost:4000')
+PREREQ_APPS += ('corsheaders',)
+MIDDLEWARE_CLASSES += ('corsheaders.middleware.CorsMiddleware',)
+CORS_ORIGIN_WHITELIST = ('localhost:4000')
 #CORS_ALLOW_CREDENTIALS = True
 

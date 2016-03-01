@@ -11,7 +11,6 @@ function api(RestangularProvider) {
 		//});
 	} else {
 		// Base URL
-		console.log(window.location.host);
 		RestangularProvider.setBaseUrl('/api/');
 	}
 	
