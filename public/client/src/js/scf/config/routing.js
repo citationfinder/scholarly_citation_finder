@@ -48,12 +48,12 @@ function routing($stateProvider, $urlRouterProvider) {
 		template: require('../view/state/harvester.html')
 	})
 	.state('evaluation-authorset', {
-		url: '/evaluation',
+		url: '/evaluation-authorset',
 		controller: require('../controller/state/evaluation/AuthorSetController'),
 		template: require('../view/state/evaluation/author_set.html')
 	})
 	.state('evaluation-run', {
-		url: '/evaluation',
+		url: '/evaluation-run',
 		controller: require('../controller/state/evaluation/RunController'),
 		template: require('../view/state/evaluation/run.html')
 	})

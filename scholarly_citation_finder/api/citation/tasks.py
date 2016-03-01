@@ -10,7 +10,6 @@ from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
     EmptyPublicationSetException
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
-from scholarly_citation_finder.api.citation.strategy.JournalStrategy import JournalStrategy
 
 logger = logging.getLogger(__name__)
 AUTHOR_SET_FILENAME = 'authors.csv'
@@ -39,9 +38,11 @@ def evaluation_run(name, strategies):
         for row in reader:
             if len(row) == 3:
                 try:
-                    citations(author_id=row[0], evaluation=True, evaluation_name=name, strategy=strategies)
+                    citations(author_id=row[0], evaluation=True, evaluation_name=name, strategies=strategies)
                 except(EmptyPublicationSetException):
                     continue
+                except(ObjectDoesNotExist) as e:
+                    raise e
     return True
 
 
@@ -58,18 +59,19 @@ def citations(author_id, author_name=None, strategy=None, strategies=None, evalu
         citationfinder = CitationFinder(evaluation=evaluation)
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id),
                                                                                          name=author_name)
-        logger.info('set {} publications by author {}'.format(length_publication_set, author_id))
+        logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
         citationfinder.hack()
         
-        logger.info('run')
-        #citation_finder.run([AuthorStrategy(ordered=True, recursive=True, min_year=False),
-        #                     JournalStrategy(ordered=True, min_year=True)])
-        strategies_name = citationfinder.run(strategy)
-        logger.info('done run strategy: {}'.format(strategies_name))
+
         if evaluation:
-            citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name)),
-                                            filename=author_id)
+            for strategy in strategies:
+                strategies_name = citationfinder.run(strategy)
+                logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
+                citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name)),
+                                                filename=author_id)
         else:
+            strategies_name = citationfinder.run(strategy)
+            logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
             citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
                                  filename=author_id)
     except(ObjectDoesNotExist) as e:

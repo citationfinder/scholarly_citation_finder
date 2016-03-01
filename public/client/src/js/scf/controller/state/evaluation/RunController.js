@@ -3,7 +3,7 @@ function RunController($scope, Restangular) {
 	//$scope.isCollapsed = true;
 	//$scope.task = {};
 	
-	$scope.submitTaskRun = function(name, strategy) {
+	$scope.submitTask = function(name, strategy) {
 		Restangular.one('citation/evaluation/run/', name + '/').customPOST(strategy, '', {}, {}).then(function(data) {
 			console.log(data);
 			$scope.addAlert('Create task');
