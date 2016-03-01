@@ -32,21 +32,21 @@ def evaluation_create_author_set(name, setsize, num_min_publications, database='
 
 
 @shared_task
-def evaluation_run(name):
+def evaluation_run(name, strategies):
     with open(os.path.join(config.EVALUATION_DIR, name, AUTHOR_SET_FILENAME)) as author_set_file:
         reader = csv.reader(author_set_file)
         next(reader, None)  # skip the headers
         for row in reader:
             if len(row) == 3:
                 try:
-                    citations(author_id=row[0], evaluation=True, evaluation_name=name)
+                    citations(author_id=row[0], evaluation=True, evaluation_name=name, strategy=strategies)
                 except(EmptyPublicationSetException):
                     continue
     return True
 
 
 @shared_task
-def citations(author_id, author_name=None, evaluation=False, evaluation_name='default', strategies=None):
+def citations(author_id, author_name=None, strategy=None, strategies=None, evaluation=False, evaluation_name='default'):
     '''
     
     :param author_id:
@@ -64,7 +64,7 @@ def citations(author_id, author_name=None, evaluation=False, evaluation_name='de
         logger.info('run')
         #citation_finder.run([AuthorStrategy(ordered=True, recursive=True, min_year=False),
         #                     JournalStrategy(ordered=True, min_year=True)])
-        strategies_name = citationfinder.run(strategies)
+        strategies_name = citationfinder.run(strategy)
         logger.info('done run strategy: {}'.format(strategies_name))
         if evaluation:
             citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name)),

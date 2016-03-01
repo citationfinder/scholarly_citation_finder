@@ -1,11 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os.path
 from django.http import HttpResponse
 from scholarly_citation_finder.api.citation import tasks
 from scholarly_citation_finder.apps.tasks.models import Task
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-import json
+from django.views.decorators.csrf import csrf_exempt
+
+from scholarly_citation_finder import config
+from .strategy.AuthorStrategy import AuthorStrategy
+from .strategy.ConferenceStrategy import ConferenceStrategy
+from .strategy.FieldofstudyStrategy import FieldofstudyStrategy
+from .strategy.JournalStrategy import JournalStrategy
 
 def evaluation_create(request, name):
     setsize = request.GET.get('setsize', None)
@@ -31,10 +38,19 @@ def evaluation_detail(request, id):
         return HttpResponse('Task #{} not found'.format(id), status=404)
 
 
+@csrf_exempt
 def evaluation_run(request, name):
-    asyncresult = tasks.evaluation_run.delay(name=name)
-    task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
-    return JsonResponse(task.as_dict())
+    if request.body and os.path.isdir(os.path.join(config.EVALUATION_DIR, name)):
+        try:
+            strategies = eval(request.body)
+            
+            asyncresult = tasks.evaluation_run.delay(name=name, strategies=strategies)
+            task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
+            return JsonResponse(task.as_dict())
+        except(AttributeError, SyntaxError):
+            return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
+    else:
+        return HttpResponse(status=400)
 
 
 def evaluation_find(request):
@@ -42,16 +58,12 @@ def evaluation_find(request):
     author_id = request.GET.get('author_id', None)
     if (author_name or author_id) and request.body:
         try:
-            from .strategy.AuthorStrategy import AuthorStrategy
-            from .strategy.ConferenceStrategy import ConferenceStrategy
-            from .strategy.FieldofstudyStrategy import FieldofstudyStrategy
-            from .strategy.JournalStrategy import JournalStrategy
-            strategies = eval(request.body)
+            strategy = eval(request.body)
 
             asyncresult = tasks.citations.delay(author_name=author_name,
                                                 author_id=int(author_id),
                                                 evaluation=True,
-                                                strategies=strategies)
+                                                strategy=strategy)
             task = Task.objects.create(type=Task.TYPE_CITATION, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:
