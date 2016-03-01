@@ -1,5 +1,9 @@
 from .base import *
 
+PREREQ_APPS += (
+    'django_extensions', # used for debug only
+)
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -85,10 +89,20 @@ LOGGING = {
 
 
 ###############################################################################
-# Rest frameworks
+# Application: Django rest framework
 ###############################################################################
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
     'PAGE_SIZE': 10
 }
+
+
+###############################################################################
+# Application: Django cors headers
+###############################################################################
+
+# Allow requests from localhost. Used for development only!
+PREREQ_APPS += ('corsheaders',)
+MIDDLEWARE_CLASSES += ('corsheaders.middleware.CorsMiddleware',)
+CORS_ORIGIN_WHITELIST = ('localhost:4000')

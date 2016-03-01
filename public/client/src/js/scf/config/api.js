@@ -1,6 +1,11 @@
 function api(RestangularProvider) {
-	// Base URL
-	RestangularProvider.setBaseUrl('/api/');
+	// Used for local development only
+	if (window.location.host === 'localhost:4000') {
+		RestangularProvider.setBaseUrl('http://localhost:8000/api/');
+	} else {
+		// Base URL
+		RestangularProvider.setBaseUrl('/api/');
+	}
 	
 	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
 		if (operation == "getList") {
