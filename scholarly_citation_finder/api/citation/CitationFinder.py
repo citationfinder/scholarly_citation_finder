@@ -84,6 +84,13 @@ class CitationFinder:
             raise e
     
     def store_evaluation(self, path, filename):
+        '''
+        
+        :param path: File path
+        :param filename: File name (without extension)
+        :raise IOError: 
+        :return: total number of inspected publications, total number of found citations
+        '''
         filename = os.path.join(path, '{}.csv'.format(filename))
         try:
             with open(filename, 'w+') as csvfile:
@@ -94,6 +101,8 @@ class CitationFinder:
                 for result in self.evaluation_result:
                     num_inspected_publications += result[0]
                     writer.writerow([num_inspected_publications, result[1]])
+                # return total number of inspected publications and total number of found citations
+                return num_inspected_publications, self.evaluation_result[-1][1]
         except(IOError) as e:
             raise e
 

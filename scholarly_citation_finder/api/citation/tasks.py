@@ -32,13 +32,21 @@ def evaluation_create_author_set(name, setsize, num_min_publications, database='
 
 @shared_task
 def evaluation_run(name, strategies):
-    with open(os.path.join(config.EVALUATION_DIR, name, AUTHOR_SET_FILENAME)) as author_set_file:
-        reader = csv.reader(author_set_file)
-        next(reader, None)  # skip the headers
+    evaluation_dir = os.path.join(config.EVALUATION_DIR, name)
+    with open(os.path.join(evaluation_dir, AUTHOR_SET_FILENAME)) as author_set_file:
+        reader = csv.DictReader(author_set_file)
         for row in reader:
             if len(row) == 3:
                 try:
-                    citations(author_id=row[0], evaluation=True, evaluation_name=name, strategies=strategies)
+                    strategies_result = evaluation_citations(author_id=row['author_id'], evaluation_name=name, strategies=strategies)
+                    for strategy_result in strategies_result:
+                        __store_evaluation_result(path=evaluation_dir,
+                                                  filename=strategy_result['strategy_name'],
+                                                  row=[row['author_id'],
+                                                       row['num_citations'],
+                                                       row['num_publications'],
+                                                       strategy_result['num_inspected_publications'],
+                                                       strategy_result['num_citations']])
                 except(EmptyPublicationSetException):
                     continue
                 except(ObjectDoesNotExist) as e:
@@ -47,7 +55,38 @@ def evaluation_run(name, strategies):
 
 
 @shared_task
-def citations(author_id, author_name=None, strategy=None, strategies=None, evaluation=False, evaluation_name='default'):
+def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
+    '''
+    
+    :param author_id:
+    :param evaluation:
+    :raise ObjectDoesNotExits:
+    :raise EmptyPublicationSetException: 
+    '''
+    result = []
+    try:
+        citationfinder = CitationFinder(evaluation=True)
+        author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id))
+        logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
+        citationfinder.hack()
+        
+        for strategy in strategies:
+            strategy_name = citationfinder.run(strategy)
+            logger.info('{}: finished strategy "{}"'.format(author_id, strategy_name))
+            num_inspected_publications, num_citations = citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategy_name)),
+                                                                                        filename=author_id)
+            result.append({'strategy_name': strategy_name,
+                           'num_inspected_publications': num_inspected_publications,
+                           'num_citations': num_citations})
+        return result
+    except(ObjectDoesNotExist) as e:
+        raise e
+    except(EmptyPublicationSetException) as e:
+        raise e
+
+
+@shared_task
+def citations(strategy, author_id=None, author_name=None):
     '''
     
     :param author_id:
@@ -56,25 +95,37 @@ def citations(author_id, author_name=None, strategy=None, strategies=None, evalu
     :raise EmptyPublicationSetException: 
     '''
     try:
-        citationfinder = CitationFinder(evaluation=evaluation)
+        citationfinder = CitationFinder()
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id),
                                                                                          name=author_name)
         logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
         citationfinder.hack()
         
-
-        if evaluation:
-            for strategy in strategies:
-                strategies_name = citationfinder.run(strategy)
-                logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
-                citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name)),
-                                                filename=author_id)
-        else:
-            strategies_name = citationfinder.run(strategy)
-            logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
-            citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
-                                 filename=author_id)
+        strategies_name = citationfinder.run(strategy)
+        logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
+        citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
+                             filename=author_id)
     except(ObjectDoesNotExist) as e:
         raise e
     except(EmptyPublicationSetException) as e:
+        raise e
+
+
+def __store_evaluation_result(path, filename, row):
+    filename = os.path.join(path, 'meta_{}.csv'.format(filename))
+    file_exists = os.path.isfile(filename)
+    '''
+    
+    :param filename:
+    :param row:
+    '''
+    try:
+        with open(filename, 'a+') as csvfile:
+            writer = csv.writer(csvfile)
+            print(file_exists)
+            if not file_exists:
+                writer.writerow(['author_id', 'author_num_citations', 'author_num_publications', 'num_inspected_publications', 'num_citations'])
+            writer.writerow(row)
+        return filename
+    except(IOError) as e:
         raise e
