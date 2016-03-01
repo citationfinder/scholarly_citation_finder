@@ -1,22 +1,24 @@
 import os.path
-import os
-import codecs
 import psycopg2
-
-
-from scholarly_citation_finder.settings.development import DATABASES
+import logging
 from psycopg2._psycopg import ProgrammingError, OperationalError, DataError,\
     InternalError
-from scholarly_citation_finder.api.Process import Process
-from .MagNormalize import MagNormalize
-#from psycopg2._psycopg import DataError, IntegrityError, InternalError
-#from ...core.models import Author
-#from django.db.utils import DataError
 
-class MagHarvester(Process):
+from scholarly_citation_finder import config
+from scholarly_citation_finder.settings.development import DATABASES
+from .MagNormalize import MagNormalize
+
+logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
+                            level=logging.INFO,
+                            format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
+logger = logging.getLogger(__name__)
+
+
+class MagHarvester:
     
     def __init__(self):
-        super(MagHarvester, self).__init__('mag')
+        self.name = 'mag'
+        self.download_dir = os.path.join(config.DOWNLOAD_DIR, self.name)
         self.conn = self.connect_database()
 
     def connect_database(self):
@@ -27,11 +29,11 @@ class MagHarvester(Process):
                                 password=db['PASSWORD'])
 
     def _database_copy(self, filename, table, columns):
-        """
-        http://initd.org/psycopg/docs/cursor.html
-        """
+        '''
+        @see: http://initd.org/psycopg/docs/cursor.html
+        '''
         try:
-            self.logger.info('harvest {} ++++++++'.format(filename))
+            logger.info('harvest {} ++++++++'.format(filename))
             cur = self.conn.cursor()
             #cur.copy_from(file=filename,
             #              table=table,
@@ -45,34 +47,34 @@ class MagHarvester(Process):
             # the quote character to \b (Backspace), because this should never
             # be in a string.
             query = "COPY {} ({}) FROM STDIN DELIMITER E'\t' QUOTE E'\b' HEADER CSV;".format(table, columns)
-            self.logger.info(query)
+            logger.info(query)
             cur.copy_expert(sql=query,
                             file=open(filename, 'r'))
-            self.logger.info(cur.statusmessage)
+            logger.info(cur.statusmessage)
             self.conn.commit()
-            self.logger.info('end harvest ++++++++++')
+            logger.info('end harvest ++++++++++')
             return True
         except(DataError, InternalError, ProgrammingError, OperationalError) as e: # by psycopg2
             self.conn.rollback()
-            self.logger.warn(e, exc_info=True)
+            logger.warn(e, exc_info=True)
         except(IOError) as e: # by open(<file>)
-            self.logger.warn(e, exc_info=True)
+            logger.warn(e, exc_info=True)
         return False
 
     def run(self):
-        self.logger.info('run -----------------------------')        
+        logger.info('run -----------------------------')        
         for name, file in MagNormalize.FILES.iteritems():
             file_pre = '{}_pre.txt'.format(file[:-4])
             csv_file = os.path.join(self.download_dir, file_pre)
             if os.path.isfile(csv_file):
-                #self.logger.info('start store {}'.format(csv_file))
+                #logger.info('start store {}'.format(csv_file))
                 if getattr(self, name)(csv_file):
                     os.rename(csv_file, os.path.join(self.download_dir, '~{}'.format(file_pre)))
                 else:
                     pass # exceptions already get logged before this line
             else:
-                self.logger.info('no file {}'.format(csv_file))
-        self.logger.info('run done ------------------------')
+                logger.info('no file {}'.format(csv_file))
+        logger.info('run done ------------------------')
 
     def affiliations(self, filename):
         return self._database_copy(filename=filename,

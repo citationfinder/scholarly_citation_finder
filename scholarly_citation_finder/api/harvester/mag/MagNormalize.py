@@ -4,7 +4,7 @@ import logging
 
 from scholarly_citation_finder import config
 
-class MagNormalize():
+class MagNormalize:
 	
 	FILES = {
 		'affiliations': 'Affiliations.txt',
