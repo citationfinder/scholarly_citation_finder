@@ -4,6 +4,8 @@
 import codecs
 import json
 import csv
+from os.path import os
+
 
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
@@ -32,7 +34,7 @@ class CitationFinder:
         
     def run(self, strategies):
         if self.publication_set.is_empty():
-            raise EmptyPublicationSetException('publication_search_set not set')
+            raise EmptyPublicationSetException('publication_search_set is empty')
 
         self.reset()    
         strategies_name = '+'.join([strategy.name for strategy in strategies])
@@ -55,14 +57,24 @@ class CitationFinder:
                 self.citations.append(citation)
                 self.publication_set.add(citation.publication_id)        
         
-        # output
+        # output for evaluation
         if self.evaluation:
             self.evaluation_result.append([len(publications), len(self.citations)])
         
-    def store(self, filename):
+    def store(self, path, filename):
+        filename = os.path.join(path, '{}.json'.format(filename))
         try:
             results = []
+            """
             for publication in self.publication_set.get():
+                for citation in self.citations:
+                    if citation.reference_id == publication.id:
+                        results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
+                        self.citations.remove(citation)
+            """
+            
+            for publication in self.publication_set.get():
+                #                                           vvvvvvvvvvvvvvvvvvvvv
                 results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
 
             with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
@@ -71,11 +83,13 @@ class CitationFinder:
         except(IOError) as e:
             raise e
     
-    def store_evaluation(self, filename):
+    def store_evaluation(self, path, filename):
+        filename = os.path.join(path, '{}.csv'.format(filename))
         try:
             with open(filename, 'w+') as csvfile:
                 num_inspected_publications = 0
                 writer = csv.writer(csvfile)
+                writer.writerow(['num_inspected_publications', 'num_citations'])
                 writer.writerow([0, 0])
                 for result in self.evaluation_result:
                     num_inspected_publications += result[0]
@@ -128,23 +142,23 @@ class CitationFinder:
             keywords.append(keyword.name)
         
         result = {'type': publication.type,
-                'title': publication.title,
-                'year': publication.year,
-                'booktitle': publication.booktitle,
-                'journal_name': journal_name,
-                'volumne': publication.volume,
-                'number': publication.number,
-                'pages_from': publication.pages_from,
-                'pages_to': publication.pages_to,
-                'series': publication.series,
-                'publisher': publication.publisher,
-                'isbn': publication.isbn,
-                'doi': publication.doi,
-                'abstract': publication.abstract,
-                'copyright': publication.copyright,
-                'authors': authors,
-                'keywords': keywords,
-                'citations': []}
+                  'title': publication.title,
+                  'year': publication.year,
+                  'booktitle': publication.booktitle,
+                  'journal_name': journal_name,
+                  'volumne': publication.volume,
+                  'number': publication.number,
+                  'pages_from': publication.pages_from,
+                  'pages_to': publication.pages_to,
+                  'series': publication.series,
+                  'publisher': publication.publisher,
+                  'isbn': publication.isbn,
+                  'doi': publication.doi,
+                  'abstract': publication.abstract,
+                  'copyright': publication.copyright,
+                  'authors': authors,
+                  'keywords': keywords,
+                  'citations': []}
 
         if citations:
             for citation in citations:

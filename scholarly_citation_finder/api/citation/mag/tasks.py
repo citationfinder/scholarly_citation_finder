@@ -23,8 +23,8 @@ def citations(author_name, author_id, publin_callback_url=None):
         citationfinder.citations = citationfinder.citing_papers
     
         # -> convert result
-        output_path = create_dir(os.path.join(config.DOWNLOAD_DIR, 'mag'))
-        output_filename = citationfinder.store(filename=os.path.join(output_path, '{}.json'.format(author_id)))
+        output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, 'mag')),
+                                               filename=author_id)
         if publin_callback_url:
             __publin_callback(publin_callback_url, output_filename)
         else:

@@ -1,9 +1,5 @@
 from .base import *
 
-PREREQ_APPS += (
-    'django_extensions', # used for debug only
-)
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -106,3 +102,5 @@ REST_FRAMEWORK = {
 PREREQ_APPS += ('corsheaders',)
 MIDDLEWARE_CLASSES += ('corsheaders.middleware.CorsMiddleware',)
 CORS_ORIGIN_WHITELIST = ('localhost:4000')
+#CORS_ALLOW_CREDENTIALS = True
+

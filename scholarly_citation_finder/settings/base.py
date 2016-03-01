@@ -45,6 +45,7 @@ PREREQ_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'djcelery',
+    'django_extensions', # used for debug only
 )
 PROJECT_APPS = (
     'scholarly_citation_finder.api.citation',
@@ -62,7 +63,7 @@ INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

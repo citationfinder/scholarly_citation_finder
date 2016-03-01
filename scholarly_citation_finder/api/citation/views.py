@@ -37,14 +37,21 @@ def evaluation_run(request, name):
     return JsonResponse(task.as_dict())
 
 
-def citations(request):
+def evaluation_find(request):
     author_name = request.GET.get('author_name', None)
     author_id = request.GET.get('author_id', None)
-    body = json.loads(request.body)
-    if (author_name or author_id) and body:
+    if (author_name or author_id) and request.body:
         try:
-            strategies = eval(body.strategies)
-            asyncresult = tasks.citations.delay(author_name=author_name, author_id=int(author_id))
+            from .strategy.AuthorStrategy import AuthorStrategy
+            from .strategy.ConferenceStrategy import ConferenceStrategy
+            from .strategy.FieldofstudyStrategy import FieldofstudyStrategy
+            from .strategy.JournalStrategy import JournalStrategy
+            strategies = eval(request.body)
+
+            asyncresult = tasks.citations.delay(author_name=author_name,
+                                                author_id=int(author_id),
+                                                evaluation=True,
+                                                strategies=strategies)
             task = Task.objects.create(type=Task.TYPE_CITATION, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:

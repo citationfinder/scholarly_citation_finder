@@ -46,7 +46,7 @@ def evaluation_run(name):
 
 
 @shared_task
-def citations(author_id, evaluation=False, evaluation_name=None, strategies=None):
+def citations(author_id, author_name=None, evaluation=False, evaluation_name='default', strategies=None):
     '''
     
     :param author_id:
@@ -54,26 +54,25 @@ def citations(author_id, evaluation=False, evaluation_name=None, strategies=None
     :raise ObjectDoesNotExits:
     :raise EmptyPublicationSetException: 
     '''
-    
     try:
-        print(author_id)
         citationfinder = CitationFinder(evaluation=evaluation)
-        author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id))
+        author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id),
+                                                                                         name=author_name)
         logger.info('set {} publications by author {}'.format(length_publication_set, author_id))
         citationfinder.hack()
         
         logger.info('run')
         #citation_finder.run([AuthorStrategy(ordered=True, recursive=True, min_year=False),
         #                     JournalStrategy(ordered=True, min_year=True)])
-        strategies_name = citationfinder.run([JournalStrategy()])
+        strategies_name = citationfinder.run(strategies)
         logger.info('done run strategy: {}'.format(strategies_name))
         if evaluation:
-            output_path = create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name))
-            citationfinder.store_evaluation(filename=os.path.join(output_path, '{}.csv'.format(author_id)))
+            citationfinder.store_evaluation(path=create_dir(os.path.join(config.EVALUATION_DIR, evaluation_name, strategies_name)),
+                                            filename=author_id)
         else:
-            citationfinder.store()
+            citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
+                                 filename=author_id)
     except(ObjectDoesNotExist) as e:
         raise e
     except(EmptyPublicationSetException) as e:
         raise e
-
