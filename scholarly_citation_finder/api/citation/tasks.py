@@ -122,7 +122,6 @@ def __store_evaluation_result(path, filename, row):
     try:
         with open(filename, 'a+') as csvfile:
             writer = csv.writer(csvfile)
-            print(file_exists)
             if not file_exists:
                 writer.writerow(['author_id', 'author_num_citations', 'author_num_publications', 'num_inspected_publications', 'num_citations'])
             writer.writerow(row)

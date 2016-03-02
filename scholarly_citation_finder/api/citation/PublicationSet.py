@@ -68,7 +68,7 @@ class PublicationSet:
     def get_min_year(self):
         return self.min_year if self.min_year else self.publications.aggregate(Min('year'))['year__min']
 
-    def get_authors(self, ordered=False, only_additionals=False):
+    def get_authors(self, ordered=False, only_additionals=False, plus_additionals=False):
         '''
         Find all authors (precise author IDs) of the given publication search set.
         
@@ -77,7 +77,7 @@ class PublicationSet:
         '''
         if ordered:
             try:
-                return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.__get_idstring(only_additionals=only_additionals)+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
+                return list(Author.objects.using(self.database).raw("SELECT author_id AS id FROM core_publicationauthoraffilation WHERE publication_id IN ("+self.__get_idstring(only_additionals=only_additionals, plus_additionals=plus_additionals)+") GROUP BY author_id ORDER BY COUNT(author_id) DESC"))
             except(EmptyIdstringException):
                 return []
         else:

@@ -27,7 +27,7 @@ class AuthorStrategy(Strategy):
         self.recursive = recursive
         
     def run(self, publication_set, callback):
-        authors = publication_set.get_authors(ordered=self.ordered)
+        authors = publication_set.get_authors(ordered=self.ordered, plus_additionals=True)
         logger.info('found {} author in the search set'.format(len(authors)))
         
         self._run_for_author(publication_set, callback, authors)
