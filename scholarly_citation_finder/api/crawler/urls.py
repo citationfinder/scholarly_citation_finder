@@ -4,6 +4,7 @@ import views
 
 
 urlpatterns = [
-    url(r'^htmlparser/$', views.htmlparser, name='htmlparser'),
-    url(r'^duckduckgo/$', views.duckduckgo, name='duckduckgo'),
+    url(r'^crossref/$', views.crossref),
+    url(r'^duckduckgo/$', views.duckduckgo),
+    url(r'^htmlparser/$', views.htmlparser),
 ]
