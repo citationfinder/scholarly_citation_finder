@@ -98,11 +98,14 @@ class CitationFinder:
                 writer = csv.writer(csvfile)
                 writer.writerow(['num_inspected_publications', 'num_citations'])
                 writer.writerow([0, 0])
-                for result in self.evaluation_result:
-                    num_inspected_publications += result[0]
-                    writer.writerow([num_inspected_publications, result[1]])
-                # return total number of inspected publications and total number of found citations
-                return num_inspected_publications, self.evaluation_result[-1][1]
+                if len(self.evaluation_result) > 0:
+                    for result in self.evaluation_result:
+                        num_inspected_publications += result[0]
+                        writer.writerow([num_inspected_publications, result[1]])
+                    # return total number of inspected publications and total number of found citations
+                    return num_inspected_publications, self.evaluation_result[-1][1]
+                else:
+                    return 0, 0
         except(IOError) as e:
             raise e
 
