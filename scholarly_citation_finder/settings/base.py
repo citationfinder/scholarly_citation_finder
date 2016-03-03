@@ -107,3 +107,4 @@ STATICFILES_DIRS = [
 # Celery settings
 BROKER_URL = os.getenv('BROKER_URL', 'amqp://guest:guest@localhost//')
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'djcelery.backends.database:DatabaseBackend')
+#CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'

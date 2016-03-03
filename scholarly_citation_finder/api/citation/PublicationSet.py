@@ -11,16 +11,14 @@ class EmptyIdstringException(Exception):
 
 
 class PublicationSet:
-    
-    publications = []
-    publications_idstring = ''
-    
-    additional_publications_idstring = ''
-
-    min_year = None
 
     def __init__(self, database='mag'):
         self.database = database
+        
+        self.publications = []
+        self.publications_idstring = ''
+        self.additional_publications_idstring = ''
+        self.min_year = None
 
     def __len__(self):
         return len(self.publications)
