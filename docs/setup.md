@@ -9,6 +9,8 @@ $ cd scf_project/
 $ source bin/activate
 ```
 
+### Setup server
+
 Get SCF and install the Python dependencies
 ```bash
 $ git clone https://github.com/citationfinder/scholarly_citation_finder.git
@@ -32,31 +34,31 @@ Finally run the build-in Django server
 $ ./manage.py runserver
 ```
 
-### Django tips
+Open [http://localhost:8000](http://localhost:8000)
 
-Migrate a specific database or flush it
+### Setup client
+
+The client is located in the `public/client` directory. Gulp in combination with Webpack is used to build the client. During development run Gulp to automatically build the project and reload the browser, when you change files
+
 ```bash
-$ ./manage.py migrate --database=<database name>
-$ ./manage.py flush --database=<database name>
+$ cd public/client
+$ gulp
 ```
 
-Open Django shell for testing or debugging
+Open [http://localhost:4000](http://localhost:4000)
+
+
+### Documenation
+
+MkDocs is used for this documentation. Run MkDocs during writing to check the results
+
 ```bash
-$ python manage.py shell
->>> import django
->>> django.setup()
+$ mkdocs serve
 ```
 
+Open [http://localhost:8000](http://localhost:8000)
 
-### PostgreSQL tips
 
-Open PostgreSQL shell
-```bash
-$ psql -U <user name> [<database name>]
-```
+## Setup a virtual machine
 
-Create a user and a database
-```
-CREATE USER <username> WITH PASSWORD '<password>';
-CREATE DATABASE <name> [OWNER <username>];
-```
+see [Deploy Vagrant](deployment.md)

@@ -3,9 +3,11 @@ repo_url: https://github.com/citationfinder/scholarly_citation_finder
 repo_name: GitHub
 theme: readthedocs
 site_description: Documentation for Scholarly Citation Finder
+include_search: true
 pages:
 - ['index.md', 'Home']
-- ['deployment.md', 'User manuel', 'Deployment']
-- ['setup.md', 'User manuel', 'Setup']
+- ['deployment.md', 'Developer manuel', 'Deployment']
+- ['setup.md', 'Developer manuel', 'Setup']
+- ['tools.md', 'Developer manuel', 'Tools']
 - ['api.md', 'User manuel', 'API']
-- ['integration.md', 'Extension', 'Integration']
+- ['integration.md', 'User manuel', 'Integration']
