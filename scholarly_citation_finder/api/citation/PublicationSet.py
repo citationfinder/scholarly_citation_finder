@@ -99,9 +99,9 @@ class PublicationSet:
         else:
             return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
-    def get_fieldofstudies(self, ordered=False):
+    def get_fieldofstudies(self, ordered=False, plus_additionals=False):
         if ordered:
-            query = "SELECT fieldofstudy_id AS id FROM core_publicationkeyword WHERE publication_id IN ("+self.publications_idstring+") GROUP BY fieldofstudy_id ORDER BY COUNT(fieldofstudy_id) DESC"
+            query = "SELECT fieldofstudy_id AS id FROM core_publicationkeyword WHERE publication_id IN ("+self.__get_idstring(plus_additionals=plus_additionals)+") GROUP BY fieldofstudy_id ORDER BY COUNT(fieldofstudy_id) DESC"
             return list(FieldOfStudy.objects.using(self.database).raw(query))
         else:
             return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()

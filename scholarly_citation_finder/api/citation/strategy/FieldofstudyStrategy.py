@@ -26,7 +26,7 @@ class FieldofstudyStrategy(Strategy):
             fieldofstudies = fieldofstudies[:self.limit]
         logger.info('found {} (limit: {}) field of studies in search set'.format(len(fieldofstudies), self.limit))
         fieldofstudies_publications = self.__find_fieldofstudies_publications(fieldofstudies, publication_set.get_min_year())
-        callback(fieldofstudies_publications, 'field of studies')
+        callback(fieldofstudies_publications, 'field of studies (limit={})'.format(self.limit))
         #for fieldofstudy in fieldofstudies:
         #    fieldofstudy_publications = self.__find_fieldofstudy_publications(fieldofstudy.id, publication_set.get_min_year())
         #    fieldofstudy_publications_citing = citing_papers.filter(publication__in=fieldofstudy_publications)
