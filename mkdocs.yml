@@ -11,3 +11,4 @@ pages:
 - ['tools.md', 'Developer manuel', 'Tools']
 - ['api.md', 'User manuel', 'API']
 - ['integration.md', 'User manuel', 'Integration']
+- ['evaluation.md', 'User manuel', 'Evaluation']
