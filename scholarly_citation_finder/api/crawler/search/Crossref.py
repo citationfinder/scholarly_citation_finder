@@ -1,5 +1,12 @@
 import requests
+import logging
 from requests.exceptions import ConnectionError
+
+logger = logging.getLogger(__name__)
+
+
+class CrossrefUnwantedType(Exception):
+    pass
 
 
 class CrossrefResponseException(Exception):
@@ -51,7 +58,10 @@ class Crossref:
         _, message = self.query(self.API_ENDPOINT_WORKS, **kwargs)
         results = []
         for item in message['items']:
-            results.append(self.__parse_publication(item))
+            try:
+                results.append(self.__parse_publication(item))
+            except(CrossrefUnwantedType) as e:
+                logger.info(str(e))
         return results
 
     def query_works_doi(self, doi, **kwargs):
@@ -59,13 +69,30 @@ class Crossref:
         return self.__parse_publication(message)
     
     def __parse_publication(self, item):
-        # 'reference-count' in item
+        if 'type' not in item:
+            raise CrossrefUnwantedType('Unwanted Crossref type: no type') 
+
         result = {}
+        container_title = None
+        
         for key, value in item.iteritems():
-            if key == 'title':
+            if key == 'type':
+                if value in ('proceedings-article', 'paper-conference'):
+                    result[key] = 'inproceedings'
+                elif 'article' in value:  # "article", "article-journal"
+                    result[key] = 'article'
+                elif value in ('chapter', 'book-chapter', 'inbook'):
+                    result[key] = 'incollection'
+                elif value == 'book':
+                    result[key] = value
+                elif value == 'thesis':
+                    result[key] = 'phdthesis'
+                else: # reference-entry, journal, dataset, component, standard
+                    raise CrossrefUnwantedType('Unwanted Crossref type: {}'.format(value)) 
+            elif key == 'title' and len(value) > 0:
                 result['title'] = value[0]
-            if key == 'container-title' and len(value) > 0:
-                result['booktitle'] = value[-1].title()
+            elif key == 'container-title' and len(value) > 0:
+                container_title = value[-1].title()
             elif key == 'page':
                 tmp = value.split('-')
                 result['page_from'] = tmp[0]
@@ -91,4 +118,15 @@ class Crossref:
                 result['urls'] = []
                 for url in value:
                     result['urls'].append('{},{}'.format(url['content-type'], url['URL']))
+        
+        if container_title:
+            if result['type'] == 'inproceedings':
+                result['conference_name'] = container_title
+            elif result['type'] == 'article':
+                result['journal_name'] = container_title           
+            elif result['type'] in ('incollection', 'book'):
+                result['booktitle'] = container_title
+            else:
+                result['container-title'] = container_title           
+            
         return result
