@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os.path
 from django.http import HttpResponse
-from djcelery.models import TaskMeta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import JsonResponse
 

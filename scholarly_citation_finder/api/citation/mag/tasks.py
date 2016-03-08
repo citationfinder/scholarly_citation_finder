@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 @shared_task
 def citations(author_name, author_id, publin_callback_url=None):
     try:
-        citationfinder = CitationFinder()
+        citationfinder = CitationFinder(database='mag')
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(name=author_name, id=author_id)
         logger.info('set {} publications by author {}'.format(length_publication_set, author_id))
         citationfinder.hack()

@@ -1,11 +1,9 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import codecs
 import json
 import csv
 from os.path import os
-
 
 from scholarly_citation_finder.api.citation.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
@@ -17,9 +15,9 @@ class EmptyPublicationSetException(Exception):
 
 class CitationFinder:
 
-    def __init__(self, database_name='mag', evaluation=False):
+    def __init__(self, database='default', evaluation=False):
         self.evaluation = evaluation
-        self.database = database_name
+        self.database = database
         self.publication_set = PublicationSet(database=self.database)
         self.reset()
 

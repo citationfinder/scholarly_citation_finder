@@ -65,7 +65,7 @@ def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
     '''
     result = []
     try:
-        citationfinder = CitationFinder(evaluation=True)
+        citationfinder = CitationFinder(database='mag', evaluation=True)
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id))
         logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
         citationfinder.hack()
@@ -95,7 +95,7 @@ def citations(strategy, author_id=None, author_name=None):
     :raise EmptyPublicationSetException: 
     '''
     try:
-        citationfinder = CitationFinder()
+        citationfinder = CitationFinder(database='mag')
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id),
                                                                                          name=author_name)
         logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
