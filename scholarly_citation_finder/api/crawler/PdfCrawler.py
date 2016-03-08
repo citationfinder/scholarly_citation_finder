@@ -1,15 +1,14 @@
 import logging
-from django.core.exceptions import ObjectDoesNotExist
 from requests.exceptions import ConnectionError
 
-from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
+from scholarly_citation_finder.apps.core.models import PublicationUrl
 from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParser, HtmlParserUnkownHeaderType
 from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo, DuckduckgoResponseException
 
 logger = logging.getLogger(__name__)
 
 
-class PublicationCrawler:
+class PdfCrawler:
     
     def __init__(self, database='default'):
         self.database = database
@@ -25,12 +24,6 @@ class PublicationCrawler:
         self.publication = publication
         # Get stored URLs of this publications
         self.urls = PublicationUrl.objects.using(self.database).filter(publication=self.publication)
-        
-    def set_by_id(self, publication_id):
-        try:
-            return self.publication(Publication.objects.using(self.database).get(pk=publication_id))
-        except(ObjectDoesNotExist) as e:
-            raise e
     
     def by_stored_pdf_urls(self):
         results = []
@@ -40,18 +33,19 @@ class PublicationCrawler:
             
     def by_search_engine(self):
         results = []
-        try:
-            for result in self.search_engine.query(keywords=self.publication.title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
-                if self.__match_title(self.publication.title, result['title_matching']):
-                    if result['type'] == Duckduckgo.API_PARAM_FILETYPE_PDF:
-                        results.append(result['url'])
-                    elif result['type'] is None:
-                        results.extend(self.use_html_page_to_find_pdf(result['url']))
-                    else:
-                        logger.info('unsupported Duckduckgo URL type {}: {}'.format(result['type'], result['url'])) 
-        except(DuckduckgoResponseException, ConnectionError) as e:
-            logger.warn(e, exc_info=True)
-        return results        
+        if self.publication.title:
+            try:
+                for result in self.search_engine.query(keywords=self.publication.title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
+                    if self.__match_title(self.publication.title, result['title_matching']):
+                        if result['type'] == Duckduckgo.API_PARAM_FILETYPE_PDF:
+                            results.append(result['url'])
+                        elif result['type'] is None:
+                            results.extend(self.use_html_page_to_find_pdf(result['url']))
+                        else:
+                            logger.info('unsupported Duckduckgo URL type {}: {}'.format(result['type'], result['url'])) 
+            except(DuckduckgoResponseException, ConnectionError) as e:
+                logger.warn(e, exc_info=True)
+        return results
 
     def by_soure(self):
         results = []
