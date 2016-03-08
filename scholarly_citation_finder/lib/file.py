@@ -1,4 +1,4 @@
-#import gzip
+import gzip
 #import os.path
 #import requests
 #from requests.exceptions import ConnectionError, InvalidSchema
@@ -16,7 +16,16 @@ from requests.exceptions import ConnectionError, InvalidSchema
 
 logger = logging.getLogger()
 
+
 class UnexpectedContentTypeException(Exception):
+    pass
+
+
+class DownloadFailedException(Exception):
+    pass
+
+
+class UnzipFailedException(Exception):
     pass
 
 
@@ -68,8 +77,7 @@ def download_file(url, path=None, name=None, expected_content_type=None):
     '''
     Downloads a single file. Can handle large files.
     
-    :raise ConnectionError:
-    :raise InvalidSchema:
+    :raise DownloadFailedException: When the connection fails or the schema is invalid
     '''
     if name:
         local_filename = os.path.join(path, name)
@@ -90,7 +98,7 @@ def download_file(url, path=None, name=None, expected_content_type=None):
                     #f.flush() commented by recommendation from J.F.Sebastian
         return local_filename
     except(ConnectionError, InvalidSchema) as e:
-        raise e
+        raise DownloadFailedException(e)
 
 
 """
@@ -113,7 +121,14 @@ def upload_file(url, filename, status_code=201):
 """    
 
 def unzip_file(filename, huge_file=True):
-    if os.path.isfile(filename):
+    '''
+    
+    :param filename:
+    :param huge_file:
+    :return: Name of the file
+    :raise UnzipFailedException: 
+    '''
+    try:
         outfilename = filename[:-3]
         input = gzip.open(filename, 'rb')
         output = open(outfilename, 'wb')
@@ -128,8 +143,8 @@ def unzip_file(filename, huge_file=True):
         input.close()
         output.close()
         return outfilename
-    else:
-        raise Exception('{} is not a file (to unzip)'.format(filename))
+    except(IOError) as e:
+        raise UnzipFailedException(e)
     
 
 def url_exits(url, check_exists=False):
