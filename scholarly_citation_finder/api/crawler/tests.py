@@ -1,12 +1,12 @@
 from django.test import TestCase
 
-from .PdfCrawler import PdfCrawler
+from scholarly_citation_finder.api.crawler import PublicationPdfCrawler
 
 
-class CrawlerTest(TestCase):
+class PublicationPdfCrawlerTest(TestCase):
 
     def setUp(self):
-        self.crawler = PdfCrawler()
+        self.crawler = PublicationPdfCrawler()
 
     def test_use_html_page_to_find_pdf(self):
         #first = self.crawler.find_pdf_hyperrefs('http://link.springer.com/book/10.1007%2F978-3-642-19357-6')

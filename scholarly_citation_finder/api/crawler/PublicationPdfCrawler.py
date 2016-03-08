@@ -8,7 +8,7 @@ from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo, 
 logger = logging.getLogger(__name__)
 
 
-class PdfCrawler:
+class PublicationPdfCrawler:
     
     def __init__(self, database='default'):
         self.database = database
