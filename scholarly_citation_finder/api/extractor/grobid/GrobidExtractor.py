@@ -1,20 +1,19 @@
 import requests
 import logging
+from requests.exceptions import RequestException
 
 from scholarly_citation_finder.lib.process import ProcessException
-from TeiParser import TeiParser
-from requests.exceptions import RequestException
+from .TeiParser import TeiParser
 
 logger = logging.getLogger(__name__)
 
 
 class GrobidExtractor:
     
-    # URL to Grobid service
-    GROBID_API = 'http://localhost:8080'
+    GROBID_API_URL = 'http://localhost:8080'
 
-    def __init__(self, **kwargs):
-        self.teiParser = TeiParser('grobid')
+    def __init__(self):
+        self.parser = TeiParser('grobid')
 
     def extract_file(self, filename):
         '''
@@ -30,13 +29,23 @@ class GrobidExtractor:
             return False
     
     def __extract_references(self, data):
+        '''
+        
+        :param data:
+        :raise ProcessException: 
+        '''
         xml = self.__call_grobid_method(data, 'processReferences')
-        return self.teiParser.parse(xml=xml,
-                                    callback_biblstruct=None)
+        return self.parser.parse(xml=xml)
 
     def __call_grobid_method(self, data, method):
+        '''
+        
+        :param data:
+        :param method:
+        :raise ProcessException: 
+        '''
         logger.debug('Call grobid method: {}'.format(method))
-        url = '{0}/{1}'.format(self.GROBID_API, method)
+        url = '{0}/{1}'.format(self.GROBID_API_URL, method)
         files = {'input': data}
         vars = {}
     
@@ -48,10 +57,4 @@ class GrobidExtractor:
         if resp.status_code != 200:
             raise ProcessException('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
     
-        # remove all namespace info from xml string
-        # this is hacky but makes parsing it much much easier down the road
-        #remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
-        #xml_text = remove_xmlns.sub('', resp.content)
-        #
-        #xml = safeET.fromstring(xml_text)
         return resp.content

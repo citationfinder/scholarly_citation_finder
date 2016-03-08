@@ -1,19 +1,18 @@
-import gzip
-import os.path
-import requests
-from requests.exceptions import ConnectionError, InvalidSchema
+#import gzip
+#import os.path
+#import requests
+#from requests.exceptions import ConnectionError, InvalidSchema
 
 from process import external_process, ProcessException
 
-import gzip
 import os.path
 import requests
-import shutil
+#import shutil
 import logging
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from requests.exceptions import ConnectionError, InvalidSchema
-from requests.packages.urllib3.connectionpool import HTTPConnectionPool
+#from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
 logger = logging.getLogger()
 
@@ -94,6 +93,7 @@ def download_file(url, path=None, name=None, expected_content_type=None):
         raise e
 
 
+"""
 def upload_file(url, filename, status_code=201):
     logger.debug('Upload {} [{}]'.format(filename, url))
     if not os.path.isfile(filename):
@@ -110,12 +110,7 @@ def upload_file(url, filename, status_code=201):
     except(ConnectionError):
         logger.debug('Connection to {} failed'.format(url))
         return False
-    
-    #if os.path.isfile(filename):
-    #else:
-    #    logger.debug("%s is not a file" % filename)
-    #return False
-    
+"""    
 
 def unzip_file(filename, huge_file=True):
     if os.path.isfile(filename):
