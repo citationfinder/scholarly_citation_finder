@@ -1,32 +1,38 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os.path
+import logging
 import filecmp
 
-from ....lib.file import download_file, unzip_file
-from ..Harvester import Harvester
+from scholarly_citation_finder.lib.file import download_file, unzip_file, DownloadFailedException, UnzipFailedException
+
+logger = logging.getLogger(__name__)
 
 
-class DblpDownloader(Harvester):
+class DblpDownloader:
     
     DBLP_BASE_URL = 'http://dblp.uni-trier.de/xml/'
     DBLP_FILE_XML_GZ = 'dblp.xml.gz'
     DBLP_FILE_MD5 = 'dblp.xml.gz.md5'
     
-    def __init__(self):
-        super(DblpDownloader, self).__init__('dblp')
+    def __init__(self, download_dir):
+        self.download_dir = download_dir
     
     def download(self):
+        '''
+        :raise DownloadFailedException: 
+        :raise UnzipFailedException: 
+        '''
         if self.is_new_data_avaible():
-            return self._download_database()
+            return self.__download_database()
         else:
-            self.logger.info('No new data is avaiable')
             return False
      
     def is_new_data_avaible(self):
         '''
-        Checks if new data is avaiable:
+        Checks if new data is available:
         Downloads the MD5-file of the XML and compares it with the local stored MD5-file        
         '''
-        self.logger.debug('Check is new data avaiable')
         old_md5_file = os.path.join(self.download_dir, self.DBLP_FILE_MD5)
         if os.path.isfile(old_md5_file):
             new_md5_file = download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, '')
@@ -34,16 +40,20 @@ class DblpDownloader(Harvester):
                 return False
         return True
     
-    def _download_database(self):
+    def __download_database(self):
         '''
-        Downloads the XML- and the DTD-file from DBLP        
+        Downloads the XML- and the DTD-file from DBLP
+        :return: Filename of the downloaded and unzipped XML database
+
+        :raise DownloadFailedException:
+        :raise UnzipFailedException:  
         '''
-        self.logger.info('Download (and unzip) data')
+        logger.info('Download (and unzip) data')
         download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, self.download_dir)
         download_file(self.DBLP_BASE_URL + 'dblp.dtd', self.download_dir)
-        xml_database_file = download_file(self.DBLP_BASE_URL + self.DBLP_FILE_XML_GZ, self.download_dir)
         
-        if xml_database_file:
+        try:
+            xml_database_file = download_file(self.DBLP_BASE_URL + self.DBLP_FILE_XML_GZ, self.download_dir)
             return unzip_file(xml_database_file)
-        else:
-            return False
+        except(DownloadFailedException, UnzipFailedException) as e:
+            raise e

@@ -12,7 +12,7 @@ class Harvester(object):
     
     COMMIT_AFTER_NUM_PUBLICATIONS = 100000
 
-    def __init__(self, name, database):
+    def __init__(self, name, database='default'):
         self.name = name
         self.download_dir = create_dir(os.path.join(config.DOWNLOAD_DIR, self.name))
         self.parser = Parser(database=database)

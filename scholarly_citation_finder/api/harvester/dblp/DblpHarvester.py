@@ -9,6 +9,9 @@ from ..Harvester import Harvester
 from scholarly_citation_finder.lib.CsvFileWriter import CsvFileWriter
 from scholarly_citation_finder.apps.core.models import Publication, PublicationReference
 from django.core.exceptions import ObjectDoesNotExist
+from scholarly_citation_finder.api.harvester.dblp.DblpDownloader import DblpDownloader
+from scholarly_citation_finder.lib.file import DownloadFailedException,\
+    UnzipFailedException
 
 logger = logging.getLogger(__name__)
 
@@ -49,11 +52,21 @@ class DblpHarvester(Harvester):
     }
     
     def __init__(self):
-        super(DblpHarvester, self).__init__(name='dblp', database='dblp')
+        super(DblpHarvester, self).__init__(name='dblp')
+
+    def download_database(self):
+        try:
+            downloader = DblpDownloader(self.download_dir)
+            result = downloader.download()
+            if result:
+                logger.info('Downloaded and unzipped XML database: {}'.format(result))
+            else:
+                logger.info('No new data is available')
+        except(DownloadFailedException, UnzipFailedException) as e:
+            raise e
     
     def harvest(self, filename=None, limit=None, _from=None):
         '''
-        
         :param filename: DBLP XML file name
         :param limit: Number of maximum publications to parse
         :param _from: Last stored (!) DBLP key, e.g. 'journals/jlp/Winter08'
