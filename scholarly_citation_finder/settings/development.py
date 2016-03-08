@@ -11,19 +11,15 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'dblp': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DBLP_DATABASE_NAME', 'dblp'),
-        'USER': os.getenv('DBLP_DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DBLP_DATABASE_PASSWORD', 'root'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DEFAULT_DATABASE_NAME', 'scf'),
+        'USER': os.getenv('DEFAULT_DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DEFAULT_DATABASE_PASSWORD', 'root'),
         'HOST': '127.0.0.1',
         'PORT': '5432'
     },
     'citeseerx': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('CITESEERX_DATABASE_NAME', 'citeseerx'),
         'USER': os.getenv('CITESEERX_DATABASE_USER', 'postgres'),
         'PASSWORD': os.getenv('CITESEERX_DATABASE_PASSWORD', 'root'),
@@ -31,7 +27,7 @@ DATABASES = {
         'PORT': '5432'
     },
     'mag': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('MAG_DATABASE_NAME', 'mag'),
         'USER': os.getenv('MAG_DATABASE_USER', 'postgres'),
         'PASSWORD': os.getenv('MAG_DATABASE_PASSWORD', 'root'),
