@@ -1,6 +1,5 @@
 import requests
 import logging
-import os.path
 from requests.exceptions import RequestException
 from lxml import etree
 
@@ -19,14 +18,12 @@ class CiteseerExtractor:
     def __init__(self):
         self.parser = CiteseerParser('citeseer')
 
-    def extract_file(self, path, filename):
+    def extract_file(self, filename):
         '''
-        Extract the citations from a provied file.
-        :param path: Path to PDF file        
+        Extract the citations from a provided file.
         :param filename: Filename to PDF file
         :raise ProcessException: 
         '''
-        filename = os.path.join(path, filename)
         logger.info('Extract file: {}'.format(filename))
         try:
             response = self.__call_citeseer_url(self.CITESEER_API_URL, data=open(filename, 'rb').read())

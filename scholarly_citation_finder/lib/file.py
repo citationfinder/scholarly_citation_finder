@@ -29,6 +29,10 @@ class UnzipFailedException(Exception):
     pass
 
 
+def DownloadPdfException(Exception):
+    pass
+
+
 def create_dir(path):
     '''
     Creates the given path, if it does not already exists
@@ -70,8 +74,10 @@ def extract_file_process(file, cwd):
 
 
 def download_file_pdf(url, **kwargs):
-    return download_file(url, expected_content_type='application/pdf', **kwargs)
-
+    try:
+        return download_file(url, expected_content_type='application/pdf', **kwargs)
+    except(UnexpectedContentTypeException, InvalidSchema, ConnectionError) as e:
+        raise DownloadPdfException(e)
 
 def download_file(url, path=None, name=None, expected_content_type=None):
     '''
