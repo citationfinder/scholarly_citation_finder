@@ -4,6 +4,7 @@ import os.path
 import logging
 import filecmp
 
+from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import download_file, unzip_file, DownloadFailedException, UnzipFailedException
 
 logger = logging.getLogger(__name__)
@@ -35,7 +36,7 @@ class DblpDownloader:
         '''
         old_md5_file = os.path.join(self.download_dir, self.DBLP_FILE_MD5)
         if os.path.isfile(old_md5_file):
-            new_md5_file = download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, '')
+            new_md5_file = download_file(self.DBLP_BASE_URL + self.DBLP_FILE_MD5, config.DOWNLOAD_TMP_DIR)
             if filecmp.cmp(new_md5_file, old_md5_file, shallow=False):
                 return False
         return True
