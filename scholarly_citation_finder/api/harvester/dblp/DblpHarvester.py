@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 class DblpHarvester(Harvester):
     
+    NAME = 'dblp'
     FILENAME_CITE = 'cite.csv'
     
     COLLABORATIONS = [
@@ -52,7 +53,7 @@ class DblpHarvester(Harvester):
     }
     
     def __init__(self):
-        super(DblpHarvester, self).__init__(name='dblp')
+        super(DblpHarvester, self).__init__(name=self.NAME)
 
     def download_database(self):
         try:
@@ -199,6 +200,8 @@ class DblpHarvester(Harvester):
                     authors = []
                     urls = []
                     citations = []
+                elif elem.tag in ('address', 'month', 'url', 'cdrom', 'note', 'crossref', 'school', 'chapter'):
+                    pass
                 else:
                     logger.info('Unknown tag <{}> with value: {}'.format(elem.tag, elem.text))
 
@@ -225,7 +228,7 @@ class DblpHarvester(Harvester):
         
     def __parse_citation(self, publication_id, reference_dblp_key):
         try:
-            reference = Publication.objects.using(self.name).get(source='{}:{}'.format('dbpl', reference_dblp_key))
+            reference = Publication.objects.using(self.name).get(source='{}:{}'.format(self.NAME, reference_dblp_key))
             PublicationReference.objects.using(self.name).get_or_create(publication_id=publication_id,
                                                                         reference=reference)
         except(ObjectDoesNotExist) as e:
