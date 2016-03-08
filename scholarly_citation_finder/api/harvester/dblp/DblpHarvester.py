@@ -203,7 +203,7 @@ class DblpHarvester(Harvester):
                 elif elem.tag in ('address', 'month', 'url', 'cdrom', 'note', 'crossref', 'school', 'chapter'):
                     pass
                 else:
-                    logger.info('Unknown tag <{}> with value: {}'.format(elem.tag, elem.text))
+                    logger.info('Unknown tag <%s> with value: %s' % (elem.tag, elem.text))
 
             # Clear element
             elem.clear()

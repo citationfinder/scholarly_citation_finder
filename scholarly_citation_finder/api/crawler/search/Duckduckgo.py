@@ -28,7 +28,7 @@ class Duckduckgo:
         :see: https://duckduckgo.com/params
         :param keywords: Search keywords
         :param filetype: Optional file type, e.g. 'pdf'
-        :raise WrongResponseException: 
+        :raise DuckduckgoResponseException: 
         :raise ConnectionError:
         '''
         keywords = keywords.strip()

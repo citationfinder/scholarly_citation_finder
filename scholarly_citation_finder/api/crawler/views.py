@@ -4,9 +4,10 @@ from requests.exceptions import ConnectionError
 from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParser
 from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo,\
     DuckduckgoResponseException
-from scholarly_citation_finder.api.crawler.Crawler import Crawler
+from scholarly_citation_finder.api.crawler.PublicationCrawler import PublicationCrawler
 from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParserUnkownHeaderType
 from scholarly_citation_finder.api.crawler.search.Crossref import Crossref, CrossrefResponseException
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def htmlparser(request):
@@ -51,8 +52,11 @@ def crossref(request):
 def crawler_index(request):
     publication_id = request.GET.get('id', None)
     if publication_id:
-        crawler = Crawler()
-        crawler.run_by_id(publication_id)
-        return HttpResponse('done')
+        try:
+            crawler = PublicationCrawler()
+            crawler.set_by_id(publication_id)
+            return HttpResponse('done')
+        except(ObjectDoesNotExist) as e:
+            return HttpResponse('Publication does not exists', status=400)
     else:
-        return HttpResponse('Nothing do to. Usage: ?id=publication-id')
+        return HttpResponse('Nothing do to. Usage: ?id=publication-id', status=400)
