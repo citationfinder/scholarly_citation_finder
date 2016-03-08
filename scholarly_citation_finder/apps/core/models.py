@@ -58,7 +58,6 @@ class Publication(models.Model):
     year = models.IntegerField(blank=True, null=True)
     date = models.CharField(blank=True, null=True, max_length=50)
     booktitle = models.CharField(blank=True, null=True, max_length=200)
-    journal = models.ForeignKey(Journal, blank=True, null=True)
     volume = models.CharField(blank=True, null=True, max_length=20)
     number = models.CharField(blank=True, null=True, max_length=20)
     pages_from = models.CharField(blank=True, null=True, max_length=5)
@@ -76,14 +75,15 @@ class Publication(models.Model):
     abstract = models.TextField(blank=True, null=True)
     copyright = models.TextField(blank=True, null=True)
     """
+    references
+    """
+    journal = models.ForeignKey(Journal, blank=True, null=True)
+    conference = models.ForeignKey(Conference, blank=True, null=True)
+    """
     other
     """
     source = models.CharField(blank=True, null=True, max_length=100)
     source_extracted = models.NullBooleanField(default=False)
-    """
-    mag only
-    """
-    conference = models.ForeignKey(Conference, blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.title)

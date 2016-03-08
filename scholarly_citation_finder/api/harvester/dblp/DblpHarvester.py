@@ -187,7 +187,7 @@ class DblpHarvester(Harvester):
                     urls = []
                     citations = []
                 else:
-                    logger.info('Unkown tag <{}> with value: {}'.format(elem.tag, elem.text))
+                    logger.info('Unknown tag <{}> with value: {}'.format(elem.tag, elem.text))
 
             # Clear element
             elem.clear()
