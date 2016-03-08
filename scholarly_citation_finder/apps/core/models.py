@@ -9,7 +9,7 @@ class Affilation(models.Model):
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(db_index=True, max_length=100)
     #coauthors = models.ManyToManyField('self')
     
     def __unicode__(self):
@@ -17,7 +17,7 @@ class Author(models.Model):
 
 
 class Conference(models.Model):
-    short_name = models.CharField(max_length=20, blank=True, null=True)
+    short_name = models.CharField(db_index=True, max_length=20, blank=True, null=True)
     name = models.CharField(max_length=250, blank=True, null=True)
     
     def __unicode__(self):
@@ -44,7 +44,7 @@ class FieldOfStudy(models.Model):
     
     
 class Journal(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(db_index=True, max_length=250)
     
     def __unicode__(self):
         return unicode(self.name)
@@ -54,7 +54,7 @@ class Publication(models.Model):
     attributes
     """
     type = models.CharField(blank=True, null=True, max_length=50)
-    title = models.CharField(blank=True, null=True, max_length=250)
+    title = models.CharField(db_index=True, blank=True, null=True, max_length=250)
     year = models.IntegerField(blank=True, null=True)
     date = models.CharField(blank=True, null=True, max_length=50)
     booktitle = models.CharField(blank=True, null=True, max_length=200)
