@@ -63,7 +63,10 @@ class Parser:
         except(IntegrityError) as e:
             logger.error(e, exc_info=True)
             self.conn.rollback()
-            raise ParserRollbackError               
+            raise ParserRollbackError
+
+    def __normalize_string(self, value):
+        return value.strip().lower()
 
     def parse_author(self, name):
         '''
@@ -81,6 +84,7 @@ class Parser:
             return result[0]
         else:
             if name and len(name) <= 100:
+                name = self.__normalize_string(name)
                 self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", [name])
                 return self.cursor.fetchone()[0]
             else:
@@ -102,6 +106,7 @@ class Parser:
             return result[0]
         else:
             if name and len(name) <= 250:
+                name = self.__normalize_string(name)
                 self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", [name])
                 return self.cursor.fetchone()[0]
             else:
@@ -115,6 +120,7 @@ class Parser:
             return result[0]
         else:
             if short_name and len(short_name) <= 20:
+                short_name = self.__normalize_string(short_name)
                 self.cursor.execute("INSERT INTO core_conference (short_name) VALUES (%s) RETURNING id", [short_name])
                 return self.cursor.fetchone()[0]
             else:
@@ -122,6 +128,7 @@ class Parser:
 
     def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal_id=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference_id=None, source=None):
         if title and len(title) <= 250:
+            title = self.__normalize_string(title)
             if date and len(date) > 50:
                 date = None
             if booktitle and len(booktitle) > 200:
