@@ -2,16 +2,31 @@
 	<h1>Extract a PDF</h1>
 </div>
 
-<div class="input-group">
-	<input ng-model="extractFileUrl"
-		   type="text" class="form-control" placeholder="Enter a URL to a PDF file" aria-describedby="basic-addon1">
-         <span class="input-group-btn">
-        <button ng-click="extractFile(extractFileUrl)"
-				class="btn btn-primary" type="button">Extract</button>
-	</span>
-</div>
+<form class="form-horizontal" ng-submit="extractFile(taskExtractor, taskFileUrl)">
+	<div class="form-group">
+    <label for="taskExtractor" class="col-sm-2 control-label">Extractor</label>
+    <div class="col-sm-10">
+		<select ng-model="taskExtractor"
+				ng-options="option.id as option.label for option in extractors"
+				id="taskExtractor" class="form-control">
+		</select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="taskFileUrl" class="col-sm-2 control-label">URL</label>
+    <div class="col-sm-10">
+		<input ng-model="taskFileUrl"
+			   type="url" class="form-control" id="taskFileUrl" placeholder="Enter a URL to a PDF file">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-primary">Extract</button>
+    </div>
+  </div>
+</form>
 
-<h5>Results (<a ng-click="extractFileResult = ''" href="">Clear</a>)</h5>
+<h5>Results (<a ng-click="extractFileResult = ''; showProgress = false;" href="">Clear</a>)</h5>
 
 <div ng-show="showProgress" class="col-sm-4"><uib-progressbar class="progress-striped active"><i>Extracting</i></uib-progressbar></div>
 
