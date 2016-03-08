@@ -22,13 +22,13 @@ class DblpHarvester(Harvester):
         'inproceedings',
         #'proceedings',
         'book',
-        #'incollection',
+        'incollection',
         'phdthesis',
         'mastersthesis',
         #'www'
     ]
 
-    # Furher avaible tags:  address|month|url|cdrom|cite|note|crossref|school|chapter
+    # Furher avaible tags:  address|month|url|cdrom|note|crossref|school|chapter
     FIELD_MAPPING = {
         #'title': 'title',
         #'author': 'authors',
@@ -38,13 +38,14 @@ class DblpHarvester(Harvester):
         'journal': 'journal',
         'volume': 'volume',
         'number': 'number',
-        #pages
+        # 'pages': 
         'series': 'series',
         'publisher': 'publisher',
         'isbn': 'isbn',
-        # doi
-        # abstract
-        #'ee': 'urls'
+        # 'doi':
+        # 'abstract'
+        # 'ee': 'urls'
+        # 'cite':
     }
     
     def __init__(self):
@@ -97,6 +98,7 @@ class DblpHarvester(Harvester):
         for _, elem in context:
             #if elem.tag in ('html', 'body'):
             #    continue
+
             # collaboration
             if elem.tag in self.COLLABORATIONS:
                 key = elem.get('key')
@@ -177,13 +179,15 @@ class DblpHarvester(Harvester):
                 elif elem.tag in self.FIELD_MAPPING and elem.text:
                     publication[self.FIELD_MAPPING[elem.tag]] = elem.text
                 #
-                elif elem.tag in ('proceedings', 'incollection', 'www'):
+                elif elem.tag in ('proceedings', 'www'):
                     publication.clear()
                     conference_short_name = None
                     journal_name = None
                     authors = []
                     urls = []
                     citations = []
+                else:
+                    logger.info('Unkown tag <{}> with value: {}'.format(elem.tag, elem.text))
 
             # Clear element
             elem.clear()
