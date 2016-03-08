@@ -15,15 +15,7 @@ class Task(models.Model):
     TYPE_EVALUATION_RUN = 'evaluation/run'
     TYPE_HARVESTER = 'harvester'
     
-    TYPES = (
-        (TYPE_CITATION_MAG, TYPE_CITATION_MAG),
-        (TYPE_EVALUATION_SET, TYPE_EVALUATION_SET),
-        (TYPE_EVALUATION_RUN, TYPE_EVALUATION_RUN),
-        (TYPE_HARVESTER, TYPE_HARVESTER),
-        (TYPE_CITATION, TYPE_CITATION)
-    )
-    
-    type = models.CharField(max_length=30, choices=TYPES)
+    type = models.CharField(max_length=30)
     starttime = models.DateTimeField(auto_now_add=True)
     taskmeta_id = models.CharField(max_length=100)
 
@@ -51,34 +43,6 @@ class Task(models.Model):
                     'traceback': self.taskmeta.traceback}
         else:
             return self.taskmeta
-
-    """
-    def taskmeta(self):
-        try:   
-            taskmeta = TaskMeta.objects.get(task_id=self.taskmeta_id)
-            return {'id': self.id,
-                    'starttime': self.starttime,
-                    'date_done': taskmeta.date_done,
-                    'result': str(taskmeta.result),
-                    'status': taskmeta.status,
-                    'traceback': taskmeta.traceback
-                    }
-        except(ObjectDoesNotExist):
-            return {'id': self.id,
-                    'starttime': self.starttime,
-                    'status': '',
-                    'date_done': ''}
-    
-    @staticmethod
-    def get_tasks(type):
-        items = []
-        for task in Task.objects.filter(type=type):
-            try:
-                items.append(task.taskmeta())
-            except(ObjectDoesNotExist):
-                pass
-        return items
-    """
     
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.SerializerMethodField()
