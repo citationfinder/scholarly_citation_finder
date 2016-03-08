@@ -1,5 +1,6 @@
 import requests
 import logging
+import os.path
 from requests.exceptions import RequestException
 
 from scholarly_citation_finder.lib.process import ProcessException
@@ -15,18 +16,20 @@ class GrobidExtractor:
     def __init__(self):
         self.parser = TeiParser('grobid')
 
-    def extract_file(self, filename):
+    def extract_file(self, path, filename):
         '''
         Extract the citations from a provied file.
-        
-        :param filename: Path to PDF file
+        :param path: Path to PDF file        
+        :param filename: Filename to PDF file
+        :raise ProcessException: 
         '''
-        logger.debug('Extract file: {}'.format(filename))
+        filename = os.path.join(path, filename)
+        logger.info('Extract file: {}'.format(filename))
         try:
             return self.__extract_references(open(filename, 'rb').read())
         except(IOError, ProcessException) as e:
             logger.warn(e, exc_info=True)
-            return False
+            raise ProcessException(e)
     
     def __extract_references(self, data):
         '''
@@ -44,7 +47,7 @@ class GrobidExtractor:
         :param method:
         :raise ProcessException: 
         '''
-        logger.debug('Call grobid method: {}'.format(method))
+        logger.info('Call grobid method: {}'.format(method))
         url = '{0}/{1}'.format(self.GROBID_API_URL, method)
         files = {'input': data}
         vars = {}
