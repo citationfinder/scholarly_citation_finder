@@ -10,5 +10,6 @@ pages:
 - ['setup.md', 'Developer manuel', 'Setup']
 - ['tools.md', 'Developer manuel', 'Tools']
 - ['api.md', 'User manuel', 'API']
+- ['harvester.md', 'User manuel', 'Harvester']
 - ['integration.md', 'User manuel', 'Integration']
 - ['evaluation.md', 'User manuel', 'Evaluation']
