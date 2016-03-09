@@ -69,14 +69,14 @@ class Parser:
         :return: ID of the author
         :raise ParserDataError: When the name is too long
         '''
-        self.cursor.execute("SELECT id FROM core_author WHERE name = %s LIMIT 1", [name])
+        name = self.__normalize_string(name)
+        self.cursor.execute("SELECT id FROM core_author WHERE name LIKE %s LIMIT 1", [name])
         result = self.cursor.fetchone()
         
         if result:
             return result[0]
         else:
             if name and len(name) <= 100:
-                name = self.__normalize_string(name)
                 self.cursor.execute("INSERT INTO core_author (name) VALUES (%s) RETURNING id", [name])
                 return self.cursor.fetchone()[0]
             else:
@@ -91,28 +91,28 @@ class Parser:
         :return: ID of the journal
         :raise ParserDataError: When the name is too long
         '''
-        self.cursor.execute("SELECT id FROM core_journal WHERE name = %s LIMIT 1", [name])
+        name = self.__normalize_string(name)
+        self.cursor.execute("SELECT id FROM core_journal WHERE name LIKE %s LIMIT 1", [name])
         result = self.cursor.fetchone()
         
         if result:
             return result[0]
         else:
             if name and len(name) <= 250:
-                name = self.__normalize_string(name)
                 self.cursor.execute("INSERT INTO core_journal (name) VALUES (%s) RETURNING id", [name])
                 return self.cursor.fetchone()[0]
             else:
                 raise ParserDataError('Journal name is too long')
 
     def parse_conference(self, short_name):
-        self.cursor.execute("SELECT id FROM core_conference WHERE short_name = %s LIMIT 1", [short_name])
+        short_name = self.__normalize_string(short_name)
+        self.cursor.execute("SELECT id FROM core_conference WHERE short_name LIKE %s LIMIT 1", [short_name])
         result = self.cursor.fetchone()
         
         if result:
             return result[0]
         else:
             if short_name and len(short_name) <= 20:
-                short_name = self.__normalize_string(short_name)
                 self.cursor.execute("INSERT INTO core_conference (short_name) VALUES (%s) RETURNING id", [short_name])
                 return self.cursor.fetchone()[0]
             else:
