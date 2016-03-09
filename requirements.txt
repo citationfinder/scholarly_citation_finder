@@ -18,7 +18,7 @@ Markdown==2.6.5
 djangorestframework==3.3.2
 
 # asyn tasks
-celery==3.1.20
+celery==3.1.22
 django-celery==3.1.17
 
 # debug/development only
