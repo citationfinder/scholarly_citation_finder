@@ -32,6 +32,8 @@ class DblpHarvester(Harvester):
         #'www'
     ]
 
+    HTML_ELEMENTS = ['i', 'sub', 'sup']
+
     # Furher avaible tags:  address|month|url|cdrom|note|crossref|school|chapter
     FIELD_MAPPING = {
         #'title': 'title',
@@ -75,11 +77,7 @@ class DblpHarvester(Harvester):
         '''
         if filename is None:
             filename = os.path.join(self.download_dir, 'dblp.xml')
-        if limit:
-            self.limit = int(limit)
-        else:
-            self.limit = None
-            
+        self.set_limit(limit)
 
         if os.path.isfile(filename):
             self.start_harevest(logger_string='limit={}, from={}'.format(limit, _from))
@@ -126,16 +124,18 @@ class DblpHarvester(Harvester):
     
                     if conference_short_name and 'booktitle' in publication:
                         del publication['booktitle']
-    
+
                     # store and clear entry afterwards
                     publication_id = self.parser.parse(publication,
                                                        conference_short_name=conference_short_name,
                                                        journal_name=journal_name,
                                                        authors=authors,
                                                        urls=urls)
+
                     if publication_id:
                         for citation in citations:
                             cite_writer.write_values(publication_id, citation)
+                    
                     publication_id = None
                     publication.clear()
                     conference_short_name = None
@@ -154,11 +154,7 @@ class DblpHarvester(Harvester):
             elif _from is None:
                 # title
                 if elem.tag == 'title' and elem.text:
-                    title = elem.text
-                    if title.endswith('.'):
-                        title = title[:-1]
-                    publication['title'] = title
-                    del title
+                    publication['title'] = etree.tostring(elem, method='text', encoding='utf-8').rstrip('.')
                 # author and editor
                 elif elem.tag in ('author', 'editor') and elem.text:
                     authors.append(elem.text)
@@ -200,15 +196,19 @@ class DblpHarvester(Harvester):
                     authors = []
                     urls = []
                     citations = []
-                elif elem.tag in ('address', 'month', 'url', 'cdrom', 'note', 'crossref', 'school', 'chapter'):
-                    pass
-                else:
-                    logger.info('Unknown tag <%s> with value: %s' % (elem.tag, elem.text))
+                elif elem.text:
+                    if elem.tag in self.HTML_ELEMENTS:
+                        pass
+                    elif elem.tag in ('address', 'month', 'url', 'cdrom', 'note', 'crossref', 'school', 'chapter'):
+                        pass
+                    else:
+                        logger.info('Unknown tag <%s> with value: %s' % (elem.tag, elem.text))
 
             # Clear element
-            elem.clear()
-            while elem.getprevious() is not None:
-                del elem.getparent()[0]
+            if elem.tag not in self.HTML_ELEMENTS: # We stil need the html elements to get the full title
+                elem.clear()
+                while elem.getprevious() is not None:
+                    del elem.getparent()[0]
         del context
         # clear chunks
         
