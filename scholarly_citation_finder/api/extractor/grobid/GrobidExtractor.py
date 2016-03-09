@@ -25,7 +25,6 @@ class GrobidExtractor:
         try:
             return self.__extract_references(open(filename, 'rb').read())
         except(IOError, ProcessException) as e:
-            logger.warn(e, exc_info=True)
             raise ProcessException(e)
     
     def __extract_references(self, data):
@@ -54,7 +53,7 @@ class GrobidExtractor:
         except (RequestException) as e:
             raise ProcessException('Request to Grobid server failed: {}'.format(e))
     
-        if resp.status_code != 200:
-            raise ProcessException('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
-    
-        return resp.content
+        if resp.status_code == 200:
+            return resp.content
+        else:
+            raise ProcessException('Grobid returned status {} instead of 200\nPossible Error:\n{}'.format(resp.status_code, resp.text))

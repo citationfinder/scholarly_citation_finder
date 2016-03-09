@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import logging
 from requests.exceptions import ConnectionError
 
@@ -72,13 +74,15 @@ class PublicationPdfCrawler:
             results.extend(self.use_html_page_to_find_pdf('http://dx.doi.org/{}'.format(self.publication.doi)))
         return results       
     
-    def use_html_page_to_find_pdf(self, url):
+    def use_html_page_to_find_pdf(self, html_url):
         results = []
         try:
-            hyperrefs = self.html_parser.find_pdf_hyperrefs(url)
+            logger.info('find pdf on page {}'.format(html_url))
+            hyperrefs = self.html_parser.find_pdf_hyperrefs(html_url)
             for link in hyperrefs:
+                logger.info('\t{}'.format(link))
                 if link.endswith('.pdf') or link.endswith('/pdf'):
-                    results.append(url)            
+                    results.append(link)            
         except(HtmlParserUnkownHeaderType, ConnectionError) as e:
             logger.warn(e, exc_info=True)
         return results

@@ -10,6 +10,7 @@ from scholarly_citation_finder.api.citation.CitationFinder import CitationFinder
     EmptyPublicationSetException
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
+from scholarly_citation_finder.api.citation.CitationFinder2 import CitationFinder2
 
 logger = logging.getLogger(__name__)
 AUTHOR_SET_FILENAME = 'authors.csv'
@@ -109,6 +110,12 @@ def citations(strategy, author_id=None, author_name=None):
         raise e
     except(EmptyPublicationSetException) as e:
         raise e
+
+
+@shared_task
+def citations_cron(limit=None, database='default'):
+    citationfinder = CitationFinder2(database=database)
+    citationfinder.run(limit=limit)
 
 
 def __store_evaluation_result(path, filename, row):

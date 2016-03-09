@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^evaluation/create/(?P<name>[a-z]+)$', views.evaluation_create),
     url(r'^evaluation/run/(?P<name>[a-z]+)/$', views.evaluation_run),
     url(r'^evaluation/find/$', views.evaluation_find),
+    url(r'^citations/cron/$', views.citations_cron),
 ]

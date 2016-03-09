@@ -70,3 +70,9 @@ def evaluation_find(request):
             return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
     else:
         return HttpResponse(status=400)
+
+
+def citations_cron(request):
+    limit = request.GET.get('limit', None)
+    asyncresult = tasks.citations_cron.delay(limit=limit)
+    return HttpResponse('started task')   
