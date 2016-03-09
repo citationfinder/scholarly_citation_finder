@@ -25,7 +25,7 @@ class Task(models.Model):
         
     def result(self, as_dict=True):
         taskmeta = self.get_taskmeta(as_dict=as_dict)
-        if taskmeta['status'] == self.STATUS_SUCCESS:
+        if taskmeta['status'] == self.STATUS_SUCCESS and not taskmeta['traceback']:
             return taskmeta['result'], taskmeta
         else:
             return False, taskmeta

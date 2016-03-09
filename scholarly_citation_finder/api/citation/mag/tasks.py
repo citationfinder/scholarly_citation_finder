@@ -31,6 +31,8 @@ def citations(author_name, author_id, publin_callback_url=None):
             return output_filename
     except(ObjectDoesNotExist) as e:
         raise e
+    except(Exception) as e:
+        raise e
 
 
 def __publin_callback(callback_url, output_filename):
