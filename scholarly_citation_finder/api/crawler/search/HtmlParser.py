@@ -5,18 +5,21 @@ from urlparse import urlparse
 from requests.exceptions import ConnectionError
 import logging
 
+from scholarly_citation_finder.apps.core.models import PublicationUrl
+
 logger = logging.getLogger(__name__)
+
 
 class HtmlParserUnkownHeaderType(Exception):
     pass
+
 
 class HtmlParser:
     '''
     Module to find a or multiple PDFs files on a HTML page.
     '''
-
-    MIMETYPE_PDF = 'application/pdf'
-    MIMETYPE_HTML = 'text/html'
+    
+    PDF_SEARCH_PATTERN = '(.*)pdf(.*)'
 
     def find_pdf_hyperrefs(self, url):
         '''
@@ -31,11 +34,11 @@ class HtmlParser:
             r_type = r.headers.get('content-type')
 
             # the URL is already a PDF
-            if self.MIMETYPE_PDF in r_type:
-                return url
+            if PublicationUrl.MIME_TYPE_PDF in r_type:
+                return r.url
             # the URL is a HTML page
-            elif self.MIMETYPE_HTML in r_type:
-                return self.__find_hyperrefs(r.text, url=url, search_pattern='(.*)pdf(.*)')
+            elif PublicationUrl.MIME_TYPE_HTML in r_type:
+                return self.__find_hyperrefs(r.text, url=r.url, search_pattern=self.PDF_SEARCH_PATTERN)
             else:
                 raise HtmlParserUnkownHeaderType('Unknown header type: {}'.format(r_type))
         except(ConnectionError) as e:
@@ -50,7 +53,7 @@ class HtmlParser:
         :param search_pattern: Search pattern for re.compile
         :return 
         '''
-        result = []
+        results = []
         parsed_uri = urlparse(url)
         url_domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
 
@@ -65,5 +68,7 @@ class HtmlParser:
                 href = url_domain + href
             else:
                 href = url + href
-            result.append(href)
-        return result
+
+            if href not in results:
+                results.append(href)
+        return results
