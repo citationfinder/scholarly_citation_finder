@@ -57,6 +57,7 @@ class TeiParser:
     
                     results.append({'reference': {
                                         'publication_id': '',
+                                        'source_id': '',
                                         'context': elem.attrib.get('xml:id')
                                     },
                                    'publication': publication.copy(),

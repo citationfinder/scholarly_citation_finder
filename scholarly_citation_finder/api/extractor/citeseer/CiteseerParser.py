@@ -48,6 +48,7 @@ class CiteseerParser:
     
                     results.append({'reference': {
                                         'publication_id': '',
+                                        'source_id': '',
                                         'context': ''
                                     },
                                    'publication': publication.copy(),

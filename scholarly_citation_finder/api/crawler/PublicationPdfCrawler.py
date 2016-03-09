@@ -21,6 +21,7 @@ class PublicationPdfCrawler:
         self.publication = publication
         # Get stored URLs of this publications
         self.urls = PublicationUrl.objects.using(self.database).filter(publication=self.publication)
+        logger.info('set publication {}; {} stored urls'.format(publication.id, len(self.urls)))
     
     def by_stored_pdf_urls(self):
         results = []
@@ -32,6 +33,7 @@ class PublicationPdfCrawler:
         results = []
         if self.publication.title:
             try:
+                logger.info('by_search_engine: keywords={}'.format(self.publication.title))
                 for result in self.search_engine.query(keywords=self.publication.title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
                     if self.__match_title(self.publication.title, result['title_matching']):
                         if result['type'] == Duckduckgo.API_PARAM_FILETYPE_PDF:

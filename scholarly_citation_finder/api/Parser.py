@@ -146,9 +146,9 @@ class Parser:
         else:
             raise ParserDataError('Title does not exists or is too long')
 
-    def parse_reference(self, publication_id, reference_id, context=None):
+    def parse_reference(self, publication_id, reference_id, context=None, source_id=None):
         if publication_id and reference_id:
-            self.cursor.execute("INSERT INTO core_publicationreference (publication_id, reference_id, context) VALUES (%s, %s, %s)", [publication_id, reference_id, context])
+            self.cursor.execute("INSERT INTO core_publicationreference (publication_id, reference_id, context, source_id) VALUES (%s, %s, %s, %s)", [publication_id, reference_id, context, source_id])
         else:
             raise ParserDataError('publication_id or reference_id does not exists')
 
