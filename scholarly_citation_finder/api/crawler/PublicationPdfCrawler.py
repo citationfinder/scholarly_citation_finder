@@ -17,9 +17,6 @@ class PublicationPdfCrawler:
         self.publication = None
         self.urls = None
         
-    def get(self):
-        return self.publication
-        
     def set(self, publication):
         self.publication = publication
         # Get stored URLs of this publications

@@ -55,7 +55,10 @@ class TeiParser:
                 if 'title' in publication:
                     publication['source'] = self.name
     
-                    results.append({'context': elem.attrib.get('xml:id'),
+                    results.append({'reference': {
+                                        'publication_id': '',
+                                        'context': elem.attrib.get('xml:id')
+                                    },
                                    'publication': publication.copy(),
                                    'journal_name': journal_name,
                                    'authors': authors })

@@ -45,14 +45,6 @@ class Parser:
         self.count_publications = 0
         #self.count_citations = 0
 
-    #def parse_publication_reference(self, context=None, type=None, title=None, authors=None, date=None, booktitle=None, journal=None, volume=None, number=None, pages=None, publisher=None, abstract=None, doi=None, citeseerx_id=None, dblp_id=None, arxiv_id=None, extractor=None, source=None):
-    #    self.count_citations += 1
-    #    
-    #    self.xml_writer.write_start_tag('reference')
-    #    self.xml_writer.write_element('context', context, is_cdata=True)
-    #    self.parse_publication(type, title, authors, date, booktitle, journal, volume, number, pages, publisher, abstract, doi, citeseerx_id, dblp_id, arxiv_id, extractor, source)
-    #    self.xml_writer.write_close_tag('reference')
-
     def commit(self):
         '''
         :raise ParserRollbackError When a problems occurred, that required to do a rollback
@@ -154,15 +146,22 @@ class Parser:
         else:
             raise ParserDataError('Title does not exists or is too long')
 
-    def parse(self, publication, conference_short_name=None, journal_name=None, authors=None, keywords=None, urls=None):
+    def parse_reference(self, publication_id, reference_id, context=None):
+        if publication_id and reference_id:
+            self.cursor.execute("INSERT INTO core_publicationreference (publication_id, reference_id, context) VALUES (%s, %s, %s)", [publication_id, reference_id, context])
+        else:
+            raise ParserDataError('publication_id or reference_id does not exists')
+
+    def parse(self, publication, conference_short_name=None, journal_name=None, authors=None, keywords=None, urls=None, reference=None):
         '''
         
-        :param publication: Publication dictonary
+        :param publication: Publication dictionary
         :param conference_short_name: Conference short name
         :param journal_name: Journal name
         :param authors: Authors name array
         :param keywords: Keywords array
         :param urls: Url array
+        :param reference: Reference dictionary
         :return: Publication ID, if entry was successfully parsed; False otherwise
         :raise ParserRollbackError: When a problems occurred, that required to do a rollback
         '''
@@ -177,14 +176,14 @@ class Parser:
             if conference_short_name:
                 try:
                     conference_id = self.parse_conference(conference_short_name)
-                except(DataError) as e:
+                except(ParserDataError) as e:
                     logger.warn(str(e))
                 del conference_short_name
             # journal
             if journal_name:
                 try:
                     journal_id = self.parse_journal(journal_name)
-                except(DataError) as e:
+                except(ParserDataError) as e:
                     logger.warn(str(e))
                 del journal_name
             # publication
@@ -196,7 +195,7 @@ class Parser:
                 for author in authors:
                     try:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", [publication_id, self.parse_author(author)])
-                    except(ParserDataError) as e:
+                    except(DataError) as e:
                         logger.warn(str(e))
                 del authors
             # keywords
@@ -218,6 +217,14 @@ class Parser:
                             url_type = None
                         self.cursor.execute("INSERT INTO core_publicationurl (publication_id, url, type) VALUES (%s, %s, %s)", [publication_id, url, url_type])
                 del urls
+            # reference
+            if reference:
+                try:
+                    self.parse_reference(reference_id=publication_id, **reference)
+                except(ParserDataError) as e:
+                    logger.warn(str(e))
+                del reference
+
             return publication_id
         except(ParserDataError) as e:
             #logger.warn(str(e))
