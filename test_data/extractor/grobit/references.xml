@@ -1,0 +1,49 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" 
+ xmlns:mml="http://www.w3.org/1998/Math/MathML">
+	<teiHeader/>
+	<text>
+		<front/>
+		<body/>
+		<back>
+			<listBibl>
+				<biblStruct coords="9,72.72,296.89,277.07,8.21" xml:id="b0">
+					<analytic>
+						<title level="a" type="main">Example title</title>
+						<author>
+							<persName>
+								<forename type="first">A</forename>
+								<forename type="middle">B</forename>
+								<surname>Cluster</surname>
+							</persName>
+						</author>
+						<author>
+							<persName>
+								<forename type="first">F</forename>
+								<surname>Cabrerizo</surname>
+							</persName>
+						</author>
+					</analytic>
+					<monogr>
+						<title level="m">Example conference</title>
+						<meeting><address><addrLine>Gosier, Guadeloupe , France</addrLine></address></meeting>
+						<imprint>
+							<biblScope unit="volume">3</biblScope>
+							<biblScope unit="issue">4</biblScope>
+							<biblScope unit="page" from="161" to="168" />
+							<date type="published" when="2009" />
+							<pubPlace>Dissertation, Berkeley</pubPlace>
+						</imprint>
+					</monogr>
+				</biblStruct>
+				<biblStruct xml:id="b1">
+					<analytic>
+						<title level="m" type="main">Another pub</title>
+					</analytic>
+					<monogr>
+						<title level="j">Example journal</title>
+					</monogr>
+				</biblStruct>
+			</listBibl>
+		</back>
+	</text>
+</TEI>
