@@ -37,10 +37,7 @@ class OaiHarvester(Harvester):
         :param resumptionToken: OAI-PHM resumption token, e.g. '10.1.1.102.634-467085-20500-oai_dc'
         :return: Number of parsed publications or False    
         '''
-        try:
-            self.limit = int(limit)
-        except(TypeError):
-            self.limit = None
+        self.set_limit(limit)
 
         list_records_options = {}
         if resumptionToken is not None:

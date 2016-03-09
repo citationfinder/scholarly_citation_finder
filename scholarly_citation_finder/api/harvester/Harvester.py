@@ -29,6 +29,12 @@ class Harvester(object):
         self.parser.commit()
     
     def check_stop_harvest(self):
-        if (self.parser.count_publications % self.COMMIT_AFTER_NUM_PUBLICATIONS) == 0:
+        if self.parser.count_publications > 0 and (self.parser.count_publications % self.COMMIT_AFTER_NUM_PUBLICATIONS) == 0:
             self.parser.commit()
         return self.limit and self.parser.count_publications >= self.limit
+    
+    def set_limit(self, limit):
+        try:
+            self.limit = int(limit)
+        except(TypeError):
+            self.limit = None

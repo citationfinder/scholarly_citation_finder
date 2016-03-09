@@ -23,3 +23,14 @@ def oaipmh(request, name):
         return JsonResponse(task.as_dict())
     except(ObjectDoesNotExist) as e:
         return HttpResponse(str(e), status=404)
+
+
+def dblp(request):
+    try:
+        harvest_parameter = {'limit': request.GET.get('limit', None), 
+                             '_from': request.GET.get('from', None)}
+        asyncresult = tasks.dblp_harevester.delay(**harvest_parameter)
+        task = Task.objects.create(type=Task.TYPE_HARVESTER, taskmeta_id=asyncresult.id)
+        return JsonResponse(task.as_dict())
+    except(IOError) as e:
+        return HttpResponse(str(e), status=503)
