@@ -1,11 +1,15 @@
 import requests
 import logging
-from requests.exceptions import RequestException
+from requests.exceptions import RequestException, ConnectionError
 
 from scholarly_citation_finder.lib.process import ProcessException
 from .TeiParser import TeiParser
+from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
 logger = logging.getLogger(__name__)
+
+class GrobidServceNotAvaibleException(Exception):
+    pass
 
 
 class GrobidExtractor:
@@ -19,18 +23,22 @@ class GrobidExtractor:
         '''
         Extract the citations from a provided file.
         :param filename: Filename to PDF file
-        :raise ProcessException: 
+        :raise ProcessException:
+        :raise GrobidServceNotAvaibleException: 
         '''
         logger.info('Extract file: {}'.format(filename))
         try:
             return self.__extract_references(open(filename, 'rb').read())
+        except(GrobidServceNotAvaibleException) as e:
+            raise e
         except(IOError, ProcessException) as e:
             raise ProcessException(e)
     
     def __extract_references(self, data):
         '''
-        
+
         :param data:
+        :raise GrobidServceNotAvaibleException:
         :raise ProcessException: 
         '''
         xml = self.__call_grobid_method(data, 'processReferences')
@@ -41,6 +49,7 @@ class GrobidExtractor:
         
         :param data:
         :param method:
+        :raise GrobidServceNotAvaibleException:
         :raise ProcessException: 
         '''
         logger.info('Call grobid method: {}'.format(method))
@@ -50,8 +59,8 @@ class GrobidExtractor:
     
         try:
             resp = requests.post(url, files=files, data=vars)
-        except (RequestException) as e:
-            raise ProcessException('Request to Grobid server failed: {}'.format(e))
+        except (HTTPConnectionPool, RequestException, ConnectionError) as e:
+            raise GrobidServceNotAvaibleException(e)
     
         if resp.status_code == 200:
             return resp.content

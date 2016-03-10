@@ -6,7 +6,8 @@ from datetime import datetime
 from scholarly_citation_finder import config
 from scholarly_citation_finder.api.crawler.PublicationPdfCrawler import PublicationPdfCrawler
 from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
-from scholarly_citation_finder.api.extractor.grobid.GrobidExtractor import GrobidExtractor
+from scholarly_citation_finder.api.extractor.grobid.GrobidExtractor import GrobidExtractor,\
+    GrobidServceNotAvaibleException
 from scholarly_citation_finder.lib.file import download_file_pdf, DownloadPdfException
 from scholarly_citation_finder.api.Parser import Parser
 from scholarly_citation_finder.lib.process import ProcessException
@@ -68,8 +69,8 @@ class CitationFinder2:
                 extraction_result = self.__extract_pdf(publication, filename=filename, url=url)
                 if extraction_result:
                     return extraction_result
-            except(DownloadPdfException) as e:
-                logger.info(e, exc_info=True)
+            except(DownloadPdfException, GrobidServceNotAvaibleException) as e:
+                logger.info('{}: {}'.format(type(e).__name__, str(e)))
         return False
 
     def __extract_pdf(self, publication, filename, url):
@@ -93,4 +94,5 @@ class CitationFinder2:
                 return False
         except(ProcessException) as e:
             logger.warn(e, exc_info=True)
-
+        except(GrobidServceNotAvaibleException) as e:
+            raise e
