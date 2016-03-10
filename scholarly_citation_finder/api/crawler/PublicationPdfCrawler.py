@@ -77,8 +77,8 @@ class PublicationPdfCrawler:
     def use_html_page_to_find_pdf(self, html_url):
         results = []
         try:
-            logger.info('find pdf on page {}'.format(html_url))
-            hyperrefs = self.html_parser.find_pdf_hyperrefs(html_url)
+            hyperrefs, resolved_url = self.html_parser.find_pdf_hyperrefs(html_url)
+            logger.info('find {} PDF hyperrefs on page: {}'.format(len(hyperrefs), resolved_url))            
             for link in hyperrefs:
                 logger.info('\t{}'.format(link))
                 if link.endswith('.pdf') or link.endswith('/pdf'):

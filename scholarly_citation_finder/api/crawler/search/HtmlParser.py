@@ -38,7 +38,7 @@ class HtmlParser:
                 return r.url
             # the URL is a HTML page
             elif PublicationUrl.MIME_TYPE_HTML in r_type:
-                return self.__find_hyperrefs(r.text, url=r.url, search_pattern=self.PDF_SEARCH_PATTERN)
+                return self.__find_hyperrefs(r.text, url=r.url, search_pattern=self.PDF_SEARCH_PATTERN), r.url
             else:
                 raise HtmlParserUnkownHeaderType('Unknown header type: {}'.format(r_type))
         except(ConnectionError) as e:
