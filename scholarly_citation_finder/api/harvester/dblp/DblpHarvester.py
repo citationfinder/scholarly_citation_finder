@@ -54,8 +54,8 @@ class DblpHarvester(Harvester):
         # 'cite':
     }
     
-    def __init__(self):
-        super(DblpHarvester, self).__init__(name=self.NAME)
+    def __init__(self, **kwargs):
+        super(DblpHarvester, self).__init__(name=self.NAME, **kwargs)
 
     def download_database(self):
         try:
@@ -154,7 +154,7 @@ class DblpHarvester(Harvester):
             elif _from is None:
                 # title
                 if elem.tag == 'title' and elem.text:
-                    publication['title'] = etree.tostring(elem, method='text', encoding='utf-8').rstrip('.')
+                    publication['title'] = etree.tostring(elem, method='text', encoding='utf-8').rstrip().rstrip('.')
                 # author and editor
                 elif elem.tag in ('author', 'editor') and elem.text:
                     authors.append(elem.text)
