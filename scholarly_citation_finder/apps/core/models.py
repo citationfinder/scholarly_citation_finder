@@ -41,13 +41,22 @@ class FieldOfStudy(models.Model):
     
     def __unicode__(self):
         return unicode(self.name)
-    
-    
+
+
+class FieldOfStudyHierarchy(models.Model):
+    child = models.ForeignKey(FieldOfStudy, related_name='%(class)s_child')
+    child_level = models.SmallIntegerField()
+    parent = models.ForeignKey(FieldOfStudy, related_name='%(class)s_parent')
+    parent_level = models.SmallIntegerField()
+    confidence = models.FloatField()
+
+
 class Journal(models.Model):
     name = models.CharField(db_index=True, max_length=250)
     
     def __unicode__(self):
         return unicode(self.name)
+
 
 class Publication(models.Model):
     """

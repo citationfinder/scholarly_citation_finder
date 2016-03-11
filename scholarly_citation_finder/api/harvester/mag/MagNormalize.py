@@ -155,7 +155,7 @@ class MagNormalize:
 			output.write('Child field of study ID\tChild field of study level\tParent field of study ID\tParent field of study level\tConfidence')
 			for line in f:
 				v = line.split('\t')
-				output.write('\n%s\t%s\t%s\t%s\t%s' % (int(v[0], 16), v[1][1], int(v[2], 16), v[3][1], v[4].rstrip()))
+				output.write('\n%s\t%s\t%s\t%s\t%s' % (int(v[0], 16), v[1][1], int(v[2], 16), v[3][1], v[4][:7].rstrip()))
 		
 	def journals(self, input, output):
 		'''
