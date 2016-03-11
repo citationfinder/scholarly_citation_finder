@@ -35,7 +35,7 @@ class DblpHarvester(Harvester):
     # List of HTML elements which a title can contain
     HTML_ELEMENTS = ['i', 'sub', 'sup', 'tt']
 
-    # Furher avaible tags:  address|month|url|cdrom|note|crossref|school|chapter
+    # Further available tags:  address|month|url|cdrom|note|crossref|school|chapter
     FIELD_MAPPING = {
         #'title': 'title',
         #'author': 'authors',
