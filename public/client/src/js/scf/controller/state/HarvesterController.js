@@ -1,9 +1,10 @@
 function HarvesterController($scope, Restangular) {
 	
-	$scope.oaipmhProvider = []
+	$scope.oaipmhProvider = [];
+	$scope.isCollapsed = true;
 	
 	$scope.getOaipmhProvider = function() {
-		Restangular.all('rest/default/harvester/oaipmhprovider/').getList().then(function(items) {
+		Restangular.all('rest/default/harvester/oaipmhprovider/').getList({type: 'oai'}).then(function(items) {
 			console.log(items);
 			$scope.oaipmhProvider = items;
 		}, function(data) {
