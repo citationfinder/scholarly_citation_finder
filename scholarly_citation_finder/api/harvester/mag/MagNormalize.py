@@ -4,6 +4,12 @@ import logging
 
 from scholarly_citation_finder import config
 
+logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
+                            level=logging.INFO,
+                            format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
+logger = logging.getLogger(__name__)
+
+
 class MagNormalize:
 	
 	FILES = {
@@ -12,6 +18,7 @@ class MagNormalize:
 		'conferences': 'Conferences.txt',
 		'conference_instances': 'ConferenceInstances.txt',
 		'fields_of_study': 'FieldsOfStudy.txt',
+		'field_of_study_hierarchy': 'FieldOfStudyHierarchy.txt',
 		'journals': 'Journals.txt',
 		'papers': 'Papers.txt',
 		'paper_author_affiliations': 'PaperAuthorAffiliations.txt',
@@ -22,35 +29,30 @@ class MagNormalize:
 	
 	def __init__(self, path):
 		self.path = path
-		self.logger = self.init_logger()
 		
-	def init_logger(self):
-		logging.basicConfig(filename=os.path.join(config.LOG_DIR, '{}.log'.format(self.__class__.__name__)),
-							level=logging.INFO,
-							format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
-		return logging.getLogger()   	
-		
-	def run(self):
-		self.logger.info('run -----------------------------')
-		for name, file in self.FILES.iteritems():
+	def run(self, files=None):
+		if files is None:
+			files = self.FILES
+		logger.info('run -----------------------------')
+		for name, file in files.iteritems():
 			input = os.path.join(self.path, file)
 			output = os.path.join(self.path, '{}_pre.txt'.format(file[:-4]))
 			if os.path.isfile(input) and not os.path.isfile(output):
 				try:
 					output_file = codecs.open(output, mode='w+', encoding='utf-8')
-					self.logger.info('start normalize {}'.format(input))
+					logger.info('start normalize {}'.format(input))
 					getattr(self, name)(input, output_file)
 					output_file.close
-					self.logger.info('normalize done')
+					logger.info('normalize done')
 				except(Exception) as e:
 					if output_file:
 						output_file.close()
 					if os.path.isfile(output):
 						os.remove(output)
-					self.logger.warn(e, exc_info=True)
+					logger.warn(e, exc_info=True)
 			else:
-				self.logger.info('skip {}'.format(input))
-		self.logger.info('run done ------------------------')
+				logger.info('skip {}'.format(input))
+		logger.info('run done ------------------------')
 
 	def affiliations(self, input, output):
 		'''
@@ -134,11 +136,26 @@ class MagNormalize:
 		1	Field of study name
 		'''
 		with codecs.open(input) as f:
-			output.write('ID\t\tName')
+			output.write('ID\tName')
 			for line in f:
 				v = line.split('\t')
 				if len(v[1]) <= 100:
 					output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
+	
+	def field_of_study_hierarchy(self, input, output):
+		'''
+		FieldOfStudyHierarchy
+		0	Child field of study ID
+		1	Child field of study level
+		2	Parent field of study ID
+		3	Parent field of study level
+		4	Confidence
+		'''
+		with codecs.open(input) as f:
+			output.write('Child field of study ID\tChild field of study level\tParent field of study ID\tParent field of study level\tConfidence')
+			for line in f:
+				v = line.split('\t')
+				output.write('\n%s\t%s\t%s\t%s\t%s' % (int(v[0], 16), v[1][1], int(v[2], 16), v[3][1], v[4].rstrip()))
 		
 	def journals(self, input, output):
 		'''
@@ -241,7 +258,7 @@ class MagNormalize:
 					if b'\x00' not in v[1]:
 						output.write('\n%s\t%s' % (int(v[0], 16), v[1].rstrip()))
 					else:
-						self.logger.info('url with unsupported characters in line {}'.format(count))
+						logger.info('url with unsupported characters in line {}'.format(count))
 #if __name__ == '__main__':
 #	a = MagNormalize(os.path.abspath('/webapps/data'))
 #	a.run()
