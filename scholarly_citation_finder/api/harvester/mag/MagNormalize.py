@@ -9,6 +9,9 @@ logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
                             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
 logger = logging.getLogger(__name__)
 
+def get_pre_name(self, filename):
+	return '{}_pre.txt'.format(filename[:-4])
+
 
 class MagNormalize:
 	
@@ -26,7 +29,7 @@ class MagNormalize:
 		'paper_references': 'PaperReferences.txt',
 		'paper_urls': 'PaperUrls.txt'
 	}
-	
+
 	def __init__(self, path):
 		self.path = path
 		
@@ -36,7 +39,7 @@ class MagNormalize:
 		logger.info('run -----------------------------')
 		for name, file in files.iteritems():
 			input = os.path.join(self.path, file)
-			output = os.path.join(self.path, '{}_pre.txt'.format(file[:-4]))
+			output = os.path.join(self.path, get_pre_name(file))
 			if os.path.isfile(input) and not os.path.isfile(output):
 				try:
 					output_file = codecs.open(output, mode='w+', encoding='utf-8')

@@ -6,7 +6,7 @@ from psycopg2._psycopg import ProgrammingError, OperationalError, DataError,\
 
 from scholarly_citation_finder import config
 from scholarly_citation_finder.settings.development import DATABASES
-from .MagNormalize import MagNormalize
+from .MagNormalize import MagNormalize, get_pre_name
 
 logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
                             level=logging.INFO,
@@ -64,7 +64,7 @@ class MagHarvester:
     def run(self):
         logger.info('run -----------------------------')        
         for name, file in MagNormalize.FILES.iteritems():
-            file_pre = '{}_pre.txt'.format(file[:-4])
+            file_pre = get_pre_name(file)
             csv_file = os.path.join(self.download_dir, file_pre)
             if os.path.isfile(csv_file):
                 #logger.info('start store {}'.format(csv_file))

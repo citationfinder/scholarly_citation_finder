@@ -4,7 +4,7 @@ import logging
 from django.db.utils import IntegrityError
 
 from scholarly_citation_finder.apps.core.models import FieldOfStudyHierarchy
-from .MagNormalize import MagNormalize
+from .MagNormalize import MagNormalize, get_pre_name
 
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ class MagHarvester2:
         if name not in MagNormalize.FILES:
             raise Exception('unknown name')
         
-        filename = os.path.join(self.path, MagNormalize.FILES[name])
+        filename = os.path.join(self.path, get_pre_name(MagNormalize.FILES[name]))
         with open(filename, 'rb') as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             reader.next()
