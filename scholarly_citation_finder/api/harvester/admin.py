@@ -1,5 +1,5 @@
 from django.contrib import admin
-from scholarly_citation_finder.api.harvester.models import OaiPmhProvider
+from scholarly_citation_finder.api.harvester.models import Harvester
 
 
-admin.site.register(OaiPmhProvider)
+admin.site.register(Harvester)

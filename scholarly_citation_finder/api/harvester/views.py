@@ -6,18 +6,18 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from scholarly_citation_finder.apps.tasks.models import Task
 from scholarly_citation_finder.api.harvester import tasks
-from scholarly_citation_finder.api.harvester.models import OaiPmhProvider
+from scholarly_citation_finder.api.harvester.models import Harvester
 
 def oaipmh(request, name):
     try:
-        oaipmh_provider = OaiPmhProvider.objects.get(name=name)            
+        oaipmh_provider = Harvester.objects.filter(type=Harvester.TYPE_OAI).get(name=name)            
         harvest_parameter = {'limit': request.GET.get('limit', None), 
                              '_from': request.GET.get('from', None),
                              'until': request.GET.get('until', None),
                              'resumptionToken': request.GET.get('resumptiontoken', None)}
         asyncresult = tasks.oaipmh_harvest.delay(name=oaipmh_provider.name,
-                                                 oai_url=oaipmh_provider.url,
-                                                 oai_identifier=oaipmh_provider.identifier,
+                                                 oai_url=oaipmh_provider.oai_url,
+                                                 oai_identifier=oaipmh_provider.oai_identifier,
                                                  **harvest_parameter)
         task = Task.objects.create(type=Task.TYPE_HARVESTER, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())

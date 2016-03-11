@@ -2,12 +2,12 @@ from django.conf.urls import include, url
 from rest_framework import routers
 
 from scholarly_citation_finder.apps.rest import views
-from scholarly_citation_finder.api.harvester.models import OaiPmhProviderViewSet
+from scholarly_citation_finder.api.harvester.models import HarvesterViewSet
 from scholarly_citation_finder.apps.tasks.models import TaskViewSet
 
 
 default_router = routers.DefaultRouter()
-default_router.register(r'harvester/oaipmhprovider', OaiPmhProviderViewSet)
+default_router.register(r'harvester', HarvesterViewSet)
 default_router.register(r'tasks', TaskViewSet)
 
 
