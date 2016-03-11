@@ -32,7 +32,8 @@ class DblpHarvester(Harvester):
         #'www'
     ]
 
-    HTML_ELEMENTS = ['i', 'sub', 'sup']
+    # List of HTML elements which a title can contain
+    HTML_ELEMENTS = ['i', 'sub', 'sup', 'tt']
 
     # Furher avaible tags:  address|month|url|cdrom|note|crossref|school|chapter
     FIELD_MAPPING = {
