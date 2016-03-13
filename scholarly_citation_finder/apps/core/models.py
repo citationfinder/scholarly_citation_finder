@@ -98,6 +98,19 @@ class Publication(models.Model):
         return unicode(self.title)
 
 
+class PublicationFieldOfStudy(models.Model):
+	publication = models.ForeignKey(Publication)
+	fieldofstudy_name = models.CharField(max_length=100)
+	level = models.SmallIntegerField(blank=True, null=True)
+	confidence = models.FloatField(blank=True, null=True)
+
+	class Meta:
+		unique_together = ('publication', 'fieldofstudy_name')
+
+	def __unicode__(self):
+		return unicode(self.fieldofstudy_name)
+
+
 class PublicationAuthorAffilation(models.Model):
     publication = models.ForeignKey(Publication)
     author = models.ForeignKey(Author)

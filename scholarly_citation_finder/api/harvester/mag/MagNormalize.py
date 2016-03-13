@@ -9,7 +9,8 @@ logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
                             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')
 logger = logging.getLogger(__name__)
 
-def get_pre_name(self, filename):
+
+def get_pre_name(filename):
 	return '{}_pre.txt'.format(filename[:-4])
 
 
