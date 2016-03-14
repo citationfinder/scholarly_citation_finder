@@ -16,7 +16,9 @@
     "gulp-util": "*",
     "require-dir": "*",
 	 
+	"css-loader": "*",
 	"webpack": "*",
-	"html-loader": "*"
+	"html-loader": "*",
+	"style-loader": "*"
   }
 }

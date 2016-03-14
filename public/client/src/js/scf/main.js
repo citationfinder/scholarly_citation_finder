@@ -1,7 +1,8 @@
 require('angular');
 require('angular-ui-router'); // exports: ui.router ($stateProvider, $urlRouterProvider)
-require('lodash')
+require('lodash');
 require('restangular');
+//require('bootstrap-css-only'); // Bootstrap CSS
 
 require('angular-bootstrap');
 

@@ -1,5 +1,5 @@
 // webpack.config.js
-var path = require("path");
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -12,7 +12,14 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.css$/, loader: 'style-loader!css-loader' },
-            { test: /\.html$/, loader: 'html' }
+            { test: /\.html$/, loader: 'html' },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=dist/images/[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
+            }
         ]
      },
      resolve: {
