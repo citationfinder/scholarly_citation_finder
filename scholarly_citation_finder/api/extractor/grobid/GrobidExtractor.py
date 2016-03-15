@@ -14,7 +14,7 @@ class GrobidServceNotAvaibleException(Exception):
 
 class GrobidExtractor:
     
-    GROBID_API_URL = 'http://localhost:8080'
+    GROBID_API_URL = 'http://localhost:8080/grobid/'
 
     def __init__(self):
         self.parser = TeiParser('grobid')
