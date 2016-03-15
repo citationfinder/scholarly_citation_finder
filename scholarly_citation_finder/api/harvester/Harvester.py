@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Harvester(object):
     
-    COMMIT_AFTER_NUM_PUBLICATIONS = 100000
+    COMMIT_AFTER_NUM_PUBLICATIONS = 50000
 
     def __init__(self, name, database='default'):
         self.name = name
