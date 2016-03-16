@@ -25,11 +25,11 @@ class PublicationPdfCrawler:
         self.urls = PublicationUrl.objects.using(self.database).filter(publication=self.publication)
         logger.info('set publication {}; {} stored urls'.format(publication.id, len(self.urls)))
     
-    def by_stored_pdf_urls(self):
-        results = []
-        for url in self.urls.filter(type=PublicationUrl.MIME_TYPE_PDF):
-            results.append(url.url)
-        return results
+    #def by_stored_pdf_urls(self):
+    #    results = []
+    #    for url in self.urls.filter(type=PublicationUrl.MIME_TYPE_PDF):
+    #        results.append(url.url)
+    #    return results
             
     def by_search_engine(self):
         results = []
@@ -58,11 +58,13 @@ class PublicationPdfCrawler:
                 results.append(self.publication, url='http://arxiv.org/pdf/{}'.format(source.replace('arxiv:', '')))
         return results
 
-    def by_stored_other_urls(self):
+    def by_stored_urls(self):
         results = []
         
         doi_not_in_urls = True
         for url in self.urls:
+            if url.type == PublicationUrl.MIME_TYPE_PDF:
+                results.append(url.url)
             if url.type in (None, PublicationUrl.MIME_TYPE_HTML):
                 if 'dx.doi.org' in url.url:
                     doi_not_in_urls = False

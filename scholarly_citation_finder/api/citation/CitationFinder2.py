@@ -16,7 +16,9 @@ logger = logging.getLogger(__name__)
 
 
 class CitationFinder2:
-    
+
+    NUM_MINIMUM_REFERENCES = 3
+
     def __init__(self, database='default'):
         self.database = database
         self.publicationpdf_crawler = PublicationPdfCrawler(database=self.database)
@@ -49,7 +51,7 @@ class CitationFinder2:
         #self.publicationpdf_crawler.pdf_by_stored_pdf_urls()
         #self.publicationpdf_crawler.pdf_by_soure()
 
-        urls = self.publicationpdf_crawler.by_stored_other_urls()
+        urls = self.publicationpdf_crawler.by_stored_urls()
         if self.extract_pdfs(publication, urls):
             return True
 
@@ -76,8 +78,8 @@ class CitationFinder2:
     def __extract_pdf(self, publication, filename, url):
         try:
             references = self.extractor.extract_file(filename)
-            # TODO: check title and maybe minimum number of citations
-            if references:
+            # TODO: maybe check title
+            if len(references) >= self.NUM_MINIMUM_REFERENCES:
                 publication_url = publication.publicationurl_set.create(url=url,
                                                                         type=PublicationUrl.MIME_TYPE_PDF,
                                                                         extraction_date=datetime.now())
