@@ -23,12 +23,13 @@ class TeiParserTest(TestCase):
     
     TMP_OUTPUT_FILE = os.path.join(config.TEST_DIR, 'tmp.xml')
     SAMPLE_TEI_CITATION_FILE = os.path.join(config.TEST_DIR, 'extractor', 'grobit', 'references.xml')
+    SAMPLE_TEI_HEADER_FILE = os.path.join(config.TEST_DIR, 'extractor', 'grobit', 'header.xml')    
     
     def setUp(self):
         self.parser = TeiParser()
         
-    def test_parse(self):
-        result = self.parser.parse_list_bibl(open(self.SAMPLE_TEI_CITATION_FILE).read())
+    def test_parse_references(self):
+        result = self.parser.parse_references(open(self.SAMPLE_TEI_CITATION_FILE).read())
         
         self.assertEqual(len(result), 2)
         
@@ -47,3 +48,19 @@ class TeiParserTest(TestCase):
         # confernce and journal name        
         self.assertEqual(result[0]['conference_instance_name'], 'Example conference')
         self.assertEqual(result[1]['journal_name'], 'Example journal')
+        
+    def test_parse_header(self):
+        result = self.parser.parse_header(open(self.SAMPLE_TEI_HEADER_FILE).read())
+
+        # check title
+        self.assertEqual(result['publication']['title'], 'Example Main Title')
+        # check author
+        self.assertEqual(result['authors'][0], 'Kusserow,Arne')
+        self.assertEqual(result['authors'][1], 'Groppe,Sven')
+        # journal name 
+        self.assertEqual(result['journal_name'], 'Example journal')
+        # keywords
+        self.assertEqual(len(result['keywords']), 3)
+        self.assertEqual(result['keywords'][0], 'Keyword 1')
+        self.assertEqual(result['keywords'][1], 'Another Keyword')
+        self.assertEqual(result['keywords'][2], 'Digital Library')

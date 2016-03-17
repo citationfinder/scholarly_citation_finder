@@ -7,14 +7,14 @@ logger = logging.getLogger(__name__)
 
 class TeiParser:
     
+    ELEMENT_TEIHEADER = 'teiheader'
+    ELEMENT_BIBLSTRUCT = 'biblstruct'
+
     def __init__(self, name=''):
         self.name = name
         
     def parse_document(self, xml):
-        pass
-        #xml_header = SPLIT
-        #xml_references = SPLIT
-        #return self.parse_references(xml_references), self.parse_header(xml_header)
+        return self.__parse(xml, end_element=self.ELEMENT_TEIHEADER)
 
     def parse_header(self, xml):
         '''
@@ -24,12 +24,11 @@ class TeiParser:
                 
         :param xml:
         '''
-        results = self.parse_list_bibl() 
-        # TODO: title of tpye main - and level in ('a', ...?):       
+        results = self.__parse(xml, end_element=self.ELEMENT_TEIHEADER) 
         if results:
             return results[0]
         else:
-            return {}
+            return False
 
     def parse_references(self, xml):
         '''
@@ -42,6 +41,9 @@ class TeiParser:
         
         :param xml:
         '''
+        return self.__parse(xml, end_element=self.ELEMENT_BIBLSTRUCT)
+    
+    def __parse(self, xml, end_element):
         results = []
         context = etree.iterparse(BytesIO(xml), html=True)
         
@@ -50,10 +52,12 @@ class TeiParser:
         conference_instance_name = None
         authors = []
         tmp_author_name = None
-        #keywords = []
+        keywords = []
         
         for _, elem in context:
-            if elem.tag == 'forename':
+            if elem.tag == 'html':  # skipped add html (html=True option)
+                continue
+            elif elem.tag == 'forename':
                 if tmp_author_name is None:
                     tmp_author_name = elem.text
                 else:
@@ -69,7 +73,7 @@ class TeiParser:
             elif elem.tag == 'title' and 'level' in elem.attrib:
                 level = elem.attrib.get('level')
                 # @see http://www.tei-c.org/release/doc/tei-p5-doc/de/html/ref-title.html
-                if elem.attrib.get('type') == 'main':
+                if elem.attrib.get('type') == 'main' and 'title' not in publication:
                     #if elem.attrib.get('level') in ('a', 'm'):
                     publication['title'] = elem.text
                 elif level == 'j':
@@ -94,20 +98,17 @@ class TeiParser:
                     publication['year'] = elem.attrib['when']
             elif elem.tag == 'publisher':
                 publication['publisher'] = elem.text
-            #elif elem.tag == 'note':
-            #    publication['copyright'] = elem.text
-            #elif elem.tag == 'term' and elem.text:
-            #    keywords.append(elem.text)
+            elif elem.tag == 'note':
+                publication['copyright'] = elem.text
+            elif elem.tag == 'term' and elem.text:
+                keywords.append(elem.text)
             # <abstract><p>ABSTRACT</p></abstract>
 
             # citation ('biblstruct') or document header ('teiheader')
-            # TODO: elif elem.tag in ('biblstruct', 'teiheader'):
-            elif elem.tag == 'biblstruct':
-                
+            elif elem.tag == end_element:
                 if 'title' in publication:
                     publication['source'] = self.name
     
-                    # TODO: append 'keywords': keywords
                     results.append({'reference': {
                                         'publication_id': '',
                                         'source_id': '',
@@ -116,16 +117,23 @@ class TeiParser:
                                    'publication': publication.copy(),
                                    'journal_name': journal_name,
                                    'conference_instance_name': conference_instance_name,
-                                   'authors': authors })
+                                   'authors': authors,
+                                   'keywords': keywords})
                 else:
                     logger.info('skip, no title found')
+                    # TODO: improve
+                    if end_element == self.ELEMENT_TEIHEADER:
+                        results.append(False)
+                # TODO: improve (idea: header read, move on to references)   
+                if end_element == self.ELEMENT_TEIHEADER:
+                    end_element = self.ELEMENT_BIBLSTRUCT
                 
                 publication.clear()
                 journal_name = None
                 conference_instance_name = None
                 authors = []
                 tmp_author_name = ''
-                #keywords = []
+                keywords = []
 
             elem.clear()
             while elem.getprevious() is not None:

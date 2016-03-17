@@ -5,7 +5,7 @@
     <teiHeader xml:lang="en">
         <fileDesc>
             <titleStmt>
-                <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+                <title level="a" type="main">Example Main Title</title>
             </titleStmt>
             <publicationStmt>
                 <publisher/>
@@ -22,14 +22,14 @@
                                 <forename type="first">Arne</forename>
                                 <surname>Kusserow</surname>
                             </persName>
-                            <email>kusserow@informatik.uni-luebeck.de, groppe@ifis.uni-luebeck.de</email>
+                            <email>kusserow@example.org, groppe@example.org</email>
                             <affiliation>
-                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
-                                <orgName type="institution">University of Lübeck</orgName>
+                                <orgName type="department">Institute of Example Systems (IFES)</orgName>
+                                <orgName type="institution">University of Example</orgName>
                                 <address>
                                     <addrLine>Ratzeburger Allee 160</addrLine>
-                                    <postCode>D-23562</postCode>
-                                    <settlement>Lübeck</settlement>
+                                    <postCode>D-53562</postCode>
+                                    <settlement>Sample Town</settlement>
                                     <country key="DE">Germany</country>
                                 </address>
                             </affiliation>
@@ -40,20 +40,20 @@
                                 <surname>Groppe</surname>
                             </persName>
                             <affiliation>
-                                <orgName type="department">Institute of Information Systems (IFIS)</orgName>
-                                <orgName type="institution">University of Lübeck</orgName>
+                                <orgName type="department">Institute of Example Systems (IFES)</orgName>
+                                <orgName type="institution">University of Example</orgName>
                                 <address>
                                     <addrLine>Ratzeburger Allee 160</addrLine>
-                                    <postCode>D-23562</postCode>
-                                    <settlement>Lübeck</settlement>
+                                    <postCode>D-53562</postCode>
+                                    <settlement>Sample Town</settlement>
                                     <country key="DE">Germany</country>
                                 </address>
                             </affiliation>
                         </author>
-                        <title level="a" type="main">Getting Indexed by Bibliographic Databases in the Area of Computer Science</title>
+                        <title level="a" type="main">Example Main Title</title>
                     </analytic>
                     <monogr>
-                        <title level="j" type="main">Open Journal of Web Technologies (OJWT)</title>
+                        <title level="j" type="main">Example journal</title>
                         <imprint>
                             <biblScope unit="volume">1</biblScope>
                             <biblScope unit="issue">2</biblScope>
@@ -67,10 +67,9 @@
         <profileDesc>
             <textClass>
                 <keywords>
-                    <term>Research review: Bibliographic Database</term>
-                    <term>Repository</term>
+                    <term>Keyword 1</term>
+                    <term>Another Keyword</term>
                     <term>Digital Library</term>
-                    <term>Publishing</term>
                 </keywords>
             </textClass>
             <abstract>

@@ -1,7 +1,8 @@
 from django.http.response import HttpResponse, JsonResponse
 
 from scholarly_citation_finder import config
-from scholarly_citation_finder.api.extractor.grobid.GrobidExtractor import GrobidExtractor
+from scholarly_citation_finder.api.extractor.grobid.GrobidExtractor import GrobidExtractor,\
+    GrobidServceNotAvaibleException
 from scholarly_citation_finder.lib.file import download_file_pdf,\
     DownloadPdfException
 from scholarly_citation_finder.api.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
@@ -18,7 +19,7 @@ def grobid(request):
             extractor = GrobidExtractor()
             result = extractor.extract_file(filename)
             return JsonResponse({'items': result})
-        except(DownloadPdfException) as e:
+        except(DownloadPdfException, GrobidServceNotAvaibleException) as e:
             return HttpResponse(str(e), status=503)
     else:
         return HttpResponse('Nothing to do. Usage ?filename=<filename> or ?url=<url>', status=400)
