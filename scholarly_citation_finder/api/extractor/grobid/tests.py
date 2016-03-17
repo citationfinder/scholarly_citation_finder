@@ -28,7 +28,7 @@ class TeiParserTest(TestCase):
         self.parser = TeiParser()
         
     def test_parse(self):
-        result = self.parser.parse(open(self.SAMPLE_TEI_CITATION_FILE).read())
+        result = self.parser.parse_list_bibl(open(self.SAMPLE_TEI_CITATION_FILE).read())
         
         self.assertEqual(len(result), 2)
         

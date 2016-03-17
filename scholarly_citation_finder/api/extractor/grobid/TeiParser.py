@@ -9,19 +9,48 @@ class TeiParser:
     
     def __init__(self, name=''):
         self.name = name
+        
+    def parse_document(self, xml):
+        pass
+        #xml_header = SPLIT
+        #xml_references = SPLIT
+        #return self.parse_references(xml_references), self.parse_header(xml_header)
 
-    def parse(self, xml):
-        context = etree.iterparse(BytesIO(xml), html=True)
-        return self.fast_iter(context)
-      
-    def fast_iter(self, context):
+    def parse_header(self, xml):
+        '''
+        <TEI>
+            <teiHeader>
+                ...
+                
+        :param xml:
+        '''
+        results = self.parse_list_bibl() 
+        # TODO: title of tpye main - and level in ('a', ...?):       
+        if results:
+            return results[0]
+        else:
+            return {}
+
+    def parse_references(self, xml):
+        '''
+        <TEI>
+            <text>
+                <back>
+                    <div type="references">
+                        <listBibl>
+                            ...
+        
+        :param xml:
+        '''
         results = []
+        context = etree.iterparse(BytesIO(xml), html=True)
         
         publication = {}
         journal_name = None
         conference_instance_name = None
         authors = []
         tmp_author_name = None
+        #keywords = []
         
         for _, elem in context:
             if elem.tag == 'forename':
@@ -65,13 +94,20 @@ class TeiParser:
                     publication['year'] = elem.attrib['when']
             elif elem.tag == 'publisher':
                 publication['publisher'] = elem.text
+            #elif elem.tag == 'note':
+            #    publication['copyright'] = elem.text
+            #elif elem.tag == 'term' and elem.text:
+            #    keywords.append(elem.text)
+            # <abstract><p>ABSTRACT</p></abstract>
 
-            # citation
+            # citation ('biblstruct') or document header ('teiheader')
+            # TODO: elif elem.tag in ('biblstruct', 'teiheader'):
             elif elem.tag == 'biblstruct':
                 
                 if 'title' in publication:
                     publication['source'] = self.name
     
+                    # TODO: append 'keywords': keywords
                     results.append({'reference': {
                                         'publication_id': '',
                                         'source_id': '',
@@ -89,10 +125,10 @@ class TeiParser:
                 conference_instance_name = None
                 authors = []
                 tmp_author_name = ''
+                #keywords = []
 
             elem.clear()
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
-        #print(results)
         return results
