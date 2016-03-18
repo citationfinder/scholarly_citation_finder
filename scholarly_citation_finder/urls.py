@@ -24,13 +24,12 @@ urlpatterns = [
     # admin
     url(r'^admin/default/', include(default_site.urls)),
     url(r'^admin/mag/', include(mag_site.urls)),
-    # rest
+    # api (rest and citations)
     url(r'^api/rest/', include('scholarly_citation_finder.apps.rest.urls')),
-    # api
     url(r'^api/citation/', include('scholarly_citation_finder.apps.citation.urls')),
-    # tools
-    url(r'^tools/crawler/', include('scholarly_citation_finder.tools.crawler.urls')),
-    url(r'^tools/extractor/', include('scholarly_citation_finder.tools.extractor.urls')),
-    url(r'^tools/harvester/', include('scholarly_citation_finder.tools.harvester.urls')),
-    url(r'^tools/nameparser/', include('scholarly_citation_finder.tools.nameparser.urls')),
+    # api tools
+    url(r'^api/tools/crawler/', include('scholarly_citation_finder.tools.crawler.urls')),
+    url(r'^api/tools/extractor/', include('scholarly_citation_finder.tools.extractor.urls')),
+    url(r'^api/tools/harvester/', include('scholarly_citation_finder.tools.harvester.urls')),
+    url(r'^api/tools/nameparser/', include('scholarly_citation_finder.tools.nameparser.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
