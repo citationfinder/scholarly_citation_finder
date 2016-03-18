@@ -21,6 +21,9 @@ djangorestframework==3.3.2
 celery==3.1.22
 django-celery==3.1.17
 
+# parsing human names
+nameparser==0.3.13
+
 # debug/development only
 django-extensions==1.6.1
 django-cors-headers==1.1.0

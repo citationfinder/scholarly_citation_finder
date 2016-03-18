@@ -10,10 +10,29 @@ class Affilation(models.Model):
 
 class Author(models.Model):
     name = models.CharField(db_index=True, max_length=100)
-    #coauthors = models.ManyToManyField('self')
     
     def __unicode__(self):
         return unicode(self.name)
+
+
+class AuthorNameBlock(models.Model):
+    name = models.CharField(db_index=True, max_length=52)
+    
+    def __unicode__(self):
+        return unicode(self.name)
+
+
+class AuthorNameVariation(models.Model):
+    block = models.ForeignKey(AuthorNameBlock)
+    author = models.ForeignKey(Author)
+    first = models.CharField(max_length=20)
+    middle = models.CharField(max_length=20, blank=True, null=True)
+    last = models.CharField(max_length=50)
+    suffix = models.CharField(max_length=10, blank=True, null=True)
+    nickname = models.CharField(max_length=20, blank=True, null=True)
+    
+    def __unicode__(self):
+        return unicode('{} {}'.format(self.first, self.last))
 
 
 class Conference(models.Model):
@@ -99,16 +118,16 @@ class Publication(models.Model):
 
 
 class PublicationFieldOfStudy(models.Model):
-	publication = models.ForeignKey(Publication)
-	fieldofstudy_name = models.CharField(max_length=100)
-	level = models.SmallIntegerField(blank=True, null=True)
-	confidence = models.FloatField(blank=True, null=True)
+    publication = models.ForeignKey(Publication)
+    fieldofstudy_name = models.CharField(max_length=100)
+    level = models.SmallIntegerField(blank=True, null=True)
+    confidence = models.FloatField(blank=True, null=True)
 
-	class Meta:
-		unique_together = ('publication', 'fieldofstudy_name')
+    class Meta:
+        unique_together = ('publication', 'fieldofstudy_name')
 
-	def __unicode__(self):
-		return unicode(self.fieldofstudy_name)
+    def __unicode__(self):
+        return unicode(self.fieldofstudy_name)
 
 
 class PublicationAuthorAffilation(models.Model):
