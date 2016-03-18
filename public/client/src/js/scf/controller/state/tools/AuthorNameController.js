@@ -3,7 +3,7 @@ function AuthorNameController($scope, Restangular) {
 	$scope.parsedName = undefined;
 
 	$scope.parsename = function(name, normalize) {
-		Restangular.all('tools/crawler/').customGET('nameparser/', {
+		Restangular.all('tools/').customGET('nameparser/', {
 			name: name, normalize: normalize
 		}).then(function(item) {
 			$scope.parsedName = item;
