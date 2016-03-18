@@ -116,7 +116,7 @@ class Parser:
                 self.cursor.execute("INSERT INTO core_conference (short_name) VALUES (%s) RETURNING id", [short_name])
                 return self.cursor.fetchone()[0]
             else:
-                raise ParserDataError('Conference short name is too long')        
+                raise ParserDataError('Conference short name is too long: %s' % short_name)        
 
     def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal_id=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference_id=None, source=None):
         if title and len(title) <= 250:
