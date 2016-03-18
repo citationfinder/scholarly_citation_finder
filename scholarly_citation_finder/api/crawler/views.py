@@ -6,6 +6,7 @@ from scholarly_citation_finder.api.crawler.search.Duckduckgo import Duckduckgo,\
     DuckduckgoResponseException
 from scholarly_citation_finder.api.crawler.search.HtmlParser import HtmlParserUnkownHeaderType
 from scholarly_citation_finder.api.crawler.search.Crossref import Crossref, CrossrefResponseException
+from scholarly_citation_finder.api.crawler.AuthorNameParser import AuthorNameParser
 
 
 def htmlparser(request):
@@ -45,3 +46,11 @@ def crossref(request):
             return HttpResponse('Nothing do to', status=400)
     except(ConnectionError, CrossrefResponseException) as e:
         return HttpResponse(str(e), status=503)
+
+
+def nameparser(request):
+    name = request.GET.get('name', None)
+    if name:
+        return JsonResponse({'item': AuthorNameParser(name).as_dict()})
+    else:
+        return HttpResponse('Nothing do to', status=400)
