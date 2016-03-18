@@ -6,38 +6,6 @@ ALLOWED_HOSTS = []
 
 
 ###############################################################################
-# Database settings
-###############################################################################
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DEFAULT_DATABASE_NAME', 'scf'),
-        'USER': os.getenv('DEFAULT_DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DEFAULT_DATABASE_PASSWORD', 'root'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    },
-    'citeseerx': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('CITESEERX_DATABASE_NAME', 'citeseerx'),
-        'USER': os.getenv('CITESEERX_DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('CITESEERX_DATABASE_PASSWORD', 'root'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    },
-    'mag': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('MAG_DATABASE_NAME', 'mag'),
-        'USER': os.getenv('MAG_DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('MAG_DATABASE_PASSWORD', 'root'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    }
-}
-
-
-###############################################################################
 # Logging
 ###############################################################################
 
@@ -86,7 +54,7 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 15
 }
 
 
