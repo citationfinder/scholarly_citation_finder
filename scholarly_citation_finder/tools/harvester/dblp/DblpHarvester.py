@@ -158,6 +158,13 @@ class DblpHarvester(Harvester):
                     publication['title'] = etree.tostring(elem, method='text', encoding='utf-8').rstrip().rstrip('.')
                 # author and editor
                 elif elem.tag in ('author', 'editor') and elem.text:
+                    try:
+                        split = elem.text.rsplit(' ', 1)
+                        int(split[1])
+                        # some authors have a 0001, 0002, ... at the end, when the name already exists
+                        elem.text = '%s (%s)' % (split[0], split[1])
+                    except(ValueError, IndexError):
+                        pass
                     authors.append(elem.text)
                 # pages
                 elif elem.tag == 'pages' and elem.text:
