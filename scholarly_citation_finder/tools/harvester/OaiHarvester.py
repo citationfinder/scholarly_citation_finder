@@ -4,7 +4,7 @@ from sickle.oaiexceptions import NoRecordsMatch
 from requests.exceptions import ChunkedEncodingError, ConnectionError
 
 from scholarly_citation_finder.tools.harvester.Harvester import Harvester
-from scholarly_citation_finder.apps.parser.Parser import ParserConnectionError,\
+from scholarly_citation_finder.apps.parser.Exceptions import ParserConnectionError,\
     ParserRollbackError
 
 logger = logging.getLogger(__name__)

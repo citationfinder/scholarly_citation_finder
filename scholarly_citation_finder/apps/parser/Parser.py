@@ -3,20 +3,10 @@
 import logging
 from django.db import connections
 from django.db.utils import IntegrityError, DataError, ProgrammingError
+from .AuthorParser import AuthorParser
+from .Exceptions import ParserRollbackError, ParserDataError
 
 logger = logging.getLogger(__name__)
-
-
-class ParserDataError(Exception):
-    pass
-
-
-class ParserRollbackError(Exception):
-    pass
-
-
-class ParserConnectionError(Exception):
-    pass
 
 
 class Parser:
@@ -43,7 +33,7 @@ class Parser:
         self.conn = connections[database]
         self.cursor = self.conn.cursor()
         self.count_publications = 0
-        #self.count_citations = 0
+        self.author_parser = AuthorParser(database=database)
 
     def commit(self):
         '''
@@ -55,7 +45,7 @@ class Parser:
         except(IntegrityError) as e:
             logger.error(e, exc_info=True)
             self.conn.rollback()
-            raise ParserRollbackError
+            raise ParserRollbackError(e)
 
     def __normalize_string(self, value):
         return value.strip().lower()
@@ -194,8 +184,8 @@ class Parser:
             if authors:
                 for author in authors:
                     try:
-                        self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", [publication_id, self.parse_author(author)])
-                    except(DataError) as e:
+                        self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", [publication_id, self.author_parser.parse(author)])
+                    except(ParserDataError, DataError) as e:
                         logger.warn(str(e))
                 del authors
             # keywords

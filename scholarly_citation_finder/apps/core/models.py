@@ -9,7 +9,7 @@ class Affilation(models.Model):
 
 
 class Author(models.Model):
-    name = models.CharField(db_index=True, max_length=100)
+    name = models.CharField(max_length=100)
     
     def __unicode__(self):
         return unicode(self.name)
@@ -24,7 +24,7 @@ class AuthorNameBlock(models.Model):
 
 class AuthorNameVariation(models.Model):
     block = models.ForeignKey(AuthorNameBlock)
-    author = models.ForeignKey(Author)
+    author = models.ForeignKey(Author, blank=True, null=True)
     first = models.CharField(max_length=20)
     middle = models.CharField(max_length=20, blank=True, null=True)
     last = models.CharField(max_length=50)
