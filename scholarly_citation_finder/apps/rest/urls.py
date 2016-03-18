@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from rest_framework import routers
 
 from scholarly_citation_finder.apps.rest import views
-from scholarly_citation_finder.api.harvester.models import HarvesterViewSet
+from scholarly_citation_finder.tools.harvester.models import HarvesterViewSet
 from scholarly_citation_finder.apps.tasks.models import TaskViewSet
 
 

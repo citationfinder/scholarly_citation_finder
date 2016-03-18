@@ -48,15 +48,17 @@ PREREQ_APPS = (
     'django_extensions', # used for debug only
 )
 PROJECT_APPS = (
-    'scholarly_citation_finder.api.citation',
-    'scholarly_citation_finder.api.citation.mag', # required for celery
-    'scholarly_citation_finder.api.crawler',
-    'scholarly_citation_finder.api.extractor',
-    'scholarly_citation_finder.api.harvester',
+    'scholarly_citation_finder.apps.citation',
+    'scholarly_citation_finder.apps.citation.mag', # required for celery
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.rest',
+    'scholarly_citation_finder.apps.parser',
     'scholarly_citation_finder.apps.tasks',
     'scholarly_citation_finder.lib',
+    'scholarly_citation_finder.tools.crawler',
+    'scholarly_citation_finder.tools.extractor',
+    'scholarly_citation_finder.tools.harvester',
+    'scholarly_citation_finder.tools.nameparser',
 )
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 

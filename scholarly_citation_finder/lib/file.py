@@ -9,8 +9,8 @@ import os.path
 import requests
 #import shutil
 import logging
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
+#from django.core.validators import URLValidator
+#from django.core.exceptions import ValidationError
 from requests.exceptions import ConnectionError, InvalidSchema
 #from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
@@ -152,7 +152,7 @@ def unzip_file(filename, huge_file=True):
     except(IOError) as e:
         raise UnzipFailedException(e)
     
-
+"""
 def url_exits(url, check_exists=False):
     #validate = URLValidator(verify_exists=True)
     try:
@@ -167,3 +167,4 @@ def url_exits(url, check_exists=False):
         return False
     except(ConnectionError, InvalidSchema):
         return False
+"""
