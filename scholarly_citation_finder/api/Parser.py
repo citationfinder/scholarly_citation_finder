@@ -233,22 +233,3 @@ class Parser:
             logger.error(e, exc_info=True)
             self.conn.rollback()
             raise ParserRollbackError(str(e))
-    
-    """
-        def check_author_name(self, name):
-        try:
-            # Milena Mihail, et al.
-            name = name.strip().replace(', et al.', '')
-            # block: n.n., S., Jr., A.
-            if ' ' in name:
-                # block: University, Università, Universität, Université
-                if not any(extension in name for extension in ('Universit', 'et al.')):
-                    return name
-        except(AttributeError) as e:
-            logger.warn(str(e))
-
-        return False
-    
-    def _check_publication_is_valid(self, entry):
-        return 'title' in entry and 'authors' in entry
-    """
