@@ -2,7 +2,7 @@ function PublicationsController($scope, $stateParams, Restangular) {
 	$scope.isCollapsed = true;
 
 	$scope.getPublication = function(id) {
-		Restangular.one('mag/publication', id).get().then(function(data) {
+		Restangular.one('citation/mag/publication', id).get().then(function(data) {
 			console.log(data)
 			$scope.publicationResult = data;
 		}, function(data) {

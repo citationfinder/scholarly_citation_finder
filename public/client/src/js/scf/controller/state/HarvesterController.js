@@ -14,7 +14,7 @@ function HarvesterController($scope, Restangular) {
 	};
 	
 	$scope.submitTask = function(name, limit, from, until, resumptiontoken) {
-		Restangular.all('harvester/oaipmh/').customGET(name, {
+		Restangular.all('tools/harvester/oaipmh/').customGET(name, {
 			limit: limit,
 			from: from,
 			until: until,
