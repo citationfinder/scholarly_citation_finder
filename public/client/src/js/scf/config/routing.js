@@ -15,17 +15,22 @@ function routing($stateProvider, $urlRouterProvider) {
 		url: '/home',
 		template: require('../view/state/home.html')
 	})
-	// PDF tools
-	.state('find-pdf', {
-		url: '/find-pdf',
-		controller: require('../controller/state/pdf_tools/FindPdfController'),
-		template: require('../view/state/pdf_tools/find_pdf.html')
+	// Tools
+	.state('tools-find-pdf', {
+		url: '/tools/find-pdf',
+		controller: require('../controller/state/tools/FindPdfController'),
+		template: require('../view/state/tools/find_pdf.html')
 	})
-	.state('extract-pdf', {
-		url: '/extract-pdf',
-		controller: require('../controller/state/pdf_tools/ExtractPdfController'),
-		template: require('../view/state/pdf_tools/extract_pdf.html')
+	.state('tools-extract-pdf', {
+		url: '/tools/extract-pdf',
+		controller: require('../controller/state/tools/ExtractPdfController'),
+		template: require('../view/state/tools/extract_pdf.html')
 	})
+	.state('tools-author-name', {
+		url: '/tools/author-name',
+		controller: require('../controller/state/tools/AuthorNameController'),
+		template: require('../view/state/tools/author_name.html')
+	})	
 	// Other
 	.state('find-citations', {
 		url: '/find-citations',

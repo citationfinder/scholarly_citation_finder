@@ -15,10 +15,15 @@ function api(RestangularProvider) {
 	}
 	
 	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
-		if (operation == "getList") {
+		if (operation == 'getList') {
 			//response.totalCount = data.total_item_count;
 			if (data.results) {
 				data = data.results;				
+			}
+		}
+		else if (operation == 'get') {
+			if (data.item) {
+				data = data.item;
 			}
 		}
 		return data;

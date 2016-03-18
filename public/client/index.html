@@ -30,10 +30,12 @@
 		  <ul class="nav navbar-nav">
 			<li class="active"><a href="#" ui-sref="home">Home <span class="sr-only">(current)</span></a></li>
 			<li class="dropdown" uib-dropdown on-toggle="toggled(open)">
-				<a id="pdf-tools-dropdown" uib-dropdown-toggle href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PDF tools <span class="caret"></span></a>
+				<a id="pdf-tools-dropdown" uib-dropdown-toggle href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
 				<ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="pdf-tools-dropdown">
-					<li><a href="#" ui-sref="find-pdf">Find PDF</a></li>
-					<li><a href="#" ui-sref="extract-pdf">Extract PDF</a></li>
+					<li><a href="#" ui-sref="tools-find-pdf">Find PDF</a></li>
+					<li><a href="#" ui-sref="tools-extract-pdf">Extract PDF</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#" ui-sref="tools-author-name">Parse Author Name</a></li>
 				</ul>
 			</li>
 			<li><a href="#" ui-sref="harvester">Harvester</a></li>
