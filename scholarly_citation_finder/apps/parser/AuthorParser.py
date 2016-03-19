@@ -46,8 +46,8 @@ class AuthorParser:
                     if variation_short:
                         author_id = variation_short[0].author_id
                     else:
-                        name.capitalize()
-                        author = Author.objects.using(self.database).create(name=name)
+                        #name.capitalize()
+                        author = Author.objects.using(self.database).create(name=str(name).title())
                         author_id = author.id
                         self.__store_shortname_variation(block.id, author_id, name.first, name_middle, name.last)
 
