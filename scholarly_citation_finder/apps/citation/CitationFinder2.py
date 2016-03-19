@@ -14,6 +14,7 @@ from scholarly_citation_finder.lib.process import ProcessException
 from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParserNoDocumentTitle,\
     TeiParserNoReferences
 from scholarly_citation_finder.apps.parser.Exceptions import ParserRollbackError
+from scholarly_citation_finder.tools.nameparser.StringMatching import nearly_match
 
 logger = logging.getLogger(__name__)
 
@@ -98,9 +99,9 @@ class CitationFinder2:
             document_meta, references = self.extractor.extract_file(filename, completely=True)
             
             # Check title
-            document_meta['title'] = document_meta['title'].lower().strip()
-            if document_meta['title'] != publication_title:
-                logger.info('Wrong title! Is "%s", should "%s"' % (document_meta['title'], publication_title) )
+            document_meta_title = document_meta['publication']['title'].lower().strip()
+            if not nearly_match(document_meta_title, publication_title):
+                logger.info('Wrong title! Is "%s", should "%s"' % (document_meta_title, publication_title) )
                 return False, False
             
             # Check number of references

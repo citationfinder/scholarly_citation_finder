@@ -48,7 +48,7 @@ class GrobidExtractor:
         :raise TeiParserNoReferences
         :raise TeiParserNoDocumentTitle
         '''
-        xml = self.__call_grobid_method(data, 'processDocument')
+        xml = self.__call_grobid_method(data, 'processFulltextDocument')
         return self.parser.parse_document(xml=xml)
 
     def __extract_references(self, data):

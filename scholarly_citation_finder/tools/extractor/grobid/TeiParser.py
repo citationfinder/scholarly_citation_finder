@@ -38,6 +38,7 @@ class TeiParser:
         except(TeiParserNoDocumentTitle) as e:
             raise e
 
+    """
     def parse_header(self, xml):
         '''
         <TEI>
@@ -52,6 +53,7 @@ class TeiParser:
             return results[0]
         except(TeiParserNoDocumentTitle) as e:
             raise e
+    """
 
     def parse_references(self, xml):
         '''
@@ -101,7 +103,7 @@ class TeiParser:
                 elif elem.tag == 'author':
                     authors.append(tmp_author_name)
                     tmp_author_name = None
-                elif elem.tag == 'title' and 'level' in elem.attrib:
+                elif elem.tag == 'title' and elem.text and 'level' in elem.attrib:
                     level = elem.attrib.get('level')
                     # @see http://www.tei-c.org/release/doc/tei-p5-doc/de/html/ref-title.html
                     if elem.attrib.get('type') == 'main' and 'title' not in publication:
@@ -114,7 +116,7 @@ class TeiParser:
                     elif level == 'm':
                         conference_instance_name = elem.text
                     else:
-                        logger.warn('Unknown title with level {}: {}'.format(level, elem.text))
+                        logger.warn('Unknown title with level %s: %s' % (level, elem.text))
                     # else: 's', 'u'
                 elif elem.tag == 'biblscope' and 'unit' in elem.attrib:
                     if elem.attrib['unit'] == 'volume':
@@ -166,7 +168,7 @@ class TeiParser:
             # Skip text body
             elif elem.tag == end_element:
                 end_element = self.ELEMENT_BIBLSTRUCT
-                
+
             # Clear
             elem.clear()
             while elem.getprevious() is not None:
