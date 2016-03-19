@@ -15,7 +15,7 @@ class GrobidServceNotAvaibleException(Exception):
 
 class GrobidExtractor:
     
-    GROBID_API_URL = 'http://localhost:8080/grobid'
+    GROBID_API_URL = 'http://localhost:8080'
 
     def __init__(self):
         self.parser = TeiParser('grobid')
@@ -24,8 +24,10 @@ class GrobidExtractor:
         '''
         Extract the citations from a provided file.
         :param filename: Filename to PDF file
-        :raise ProcessException:
-        :raise GrobidServceNotAvaibleException: 
+        :raise ProcessException: When extractor failed
+        :raise GrobidServceNotAvaibleException: When extractor is not available
+        :raise TeiParserNoReferences: When document has no references
+        :raise TeiParserNoDocumentTitle: When document has no title   
         '''
         logger.info('Extract file: {}'.format(filename))
         try:
@@ -34,8 +36,6 @@ class GrobidExtractor:
                 return self.__extract_document(file)
             else:
                 return self.__extract_references(file)
-        except(GrobidServceNotAvaibleException) as e:
-            raise e
         except(IOError, ProcessException) as e:
             raise ProcessException(e)
 
@@ -45,6 +45,8 @@ class GrobidExtractor:
         :param data:
         :raise GrobidServceNotAvaibleException:
         :raise ProcessException: 
+        :raise TeiParserNoReferences
+        :raise TeiParserNoDocumentTitle
         '''
         xml = self.__call_grobid_method(data, 'processDocument')
         return self.parser.parse_document(xml=xml)

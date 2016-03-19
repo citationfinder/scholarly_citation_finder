@@ -11,6 +11,9 @@ from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import Gro
 from scholarly_citation_finder.lib.file import download_file_pdf, DownloadPdfException
 from scholarly_citation_finder.apps.parser.Parser import Parser
 from scholarly_citation_finder.lib.process import ProcessException
+from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParserNoDocumentTitle,\
+    TeiParserNoReferences
+from scholarly_citation_finder.apps.parser.Exceptions import ParserRollbackError
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +55,7 @@ class CitationFinder2:
         #self.publicationpdf_crawler.pdf_by_soure()
 
         urls = self.publicationpdf_crawler.by_stored_urls()
-        if self.extract_pdfs(publication, urls):
+        if self.extract_documents(publication, urls):
             return True
 
         #urls = self.publicationpdf_crawler.by_search_engine()
@@ -61,40 +64,79 @@ class CitationFinder2:
 
         return False
         
-    def extract_pdfs(self, publication, pdfs_as_urls):
+    def extract_documents(self, publication, pdfs_as_urls):
         logger.info('extract_pdfs: {}'.format(len(pdfs_as_urls)))
         for url in pdfs_as_urls:
             logger.warn('\t{}'.format(url))
         
             try:
-                filename = download_file_pdf(url, path=config.DOWNLOAD_TMP_DIR, name='{}_tmp.pdf'.format(publication.id))
-                extraction_result = self.__extract_pdf(publication, filename=filename, url=url)
-                if extraction_result:
-                    return extraction_result
-            except(DownloadPdfException, GrobidServceNotAvaibleException) as e:
+                document_meta, references = self.__extract_document(publication.title, publication.id, url=url)
+                if document_meta and references:
+                    self.__store_references(publication=publication, url=url, references=references)
+                    return True
+            except(ProcessException, GrobidServceNotAvaibleException) as e:
                 logger.info('{}: {}'.format(type(e).__name__, str(e)))
+            except(ParserRollbackError) as e:
+                logger.warn(e, exc_info=True)
         return False
 
-    def __extract_pdf(self, publication, filename, url):
+    def __extract_document(self, publication_title, publication_id, url):
+        '''
+        Try to download the document from the given URL and extract it
+        
+        :param publication_title: Title of the publication to check, if it's the correct document
+        :param publication_id: ID of the publication. Used for the filename of the temporary stored document
+        :param url: Document URL
+        :return: Document meta object, references array
+                 False, False if (a) it failed to download the document (b) or the document has no title or references
+        :raise ProcessException: Grobid failed
+        :raise GrobidServceNotAvaibleException: Grobid is not available
+        '''
         try:
-            references = self.extractor.extract_file(filename)
-            # TODO: maybe check title
-            if len(references) >= self.NUM_MINIMUM_REFERENCES:
-                publication_url = publication.publicationurl_set.create(url=url,
-                                                                        type=PublicationUrl.MIME_TYPE_PDF,
-                                                                        extraction_date=datetime.now())
-                        
-                for reference in references:
-                    # TODO: check if paper already exists (!)
-                    reference['reference']['publication_id'] = publication.id
-                    reference['reference']['source_id'] = publication_url.id
-                    reference['publication']['source'] = '{}:{}'.format(reference['publication']['source'], publication_url.id)
-                    self.parser.parse(**reference)
-                self.parser.commit()
-                return True
-            else:
-                return False
-        except(ProcessException) as e:
-            logger.warn(e, exc_info=True)
-        except(GrobidServceNotAvaibleException) as e:
+            filename = download_file_pdf(url, path=config.DOWNLOAD_TMP_DIR, name='{}_tmp.pdf'.format(publication_id))
+            document_meta, references = self.extractor.extract_file(filename, completely=True)
+            
+            # Check title
+            document_meta['title'] = document_meta['title'].lower().strip()
+            if document_meta['title'] != publication_title:
+                logger.info('Wrong title! Is "%s", should "%s"' % (document_meta['title'], publication_title) )
+                return False, False
+            
+            # Check number of references
+            if len(references) < self.NUM_MINIMUM_REFERENCES:
+                logger.info('Not enough references')
+                return False, False
+            
+            return document_meta, references
+                
+        # Invalid document
+        except(DownloadPdfException, TeiParserNoDocumentTitle, TeiParserNoReferences) as e:
+            logger.info('{}: {}'.format(type(e).__name__, str(e)))
+            return False, False
+        # Extractor failed
+        except(ProcessException, GrobidServceNotAvaibleException) as e:
+            raise e
+        
+    def __store_references(self, publication, url, references):
+        '''
+        Store the URL and the references
+        
+        :param publication: Publication object
+        :param url: URL
+        :param references: References list
+        :raise ParserRollbackError: Storage of the references failed
+        '''
+        publication_url = publication.publicationurl_set.create(url=url,
+                                                                type=PublicationUrl.MIME_TYPE_PDF,
+                                                                extraction_date=datetime.now())
+        for reference in references:
+            # TODO: check if paper already exists (!)
+            reference['reference']['publication_id'] = publication.id
+            reference['reference']['source_id'] = publication_url.id
+            reference['publication']['source'] = '{}:{}'.format(reference['publication']['source'], publication_url.id)
+            self.parser.parse(**reference)
+
+        try:
+            self.parser.commit()
+        except(ParserRollbackError) as e:
             raise e
