@@ -76,7 +76,8 @@ def extract_file_process(file, cwd):
 def download_file_pdf(url, **kwargs):
     try:
         return download_file(url, expected_content_type='application/pdf', **kwargs)
-    except(UnexpectedContentTypeException, InvalidSchema, ConnectionError) as e:
+    except(DownloadFailedException, UnexpectedContentTypeException) as e:
+        #logger.warn(e, exc_info=True)
         raise DownloadPdfException(e)
 
 def download_file(url, path=None, name=None, expected_content_type=None):
@@ -84,6 +85,7 @@ def download_file(url, path=None, name=None, expected_content_type=None):
     Downloads a single file. Can handle large files.
     
     :raise DownloadFailedException: When the connection fails or the schema is invalid
+    :raise UnexpectedContentTypeException: When expected_content_type is set and content type differs
     '''
     if name:
         local_filename = os.path.join(path, name)
@@ -105,7 +107,6 @@ def download_file(url, path=None, name=None, expected_content_type=None):
         return local_filename
     except(ConnectionError, InvalidSchema) as e:
         raise DownloadFailedException(e)
-
 
 """
 def upload_file(url, filename, status_code=201):
