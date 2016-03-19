@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 
 from scholarly_citation_finder import config
-from scholarly_citation_finder.apps.parser import PublicationPdfCrawler
+from scholarly_citation_finder.apps.parser.PublicationPdfCrawler import PublicationPdfCrawler
 from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
 from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor,\
     GrobidServceNotAvaibleException
