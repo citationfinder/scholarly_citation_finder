@@ -24,7 +24,7 @@ class AuthorNameBlock(models.Model):
 
 class AuthorNameVariation(models.Model):
     block = models.ForeignKey(AuthorNameBlock)
-    author = models.ForeignKey(Author, blank=True, null=True)
+    author = models.ForeignKey(Author)
     first = models.CharField(max_length=20)
     middle = models.CharField(max_length=20, blank=True, null=True)
     last = models.CharField(max_length=50)
