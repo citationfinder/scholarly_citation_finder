@@ -25,7 +25,7 @@ def task_detail(request, id):
     try:
         task = Task.objects.get(pk=id)
         result, tastmeta = task.result()
-        if os.path.isfile(result):
+        if result and os.path.isfile(result):
             with open(result) as result_file:
                 return HttpResponse(result_file, content_type='application/json')
         elif result:
