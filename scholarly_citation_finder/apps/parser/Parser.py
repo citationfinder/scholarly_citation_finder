@@ -150,7 +150,7 @@ class Parser:
         :param journal_name: Journal name
         :param authors: Authors name array
         :param keywords: Keywords array
-        :param urls: Url array
+        :param urls: URL array
         :param reference: Reference dictionary
         :return: Publication ID, if entry was successfully parsed; False otherwise
         :raise ParserRollbackError: When a problems occurred, that required to do a rollback

@@ -72,6 +72,7 @@ class CitationFinder2:
             try:
                 document_meta, references = self.__extract_document(publication.title, publication.id, url=url)
                 if document_meta and references:
+                    self.__store_document_meta(publication=publication, document_meta=document_meta)
                     self.__store_references(publication=publication, url=url, references=references)
                     return True
             except(ProcessException, GrobidServceNotAvaibleException) as e:
@@ -117,7 +118,7 @@ class CitationFinder2:
         except(ProcessException, GrobidServceNotAvaibleException) as e:
             raise e
         
-    def __store_references(self, publication, url, references):
+    def __store_references(self, publication, references, url):
         '''
         Store the URL and the references
         
@@ -140,3 +141,8 @@ class CitationFinder2:
             self.parser.commit()
         except(ParserRollbackError) as e:
             raise e
+        
+    def __store_document_meta(self, publication, document_meta):        
+        if 'keywords' in document_meta:
+            for keyword in document_meta['keywords']:
+                publication.publicationkeyword_set.get_or_create(name=keyword)
