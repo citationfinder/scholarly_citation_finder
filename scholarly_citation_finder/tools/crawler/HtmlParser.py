@@ -64,6 +64,8 @@ class HtmlParser:
             # Convert relativ urls to absolute url
             if href.startswith(('http://', 'https://', 'ftp://')):
                 pass
+            elif href.startswith('//'):
+                href = 'http:' + href
             elif href.startswith('/'):
                 href = url_domain + href
             else:
