@@ -26,8 +26,9 @@ class Harvester(object):
         
     def stop_harvest(self):
         logger.info('stop parsed {} entries'.format(self.parser.count_publications))
+        self.parser.count_publications = 0
         self.parser.commit()
-    
+
     def check_stop_harvest(self):
         if self.parser.count_publications > 0 and (self.parser.count_publications % self.COMMIT_AFTER_NUM_PUBLICATIONS) == 0:
             self.parser.commit()
