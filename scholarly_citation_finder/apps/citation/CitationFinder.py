@@ -107,7 +107,7 @@ class CitationFinder:
         except(IOError) as e:
             raise e
 
-    def __serialze(self, publication, citations=None):
+    def __serialze(self, publication, citations=None, isi_fieldofstudy=False):
         
         if self.database == 'mag':
             publication.title = publication.title.title()
@@ -150,7 +150,7 @@ class CitationFinder:
         keywords = []        
         for keyword in publication.publicationkeyword_set.all():
             keywords.append(keyword.name)
-        
+
         result = {'type': publication.type,
                   'title': publication.title,
                   'year': publication.year,
@@ -168,6 +168,7 @@ class CitationFinder:
                   'copyright': publication.copyright,
                   'authors': authors,
                   'keywords': keywords,
+                  'isi_fieldofstudy': self.__isi_fieldofstudy_mapping(publication) if isi_fieldofstudy else None,
                   'citations': []}
 
         if citations:
@@ -181,3 +182,38 @@ class CitationFinder:
             return int(value)
         except(ValueError):
             return None
+        
+    def __isi_fieldofstudy_mapping(self, publication):        
+        # Maps the MAG field of studies to the ISI field of studies
+        mappingTable = {'Engineering': 'Engineering',
+                        'History': 'Social Sciences, general',
+                        'Environmental science': 'Environment/Ecology',
+                        'Psychology': 'Psychiatry/Psychology',
+                        'Biology': 'Biology & Biochemistry',
+                        'Materials Science': 'Materials Science',
+                        'Geography': 'Geosciences',
+                        'Mathematics': 'Mathematics',
+                        'Political Science': 'Social Sciences, general',
+                        'Computer Science': 'Computer Science',
+                        'Business': 'Economics & Business',
+                        'Geology': 'Geosciences',
+                        'Chemistry': 'Chemistry',
+                        'Physics': 'Physics',
+                        'Sociology': 'Social Sciences, general',
+                        'Economics': 'Economics & Business',
+                        
+                        'Human computer interaction': 'Computer Science',
+                        'Surgery': 'Clinical Medicine',
+                        'Economic policy': 'Social Sciences, general',
+                        'Environmental planning': 'Environment/Ecology',
+                        'Management': 'Economics & Business'}
+        
+        # Sort field of study in descending level order, i.e. check first level 1 and then level 0.
+        # Don't consider field of studies with a confidence lower then 0.5
+        query = publication.publicationfieldofstudy__set().filter(level__gte=0, level__lte=1, confidence__gte=0.5).order_by('-level')
+        # Iterate over all level 1 and 0 field of studies
+        for fieldofstudy in query.iterate():
+            if fieldofstudy in mappingTable:
+                return mappingTable[fieldofstudy]
+
+        return None
