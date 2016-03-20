@@ -1,0 +1,8 @@
+<i>{{item.publication.title}} </i><br>
+<span ng-repeat="author in item.authors">{{author}}; </span><br>
+year: {{item.publication.year}}<br>
+pages: {{item.publication.pages_from}}--{{item.publication.pages_to}}<br>
+volume: {{item.publication.volume}}, number: {{item.publication.number}}<br>
+journal: {{item.publication.journal_name}}, conference: {{item.publication.conference_instance_name}}<br>
+publisher: {{item.publication.publisher}}<br>
+keywords: <span ng-repeat="keyword in item.keywords">{{keyword}}; </span><br>

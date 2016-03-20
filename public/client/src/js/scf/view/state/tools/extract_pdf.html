@@ -26,13 +26,17 @@
   </div>
 </form>
 
-<h5>Results (<a ng-click="extractFileResult = ''; showProgress = false;" href="">Clear</a>)</h5>
-
+<h3>Results (<a ng-click="extractFileDocumentMeta = ''; showProgress = false;" href="">Clear</a>)</h3>
 <div ng-show="showProgress" class="col-sm-4"><uib-progressbar class="progress-striped active"><i>Extracting</i></uib-progressbar></div>
 
-<ol>
-	<li ng-repeat="item in extractFileResult">
-		<i>{{item.publication.title}} </i>({{item.publication.year}}, {{item.journal_name}})<br>
-		<span ng-repeat="author in item.authors">{{author}} &middot; </span>
-	</li>
-</ol>
+<div ng-show="extractFileDocumentMeta">
+	<h4>Document</h4>
+	<listpublication item="extractFileDocumentMeta"></listpublication>
+
+	<h4>References</h4>
+	<ol>
+		<li ng-repeat="item in extractFileReferences">
+			<listpublication item="item"></listpublication>
+		</li>
+	</ol>
+</div>

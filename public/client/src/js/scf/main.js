@@ -20,4 +20,5 @@ angular.module('scf', ['ui.router', 'restangular', 'ui.bootstrap'])
 	
 	// directive
 	.directive('listtasks', require('./directive/ListTasks'))
+	.directive('listpublication', require('./directive/ListPublication'))
 ;

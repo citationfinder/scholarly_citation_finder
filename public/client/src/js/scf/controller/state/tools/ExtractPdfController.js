@@ -9,8 +9,9 @@ function ExtractPdfController($scope, Restangular) {
 
 	$scope.extractFile = function(extractor, url) {
 		$scope.showProgress = true;
-		Restangular.all('tools/extractor/' + extractor + '/').getList({url: url}).then(function(items) {
-			$scope.extractFileResult = items;
+		Restangular.one('tools/extractor').customGET(extractor + '/', {url: url}).then(function(item) {
+			$scope.extractFileDocumentMeta = item.document_meta;
+			$scope.extractFileReferences = item.references;
 			$scope.showProgress = false;
 		}, function(data) {
 			$scope.showProgress = false;
