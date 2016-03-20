@@ -7,6 +7,8 @@ from scholarly_citation_finder.lib.file import download_file_pdf,\
     DownloadPdfException
 from scholarly_citation_finder.tools.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
 from scholarly_citation_finder.lib.process import ProcessException
+from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParserNoReferences,\
+    TeiParserNoDocumentTitle
 
 
 def grobid(request):
@@ -17,9 +19,12 @@ def grobid(request):
             if url:
                 filename = download_file_pdf(url, path=config.DOWNLOAD_TMP_DIR, name='tmp.pdf')
             extractor = GrobidExtractor()
-            result = extractor.extract_file(filename)
-            return JsonResponse({'items': result})
-        except(DownloadPdfException, GrobidServceNotAvaibleException) as e:
+            document_meta, references = extractor.extract_file(filename, completely=True)
+            return JsonResponse({'item': {'document_meta': document_meta,
+                                          'references': references}})
+        except(TeiParserNoReferences, TeiParserNoDocumentTitle) as e:
+            return HttpResponse(str(e), status=400)
+        except(DownloadPdfException, GrobidServceNotAvaibleException, ProcessException) as e:
             return HttpResponse(str(e), status=503)
     else:
         return HttpResponse('Nothing to do. Usage ?filename=<filename> or ?url=<url>', status=400)

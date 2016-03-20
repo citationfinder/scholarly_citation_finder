@@ -1,5 +1,7 @@
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" 
- xmlns:mml="http://www.w3.org/1998/Math/MathML">
+<TEI
+	xmlns="http://www.tei-c.org/ns/1.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+ 	xmlns:mml="http://www.w3.org/1998/Math/MathML">
 	<teiHeader/>
 	<text>
 		<front/>
@@ -35,7 +37,7 @@
 						</imprint>
 					</monogr>
 				</biblStruct>
-				<biblStruct xml:id="b1">
+				<biblStruct coords="14,93.58,511.37,202.94,8.91;14,93.58,523.33,202.94,8.91;14,93.58,535.28,202.94,8.91;14,93.58,547.24,202.94,8.91;14,93.58,559.19,107.10,8.91" xml:id="b1">
 					<analytic>
 						<title level="m" type="main">Another pub</title>
 					</analytic>

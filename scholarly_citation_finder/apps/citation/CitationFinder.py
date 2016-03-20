@@ -213,7 +213,6 @@ class CitationFinder:
         query = publication.publicationfieldofstudy__set().filter(level__gte=0, level__lte=1, confidence__gte=0.5).order_by('-level')
         # Iterate over all level 1 and 0 field of studies
         for fieldofstudy in query.iterate():
-            if fieldofstudy in mappingTable:
-                return mappingTable[fieldofstudy]
-
+            if fieldofstudy.name in mappingTable:
+                return mappingTable[fieldofstudy.name]
         return None

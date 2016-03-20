@@ -15,6 +15,8 @@ class TeiParserNoReferences(Exception):
 
 class TeiParser:
     
+    TEI_ELEMENT_XSI_PREFIX = '{http://www.tei-c.org/ns/1.0}'
+
     ELEMENT_TEIHEADER = 'teiheader'
     ELEMENT_BODY = 'body'
     ELEMENT_BIBLSTRUCT = 'biblstruct'
@@ -38,7 +40,6 @@ class TeiParser:
         except(TeiParserNoDocumentTitle) as e:
             raise e
 
-    """
     def parse_header(self, xml):
         '''
         <TEI>
@@ -53,7 +54,6 @@ class TeiParser:
             return results[0]
         except(TeiParserNoDocumentTitle) as e:
             raise e
-    """
 
     def parse_references(self, xml):
         '''
@@ -76,7 +76,7 @@ class TeiParser:
         :raise TeiParserNoDocumentTitle: 
         '''
         results = []
-        context = etree.iterparse(BytesIO(xml), html=True)
+        context = etree.iterparse(BytesIO(xml))
         
         publication = {}
         journal_name = None
@@ -86,10 +86,10 @@ class TeiParser:
         keywords = []
         
         for _, elem in context:
-            if elem.tag == 'html':  # skipped add html (html=True option)
-                continue
+            elem.tag = elem.tag.lower().replace(self.TEI_ELEMENT_XSI_PREFIX, '')
+
             # Extract teiHeader / biblstruct
-            elif end_element in (self.ELEMENT_TEIHEADER, self.ELEMENT_BIBLSTRUCT):
+            if end_element in (self.ELEMENT_TEIHEADER, self.ELEMENT_BIBLSTRUCT):
                 if elem.tag == 'forename':
                     if tmp_author_name is None:
                         tmp_author_name = elem.text
@@ -131,8 +131,8 @@ class TeiParser:
                         publication['year'] = elem.attrib['when']
                 elif elem.tag == 'publisher':
                     publication['publisher'] = elem.text
-                elif elem.tag == 'note':
-                    publication['copyright'] = elem.text
+                #elif elem.tag == 'note':
+                #    publication['copyright'] = elem.text
                 elif elem.tag == 'term' and elem.text:
                     keywords.append(elem.text)
                 # citation ('biblstruct') or document header ('teiheader')
@@ -171,6 +171,8 @@ class TeiParser:
 
             # Clear
             elem.clear()
+            #if elem.tag == 'tei': # can not clear root element
+            #    continue
             while elem.getprevious() is not None:
                 del elem.getparent()[0]
         del context
