@@ -30,7 +30,12 @@ function routing($stateProvider, $urlRouterProvider) {
 		url: '/tools/author-name',
 		controller: require('../controller/state/tools/AuthorNameController'),
 		template: require('../view/state/tools/author_name.html')
-	})	
+	})
+	.state('tools-string-matching', {
+		url: '/tools/string-matching',
+		controller: require('../controller/state/tools/StringMatchingController'),
+		template: require('../view/state/tools/string_matching.html')
+	})
 	// Other
 	.state('find-citations', {
 		url: '/find-citations',
