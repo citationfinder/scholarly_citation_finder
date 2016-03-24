@@ -4,5 +4,6 @@ import views
 
 
 urlpatterns = [
-    url(r'^$', views.nameparser),
+    url(r'^humanname/$', views.humanname),
+    url(r'^stringmatching/$', views.stringmatching),
 ]
