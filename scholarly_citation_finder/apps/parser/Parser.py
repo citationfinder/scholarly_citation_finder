@@ -3,8 +3,10 @@
 import logging
 from django.db import connections
 from django.db.utils import IntegrityError, DataError, ProgrammingError
+
 from .AuthorParser import AuthorParser
 from .Exceptions import ParserRollbackError, ParserDataError
+from scholarly_citation_finder.lib.string import normalize_string
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +49,6 @@ class Parser:
             self.conn.rollback()
             raise ParserRollbackError(e)
 
-    def __normalize_string(self, value):
-        return value.strip().lower()
-
     def parse_author(self, name):
         '''
         If the author with the given name already exists, the ID of that author is returned.
@@ -59,7 +58,7 @@ class Parser:
         :return: ID of the author
         :raise ParserDataError: When the name is too long
         '''
-        name = self.__normalize_string(name)
+        name = normalize_string(name)
         self.cursor.execute("SELECT id FROM core_author WHERE name LIKE %s LIMIT 1", [name])
         result = self.cursor.fetchone()
         
@@ -81,7 +80,7 @@ class Parser:
         :return: ID of the journal
         :raise ParserDataError: When the name is too long
         '''
-        name = self.__normalize_string(name)
+        name = normalize_string(name)
         self.cursor.execute("SELECT id FROM core_journal WHERE name LIKE %s LIMIT 1", [name])
         result = self.cursor.fetchone()
         
@@ -95,7 +94,7 @@ class Parser:
                 raise ParserDataError('Journal name is too long')
 
     def parse_conference(self, short_name):
-        short_name = self.__normalize_string(short_name)
+        short_name = normalize_string(short_name)
         self.cursor.execute("SELECT id FROM core_conference WHERE short_name LIKE %s LIMIT 1", [short_name])
         result = self.cursor.fetchone()
         
@@ -110,29 +109,35 @@ class Parser:
 
     def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal_id=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference_id=None, source=None):
         if title and len(title) <= 250:
-            title = self.__normalize_string(title)
-            if date and len(date) > 50:
-                date = None
-            if booktitle and len(booktitle) > 200:
-                booktitle = None
-            if volume and len(volume) > 20:
-                volume = None
-            if number and len(number) > 20:
-                number = None
-            if pages_from and len(pages_from) > 5:
-                pages_from = None
-            if pages_to and len(pages_to) > 5:
-                pages_to = None
-            if series and len(series) > 200:
-                series = None
-            if publisher and len(publisher) > 150:
-                publisher = None
-            if isbn and len(isbn) > 50:
-                isbn = None
-            if doi and len(doi) > 50:
-                doi = None
-            self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", [type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source])
-            return self.cursor.fetchone()[0]
+            title = normalize_string(title)
+            
+            self.cursor.execute("SELECT id FROM core_publication WHERE title LIKE %s LIMIT 1", [title])
+            result = self.cursor.fetchone()
+            if result:
+                return result[0]
+            else:
+                if date and len(date) > 50:
+                    date = None
+                if booktitle and len(booktitle) > 200:
+                    booktitle = None
+                if volume and len(volume) > 20:
+                    volume = None
+                if number and len(number) > 20:
+                    number = None
+                if pages_from and len(pages_from) > 5:
+                    pages_from = None
+                if pages_to and len(pages_to) > 5:
+                    pages_to = None
+                if series and len(series) > 200:
+                    series = None
+                if publisher and len(publisher) > 150:
+                    publisher = None
+                if isbn and len(isbn) > 50:
+                    isbn = None
+                if doi and len(doi) > 50:
+                    doi = None
+                self.cursor.execute("INSERT INTO core_publication (type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", [type, title, year, date, booktitle, journal_id, volume, number, pages_from, pages_to, series, publisher, isbn, doi, abstract, copyright, conference_id, source])
+                return self.cursor.fetchone()[0]
         else:
             raise ParserDataError('Title does not exists or is too long')
 
@@ -192,6 +197,7 @@ class Parser:
             if keywords:
                 for keyword in keywords:
                     if keyword and len(keyword) <= 100:
+                        keyword = normalize_string(keyword)
                         self.cursor.execute("INSERT INTO core_publicationkeyword (publication_id, name) VALUES (%s, %s)", [publication_id, keyword])
                 del keywords
             # urls

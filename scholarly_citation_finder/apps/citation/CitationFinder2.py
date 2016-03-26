@@ -15,6 +15,7 @@ from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParser
     TeiParserNoReferences
 from scholarly_citation_finder.apps.parser.Exceptions import ParserRollbackError
 from scholarly_citation_finder.tools.nameparser.StringMatching import nearly_match
+from scholarly_citation_finder.lib.string import normalize_string
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,8 @@ class CitationFinder2:
         logger.info('find citations for publication {} ----------------------'.format(publication.id))
         self.publicationpdf_crawler.set(publication)
             
+        # stored citations
+
         #self.publicationpdf_crawler.pdf_by_stored_pdf_urls()
         #self.publicationpdf_crawler.pdf_by_soure()
 
@@ -146,4 +149,5 @@ class CitationFinder2:
     def __store_document_meta(self, publication, document_meta):        
         if 'keywords' in document_meta:
             for keyword in document_meta['keywords']:
+                keyword = normalize_string(keyword)
                 publication.publicationkeyword_set.get_or_create(name=keyword)
