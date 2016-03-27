@@ -2,9 +2,10 @@ import os.path
 import csv
 import logging
 from django.db.utils import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 from scholarly_citation_finder.apps.core.models import FieldOfStudyHierarchy,\
-	PublicationKeyword, PublicationFieldOfStudy
+	PublicationKeyword, PublicationFieldOfStudy, FieldOfStudy
 from .MagNormalize import MagNormalize, get_pre_name
 from scholarly_citation_finder.lib.django import queryset_iterator
 
@@ -34,28 +35,39 @@ class MagHarvester2:
 	def publication_fieldofstudy(self):
 		query = PublicationKeyword.objects.using(self.database).all()
 		for keyword in queryset_iterator(query):
-			self.__lop(fieldofstudy_id=keyword.fieldofstudy_id, publication_id=keyword.publication_id, store_child=True)
+			result = self.__store_fieldofstudie_hierarchy(keyword.publication_id, fieldofstudy_id=keyword.fieldofstudy_id)
+			if not result:
+				self.__store_fieldofstudy(keyword.publication_id, fieldofstudy_id=keyword.fieldofstudy_id, confidence=1)
+					
+	def __store_fieldofstudy(self, publication_id, fieldofstudy_id=None, name=None, level=10, confidence=1):
+		try:
+			if not name:
+				fieldofstudy = FieldOfStudy.objects.using(self.database).get(id=fieldofstudy_id)
+				name = fieldofstudy.name
+			PublicationFieldOfStudy.objects.using(self.database).create(publication_id=publication_id,
+																		name=name,
+																		level=level,
+																		confidence=confidence)
+		except(IntegrityError) as e:
+			pass
+		except(ObjectDoesNotExist) as e:
+			logger.info(str(e))
 
-	def __lop(self, fieldofstudy_id, publication_id, store_child=False):
+	def __store_fieldofstudie_hierarchy(self, publication_id, fieldofstudy_id, store_child=True, recursive=False):
+		result = False
+
 		query = FieldOfStudyHierarchy.objects.using(self.database).filter(child_id=fieldofstudy_id)
-		for h in query.iterator():
+		for hierarchy in query.iterator():
+			result = True
 			# store child (level 3 to 1)
 			if store_child:
-				try:
-					PublicationFieldOfStudy.objects.using(self.database).create(publication_id=publication_id,
-																				fieldofstudy_name=h.child.name,
-																				level=h.child_level,
-																				confidence=1)
-				except(IntegrityError) as e:
-					logger.info(str(e))
+				self.__store_fieldofstudy(publication_id, name=hierarchy.child.name, level=hierarchy.child_level, confidence=1)
 				store_child=False
 
 			# store parent (level 2 to 0)
-			try:
-				PublicationFieldOfStudy.objects.using(self.database).create(publication_id=publication_id,
-																			fieldofstudy_name=h.parent.name,
-																			level=h.parent_level,
-																			confidence=h.confidence)
-			except(IntegrityError) as e:
-				logger.info(str(e))
-			self.__lop(fieldofstudy_id=h.parent_id, publication_id=publication_id)
+			self.__store_fieldofstudy(publication_id, name=hierarchy.parent.name, level=hierarchy.parent_level, confidence=hierarchy.confidence)				
+
+			if recursive:
+				self.__lop(publication_id, fieldofstudy_id=hierarchy.parent_id, store_child=False)
+
+		return result
