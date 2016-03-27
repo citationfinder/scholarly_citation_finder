@@ -77,6 +77,19 @@ class Journal(models.Model):
         return unicode(self.name)
 
 
+class KeywordFieldofstudy(models.Model):
+    name = models.CharField(max_length=100)
+    fieldofstudy = models.ForeignKey(FieldOfStudy, blank=True, null=True)
+    #fieldofstudy_name = models.CharField(max_length=100, blank=True, null=True)
+    #level = models.SmallIntegerField(blank=True, null=True)
+    #confidence = models.FloatField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.name)    
+
+    class Meta:
+        unique_together = ('name', 'fieldofstudy')
+
 class Publication(models.Model):
     """
     attributes
@@ -170,5 +183,3 @@ class PublicationReference(models.Model):
     context = models.TextField(blank=True, null=True)
     self = models.NullBooleanField(default=False)
     source = models.ForeignKey(PublicationUrl, blank=True, null=True)
-
-

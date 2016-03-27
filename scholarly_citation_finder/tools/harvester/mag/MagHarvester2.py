@@ -5,7 +5,7 @@ from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 
 from scholarly_citation_finder.apps.core.models import FieldOfStudyHierarchy,\
-	PublicationKeyword, PublicationFieldOfStudy, FieldOfStudy
+	PublicationKeyword, PublicationFieldOfStudy, FieldOfStudy, KeywordFieldofstudy
 from .MagNormalize import MagNormalize, get_pre_name
 from scholarly_citation_finder.lib.django import queryset_iterator
 #from django.db import connections
@@ -36,6 +36,11 @@ class MagHarvester2:
 				except(IntegrityError) as e:
 					logger.info('{}:{}'.format(type(e).__name__, str(e)))
 
+	def keyword_fieldofstudy(self):
+		query = PublicationKeyword.objects.using(self.database).all()
+		for keyword in queryset_iterator(query):
+			KeywordFieldofstudy.objects.using(self.database).create(name=keyword.name, fieldofstudy_id=keyword.fieldofstudy_id)
+
 	def publication_fieldofstudy(self):
 		query = PublicationKeyword.objects.using(self.database).all()
 		for keyword in queryset_iterator(query):
@@ -64,7 +69,6 @@ class MagHarvester2:
 
 		query = FieldOfStudyHierarchy.objects.using(self.database).filter(child_id=fieldofstudy_id)
 		for hierarchy in query.iterator():
-			result = True
 			# store child (level 3 to 1)
 			if hierarchy.child_id not in result:
 				if self.__store_fieldofstudy(publication_id, fieldofstudy_id=hierarchy.child_id, name=hierarchy.child.name, level=hierarchy.child_level, confidence=1):
