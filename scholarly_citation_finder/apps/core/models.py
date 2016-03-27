@@ -119,12 +119,13 @@ class Publication(models.Model):
 
 class PublicationFieldOfStudy(models.Model):
     publication = models.ForeignKey(Publication)
+    fieldofstudy = models.ForeignKey(FieldOfStudy, null=True)
     fieldofstudy_name = models.CharField(max_length=100)
     level = models.SmallIntegerField(blank=True, null=True)
     confidence = models.FloatField(blank=True, null=True)
 
     class Meta:
-        unique_together = ('publication', 'fieldofstudy_name')
+        unique_together = ('publication', 'fieldofstudy')
 
     def __unicode__(self):
         return unicode(self.fieldofstudy_name)
