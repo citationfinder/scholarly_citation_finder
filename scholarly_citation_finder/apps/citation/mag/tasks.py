@@ -50,8 +50,8 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
             return output_filename
     except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
         raise e
-    except(Exception) as e:
-        raise e
+    #except(Exception) as e:
+    #    raise e
 
 
 def __publin_callback(callback_url, output_filename):
