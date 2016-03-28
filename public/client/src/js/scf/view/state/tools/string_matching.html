@@ -3,7 +3,6 @@
 </div>
 
 <h3>Compare two titles</h3>
-<p>For example try: <i>TODO</i></p>
 <form class="form-horizontal" ng-submit="stringmatching(first, second)">
 	<div class="form-group">
 		<label for="first" class="col-sm-2 control-label">First title</label>
@@ -25,9 +24,6 @@
 </form>
 
 <div ng-show="stringmatchingResult">
-	<h4>Result</h4>
-	<p>(<a href="" ng-click="stringmatchingResult = undefined">Clear</a>)</p>
+	<h4>Result (<a href="" ng-click="stringmatchingResult = undefined">Clear</a>)</h4>
 	<p>String matching: {{stringmatchingResult.ratio}} (0.0: no matching, 1.0: match 100%)
 </div>
-
-

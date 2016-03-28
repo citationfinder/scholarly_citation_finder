@@ -36,6 +36,11 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/tools/StringMatchingController'),
 		template: require('../view/state/tools/string_matching.html')
 	})
+	.state('tools-doi', {
+		url: '/tools/doi',
+		controller: require('../controller/state/tools/DoiController'),
+		template: require('../view/state/tools/doi.html')
+	})	
 	// Other
 	.state('find-citations', {
 		url: '/find-citations',
