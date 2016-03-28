@@ -3,7 +3,7 @@
 from django.test import TestCase
 from psycopg2._psycopg import DataError
 
-from .PublicationPdfCrawler import PublicationPdfCrawler
+from .PublicationDocumentCrawler import PublicationDocumentCrawler
 from .Parser import Parser
 
 
@@ -57,10 +57,10 @@ class ParserTest(TestCase):
         self.assertEqual(first, False)
 """
 
-class PublicationPdfCrawlerTest(TestCase):
+class PublicationDocumentCrawlerTest(TestCase):
 
     def setUp(self):
-        self.crawler = PublicationPdfCrawler()
+        self.crawler = PublicationDocumentCrawler()
 
     def test_use_html_page_to_find_pdf(self):
         #first = self.crawler.find_pdf_hyperrefs('http://link.springer.com/book/10.1007%2F978-3-642-19357-6')

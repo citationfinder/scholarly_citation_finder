@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 
 from scholarly_citation_finder import config
-from scholarly_citation_finder.apps.parser.PublicationPdfCrawler import PublicationPdfCrawler
+from scholarly_citation_finder.apps.parser.PublicationDocumentCrawler import PublicationDocumentCrawler
 from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
 from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor,\
     GrobidServceNotAvaibleException
@@ -26,7 +26,7 @@ class CitationFinder2:
 
     def __init__(self, database='default'):
         self.database = database
-        self.publicationpdf_crawler = PublicationPdfCrawler(database=self.database)
+        self.document_crawler = PublicationDocumentCrawler(database=self.database)
         self.extractor = GrobidExtractor()
         self.parser = Parser(database=database)
     
@@ -51,18 +51,18 @@ class CitationFinder2:
         :return: Boolean True, if citations were found
         '''
         logger.info('find citations for publication {} ----------------------'.format(publication.id))
-        self.publicationpdf_crawler.set(publication)
+        self.document_crawler.set(publication)
             
         # stored citations
 
-        #self.publicationpdf_crawler.pdf_by_stored_pdf_urls()
-        #self.publicationpdf_crawler.pdf_by_soure()
+        #self.document_crawler.pdf_by_stored_pdf_urls()
+        #self.document_crawler.pdf_by_soure()
 
-        urls = self.publicationpdf_crawler.by_stored_urls()
+        urls = self.document_crawler.by_stored_urls()
         if urls and self.extract_documents(publication, urls):
             return True
 
-        #urls = self.publicationpdf_crawler.by_search_engine()
+        #urls = self.document_crawler.by_search_engine()
         #if urls and self.extract_documents(publication, urls):
         #    return True
 

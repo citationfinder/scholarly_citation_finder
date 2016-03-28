@@ -10,7 +10,7 @@ from scholarly_citation_finder.tools.crawler.Duckduckgo import Duckduckgo, Duckd
 logger = logging.getLogger(__name__)
 
 
-class PublicationPdfCrawler:
+class PublicationDocumentCrawler:
     
     def __init__(self, database='default'):
         self.database = database
