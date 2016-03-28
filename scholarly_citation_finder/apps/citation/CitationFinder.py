@@ -189,7 +189,7 @@ class CitationFinder:
     def __isi_fieldofstudy_mapping(self, publication):
         # Sort field of study in descending level order, i.e. check first level 1 and then level 0.
         # Don't consider field of studies with a confidence lower then 0.5
-        query = publication.publicationfieldofstudy_set().order_by('-level', '-confidence').filter(level__gte=0, level__lte=1)
+        query = publication.publicationfieldofstudy_set().filter(level__gte=0, level__lte=1).order_by('-level', '-confidence').all()
         # Iterate over all level 1 and 0 field of studies
         for fieldofstudy in query.iterate():
             if fieldofstudy.level == 0 and fieldofstudy.name in IsiFieldofstudy.mappingLevel0:
