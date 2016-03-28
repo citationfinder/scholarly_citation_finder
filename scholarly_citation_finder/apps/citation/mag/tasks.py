@@ -3,33 +3,51 @@ from celery import shared_task
 import os.path
 import logging
 import requests
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
-from scholarly_citation_finder.apps.citation.CitationFinder import CitationFinder
+from scholarly_citation_finder.apps.citation.CitationFinder import CitationFinder,\
+    EmptyPublicationSetException
 
 
 logger = logging.getLogger(__name__)
 
 
 @shared_task
-def citations(author_name, author_id, publin_callback_url=None):
+def citations(type, name=None, id=None, publin_callback_url=None, database='mag'):
+    '''
+    
+    :param type:
+    :param name:
+    :param id:
+    :param publin_callback_url:
+    :return: 
+    :raise ObjectDoesNotExits:
+    :raise MultipleObjectsReturned:
+    :raise EmptyPublicationSetException: 
+    '''
     try:
-        citationfinder = CitationFinder(database='mag')
-        author_id, length_publication_set = citationfinder.publication_set.set_by_author(name=author_name, id=author_id)
-        logger.info('set {} publications by author {}'.format(length_publication_set, author_id))
+        citationfinder = CitationFinder(database=database)
+        if type == 'author':
+            id, length_publication_set = citationfinder.publication_set.set_by_author(name=name, id=id)
+        elif type == 'journal':
+            id, length_publication_set = citationfinder.publication_set.set_by_journal(name=name, id=id)
+        else:
+            raise Exception('Unknown type: {}'.format(type))
+        logger.info('set {} publications by {} {}'.format(length_publication_set, type, id))
+        
         citationfinder.hack()
         citationfinder.citations = citationfinder.citing_papers
     
         # -> convert result
         output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, 'mag')),
-                                               filename=author_id)
+                                               filename=id)
         if publin_callback_url:
             __publin_callback(publin_callback_url, output_filename)
         else:
             return output_filename
-    except(ObjectDoesNotExist) as e:
+    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
         raise e
     except(Exception) as e:
         raise e

@@ -54,22 +54,22 @@ def evaluation_run(request, name):
 
 
 def evaluation_find(request):
-    author_name = request.GET.get('author_name', None)
-    author_id = request.GET.get('author_id', None)
-    if (author_name or author_id) and request.body:
+    type = request.GET.get('type', None)
+    name = request.GET.get('name', None)
+    id = request.GET.get('id', None)
+    if type in ('author', 'journal') and (name or id) and request.body:
         try:
-            strategy = eval(request.body)
-
-            asyncresult = tasks.citations.delay(author_name=author_name,
-                                                author_id=int(author_id),
+            asyncresult = tasks.citations.delay(type=type,
+                                                name=name,
+                                                id=int(id),
                                                 evaluation=True,
-                                                strategy=strategy)
+                                                strategy=eval(request.body))
             task = Task.objects.create(type=Task.TYPE_CITATION, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:
             return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
     else:
-        return HttpResponse(status=400)
+        return HttpResponse('Nothing to do', status=400)
 
 
 def citations_cron(request):

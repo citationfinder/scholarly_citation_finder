@@ -3,7 +3,7 @@ from celery import shared_task
 import os.path
 import logging
 import csv
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from .evaluation.RandomAuthorSet import RandomAuthorSet
 from .CitationFinder import CitationFinder, EmptyPublicationSetException
@@ -86,30 +86,32 @@ def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
 
 
 @shared_task
-def citations(strategy, author_id=None, author_name=None):
+def citations(strategy, type, id=None, name=None, database='mag'):
     '''
     
-    :param author_id:
+    :param id:
     :param evaluation:
     :raise ObjectDoesNotExits:
     :raise EmptyPublicationSetException: 
     '''
     try:
-        citationfinder = CitationFinder(database='mag')
-        author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id),
-                                                                                         name=author_name)
-        logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
+        citationfinder = CitationFinder(database=database)
+        if type == 'author':
+            id, length_publication_set = citationfinder.publication_set.set_by_author(name=name, id=id)
+        elif type == 'journal':
+            id, length_publication_set = citationfinder.publication_set.set_by_journal(name=name, id=id)
+        else:
+            raise Exception('Unknown type: {}'.format(type))
+        logger.info('{} {}: set {} publications'.format(id, type, length_publication_set))
+        
         citationfinder.hack()
         
         strategies_name = citationfinder.run(strategy)
-        logger.info('{}: finished strategy "{}"'.format(author_id, strategies_name))
+        logger.info('{}: finished strategy "{}"'.format(id, strategies_name))
         citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
-                             filename=author_id)
-    except(ObjectDoesNotExist) as e:
+                             filename=id)
+    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
         raise e
-    except(EmptyPublicationSetException) as e:
-        raise e
-
 
 @shared_task
 def citations_cron(limit=None, database='default'):

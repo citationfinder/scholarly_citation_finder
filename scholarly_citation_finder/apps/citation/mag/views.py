@@ -10,15 +10,16 @@ from scholarly_citation_finder.apps.tasks.models import Task
 
 
 def index(request):
-    author_name = request.GET.get('author_name', None)
-    author_id = request.GET.get('author_id', None)
+    type = request.GET.get('type', None)
+    name = request.GET.get('name', None)
+    id = request.GET.get('id', None)
     publin_callback_url = request.GET.get('publin_callback_url', None)
-    if author_name or author_id:
-        asyncresult = tasks.citations.delay(author_name=author_name, author_id=int(author_id), publin_callback_url=publin_callback_url)
+    if type in ('author', 'journal') and (name or id):
+        asyncresult = tasks.citations.delay(type=type, name=name, id=int(id), publin_callback_url=publin_callback_url)
         task = Task.objects.create(type=Task.TYPE_CITATION_MAG, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:
-        return HttpResponse(status=400)
+        return HttpResponse('Nothing to do', status=400)
 
 
 def task_detail(request, id):
