@@ -47,11 +47,6 @@ function routing($stateProvider, $urlRouterProvider) {
 		controller: require('../controller/state/FindCitationsController'),
 		template: require('../view/state/find-citations.html')
 	})
-	.state('publications', {
-		url: '/publications/:id',
-		controller: require('../controller/state/PublicationsController'),
-		template: require('../view/state/publications.html')
-	})
 	.state('mag-citations', {
 		url: '/mag-citations',
 		controller: require('../controller/state/MagCitationsController'),
