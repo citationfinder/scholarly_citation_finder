@@ -2,6 +2,7 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 	
 	$scope.task = {};
 	$scope.isCollapsed = true;
+	$scope.taskType = 'author'; // select default
 	
 	$scope.getTask = function(item) {
 		$scope.task = item;
