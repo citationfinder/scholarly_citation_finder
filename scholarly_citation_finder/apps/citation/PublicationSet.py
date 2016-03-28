@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Min
 
 from scholarly_citation_finder.apps.core.models import Author, Publication, Conference, Journal, FieldOfStudy
@@ -36,24 +35,37 @@ class PublicationSet:
         
         :param name: Name of the author
         :param id: ID of the author
-        :return: Author, if author was found in database otherwise False
+        :return: Author ID, number of publications
+        :raise: ObjectDoesNotExist
+        :raise: MultipleObjectsReturned
         '''
-        try:
-            query = Author.objects.using(self.database)
-            if id:
-                author = query.get(id=id)
-            else:
-                author = query.get(name=name)
+        query = Author.objects.using(self.database)
+        if id:
+            author = query.get(id=id)
+        else:
+            author = query.get(name=name)
                 
-            #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
-            #Publication.objects.using(self.database).filter()
-            num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),)
-            return author.id, num_publications
-        except(ObjectDoesNotExist) as e:
-            raise e
+        #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
+        #Publication.objects.using(self.database).filter()
+        num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),)
+        return author.id, num_publications
             
     def set_by_journal(self, name=None, id=None):
-        pass
+        '''
+        
+        :param name:
+        :param id:
+        :return: Journal ID, number of publications
+        :raise: ObjectDoesNotExist
+        :raise: MultipleObjectsReturned
+        '''
+        query = Journal.objects.using(self.database)
+        if id:
+            journal = query.get(id=id)
+        else:
+            journal = query.get(name=name)
+        num_publications = self.set(Publication.objects.using(self.database).filter(journal=journal))
+        return journal.id, num_publications
     
     def add(self, publication_id):
         if not self.publications.filter(id=publication_id):
