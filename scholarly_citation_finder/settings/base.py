@@ -75,6 +75,14 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432'
     },
+    'dblp': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DBLP_DATABASE_NAME', 'dblp'),
+        'USER': os.getenv('DBLP_DATABASE_USER', 'dblp'),
+        'PASSWORD': os.getenv('DEFAULT_DATABASE_PASSWORD', 'root'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    },
     'citeseerx': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('CITESEERX_DATABASE_NAME', 'citeseerx'),
