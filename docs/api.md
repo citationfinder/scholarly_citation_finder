@@ -1,6 +1,6 @@
 <h1>API</h1>
 
-## SCF-JSON format
+### SCF-JSON format
 
 SCF exports publications and it's citing publication in the so called SCF-JSON format.
 
@@ -62,3 +62,13 @@ Example for a publication with citations
     ]
 }
 ```
+
+### Find citations - parameters
+
+|Parameter|Type|Required|Description|
+|---------|----|--------|-----------|
+|`type`|'author', 'journal'|yes|Query type|
+|`id`|int|id or name required|ID|
+|`name`|string|id or name required|Name|
+|`publin_callback_url`|URL|no|Callback URL|
+|`fieldofstudy`|'isi'|no|ISI field of study|
