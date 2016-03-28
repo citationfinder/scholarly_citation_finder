@@ -191,9 +191,9 @@ class CitationFinder:
         # Don't consider field of studies with a confidence lower then 0.5
         query = publication.publicationfieldofstudy_set.filter(level__gte=0, level__lte=1).order_by('-level', '-confidence')
         # Iterate over all level 1 and 0 field of studies
-        for fieldofstudy in query.iterator():
-            if fieldofstudy.level == 0 and fieldofstudy.name in IsiFieldofstudy.mappingLevel0:
-                return IsiFieldofstudy.mappingLevel0[fieldofstudy.name]
-            elif fieldofstudy.level == 1 and fieldofstudy.name in IsiFieldofstudy.mappingLevel1:
-                return IsiFieldofstudy.mappingLevel1[fieldofstudy.name]
+        for publication_fos in query.iterator():
+            if publication_fos.level == 0 and publication_fos.fieldofstudy_name in IsiFieldofstudy.mappingLevel0:
+                return IsiFieldofstudy.mappingLevel0[publication_fos.fieldofstudy_name]
+            elif publication_fos.level == 1 and publication_fos.fieldofstudy_name in IsiFieldofstudy.mappingLevel1:
+                return IsiFieldofstudy.mappingLevel1[publication_fos.fieldofstudy_name]
         return None
