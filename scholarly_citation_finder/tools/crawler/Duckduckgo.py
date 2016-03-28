@@ -15,7 +15,7 @@ class Duckduckgo:
     API_PARAM_FILETYPE_PDF = 'pdf'
 
     CSS_RESULT_ELEMENT = 'a'
-    CSS_RESULT_ELEMENT_CLASS = 'large'
+    CSS_RESULT_ELEMENT_CLASS = 'result__a'
     CSS_RESULT_ELEMENT_MATCHING_KEYWORDS = 'b'
     CSS_RESULT_TYPE_ELEMENT = 'span'
     CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'

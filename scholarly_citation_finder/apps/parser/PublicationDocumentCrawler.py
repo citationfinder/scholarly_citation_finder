@@ -31,19 +31,22 @@ class PublicationDocumentCrawler:
     #        results.append(url.url)
     #    return results
             
-    def by_search_engine(self):
+    def by_search_engine(self, keywords=None):
         results = []
-        if self.publication.title:
+        keywords = keywords if keywords else self.publication.title
+        if keywords:
             try:
-                logger.info('by_search_engine: keywords={}'.format(self.publication.title))
-                for result in self.search_engine.query(keywords=self.publication.title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
-                    if self.__match_title(self.publication.title, result['title_matching']):
+                logger.info('by_search_engine: keywords={}'.format(keywords))
+                for result in self.search_engine.query(keywords=keywords, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
+                    if self.__match_title(keywords, result['title_matching']):
                         if result['type'] == Duckduckgo.API_PARAM_FILETYPE_PDF:
                             results.append(result['url'])
                         elif result['type'] is None:
                             results.extend(self.use_html_page_to_find_pdf(result['url']))
                         else:
-                            logger.info('unsupported Duckduckgo URL type {}: {}'.format(result['type'], result['url'])) 
+                            logger.info('Unsupported Duckduckgo URL type {}: {}'.format(result['type'], result['url']))
+                    #else:
+                    #    logger.info('"%s" and "%s" does not match' % (keywords, result['title_matching']))
             except(DuckduckgoResponseException, ConnectionError) as e:
                 logger.warn(e, exc_info=True)
         return results
@@ -91,19 +94,6 @@ class PublicationDocumentCrawler:
         except(HtmlParserUnkownHeaderType, ConnectionError) as e:
             logger.warn(e, exc_info=True)
         return results
-
-    """
-    def use_search_engine_to_find_pdf(self, title):
-        try:
-            results = []
-            for result in self.search_engine.query(keywords=title, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
-                if self.__match_title(title, result['title_matching']):
-                    results.append(result)
-                return results
-        except(DuckduckgoResponseException, ConnectionError) as e:
-            logger.warn(e, exc_info=True)
-        return False, None
-    """
 
     def __match_title(self, original_title, found_title_matching, max_num_words_difference=2):
         '''
