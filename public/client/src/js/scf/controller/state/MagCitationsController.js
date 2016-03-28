@@ -16,10 +16,11 @@ function MagCitationsController($scope, $stateParams, Restangular) {
 		}
 	};
 	
-	$scope.submitTask = function(author_name, author_id) {
-		Restangular.all('citation/mag/').customGET('', {
-			author_name: author_name,
-			author_id: author_id
+	$scope.submitTask = function(type, name, id) {
+		Restangular.all('citation').customGET('mag/', {
+			type: type,
+			name: name,
+			id: id
 		}).then(function(data) {
 			console.log(data);
 			//$scope.getTasks();
