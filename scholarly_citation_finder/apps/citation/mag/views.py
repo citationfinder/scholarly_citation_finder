@@ -13,9 +13,13 @@ def index(request):
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
-    publin_callback_url = request.GET.get('publin_callback_url', None)
     if type in ('author', 'journal') and (name or id):
-        asyncresult = tasks.citations.delay(type=type, name=name, id=int(id), publin_callback_url=publin_callback_url)
+        publin_callback_url=request.GET.get('publin_callback_url', None)
+        isi_fieldofstudy = request.GET.get('fieldofstudy', None) == 'isi'
+        asyncresult = tasks.citations.delay(type=type, name=name,
+                                            id=int(id),
+                                            publin_callback_url=publin_callback_url,
+                                            isi_fieldofstudy=isi_fieldofstudy)
         task = Task.objects.create(type=Task.TYPE_CITATION_MAG, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:

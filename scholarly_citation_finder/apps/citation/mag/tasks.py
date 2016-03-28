@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def citations(type, name=None, id=None, publin_callback_url=None, database='mag'):
+def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstudy=False, database='mag'):
     '''
     
     :param type:
@@ -42,7 +42,8 @@ def citations(type, name=None, id=None, publin_callback_url=None, database='mag'
     
         # -> convert result
         output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, 'mag')),
-                                               filename=id)
+                                               filename=id,
+                                               isi_fieldofstudy=isi_fieldofstudy)
         if publin_callback_url:
             __publin_callback(publin_callback_url, output_filename)
         else:

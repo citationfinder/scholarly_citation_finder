@@ -60,7 +60,7 @@ class CitationFinder:
         if self.evaluation:
             self.evaluation_result.append([len(publications), len(self.citations)])
         
-    def store(self, path, filename):
+    def store(self, path, filename, isi_fieldofstudy=False):
         filename = os.path.join(path, '{}.json'.format(filename))
         try:
             results = []
@@ -74,7 +74,7 @@ class CitationFinder:
             
             for publication in self.publication_set.get():
                 #                                           vvvvvvvvvvvvvvvvvvvvv
-                results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
+                results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id), isi_fieldofstudy=isi_fieldofstudy))
 
             with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
                 output_file.write(json.dumps(results, indent=4))
@@ -169,8 +169,10 @@ class CitationFinder:
                   'copyright': publication.copyright,
                   'authors': authors,
                   'keywords': keywords,
-                  'isi_fieldofstudy': self.__isi_fieldofstudy_mapping(publication) if isi_fieldofstudy else None,
                   'citations': []}
+        
+        if isi_fieldofstudy:
+            result['isi_fieldofstudy'] = self.__isi_fieldofstudy_mapping(publication)
 
         if citations:
             for citation in citations:
