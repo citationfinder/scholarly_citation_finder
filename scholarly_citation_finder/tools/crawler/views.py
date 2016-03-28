@@ -5,6 +5,8 @@ from .HtmlParser import HtmlParser
 from .Duckduckgo import Duckduckgo, DuckduckgoResponseException
 from .HtmlParser import HtmlParserUnkownHeaderType
 from .Crossref import Crossref, CrossrefResponseException
+from scholarly_citation_finder.tools.crawler.Crossref import CrossrefNothingFoundException,\
+    CrossrefUnwantedType
 
 
 def htmlparser(request):
@@ -42,5 +44,5 @@ def crossref(request):
             return JsonResponse({'item': search_engine.query_works_doi(doi)})
         else:
             return HttpResponse('Nothing do to', status=400)
-    except(ConnectionError, CrossrefResponseException) as e:
+    except(ConnectionError, CrossrefResponseException, CrossrefNothingFoundException, CrossrefUnwantedType) as e:
         return HttpResponse(str(e), status=503)

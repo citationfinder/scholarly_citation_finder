@@ -48,7 +48,7 @@ class PublicationDocumentCrawler:
                     #else:
                     #    logger.info('"%s" and "%s" does not match' % (keywords, result['title_matching']))
             except(DuckduckgoResponseException, ConnectionError) as e:
-                logger.warn(e, exc_info=True)
+                logger.warn(str(e))
         return results
 
     def by_soure(self):
