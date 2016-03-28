@@ -147,11 +147,11 @@ class Parser:
         else:
             raise ParserDataError('publication_id or reference_id does not exists')
 
-    def parse(self, publication, conference_short_name=None, journal_name=None, authors=None, keywords=None, urls=None, reference=None):
+    def parse(self, publication, conference=None, journal_name=None, authors=None, keywords=None, urls=None, reference=None):
         '''
         
         :param publication: Publication dictionary
-        :param conference_short_name: Conference short name
+        :param conference: Conference dictionary: 'short_name', 'instance_name'
         :param journal_name: Journal name
         :param authors: Authors name array
         :param keywords: Keywords array
@@ -168,12 +168,15 @@ class Parser:
             journal_id = None
 
             # conference
-            if conference_short_name:
-                try:
-                    conference_id = self.parse_conference(conference_short_name)
-                except(ParserDataError) as e:
-                    logger.warn(str(e))
-                del conference_short_name
+            if conference:
+                if 'short_name' in conference:
+                    try:
+                        conference_id = self.parse_conference(conference['short_name'])
+                    except(ParserDataError) as e:
+                        logger.warn(str(e))
+                elif 'instance_name' in conference:
+                    logger.warn('Can not handle conference instance name yet: %s' % (conference['instance_name']))
+                del conference
             # journal
             if journal_name:
                 try:

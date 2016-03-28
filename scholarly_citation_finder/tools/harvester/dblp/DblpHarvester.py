@@ -128,7 +128,7 @@ class DblpHarvester(Harvester):
 
                     # store and clear entry afterwards
                     publication_id = self.parser.parse(publication,
-                                                       conference_short_name=conference_short_name,
+                                                       conference={'short_name': conference_short_name},
                                                        journal_name=journal_name,
                                                        authors=authors,
                                                        urls=urls)

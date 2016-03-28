@@ -3,8 +3,7 @@ from django.http.response import HttpResponse, JsonResponse
 from scholarly_citation_finder import config
 from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor,\
     GrobidServceNotAvaibleException
-from scholarly_citation_finder.lib.file import download_file_pdf,\
-    DownloadPdfException
+from scholarly_citation_finder.lib.file import download_file_pdf, DownloadFailedException, UnexpectedContentTypeException
 from scholarly_citation_finder.tools.extractor.citeseer.CiteseerExtractor import CiteseerExtractor
 from scholarly_citation_finder.lib.process import ProcessException
 from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParserNoReferences,\
@@ -22,9 +21,14 @@ def grobid(request):
             document_meta, references = extractor.extract_file(filename, completely=True)
             return JsonResponse({'item': {'document_meta': document_meta,
                                           'references': references}})
+        # Tei failed -> invalid document
         except(TeiParserNoReferences, TeiParserNoDocumentTitle) as e:
             return HttpResponse(str(e), status=400)
-        except(DownloadPdfException, GrobidServceNotAvaibleException, ProcessException) as e:
+        # Extractor failed
+        except(GrobidServceNotAvaibleException, ProcessException) as e:
+            return HttpResponse(str(e), status=503)
+        # Download failed
+        except(DownloadFailedException, UnexpectedContentTypeException) as e:
             return HttpResponse(str(e), status=503)
     else:
         return HttpResponse('Nothing to do. Usage ?filename=<filename> or ?url=<url>', status=400)
@@ -38,7 +42,11 @@ def citeseer(request):
             extractor = CiteseerExtractor()
             result = extractor.extract_file(filename)
             return JsonResponse({'items': result})
-        except(DownloadPdfException, ProcessException) as e:
+        # Download failed
+        except(DownloadFailedException, UnexpectedContentTypeException) as e:
+            return HttpResponse(str(e), status=503)
+        # Extractor failed
+        except(ProcessException) as e:
             return HttpResponse(str(e), status=503)
     else:
         return HttpResponse('Nothing to do. Usage ?url=<url>', status=400)

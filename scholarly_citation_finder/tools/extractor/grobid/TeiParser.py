@@ -80,7 +80,7 @@ class TeiParser:
         
         publication = {}
         journal_name = None
-        conference_instance_name = None
+        conference = {}
         authors = []
         tmp_author_name = None
         keywords = []
@@ -114,7 +114,7 @@ class TeiParser:
                     elif level == 'b':
                         publication['booktitle'] = elem.text
                     elif level == 'm':
-                        conference_instance_name = elem.text
+                        conference['instance_name'] = elem.text
                     else:
                         logger.warn('Unknown title with level %s: %s' % (level, elem.text))
                     # else: 's', 'u'
@@ -128,7 +128,12 @@ class TeiParser:
                         publication['pages_to'] = elem.attrib.get('to')
                 elif elem.tag == 'date' and 'when' in elem.attrib:
                     if 'type' in elem.attrib and elem.attrib['type'] == 'published':
-                        publication['year'] = elem.attrib['when']
+                        if len(elem.attrib['when']) == 4:
+                            publication['year'] = elem.attrib['when']
+                        else:
+                            # Tei date format: YYYY-MM-DD
+                            publication['year'] = elem.attrib['when'].split('-')[0]
+                            publication['date'] = elem.attrib['when']
                 elif elem.tag == 'publisher':
                     publication['publisher'] = elem.text
                 #elif elem.tag == 'note':
@@ -147,7 +152,7 @@ class TeiParser:
                                         },
                                        'publication': publication.copy(),
                                        'journal_name': journal_name,
-                                       'conference_instance_name': conference_instance_name,
+                                       'conference': conference,
                                        'authors': authors,
                                        'keywords': keywords})
                     else:
@@ -161,7 +166,7 @@ class TeiParser:
                     
                     publication.clear()
                     journal_name = None
-                    conference_instance_name = None
+                    conference.clear()
                     authors = []
                     tmp_author_name = ''
                     keywords = []

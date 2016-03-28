@@ -8,7 +8,7 @@ from scholarly_citation_finder.apps.parser.PublicationPdfCrawler import Publicat
 from scholarly_citation_finder.apps.core.models import Publication, PublicationUrl
 from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor,\
     GrobidServceNotAvaibleException
-from scholarly_citation_finder.lib.file import download_file_pdf, DownloadPdfException
+from scholarly_citation_finder.lib.file import download_file_pdf, DownloadFailedException, UnexpectedContentTypeException
 from scholarly_citation_finder.apps.parser.Parser import Parser
 from scholarly_citation_finder.lib.process import ProcessException
 from scholarly_citation_finder.tools.extractor.grobid.TeiParser import TeiParserNoDocumentTitle,\
@@ -59,11 +59,11 @@ class CitationFinder2:
         #self.publicationpdf_crawler.pdf_by_soure()
 
         urls = self.publicationpdf_crawler.by_stored_urls()
-        if self.extract_documents(publication, urls):
+        if urls and self.extract_documents(publication, urls):
             return True
 
         #urls = self.publicationpdf_crawler.by_search_engine()
-        #if self.extract_pdfs(publication, urls):
+        #if urls and self.extract_documents(publication, urls):
         #    return True
 
         return False
@@ -114,8 +114,12 @@ class CitationFinder2:
             
             return document_meta, references
                 
-        # Invalid document
-        except(DownloadPdfException, TeiParserNoDocumentTitle, TeiParserNoReferences) as e:
+        # Download failed
+        except(DownloadFailedException, UnexpectedContentTypeException) as e:
+            logger.info('{}: {}'.format(type(e).__name__, str(e)))
+            return False, False
+        # Tei failed (invalid document)
+        except(TeiParserNoDocumentTitle, TeiParserNoReferences) as e:
             logger.info('{}: {}'.format(type(e).__name__, str(e)))
             return False, False
         # Extractor failed

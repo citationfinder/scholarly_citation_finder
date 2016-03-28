@@ -29,10 +29,6 @@ class UnzipFailedException(Exception):
     pass
 
 
-def DownloadPdfException(Exception):
-    pass
-
-
 def create_dir(path):
     '''
     Creates the given path, if it does not already exists
@@ -74,11 +70,15 @@ def extract_file_process(file, cwd):
 
 
 def download_file_pdf(url, **kwargs):
+    '''
+    :param url:
+    :raise DownloadFailedException: When the connection fails or the schema is invalid
+    :raise UnexpectedContentTypeException: When expected_content_type and content type differs    
+    '''
     try:
         return download_file(url, expected_content_type='application/pdf', **kwargs)
     except(DownloadFailedException, UnexpectedContentTypeException) as e:
-        #logger.warn(e, exc_info=True)
-        raise DownloadPdfException(e)
+        raise e
 
 def download_file(url, path=None, name=None, expected_content_type=None):
     '''
@@ -106,7 +106,8 @@ def download_file(url, path=None, name=None, expected_content_type=None):
                     #f.flush() commented by recommendation from J.F.Sebastian
         return local_filename
     except(ConnectionError, InvalidSchema) as e:
-        raise DownloadFailedException(e)
+        error_message = str(e)
+    raise DownloadFailedException(error_message)
 
 """
 def upload_file(url, filename, status_code=201):

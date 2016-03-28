@@ -55,7 +55,7 @@ class PublicationPdfCrawler:
             if 'citeseerx:' in source:
                 results.append('http://citeseerx.ist.psu.edu/viewdoc/download?doi={}&rep=rep1&type=pdf'.format(source.replace('citeseerx:', '')))
             elif 'arxiv:' in source:
-                results.append(self.publication, url='http://arxiv.org/pdf/{}'.format(source.replace('arxiv:', '')))
+                results.append('http://arxiv.org/pdf/{}'.format(source.replace('arxiv:', '')))
         return results
 
     def by_stored_urls(self):
@@ -80,11 +80,14 @@ class PublicationPdfCrawler:
         results = []
         try:
             hyperrefs, resolved_url = self.html_parser.find_pdf_hyperrefs(html_url)
-            logger.info('find {} PDF hyperrefs on page: {}'.format(len(hyperrefs), resolved_url))            
-            for link in hyperrefs:
-                logger.info('\t{}'.format(link))
-                if link.endswith('.pdf') or link.endswith('/pdf'):
-                    results.append(link)            
+            if hyperrefs:
+                logger.info('find {} PDF hyperrefs on page: {}'.format(len(hyperrefs), resolved_url))            
+                for link in hyperrefs:
+                    logger.info('\t{}'.format(link))
+                    if link.endswith('.pdf') or link.endswith('/pdf'):
+                        results.append(link)
+            elif hyperrefs == False:
+                results.append(resolved_url)
         except(HtmlParserUnkownHeaderType, ConnectionError) as e:
             logger.warn(e, exc_info=True)
         return results

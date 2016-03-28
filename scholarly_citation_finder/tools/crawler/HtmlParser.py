@@ -26,7 +26,7 @@ class HtmlParser:
         Looks for hyperrefs to PDFs file on the provided website.
         
         :param url: HTML page
-        :raise PdfFinderUnkownHeaderType:
+        :raise HtmlParserUnkownHeaderType:
         :raise ConnectionError:
         '''
         try:
@@ -35,7 +35,7 @@ class HtmlParser:
 
             # the URL is already a PDF
             if PublicationUrl.MIME_TYPE_PDF in r_type:
-                return r.url
+                return False, r.url
             # the URL is a HTML page
             elif PublicationUrl.MIME_TYPE_HTML in r_type:
                 return self.__find_hyperrefs(r.text, url=r.url, search_pattern=self.PDF_SEARCH_PATTERN), r.url
