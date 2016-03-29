@@ -14,7 +14,8 @@ def htmlparser(request):
     if url:
         html_parser = HtmlParser()
         try:
-            return JsonResponse({'results': html_parser.find_pdf_hyperrefs(url)})
+            hyperrefs, _ = html_parser.find_pdf_hyperrefs(url)
+            return JsonResponse({'results': hyperrefs})
         except(ConnectionError, HtmlParserUnkownHeaderType) as e:
             return HttpResponse(str(e), status=503)
     else:
