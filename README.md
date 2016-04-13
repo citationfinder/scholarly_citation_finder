@@ -1,6 +1,8 @@
-## Scholarly Citation Finder
+## Scholarly Citation Finder (SCF)
 
 Documentation: [scholarly-citation-finder.readthedocs.org](http://scholarly-citation-finder.readthedocs.org)
+
+License: SCF is licensed under the [MIT License](LICENSE.txt).
 
 #### Code style
  
