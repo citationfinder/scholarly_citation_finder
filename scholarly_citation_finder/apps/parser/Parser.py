@@ -169,7 +169,7 @@ class Parser:
 
             # conference
             if conference:
-                if 'short_name' in conference:
+                if 'short_name' in conference and conference['short_name']: # otherwise value can be None or NoneType
                     try:
                         conference_id = self.parse_conference(conference['short_name'])
                     except(ParserDataError) as e:
