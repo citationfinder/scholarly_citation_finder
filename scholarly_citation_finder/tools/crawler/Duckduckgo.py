@@ -4,8 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import ConnectionError
 
+
 class DuckduckgoResponseException(Exception):
     pass
+
 
 class Duckduckgo:
     
@@ -20,6 +22,8 @@ class Duckduckgo:
     CSS_RESULT_TYPE_ELEMENT = 'span'
     CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'
     
+    TITLE_LENGTH = 58
+
     def query(self, keywords, filetype=None, limit=None):
         '''
         Query Duckduckgo
@@ -33,7 +37,7 @@ class Duckduckgo:
         '''
         keywords = keywords.strip()
         if filetype:
-            keywords = 'filetype:{} {}'.format(filetype, keywords)
+            keywords = 'filetype:%s %s' % (filetype, keywords)
         
         try:
             r = requests.get(self.API_URL, {self.API_PARAM_QUERY: keywords})

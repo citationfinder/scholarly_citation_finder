@@ -6,6 +6,7 @@ from requests.exceptions import ConnectionError
 from scholarly_citation_finder.apps.core.models import PublicationUrl
 from scholarly_citation_finder.tools.crawler.HtmlParser import HtmlParser, HtmlParserUnkownHeaderType
 from scholarly_citation_finder.tools.crawler.Duckduckgo import Duckduckgo, DuckduckgoResponseException
+from scholarly_citation_finder.tools.nameparser.StringMatching import words_difference
 
 logger = logging.getLogger(__name__)
 
@@ -17,32 +18,29 @@ class PublicationDocumentCrawler:
         self.html_parser = HtmlParser()
         self.search_engine = Duckduckgo()
         self.publication = None
-        self.urls = None
         
     def set(self, publication):
         self.publication = publication
-        # Get stored URLs of this publications
-        self.urls = PublicationUrl.objects.using(self.database).filter(publication=self.publication)
-        logger.info('set publication {}; {} stored urls'.format(publication.id, len(self.urls)))
+        logger.info('set publication {}'.format(publication.id))
     
-    #def by_stored_pdf_urls(self):
+    #def get_by_stored_pdf_urls(self):
     #    results = []
     #    for url in self.urls.filter(type=PublicationUrl.MIME_TYPE_PDF):
     #        results.append(url.url)
     #    return results
             
-    def by_search_engine(self, keywords=None):
+    def get_by_search_engine(self, keywords=None):
         results = []
         keywords = keywords if keywords else self.publication.title
         if keywords:
             try:
-                logger.info('by_search_engine: keywords={}'.format(keywords))
+                logger.info('get_by_search_engine: keywords=%s' % keywords)
                 for result in self.search_engine.query(keywords=keywords, filetype=Duckduckgo.API_PARAM_FILETYPE_PDF, limit=2):
-                    if self.__match_title(keywords, result['title_matching']):
+                    if words_difference(keywords[:Duckduckgo.TITLE_LENGTH], result['title_matching']):
                         if result['type'] == Duckduckgo.API_PARAM_FILETYPE_PDF:
                             results.append(result['url'])
                         elif result['type'] is None:
-                            results.extend(self.use_html_page_to_find_pdf(result['url']))
+                            results.extend(self.__find_document_on_website(result['url']))
                         else:
                             logger.info('Unsupported Duckduckgo URL type {}: {}'.format(result['type'], result['url']))
                     #else:
@@ -51,7 +49,7 @@ class PublicationDocumentCrawler:
                 logger.warn(str(e))
         return results
 
-    def by_soure(self):
+    def get_by_soure(self):
         results = []
         source = self.publication.source
         if source:
@@ -61,25 +59,25 @@ class PublicationDocumentCrawler:
                 results.append('http://arxiv.org/pdf/{}'.format(source.replace('arxiv:', '')))
         return results
 
-    def by_stored_urls(self):
+    def get_by_stored_urls(self):
         results = []
         
         doi_not_in_urls = True
-        for url in self.urls:
+        for url in PublicationUrl.objects.using(self.database).filter(publication=self.publication):
             if url.type == PublicationUrl.MIME_TYPE_PDF:
                 results.append(url.url)
             if url.type in (None, PublicationUrl.MIME_TYPE_HTML):
                 if 'dx.doi.org' in url.url:
                     doi_not_in_urls = False
-                results.extend(self.use_html_page_to_find_pdf(url.url))
+                results.extend(self.__find_document_on_website(url.url))
             else:
                 logger.info('unsupported URL type {}: {}'.format(url.type, url.url))
         # If the default DOI url was not already in the URLs add it              
         if doi_not_in_urls and self.publication.doi:
-            results.extend(self.use_html_page_to_find_pdf('http://dx.doi.org/{}'.format(self.publication.doi)))
+            results.extend(self.__find_document_on_website('http://dx.doi.org/{}'.format(self.publication.doi)))
         return results       
     
-    def use_html_page_to_find_pdf(self, html_url):
+    def __find_document_on_website(self, html_url):
         results = []
         try:
             hyperrefs, resolved_url = self.html_parser.find_pdf_hyperrefs(html_url)
@@ -94,13 +92,3 @@ class PublicationDocumentCrawler:
         except(HtmlParserUnkownHeaderType, ConnectionError) as e:
             logger.warn(e, exc_info=True)
         return results
-
-    def __match_title(self, original_title, found_title_matching, max_num_words_difference=2):
-        '''
-        
-        :param original_title:
-        :param found_title_matching:
-        '''
-        num_words_orignal = len(original_title[:58].split(' '))
-        num_words_found = len(found_title_matching.split(' '))
-        return abs(num_words_orignal-num_words_found) <= max_num_words_difference
