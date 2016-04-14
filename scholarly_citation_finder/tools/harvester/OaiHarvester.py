@@ -1,4 +1,5 @@
 import logging
+import re
 from sickle import Sickle
 from sickle.oaiexceptions import NoRecordsMatch
 from requests.exceptions import ChunkedEncodingError, ConnectionError
@@ -20,12 +21,10 @@ class OaiHarvester(Harvester):
     }    
     
     oai_url = None
-    oai_identifier = None
     
-    def __init__(self, name, oai_url, oai_identifier):
-        super(OaiHarvester, self).__init__(name=name, database='citeseerx')
+    def __init__(self, name, oai_url, **kwargs):
+        super(OaiHarvester, self).__init__(name=name, **kwargs)
         self.oai_url = oai_url
-        self.oai_identifier = oai_identifier     
     
     def harvest(self, limit=None, _from=None, until=None, _from_id=None, resumptionToken=None):
         '''
@@ -57,6 +56,9 @@ class OaiHarvester(Harvester):
             return num_publications
         except(ParserConnectionError) as e:
             logger.warn(str(e))
+            search_token = re.search(r'resumptionToken=[^ ]+', str(e))
+            if search_token:
+                logger.warn(search_token.group().replace('resumptionToken=', ''))
             self.stop_harvest() # commit results
             # TODO: restart, if it was not a: requests.exceptions.ConnectionError: ('Connection aborted.', error(104, 'Connection reset by peer'))
             return False
@@ -78,8 +80,8 @@ class OaiHarvester(Harvester):
             records = client.ListRecords(**list_records_options)
 
             for record in records:
-                # '<identifier>oai:CiteSeerX.psu:10.1.1.1.1519</identifier>' -> '10.1.1.1.1519'
-                identifier = record.header.identifier.replace(self.oai_identifier, '')
+                identifier = record.header.identifier.split(':')[2] # '<identifier>scheme:namespace-identifier:local-identifier</identifier>
+                # last_datestamp = record.header.datestamp
                 if _from_id is not None:
                     if _from_id == identifier:
                         _from_id = None
@@ -145,7 +147,7 @@ class OaiHarvester(Harvester):
             return False
         # requests (part of sickle) errors => connection errors
         except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
-            logger.info(e, exc_info=True)
+            #logger.info(e, exc_info=True)
             raise ParserConnectionError(str(e))
         # database errors
         except(ParserRollbackError) as e:

@@ -14,7 +14,6 @@ class Harvester(models.Model):
     name = models.CharField(unique=True, max_length=50)
     type = models.CharField(max_length=50, choices=TYPES)
     oai_url = models.URLField(blank=True, null=True)
-    oai_identifier = models.CharField(blank=True, null=True, max_length=50)
 
     def __unicode__(self):
         return unicode(self.name)
