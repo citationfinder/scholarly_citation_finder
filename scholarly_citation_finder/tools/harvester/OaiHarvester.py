@@ -56,12 +56,15 @@ class OaiHarvester(Harvester):
             return num_publications
         except(ParserConnectionError) as e:
             logger.warn(str(e))
-            search_token = re.search(r'resumptionToken=[^ ]+', str(e))
-            if search_token:
-                logger.warn(search_token.group().replace('resumptionToken=', ''))
             self.stop_harvest() # commit results
             # TODO: restart, if it was not a: requests.exceptions.ConnectionError: ('Connection aborted.', error(104, 'Connection reset by peer'))
-            return False
+
+            search_resumptionToken = re.search(r'resumptionToken=[^ ]+', str(e)) # [...]ds&resumptionToken=10.1.1.104.424-327119-34500-oai_dc (Ca[...]
+            if search_resumptionToken:
+                search_resumptionToken = search_resumptionToken.group(0).replace('resumptionToken=', '')
+                return self.harvest(resumptionToken=search_resumptionToken)
+            else:
+                return False
         except(ParserRollbackError) as e:
             # TODO: rollback already happend, restart from last point
             return False
@@ -147,7 +150,6 @@ class OaiHarvester(Harvester):
             return False
         # requests (part of sickle) errors => connection errors
         except(ConnectionError, ChunkedEncodingError) as e: # incorrect chunked encoding
-            #logger.info(e, exc_info=True)
             raise ParserConnectionError(str(e))
         # database errors
         except(ParserRollbackError) as e:
