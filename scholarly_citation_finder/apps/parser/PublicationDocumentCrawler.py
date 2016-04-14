@@ -72,7 +72,7 @@ class PublicationDocumentCrawler:
                 results.extend(self.__find_document_on_website(url.url))
             else:
                 logger.info('unsupported URL type {}: {}'.format(url.type, url.url))
-        # If the default DOI url was not already in the URLs add it              
+        # If the default DOI URL was not already in the URLs add it              
         if doi_not_in_urls and self.publication.doi:
             results.extend(self.__find_document_on_website('http://dx.doi.org/{}'.format(self.publication.doi)))
         return results       

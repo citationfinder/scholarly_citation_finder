@@ -34,8 +34,13 @@ class PublicationDocumentExtractor:
                 self.__store_document_meta(publication=publication, document_meta=document_meta)
                 self.__store_references(publication=publication, url=url, references=references)
                 return True
+        # Download failed
+        except(DownloadFailedException, UnexpectedContentTypeException) as e:
+            logger.info('{}: {}'.format(type(e).__name__, str(e)))
+        # Extractor failed
         except(ProcessException, GrobidServceNotAvaibleException) as e:
             logger.info('{}: {}'.format(type(e).__name__, str(e)))
+        # Storage failed
         except(ParserRollbackError) as e:
             logger.warn(e, exc_info=True)
         return False
@@ -49,8 +54,10 @@ class PublicationDocumentExtractor:
         :param url: Document URL
         :return: Document meta object, references array
                  False, False if (a) it failed to download the document (b) or the document has no title or references
-        :raise ProcessException: Grobid failed
-        :raise GrobidServceNotAvaibleException: Grobid is not available
+        :raise ProcessException: Extractor failed
+        :raise GrobidServceNotAvaibleException: Extractor is not available
+        :raise DownloadFailedException: Download failed
+        :raise UnexpectedContentTypeException: File for given URL has the wrong content type
         '''
         try:
             filename = download_file_pdf(url, path=config.DOWNLOAD_TMP_DIR, name='{}_tmp.pdf'.format(publication_id))
@@ -68,18 +75,11 @@ class PublicationDocumentExtractor:
                 return False, False
             
             return document_meta, references
-                
-        # Download failed
-        except(DownloadFailedException, UnexpectedContentTypeException) as e:
-            logger.info('{}: {}'.format(type(e).__name__, str(e)))
-            return False, False
+
         # Tei failed (invalid document)
         except(TeiParserNoDocumentTitle, TeiParserNoReferences) as e:
             logger.info('{}: {}'.format(type(e).__name__, str(e)))
             return False, False
-        # Extractor failed
-        except(ProcessException, GrobidServceNotAvaibleException) as e:
-            raise e
 
     def __store_references(self, publication, references, url):
         '''
