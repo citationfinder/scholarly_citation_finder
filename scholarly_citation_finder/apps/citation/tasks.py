@@ -41,8 +41,6 @@ def citations_find(strategy, type, id=None, name=None, database='mag'):
             raise Exception('Unknown type: {}'.format(type))
         logger.info('{} {}: set {} publications'.format(id, type, length_publication_set))
         
-        citationfinder.hack()
-        
         strategies_name = citationfinder.run(strategy)
         logger.info('{}: finished strategy "{}"'.format(id, strategies_name))
         

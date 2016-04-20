@@ -68,7 +68,7 @@ def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
         citationfinder = CitationFinder(database='mag', evaluation=True)
         author_id, length_publication_set = citationfinder.publication_set.set_by_author(id=int(author_id))
         logger.info('{} author: set {} publications'.format(author_id, length_publication_set))
-        citationfinder.hack()
+        citationfinder.load_stored_citations()
         
         for strategy in strategies:
             strategy_name = citationfinder.run(strategy)

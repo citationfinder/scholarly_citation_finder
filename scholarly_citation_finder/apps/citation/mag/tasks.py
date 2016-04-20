@@ -40,8 +40,8 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
             raise Exception('Unknown type: {}'.format(type))
         logger.info('set {} publications by {} {}'.format(length_publication_set, type, id))
         
-        citationfinder.hack()
-        citationfinder.citations = citationfinder.citing_papers
+        citationfinder.load_stored_citations()
+        citationfinder.citations = citationfinder.stored_citations
     
         # -> convert result
         output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, 'mag')),

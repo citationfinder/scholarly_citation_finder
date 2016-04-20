@@ -8,6 +8,7 @@ from os.path import os
 from .search.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
 from scholarly_citation_finder.apps.parser.ScfjsonSerializer import ScfjsonSerializer
+from scholarly_citation_finder.apps.citation.search.CitationExtractor import CitationExtractor
 
 
 class EmptyPublicationSetException(Exception):
@@ -20,15 +21,16 @@ class CitationFinder:
         self.evaluation = evaluation
         self.database = database
         self.publication_set = PublicationSet(database=self.database)
+        self.citation_extractor = CitationExtractor(database=self.database)
         self.seralizer = ScfjsonSerializer(database=self.database)
         self.reset()
 
-    def hack(self):
-        # <----- remove
-        self.citing_papers = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
+    def load_stored_citations(self):
+        # Get already stored citations
+        self.stored_citations = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
         
     def reset(self):
-        self.publication_set.additional_publications_idstring = ''
+        self.publication_set.reset()
         self.citations = []
         self.evaluation_result = []
         
@@ -47,19 +49,22 @@ class CitationFinder:
         return strategies_name
 
     def inspect_publications(self, publications, string=''):
-        # <----- remove
-        publications_citing = self.citing_papers.filter(publication__in=publications)
-
-        #self.logger.info('{}: found {} publications, {} citations'.format(string, len(publications), len(publications_citing)))
-        # add
-        for citation in publications_citing:
-            if citation not in self.citations:
-                self.citations.append(citation)
-                self.publication_set.add(citation.publication_id)        
-        
-        # output for evaluation
+        # Evaluation only
         if self.evaluation:
+            publications_citing = self.stored_citations.filter(publication__in=publications)
+    
+            # add
+            for citation in publications_citing:
+                if citation not in self.citations:
+                    self.citations.append(citation)
+                    self.publication_set.add(citation.publication_id)            
+            
+            # output for evaluation
             self.evaluation_result.append([len(publications), len(self.citations)])
+        # Normally
+        else:
+            self.citation_extractor.run(publications)
+            # TODO: go on
         
     def store(self, path, filename, isi_fieldofstudy=False):
         filename = os.path.join(path, '{}.json'.format(filename))

@@ -11,7 +11,7 @@ class EmptyIdstringException(Exception):
 
 class PublicationSet:
 
-    def __init__(self, database='mag'):
+    def __init__(self, database='default'):
         self.database = database
         
         self.publications = []
@@ -24,6 +24,9 @@ class PublicationSet:
 
     def is_empty(self):
         return not self.publications
+    
+    def reset(self):
+        self.additional_publications_idstring = ''
     
     def set(self, publications):
         self.publications = publications
