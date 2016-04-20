@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def citations_find(strategy, type, id=None, name=None, database='mag'):
+def citations_find(strategy, type, id=None, name=None, database='default'):
     '''
 
     :param strategy:    

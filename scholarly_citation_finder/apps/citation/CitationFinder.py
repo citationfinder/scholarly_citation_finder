@@ -15,6 +15,10 @@ class EmptyPublicationSetException(Exception):
     pass
 
 
+class NoCitationsFoundExeception(Exception):
+    pass
+
+
 class CitationFinder:
 
     def __init__(self, database='default', evaluation=False):
@@ -67,23 +71,31 @@ class CitationFinder:
             # TODO: go on
         
     def store(self, path, filename, isi_fieldofstudy=False):
-        filename = os.path.join(path, '{}.json'.format(filename))
-        try:
-            results = []
-            
-            # TODO: go on
-            if not self.citations:
-                self.citations = self.load_stored_citations()
+        '''
+        
+        :param path:
+        :param filename:
+        :param isi_fieldofstudy:
+        :return: File name of the stored output
+        :raise IOError: Problem to create or write output file
+        :raise NoCitationsFoundExeception: When no citations where found
+        '''
+        # TODO: go on
+        if not self.citations:
+            self.citations = self.load_stored_citations()
 
-            for publication in self.publication_set.get():
-                #                                                   vvvvvvvvvvvvvvvvvvvvv
-                results.append(self.seralizer.serialze(publication, self.citations.filter(reference_id=publication.id), isi_fieldofstudy=isi_fieldofstudy))
+        if not self.citations:
+            raise NoCitationsFoundExeception('No citations found which could be stored')
+
+        filename = os.path.join(path, '{}.json'.format(filename))
+        results = []
+
+        for publication in self.publication_set.get():
+            results.append(self.seralizer.serialze(publication, self.citations.filter(reference_id=publication.id), isi_fieldofstudy=isi_fieldofstudy))
  
-            with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
-                output_file.write(json.dumps(results, indent=4))
-                return filename
-        except(IOError) as e:
-            raise e
+        with codecs.open(filename, 'w+', encoding='utf-8') as output_file: # raises IOError
+            output_file.write(json.dumps(results, indent=4))
+            return filename
     
     def store_evaluation(self, path, filename):
         '''

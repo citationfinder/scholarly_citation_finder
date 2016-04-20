@@ -17,12 +17,17 @@ def citations_find(request):
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
-    if type in ('author', 'conference', 'journal') and (name or id) and request.body:
+    if type in ('author', 'conference', 'journal') and (name or id):
         try:
+            #if request.body:
+            #    strategy=eval(request.body)
+            #else:
+            strategy = [AuthorStrategy(ordered=True)]
+
             asyncresult = tasks.citations_find.delay(type=type,
                                                      name=name,
                                                      id=int(id),
-                                                     strategy=eval(request.body))
+                                                     strategy=strategy)
             task = Task.objects.create(type=Task.TYPE_CITATION_FIND, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:
