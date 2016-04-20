@@ -3,6 +3,7 @@
 from django.test import TestCase
 import os.path
 
+import tasks
 from RandomAuthorSet import RandomAuthorSet
 from scholarly_citation_finder.apps.core.models import PublicationAuthorAffilation
 
@@ -41,3 +42,22 @@ class RandomAuthorSetTest(TestCase):
         self.author_set.create(3)
         self.author_set.store(self.TMP_FILE)
         self.assertTrue(os.path.isfile(self.TMP_FILE))
+
+
+class TaskTest(TestCase):
+    fixtures = ['sample_data']
+
+    TMP_FILE = 'tmp'
+
+    def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass
+     
+    def test_evaluation_create_author_set(self):
+        filename = tasks.evaluation_create_author_set(self.TMP_FILE, 3, 0, 'default')
+        first = os.path.isfile(filename)
+        self.assertTrue(first)
+        if first:
+            os.remove(filename)
