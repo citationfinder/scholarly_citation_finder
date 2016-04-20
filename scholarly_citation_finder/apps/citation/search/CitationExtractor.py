@@ -16,10 +16,23 @@ class CitationExtractor:
         self.document_extractor = PublicationDocumentExtractor(database=database)
 
     def run(self, publications):
+        '''
+        
+        :param publications: List of publication objects
+        #:return: List of successful extracted publications 
+        '''
+        #extracted_publication = []
+        
         for publication in publications:
-            publication.source_extracted = self.find_citations(publication)
-            logger.info(publication.source_extracted)
-            publication.save()
+            # If publication was not already extracted
+            if not publication.source_extracted:
+                publication.source_extracted = self.find_citations(publication)
+                logger.info(publication.source_extracted)
+                publication.save()
+                #if publication.source_extracted:
+                #    extracted_publication.append(publication)
+                
+        #return extracted_publication
 
     def find_citations(self, publication):
         '''

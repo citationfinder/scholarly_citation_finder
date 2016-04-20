@@ -85,10 +85,10 @@ class PublicationDocumentExtractor:
         '''
         Store the URL and the references
         
-        :param publication: Publication object
-        :param url: URL
-        :param references: References list
-        :raise ParserRollbackError: Storage of the references failed
+        :param publication: Publication that was extracted
+        :param references: References list, extracted from the document
+        :param url: URL of the document that was extracted
+        :raise ParserRollbackError: Storage (database commit) of the references failed
         '''
         publication_url = publication.publicationurl_set.create(url=url,
                                                                 type=PublicationUrl.MIME_TYPE_PDF,
@@ -100,10 +100,7 @@ class PublicationDocumentExtractor:
             reference['publication']['source'] = '{}:{}'.format(reference['publication']['source'], publication_url.id)
             self.parser.parse(**reference)
 
-        try:
-            self.parser.commit()
-        except(ParserRollbackError) as e:
-            raise e
+        self.parser.commit() # raises ParserRollbackError
 
     def __store_document_meta(self, publication, document_meta):        
         if 'keywords' in document_meta:

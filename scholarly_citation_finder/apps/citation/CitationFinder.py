@@ -70,18 +70,15 @@ class CitationFinder:
         filename = os.path.join(path, '{}.json'.format(filename))
         try:
             results = []
-            """
-            for publication in self.publication_set.get():
-                for citation in self.citations:
-                    if citation.reference_id == publication.id:
-                        results.append(self.__serialze(publication, self.citations.filter(reference_id=publication.id)))
-                        self.citations.remove(citation)
-            """
             
+            # TODO: go on
+            if not self.citations:
+                self.citations = self.load_stored_citations()
+
             for publication in self.publication_set.get():
                 #                                                   vvvvvvvvvvvvvvvvvvvvv
                 results.append(self.seralizer.serialze(publication, self.citations.filter(reference_id=publication.id), isi_fieldofstudy=isi_fieldofstudy))
-
+ 
             with codecs.open(filename, 'w+', encoding='utf-8') as output_file:
                 output_file.write(json.dumps(results, indent=4))
                 return filename
