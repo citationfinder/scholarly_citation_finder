@@ -5,7 +5,7 @@ import json
 import csv
 from os.path import os
 
-from .PublicationSet import PublicationSet
+from .search.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
 from scholarly_citation_finder.apps.citation.mag.IsiFieldofstudy import IsiFieldofstudy
 

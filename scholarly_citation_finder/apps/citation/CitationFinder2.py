@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from scholarly_citation_finder.apps.parser.PublicationDocumentCrawler import PublicationDocumentCrawler
+from .search.PublicationDocumentCrawler import PublicationDocumentCrawler
 from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.lib.django import queryset_iterator
-from scholarly_citation_finder.apps.parser.PublicationDocumentExtractor import PublicationDocumentExtractor
+from .search.PublicationDocumentExtractor import PublicationDocumentExtractor
 
 logger = logging.getLogger(__name__)
 
