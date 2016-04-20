@@ -17,13 +17,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 
-from .apps.core.admin import default_site, mag_site
+from .apps.core.admin import default_site, mag_site, dblp_site
 
 
 urlpatterns = [
     # admin
     url(r'^admin/default/', include(default_site.urls)),
     url(r'^admin/mag/', include(mag_site.urls)),
+    url(r'^admin/dblp/', include(dblp_site.urls)),
     # api (rest and citations)
     url(r'^api/rest/', include('scholarly_citation_finder.apps.rest.urls')),
     url(r'^api/citation/', include('scholarly_citation_finder.apps.citation.urls')),

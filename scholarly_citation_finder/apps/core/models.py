@@ -130,6 +130,12 @@ class Publication(models.Model):
         return unicode(self.title)
 
 
+class PublicationAuthorAffilation(models.Model):
+    publication = models.ForeignKey(Publication)
+    author = models.ForeignKey(Author)
+    affilation = models.ForeignKey(Affilation, blank=True, null=True)
+
+
 class PublicationFieldOfStudy(models.Model):
     publication = models.ForeignKey(Publication)
     fieldofstudy = models.ForeignKey(FieldOfStudy, null=True)
@@ -142,12 +148,6 @@ class PublicationFieldOfStudy(models.Model):
 
     def __unicode__(self):
         return unicode(self.fieldofstudy_name)
-
-
-class PublicationAuthorAffilation(models.Model):
-    publication = models.ForeignKey(Publication)
-    author = models.ForeignKey(Author)
-    affilation = models.ForeignKey(Affilation, blank=True, null=True)
     
     
 class PublicationKeyword(models.Model):
