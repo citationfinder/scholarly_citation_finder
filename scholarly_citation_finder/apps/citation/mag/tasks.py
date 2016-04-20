@@ -26,7 +26,7 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
     :raise ObjectDoesNotExits:
     :raise MultipleObjectsReturned:
     :raise EmptyPublicationSetException:
-    :raise Exception: When type is unkown
+    :raise Exception: When type is unknown
     '''
     try:
         citationfinder = CitationFinder(database=database)

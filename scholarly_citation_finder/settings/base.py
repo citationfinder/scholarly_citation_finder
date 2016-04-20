@@ -37,6 +37,7 @@ PREREQ_APPS = (
 )
 PROJECT_APPS = (
     'scholarly_citation_finder.apps.citation',
+    'scholarly_citation_finder.apps.citation.evaluation', # required for celery
     'scholarly_citation_finder.apps.citation.mag', # required for celery
     'scholarly_citation_finder.apps.core',
     'scholarly_citation_finder.apps.rest',
