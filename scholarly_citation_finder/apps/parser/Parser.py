@@ -195,6 +195,8 @@ class Parser:
                         self.cursor.execute("INSERT INTO core_publicationauthoraffilation (publication_id, author_id) VALUES (%s, %s)", [publication_id, self.author_parser.parse(author)])
                     except(ParserDataError, DataError) as e:
                         logger.warn(str(e))
+                    except(IntegrityError) as e:
+                        pass
                 del authors
             # keywords
             if keywords:

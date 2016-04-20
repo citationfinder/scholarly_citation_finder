@@ -135,6 +135,9 @@ class PublicationAuthorAffilation(models.Model):
     author = models.ForeignKey(Author)
     affilation = models.ForeignKey(Affilation, blank=True, null=True)
 
+    class Meta:
+        unique_together = ('publication', 'author')
+
 
 class PublicationFieldOfStudy(models.Model):
     publication = models.ForeignKey(Publication)
