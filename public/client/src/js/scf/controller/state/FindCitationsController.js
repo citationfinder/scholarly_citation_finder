@@ -1,12 +1,21 @@
 function FindCitationsController($scope, Restangular) {
 	
+	$scope.task = {};
 	//$scope.isCollapsed = true;
+	$scope.taskType = 'author'; // select default
 	
-	$scope.submitTask = function(author_name, author_id, strategy) {
-		// POST /accounts/123/messages?param=myParam with the body of name: "My Message"
-		Restangular.all('citation/evaluation/find/').customPOST(strategy, '', {
-			author_name: author_name,
-			author_id: author_id
+	$scope.getTask = function(item) {
+		$scope.task = item;
+		if ($scope.task.status == 'SUCCESS') {
+			// TODO: see MagCitationsController
+		}
+	};
+
+	$scope.submitTask = function(type, name, id, strategy) {
+		Restangular.all('citation/evaluation/').customPOST(strategy, 'find/', {
+			type: type,
+			name: name,
+			id: id
 		}, {}).then(function(data) {
 			console.log(data);
 			$scope.addAlert('Create task');
