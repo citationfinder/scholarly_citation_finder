@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 from django.db.models import Min
 
 from scholarly_citation_finder.apps.core.models import Author, Publication, Conference, Journal, FieldOfStudy
+
+logger = logging.getLogger(__name__)
 
 
 class EmptyIdstringException(Exception):
@@ -50,7 +53,7 @@ class PublicationSet:
                 
         #author_publication = PublicationAuthorAffilation.objects.using(self.database).filter(author=author)
         #Publication.objects.using(self.database).filter()
-        num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),)
+        num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author))
         return author.id, num_publications
 
     def set_by_conference(self, name=None, id=None):

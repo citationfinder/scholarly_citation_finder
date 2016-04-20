@@ -39,7 +39,7 @@ class CitationExtractor:
         :param publication: 
         :return: Boolean True, if citations were found
         '''
-        logger.info('find references of publication {} ----------------------'.format(publication.id))
+        logger.info('find the references of publication {} ----------------------'.format(publication.id))
         self.document_crawler.set(publication)
             
         # stored citations

@@ -18,10 +18,10 @@ class PublicationDocumentCrawler:
         self.html_parser = HtmlParser()
         self.search_engine = Duckduckgo()
         self.publication = None
-        
+
     def set(self, publication):
         self.publication = publication
-        logger.info('set publication {}'.format(publication.id))
+        #logger.info('set publication {}'.format(publication.id))
     
     #def get_by_stored_pdf_urls(self):
     #    results = []
@@ -81,8 +81,8 @@ class PublicationDocumentCrawler:
         results = []
         try:
             hyperrefs, resolved_url = self.html_parser.find_pdf_hyperrefs(html_url)
+            logger.info('find {} PDF hyperrefs on page: {}'.format(len(hyperrefs), resolved_url))            
             if hyperrefs:
-                logger.info('find {} PDF hyperrefs on page: {}'.format(len(hyperrefs), resolved_url))            
                 for link in hyperrefs:
                     logger.info('\t{}'.format(link))
                     if link.endswith('.pdf') or link.endswith('/pdf'):

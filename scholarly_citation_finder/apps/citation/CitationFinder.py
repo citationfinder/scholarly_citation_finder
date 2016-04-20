@@ -3,12 +3,15 @@
 import codecs
 import json
 import csv
+import logging
 from os.path import os
 
 from .search.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
 from scholarly_citation_finder.apps.parser.ScfjsonSerializer import ScfjsonSerializer
 from scholarly_citation_finder.apps.citation.search.CitationExtractor import CitationExtractor
+
+logger = logging.getLogger(__name__)
 
 
 class EmptyPublicationSetException(Exception):
@@ -46,7 +49,7 @@ class CitationFinder:
         strategies_name = '+'.join([strategy.name for strategy in strategies])
         
         for strategy in strategies:
-            #self.logger.info('run {}'.format(strategy.name))
+            #logger.info('run {}'.format(strategy.name))
             strategy.setup(database=self.database)
             strategy.run(self.publication_set, self.inspect_publications)
             
@@ -67,6 +70,7 @@ class CitationFinder:
             self.evaluation_result.append([len(publications), len(self.citations)])
         # Normally
         else:
+            logger.info(string)
             self.citation_extractor.run(publications)
             # TODO: go on
         
