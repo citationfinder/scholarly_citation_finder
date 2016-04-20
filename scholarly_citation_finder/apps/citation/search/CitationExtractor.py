@@ -2,32 +2,21 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from .search.PublicationDocumentCrawler import PublicationDocumentCrawler
-from scholarly_citation_finder.apps.core.models import Publication
-from scholarly_citation_finder.lib.django import queryset_iterator
-from .search.PublicationDocumentExtractor import PublicationDocumentExtractor
+from .PublicationDocumentExtractor import PublicationDocumentExtractor
+from .PublicationDocumentCrawler import PublicationDocumentCrawler
 
 logger = logging.getLogger(__name__)
 
 
-class CitationFinder2:
-
+class CitationExtractor:
+    
     def __init__(self, database='default'):
         self.database = database
         self.document_crawler = PublicationDocumentCrawler(database=database)
         self.document_extractor = PublicationDocumentExtractor(database=database)
-    
-    def run(self, limit=None):
-        try:
-            limit = int(limit)
-        except(ValueError):
-            limit = None
 
-        query = Publication.objects.using(self.database).filter(source_extracted__isnull=True)
-        if limit:
-            query = query[:limit]
-
-        for publication in query:
+    def run(self, publications):
+        for publication in publications:
             publication.source_extracted = self.find_citations(publication)
             logger.info(publication.source_extracted)
             publication.save()
@@ -46,16 +35,16 @@ class CitationFinder2:
         #self.document_crawler.pdf_by_soure()
 
         urls = self.document_crawler.get_by_stored_urls()
-        if urls and self.extract_documents(publication, urls):
+        if urls and self.extract_document_from_urls(publication, urls):
             return True
 
         #urls = self.document_crawler.get_by_search_engine()
-        #if urls and self.extract_documents(publication, urls):
+        #if urls and self.extract_document_from_urls(publication, urls):
         #    return True
 
         return False
-        
-    def extract_documents(self, publication, pdfs_as_urls):
+
+    def extract_document_from_urls(self, publication, pdfs_as_urls):
         logger.info('extract_pdfs: {}'.format(len(pdfs_as_urls)))
         for url in pdfs_as_urls:
             logger.warn('\t{}'.format(url))

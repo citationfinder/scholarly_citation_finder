@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from celery import shared_task
 import os.path
@@ -7,7 +9,8 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from .CitationFinder import CitationFinder, EmptyPublicationSetException
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
-from .CitationFinder2 import CitationFinder2
+from scholarly_citation_finder.apps.core.models import Publication
+from scholarly_citation_finder.apps.citation.search.CitationExtractor import CitationExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -51,5 +54,14 @@ def citations_find(strategy, type, id=None, name=None, database='mag'):
 
 @shared_task
 def citations_cron(limit=None, database='default'):
-    citationfinder = CitationFinder2(database=database)
-    citationfinder.run(limit=limit)
+    try:
+        limit = int(limit)
+    except(ValueError):
+        limit = None
+    
+    query = Publication.objects.using(database).filter(source_extracted__isnull=True)
+    if limit:
+        query = query[:limit]
+
+    citationextractor = CitationExtractor(database=database)
+    citationextractor.run(query)
