@@ -38,7 +38,6 @@ def evaluation_detail(request, id):
         return HttpResponse('Task #{} not found'.format(id), status=404)
 
 
-@csrf_exempt
 def evaluation_run(request, name):
     if request.body and os.path.isdir(os.path.join(config.EVALUATION_DIR, name)):
         try:
@@ -53,18 +52,17 @@ def evaluation_run(request, name):
         return HttpResponse(status=400)
 
 
-def evaluation_find(request):
+def citations_find(request):
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
-    if type in ('author', 'journal') and (name or id) and request.body:
+    if type in ('author', 'conference', 'journal') and (name or id) and request.body:
         try:
-            asyncresult = tasks.citations.delay(type=type,
-                                                name=name,
-                                                id=int(id),
-                                                evaluation=True,
-                                                strategy=eval(request.body))
-            task = Task.objects.create(type=Task.TYPE_CITATION, taskmeta_id=asyncresult.id)
+            asyncresult = tasks.citations_find.delay(type=type,
+                                                     name=name,
+                                                     id=int(id),
+                                                     strategy=eval(request.body))
+            task = Task.objects.create(type=Task.TYPE_CITATION_FIND, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:
             return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)

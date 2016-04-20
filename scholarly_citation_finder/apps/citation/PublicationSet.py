@@ -49,7 +49,24 @@ class PublicationSet:
         #Publication.objects.using(self.database).filter()
         num_publications = self.set(Publication.objects.using(self.database).filter(publicationauthoraffilation__author=author),)
         return author.id, num_publications
-            
+
+    def set_by_conference(self, name=None, id=None):
+        '''
+        
+        :param name:
+        :param id:
+        :return: Conference ID, number of publications
+        :raise: ObjectDoesNotExist
+        :raise: MultipleObjectsReturned
+        '''
+        query = Conference.objects.using(self.database)
+        if id:
+            conference = query.get(id=id)
+        else:
+            conference = query.get(name=name)
+        num_publications = self.set(Publication.objects.using(self.database).filter(conference=conference))
+        return conference.id, num_publications
+
     def set_by_journal(self, name=None, id=None):
         '''
         

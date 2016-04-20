@@ -13,7 +13,7 @@ def index(request):
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
-    if type in ('author', 'journal') and (name or id):
+    if type in ('author', 'conference', 'journal') and (name or id):
         publin_callback_url=request.GET.get('publin_callback_url', None)
         isi_fieldofstudy = request.GET.get('fieldofstudy', None) == 'isi'
         asyncresult = tasks.citations.delay(type=type, name=name,

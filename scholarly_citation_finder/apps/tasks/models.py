@@ -9,7 +9,7 @@ class Task(models.Model):
     STATUS_SUCCESS = 'SUCCESS'
     STATUS_PENDING = 'PENDING'
     
-    TYPE_CITATION = 'citation'
+    TYPE_CITATION_FIND = 'citation/find'
     TYPE_CITATION_MAG = 'citation/mag'
     TYPE_EVALUATION_SET = 'evaluation/set'
     TYPE_EVALUATION_RUN = 'evaluation/run'

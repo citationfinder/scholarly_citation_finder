@@ -22,15 +22,18 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
     :param name:
     :param id:
     :param publin_callback_url:
-    :return: 
+    :return: Name of the output file
     :raise ObjectDoesNotExits:
     :raise MultipleObjectsReturned:
-    :raise EmptyPublicationSetException: 
+    :raise EmptyPublicationSetException:
+    :raise Exception: When type is unkown
     '''
     try:
         citationfinder = CitationFinder(database=database)
         if type == 'author':
             id, length_publication_set = citationfinder.publication_set.set_by_author(name=name, id=id)
+        elif type == 'conference':
+            id, length_publication_set = citationfinder.publication_set.set_by_conference(name=name, id=id)            
         elif type == 'journal':
             id, length_publication_set = citationfinder.publication_set.set_by_journal(name=name, id=id)
         else:

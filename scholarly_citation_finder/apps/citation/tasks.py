@@ -86,18 +86,25 @@ def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
 
 
 @shared_task
-def citations(strategy, type, id=None, name=None, database='mag'):
+def citations_find(strategy, type, id=None, name=None, database='mag'):
     '''
-    
+
+    :param strategy:    
+    :param type:
     :param id:
-    :param evaluation:
+    :param name:
+    :return: Name of the output file
     :raise ObjectDoesNotExits:
+    :raise MultipleObjectsReturned:
     :raise EmptyPublicationSetException: 
+    :raise Exception: When type is unkown
     '''
     try:
         citationfinder = CitationFinder(database=database)
         if type == 'author':
             id, length_publication_set = citationfinder.publication_set.set_by_author(name=name, id=id)
+        elif type == 'conference':
+            id, length_publication_set = citationfinder.publication_set.set_by_conference(name=name, id=id)
         elif type == 'journal':
             id, length_publication_set = citationfinder.publication_set.set_by_journal(name=name, id=id)
         else:
@@ -108,8 +115,10 @@ def citations(strategy, type, id=None, name=None, database='mag'):
         
         strategies_name = citationfinder.run(strategy)
         logger.info('{}: finished strategy "{}"'.format(id, strategies_name))
-        citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
-                             filename=id)
+        
+        output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
+                                               filename=id)
+        return output_filename
     except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
         raise e
 
