@@ -90,7 +90,7 @@ class PublicationDocumentExtractor:
         :param url: URL of the document that was extracted
         :raise ParserRollbackError: Storage (database commit) of the references failed
         '''
-        publication_url = publication.publicationurl_set.create(url=url,
+        publication_url = publication.publicationurl_set.create(url=url[:200],
                                                                 type=PublicationUrl.MIME_TYPE_PDF,
                                                                 extraction_date=datetime.now())
         for reference in references:
