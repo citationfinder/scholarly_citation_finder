@@ -6,12 +6,10 @@
 <table class="table table-striped" ng-if="oaipmhProvider.length > 0">
 	<tr>
 		<th>Name</th>
-		<th>Identifier</th>
 		<th>URL</th>
 	</tr>
 	<tr ng-repeat="item in oaipmhProvider">
 		<td>{{item.name}}</td>
-		<td>{{item.oai_identifier}}</td>
 		<td><a ng-href="{{item.oai_url}}" href="" target="_blank">{{item.oai_url}}</a></td>
 	</tr>
 </table>

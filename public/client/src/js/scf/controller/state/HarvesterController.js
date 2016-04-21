@@ -26,7 +26,7 @@ function HarvesterController($scope, Restangular) {
 			console.warn(data);
 			$scope.addAlert(data.data);
 		});
-	}
+	};
 	
 	
 	$scope.getOaipmhProvider();
