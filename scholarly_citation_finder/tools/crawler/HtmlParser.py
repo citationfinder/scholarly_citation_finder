@@ -40,7 +40,7 @@ class HtmlParser:
             elif PublicationUrl.MIME_TYPE_HTML in r_type:
                 return self.__find_hyperrefs(r.text, url=r.url, search_pattern=self.PDF_SEARCH_PATTERN), r.url
             else:
-                raise HtmlParserUnkownHeaderType('Unknown header type: {}'.format(r_type))
+                raise HtmlParserUnkownHeaderType('Unknown header type: %s' % r_type)
         except(ConnectionError) as e:
             raise e
 

@@ -55,7 +55,7 @@ def citations_find(strategy, type, id=None, name=None, database='default'):
 def citations_cron(limit=None, database='default'):
     try:
         limit = int(limit)
-    except(ValueError):
+    except(TypeError, ValueError):
         limit = None
     
     query = Publication.objects.using(database).filter(source_extracted__isnull=True)
