@@ -106,4 +106,7 @@ class PublicationDocumentExtractor:
         if 'keywords' in document_meta:
             for keyword in document_meta['keywords']:
                 keyword = normalize_string(keyword)
-                publication.publicationkeyword_set.get_or_create(name=keyword)
+                if len(keyword) <= 100:
+                    publication.publicationkeyword_set.get_or_create(name=keyword)
+                else:
+                    logger.info('keyword "%s" is too long' % keyword)
