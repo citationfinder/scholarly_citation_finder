@@ -16,7 +16,7 @@ class Author(models.Model):
 
 
 class AuthorNameBlock(models.Model):
-    name = models.CharField(db_index=True, max_length=52)
+    name = models.CharField(db_index=True, unique=True, max_length=52)
     
     def __unicode__(self):
         return unicode(self.name)
