@@ -49,7 +49,8 @@ class AuthorParser:
                         #name.capitalize()
                         author = Author.objects.using(self.database).create(name=str(name).title())
                         author_id = author.id
-                        self.__store_shortname_variation(block.id, author_id, name.first, name_middle, name.last)
+                        if len(name.first) > 1: # Otherwise this version was already stored above
+                            self.__store_shortname_variation(block.id, author_id, name.first, name_middle, name.last)
 
                     AuthorNameVariation.objects.using(self.database).create(block_id=block.id,
                                                                             author_id=author_id,
