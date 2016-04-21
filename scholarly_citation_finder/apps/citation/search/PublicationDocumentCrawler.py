@@ -90,5 +90,5 @@ class PublicationDocumentCrawler:
             elif hyperrefs == False:
                 results.append(resolved_url)
         except(HtmlParserUnkownHeaderType, ConnectionError) as e:
-            logger.warn(e, exc_info=True)
+            logger.warn(str(e))
         return results

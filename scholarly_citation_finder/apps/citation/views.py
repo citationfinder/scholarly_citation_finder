@@ -39,4 +39,5 @@ def citations_find(request):
 def citations_cron(request):
     limit = request.GET.get('limit', None)
     asyncresult = tasks.citations_cron.delay(limit=limit)
-    return HttpResponse('started task')   
+    task = Task.objects.create(type=Task.TYPE_CITATION_CRON, taskmeta_id=asyncresult.id)
+    return JsonResponse(task.as_dict())

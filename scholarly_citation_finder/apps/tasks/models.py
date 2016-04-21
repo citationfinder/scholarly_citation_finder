@@ -10,6 +10,7 @@ class Task(models.Model):
     STATUS_PENDING = 'PENDING'
     
     TYPE_CITATION_FIND = 'citation/find'
+    TYPE_CITATION_CRON = 'citation/cron'
     TYPE_CITATION_MAG = 'citation/mag'
     TYPE_EVALUATION_SET = 'evaluation/set'
     TYPE_EVALUATION_RUN = 'evaluation/run'
