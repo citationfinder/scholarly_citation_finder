@@ -1,11 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import logging
-from requests.exceptions import Timeout, ConnectionError
 
 from .PublicationDocumentExtractor import PublicationDocumentExtractor
 from .PublicationDocumentCrawler import PublicationDocumentCrawler
-from .engine.SearchEngine import SearchEngineResponseException
 
 logger = logging.getLogger(__name__)
 
@@ -53,13 +51,9 @@ class CitationExtractor:
         if urls and self.extract_document_from_urls(publication, urls):
             return True
 
-        try:
-            urls = self.document_crawler.get_by_search_engine()
-            if urls and self.extract_document_from_urls(publication, urls):
-                return True
-        except(Timeout, ConnectionError, SearchEngineResponseException) as e:
-            logger.warn(str(e))
-            # TODO: stop
+        urls = self.document_crawler.get_by_search_engine()
+        if urls and self.extract_document_from_urls(publication, urls):
+            return True
 
         return False
 

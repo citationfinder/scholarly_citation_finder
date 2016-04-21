@@ -3,8 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from .SearchEngine import SearchEngineResponseException
-from scholarly_citation_finder.tools.crawler.engine import SearchEngine
+from .SearchEngine import SearchEngine, SearchEngineResponseException
 
 
 class Duckduckgo(SearchEngine):
@@ -21,6 +20,7 @@ class Duckduckgo(SearchEngine):
     CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'
     
     TITLE_LENGTH = 58
+    TRUNCATE_STRING = '...'
 
     def query(self, keywords, filetype=None, limit=None):
         '''

@@ -4,8 +4,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-from .SearchEngine import SearchEngineResponseException
-from scholarly_citation_finder.tools.crawler.engine import SearchEngine
+from .SearchEngine import SearchEngine, SearchEngineResponseException
 
 
 class Bing(SearchEngine):
@@ -22,6 +21,8 @@ class Bing(SearchEngine):
     #CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'
     
     TITLE_LENGTH = 52
+    #TRUNCATE_STRING = u'\u2026'
+    TRUNCATE_STRING = '...'
 
     def query(self, keywords, filetype=None, limit=None):
         '''

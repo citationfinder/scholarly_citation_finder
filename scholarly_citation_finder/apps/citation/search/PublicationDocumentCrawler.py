@@ -1,12 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import logging
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, Timeout
 
 from scholarly_citation_finder.apps.core.models import PublicationUrl
 from scholarly_citation_finder.tools.crawler.HtmlParser import HtmlParser, HtmlParserUnkownHeaderType
 from scholarly_citation_finder.tools.crawler.engine.Duckduckgo import Duckduckgo
-from scholarly_citation_finder.tools.nameparser.StringMatching import words_difference
+from scholarly_citation_finder.tools.nameparser.StringMatching import words_difference, nearly_match
+from scholarly_citation_finder.tools.crawler.engine.SearchEngine import SearchEngineResponseException
+from scholarly_citation_finder.tools.crawler.engine.Bing import Bing
 
 logger = logging.getLogger(__name__)
 
@@ -34,24 +36,26 @@ class PublicationDocumentCrawler:
         
         :param keywords: Query keyword string
         :return: List of URLs, which refer to documents
-        :raise ConnectionError: 
-        :raise Timeout: When engine does not responds. A reason can be that the server stops responding after too many requests.
-        :raise SearchEngineResponseException: 
         '''
         results = []
         keywords = keywords if keywords else self.publication.title
         if keywords:
             logger.info('get_by_search_engine: keywords=%s' % keywords)
-            for result in self.search_engine.query(keywords=keywords, filetype=self.search_engine.API_PARAM_FILETYPE_PDF, limit=2): # raises Timeout, ConnectionError, SearchEngineResponseException
-                if words_difference(keywords[:self.search_engine.TITLE_LENGTH], result['title_matching']):
-                    if result['type'] == self.search_engine.API_PARAM_FILETYPE_PDF:
-                        results.append(result['url'])
-                    elif result['type'] is None:
-                        results.extend(self.__find_document_on_website(result['url']))
-                    else:
-                        logger.info('Unsupported URL type {}: {}'.format(result['type'], result['url']))
-                #else:
-                #    logger.info('"%s" and "%s" does not match' % (keywords, result['title_matching']))
+            try:
+                for result in self.search_engine.query(keywords=keywords, filetype=self.search_engine.API_PARAM_FILETYPE_PDF, limit=2):
+                    #if words_difference(keywords[:self.search_engine.TITLE_LENGTH], result['title_matching']):
+                    if self.search_engine.nearly_match_titles(keywords, result['title']):
+                        if result['type'] == self.search_engine.API_PARAM_FILETYPE_PDF:
+                            results.append(result['url'])
+                        elif result['type'] is None:
+                            results.extend(self.__find_document_on_website(result['url']))
+                        else:
+                            logger.info('Unsupported URL type {}: {}'.format(result['type'], result['url']))
+                    #else:
+                    #    logger.info('"%s" and "%s" does not match' % (keywords, result['title_matching']))
+            except(SearchEngineResponseException, Timeout, ConnectionError) as e:
+                logger.warn(str(e))
+                self.search_engine = Bing()
         return results
 
     def get_by_soure(self):

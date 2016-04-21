@@ -6,10 +6,10 @@ import csv
 import logging
 from os.path import os
 
-from .search.PublicationSet import PublicationSet
 from scholarly_citation_finder.apps.core.models import PublicationReference
 from scholarly_citation_finder.apps.parser.ScfjsonSerializer import ScfjsonSerializer
-from scholarly_citation_finder.apps.citation.search.CitationExtractor import CitationExtractor
+from .search.CitationExtractor import CitationExtractor
+from .search.PublicationSet import PublicationSet
 
 logger = logging.getLogger(__name__)
 
