@@ -9,21 +9,25 @@ logger = logging.getLogger(__name__)
 
 class FieldofstudyStrategy(Strategy):
 
-    def __init__(self, ordered=False, min_year=False, limit=None):
+    def __init__(self, ordered=False, min_year=False, level=False, limit=None):
         name = 'fieldofstudy'
         if ordered:
             name += '-ordered'
         if min_year:
             name += '-minyear'
+        if level:
+            name += '-level'
         if limit > 0:
             name += '-limit'
+
         super(FieldofstudyStrategy, self).__init__(name=name)
         self.ordered = ordered
         self.min_year = min_year
+        self.level = level
         self.limit = limit
         
     def run(self, publication_set, callback):
-        fieldofstudies = publication_set.get_fieldofstudies(self.ordered)
+        fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered, level=self.level)
         if self.limit > 0:
             fieldofstudies = fieldofstudies[:self.limit]
         logger.info('found {} (limit: {}) field of studies in search set'.format(len(fieldofstudies), self.limit))
