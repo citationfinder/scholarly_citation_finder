@@ -12,6 +12,7 @@ from ..strategy.AuthorStrategy import AuthorStrategy
 from ..strategy.ConferenceStrategy import ConferenceStrategy
 from ..strategy.FieldofstudyStrategy import FieldofstudyStrategy
 from ..strategy.JournalStrategy import JournalStrategy
+from django.views.decorators.csrf import csrf_exempt
 
 def create(request, name):
     setsize = request.GET.get('setsize', None)
@@ -21,7 +22,7 @@ def create(request, name):
         task = Task.objects.create(type=Task.TYPE_EVALUATION_SET, taskmeta_id=asyncresult.id)
         return JsonResponse(task.as_dict())
     else:
-        return HttpResponse(status=400)
+        return HttpResponse('Nothing to do', status=400)
 
     
 def create_detail(request, id):
@@ -37,6 +38,7 @@ def create_detail(request, id):
         return HttpResponse('Task #{} not found'.format(id), status=404)
 
 
+@csrf_exempt
 def run(request, name):
     if request.body and os.path.isdir(os.path.join(config.EVALUATION_DIR, name)):
         try:
@@ -48,4 +50,4 @@ def run(request, name):
         except(AttributeError, SyntaxError, TypeError) as e:
             return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
     else:
-        return HttpResponse(status=400)
+        return HttpResponse('Nothing to do', status=400)
