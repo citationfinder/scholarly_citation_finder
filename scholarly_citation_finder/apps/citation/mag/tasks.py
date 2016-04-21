@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
 from scholarly_citation_finder.apps.citation.CitationFinder import CitationFinder,\
-    EmptyPublicationSetException
+    EmptyPublicationSetException, NoCitationsFoundExeception
 
 
 logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
             __publin_callback(publin_callback_url, output_filename)
         else:
             return output_filename
-    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
+    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException, NoCitationsFoundExeception) as e:
         raise e
     #except(Exception) as e:
     #    raise e

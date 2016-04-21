@@ -11,6 +11,7 @@ from scholarly_citation_finder import config
 from scholarly_citation_finder.lib.file import create_dir
 from scholarly_citation_finder.apps.core.models import Publication
 from scholarly_citation_finder.apps.citation.search.CitationExtractor import CitationExtractor
+from scholarly_citation_finder.apps.citation.CitationFinder import NoCitationsFoundExeception
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ def citations_find(strategy, type, id=None, name=None, database='default'):
         output_filename = citationfinder.store(path=create_dir(os.path.join(config.DOWNLOAD_TMP_DIR, strategies_name)),
                                                filename=id)
         return output_filename
-    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException) as e:
+    except(ObjectDoesNotExist, MultipleObjectsReturned, EmptyPublicationSetException, NoCitationsFoundExeception) as e:
         raise e
 
 @shared_task
