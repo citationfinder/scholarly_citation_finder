@@ -1,51 +1,40 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import requests
+import re
 from bs4 import BeautifulSoup
-from requests.exceptions import ConnectionError
+
+from .SearchEngine import SearchEngineResponseException
+from scholarly_citation_finder.tools.crawler.engine import SearchEngine
 
 
-class DuckduckgoResponseException(Exception):
-    pass
-
-
-class Duckduckgo:
+class Bing(SearchEngine):
     
-    API_URL = 'https://duckduckgo.com/html/'
+    API_URL = 'https://bing.com/search'
     
     API_PARAM_QUERY = 'q'
     API_PARAM_FILETYPE_PDF = 'pdf'
 
     CSS_RESULT_ELEMENT = 'a'
-    CSS_RESULT_ELEMENT_CLASS = 'result__a'
-    CSS_RESULT_ELEMENT_MATCHING_KEYWORDS = 'b'
-    CSS_RESULT_TYPE_ELEMENT = 'span'
-    CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'
+    CSS_RESULT_ELEMENT_HREF = re.compile('http')
+    CSS_RESULT_ELEMENT_MATCHING_KEYWORDS = 'strong'
+    #CSS_RESULT_TYPE_ELEMENT = 'span'
+    #CSS_RESULT_TYPE_ELEMENT_CLASS = 'result__type'
     
-    TITLE_LENGTH = 58
+    TITLE_LENGTH = 52
 
     def query(self, keywords, filetype=None, limit=None):
         '''
-        Query Duckduckgo
-        
-        :see: https://duck.co/help/results/syntax
-        :see: https://duckduckgo.com/params
-        :param keywords: Search keywords
-        :param filetype: Optional file type, e.g. 'pdf'
-        :raise DuckduckgoResponseException: 
-        :raise ConnectionError:
+        @see parent method
         '''
         keywords = keywords.strip()
         if filetype:
             keywords = 'filetype:%s %s' % (filetype, keywords)
         
-        try:
-            r = requests.get(self.API_URL, {self.API_PARAM_QUERY: keywords})
-            if r.status_code != 200:
-                raise DuckduckgoResponseException('Expected response code 200, but is {}'.format(r.status_code))
-            return self.__get_results(r.text, limit=limit)
-        except(ConnectionError) as e:
-            raise e
+        r = requests.get(self.API_URL, {self.API_PARAM_QUERY: keywords}, timeout=self.timeout) # raises ConnectionError / Timeout exception
+        if r.status_code != 200:
+            raise SearchEngineResponseException('Expected response code 200, but is {}'.format(r.status_code))
+        return self.__get_results(r.text, limit=limit)
 
     def __get_results(self, html, limit=None):
         '''
@@ -56,7 +45,7 @@ class Duckduckgo:
         '''
         results = []
         soup = BeautifulSoup(html, 'lxml')
-        for link in soup.findAll(self.CSS_RESULT_ELEMENT, class_=self.CSS_RESULT_ELEMENT_CLASS):
+        for link in soup.findAll(self.CSS_RESULT_ELEMENT, href=self.CSS_RESULT_ELEMENT_HREF):
             results.append(self.__get_result_item(link))
             if len(results) > limit:
                 break
@@ -74,9 +63,9 @@ class Duckduckgo:
             title = html_a_element.text
             soup = BeautifulSoup(str(html_a_element), 'lxml')
             title_matching = ' '.join([keyword.text.lower() for keyword in soup.find_all(self.CSS_RESULT_ELEMENT_MATCHING_KEYWORDS)])
-            type = soup.find(self.CSS_RESULT_TYPE_ELEMENT, class_=self.CSS_RESULT_TYPE_ELEMENT_CLASS)
-            if type:
-                type = type.text
-                title = title.replace(type + ' ', '')
-                type = type.lower()
-        return {'url': url, 'title': title, 'type': type, 'title_matching': title_matching}
+            #type = soup.find(self.CSS_RESULT_TYPE_ELEMENT, class_=self.CSS_RESULT_TYPE_ELEMENT_CLASS)
+            #if type:
+            #    type = type.text
+            #    title = title.replace(type + ' ', '')
+            #    type = type.lower()
+        return {'url': url, 'title': title, 'type': self.API_PARAM_FILETYPE_PDF, 'title_matching': title_matching}

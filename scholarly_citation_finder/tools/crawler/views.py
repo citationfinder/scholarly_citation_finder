@@ -1,8 +1,9 @@
 from django.http import HttpResponse, JsonResponse
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, Timeout
 
 from .HtmlParser import HtmlParser
-from .Duckduckgo import Duckduckgo, DuckduckgoResponseException
+from .engine.SearchEngine import SearchEngineResponseException
+from .engine.Duckduckgo import Duckduckgo
 from .HtmlParser import HtmlParserUnkownHeaderType
 from .Crossref import Crossref, CrossrefResponseException
 from scholarly_citation_finder.tools.crawler.Crossref import CrossrefNothingFoundException,\
@@ -27,8 +28,8 @@ def duckduckgo(request):
     if keywords:
         search_engine = Duckduckgo()
         try:
-            return JsonResponse({'results': search_engine.query(keywords, filetype='pdf', limit=2)})
-        except(ConnectionError, DuckduckgoResponseException) as e:
+            return JsonResponse({'results': search_engine.query(keywords, filetype=search_engine.API_PARAM_FILETYPE_PDF, limit=2)})
+        except(ConnectionError, Timeout, SearchEngineResponseException) as e:
             return HttpResponse(str(e), status=503)
     else:
         return HttpResponse('Nothing do to. Usage: ?keywords=keywords', status=400)

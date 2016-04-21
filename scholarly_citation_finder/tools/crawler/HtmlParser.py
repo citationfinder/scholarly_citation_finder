@@ -20,6 +20,13 @@ class HtmlParser:
     '''
     
     PDF_SEARCH_PATTERN = '(.*)pdf(.*)'
+    
+    def __init__(self, timeout=None):
+        '''
+        
+        :param timeout: Request timeout in seconds
+        '''
+        self.timeout = timeout
 
     def find_pdf_hyperrefs(self, url):
         '''
@@ -30,7 +37,7 @@ class HtmlParser:
         :raise ConnectionError:
         '''
         try:
-            r = requests.get(url)
+            r = requests.get(url, timeout=self.timeout)
             r_type = r.headers.get('content-type')
 
             # the URL is already a PDF
