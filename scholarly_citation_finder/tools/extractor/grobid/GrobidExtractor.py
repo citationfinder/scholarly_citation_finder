@@ -5,15 +5,12 @@ from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 
 from scholarly_citation_finder.lib.process import ProcessException
 from .TeiParser import TeiParser
+from ..Extractor import Extractor, ExtractorNotAvaiableException
 
 logger = logging.getLogger(__name__)
 
 
-class GrobidServceNotAvaibleException(Exception):
-    pass
-
-
-class GrobidExtractor:
+class GrobidExtractor(Extractor):
     
     GROBID_API_URL = 'http://localhost:8080'
 
@@ -25,7 +22,7 @@ class GrobidExtractor:
         Extract the citations from a provided file.
         :param filename: Filename to PDF file
         :raise ProcessException: When extractor failed
-        :raise GrobidServceNotAvaibleException: When extractor is not available
+        :raise ExtractorNotAvaiableException: When extractor is not available
         :raise TeiParserNoReferences: When document has no references
         :raise TeiParserNoDocumentTitle: When document has no title   
         '''
@@ -43,7 +40,7 @@ class GrobidExtractor:
         '''
 
         :param data:
-        :raise GrobidServceNotAvaibleException:
+        :raise ExtractorNotAvaiableException:
         :raise ProcessException: 
         :raise TeiParserNoReferences
         :raise TeiParserNoDocumentTitle
@@ -55,7 +52,7 @@ class GrobidExtractor:
         '''
 
         :param data:
-        :raise GrobidServceNotAvaibleException:
+        :raise ExtractorNotAvaiableException:
         :raise ProcessException: 
         '''
         xml = self.__call_grobid_method(data, 'processReferences')
@@ -66,7 +63,7 @@ class GrobidExtractor:
         
         :param data:
         :param method:
-        :raise GrobidServceNotAvaibleException:
+        :raise ExtractorNotAvaiableException:
         :raise ProcessException: 
         '''
         logger.info('Call grobid method: {}'.format(method))
@@ -77,7 +74,7 @@ class GrobidExtractor:
         try:
             resp = requests.post(url, files=files, data=vars)
         except (HTTPConnectionPool, RequestException, ConnectionError) as e:
-            raise GrobidServceNotAvaibleException(e)
+            raise ExtractorNotAvaiableException(e)
     
         if resp.status_code == 200:
             return resp.content

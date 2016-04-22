@@ -37,7 +37,7 @@ class CiteseerExtractor:
         '''
         
         :param responseAsXml:
-        :raise: RequestException:
+        :raise ProcessException:
         '''
         citations_element = responseAsXml.find(self.CITESEER_API_RESPONSE_CITATIONS)
         if citations_element is not None:
@@ -49,8 +49,8 @@ class CiteseerExtractor:
     def __call_citeseer_url(self, url, data=None):
         '''
         
-        :param url:
-        :raise RequestException: 
+        :param url:#
+        :raise ProcessException: 
         '''
         logger.info('Request citeseer url: {}'.format(url))
         try:
@@ -62,7 +62,7 @@ class CiteseerExtractor:
                 resp = requests.get(url)
                 if resp.status_code != 200:
                     raise ProcessException('Citeseer returned status {} instead of 200\nPossible Error:\n{}'.format(resp.status_code, resp.text))
-        except (RequestException) as e:
+        except(RequestException) as e:
             raise ProcessException('Request to Citeseer server failed: {}'.format(e))
     
         #return resp.text.encode('utf-8')

@@ -61,7 +61,7 @@ class CitationExtractor:
         logger.info('extract_pdfs: {}'.format(len(pdfs_as_urls)))
         for url in pdfs_as_urls:
             logger.warn('\t{}'.format(url))
-            result = self.document_extractor.extract_and_store(publication, url)
+            result = self.document_extractor.extract_and_store(publication, url) # raises ExtractorNotAvaiableException
             if result:
                 return True
         return False

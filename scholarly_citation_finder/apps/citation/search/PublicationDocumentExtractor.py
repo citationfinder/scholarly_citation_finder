@@ -6,8 +6,7 @@ from datetime import datetime
 from scholarly_citation_finder import config
 from scholarly_citation_finder.apps.parser.Parser import Parser
 from scholarly_citation_finder.apps.core.models import PublicationUrl
-from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor,\
-    GrobidServceNotAvaibleException
+from scholarly_citation_finder.tools.extractor.grobid.GrobidExtractor import GrobidExtractor
 from scholarly_citation_finder.lib.file import download_file_pdf, DownloadFailedException, UnexpectedContentTypeException
 from scholarly_citation_finder.lib.process import ProcessException
 from scholarly_citation_finder.apps.parser.Exceptions import ParserRollbackError
@@ -28,8 +27,14 @@ class PublicationDocumentExtractor:
         self.parser = Parser(database=database) # used to store results
       
     def extract_and_store(self, publication, url):
+        '''
+        
+        :param publication:
+        :param url:
+        :raise ExtractorNotAvaiableException: 
+        '''
         try:
-            document_meta, references = self.extract(publication.title, publication.id, url=url)
+            document_meta, references = self.extract(publication.title, publication.id, url=url) # raises ExtractorNotAvaiableException
             if document_meta and references:
                 self.__store_document_meta(publication=publication, document_meta=document_meta)
                 self.__store_references(publication=publication, url=url, references=references)
@@ -38,7 +43,7 @@ class PublicationDocumentExtractor:
         except(DownloadFailedException, UnexpectedContentTypeException) as e:
             logger.info('{}: {}'.format(type(e).__name__, str(e)))
         # Extractor failed
-        except(ProcessException, GrobidServceNotAvaibleException) as e:
+        except(ProcessException) as e:
             logger.info('{}: {}'.format(type(e).__name__, str(e)))
         # Storage failed
         except(ParserRollbackError) as e:
@@ -55,7 +60,7 @@ class PublicationDocumentExtractor:
         :return: Document meta object, references array
                  False, False if (a) it failed to download the document (b) or the document has no title or references
         :raise ProcessException: Extractor failed
-        :raise GrobidServceNotAvaibleException: Extractor is not available
+        :raise ExtractorNotAvaiableException: Extractor is not available
         :raise DownloadFailedException: Download failed
         :raise UnexpectedContentTypeException: File for given URL has the wrong content type
         '''
