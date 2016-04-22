@@ -31,8 +31,8 @@ class FieldofstudyStrategy(Strategy):
     def run(self, publication_set, callback):
         fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered)
         if self.max_level:
-            for fieldofstudy in fieldofstudies:
-                num = FieldOfStudyHierarchy.objects.using(self.database).filter(child=fieldofstudy,child_level__gte=self.max_level).count()
+            for fieldofstudy in list(fieldofstudies):
+                num = FieldOfStudyHierarchy.objects.using(self.database).filter(child=fieldofstudy, child_level__gte=self.max_level).count()
                 if num == 0:
                     fieldofstudies.remove(fieldofstudy)
         if self.limit > 0:
