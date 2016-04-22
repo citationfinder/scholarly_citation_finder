@@ -139,7 +139,12 @@ class TeiParser:
                 #elif elem.tag == 'note':
                 #    publication['copyright'] = elem.text
                 elif elem.tag == 'term' and elem.text:
-                    keywords.append(elem.text)
+                    if ',' in elem: # split string when it still contains multiple keywords
+                        for keyword in elem.text.strip().split(','):
+                            if keyword:
+                                keyword.append(elem.text)
+                    else:
+                        keywords.append(elem.text)
                 # citation ('biblstruct') or document header ('teiheader')
                 elif elem.tag == end_element:
                     if 'title' in publication:
