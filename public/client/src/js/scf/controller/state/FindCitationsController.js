@@ -12,7 +12,7 @@ function FindCitationsController($scope, Restangular) {
 	};
 
 	$scope.submitTask = function(type, name, id, strategy) {
-		Restangular.all('citation/citations/').customGET('find/', {
+		Restangular.all('citation/citations/').customPOST(strategy, 'find/', {
 			type: type,
 			name: name,
 			id: id
