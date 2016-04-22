@@ -48,6 +48,6 @@ def run(request, name):
             task = Task.objects.create(type=Task.TYPE_EVALUATION_RUN, taskmeta_id=asyncresult.id)
             return JsonResponse(task.as_dict())
         except(AttributeError, SyntaxError, TypeError) as e:
-            return HttpResponse('Strategies string is not valid. {}: {}'.format(type(e).__name__, str(e)), status=400)
+            return HttpResponse('Strategies string is not valid. {}: {}'.format(e.__class__.__name__, str(e)), status=400)
     else:
         return HttpResponse('Nothing to do', status=400)

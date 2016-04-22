@@ -134,15 +134,9 @@ class PublicationSet:
         else:
             return Journal.objects.using(self.database).filter(publication__in=self.publications).distinct()
     
-    def get_fieldofstudies(self, ordered=False, plus_additionals=False, level=False):
+    def get_fieldofstudies(self, ordered=False, plus_additionals=False):
         if ordered:
-
-            if level:
-                hierarchy_join = "INNER JOIN core_fieldofstudyhierarchy fh ON fh.child_id = pk.fieldofstudy_id"
-            else:
-                hierarchy_join = ""
-
-            query = "SELECT fieldofstudy_id AS id FROM core_publicationkeyword pk "+hierarchy_join+" WHERE publication_id IN ("+self.__get_idstring(plus_additionals=plus_additionals)+") GROUP BY fieldofstudy_id ORDER BY COUNT(fieldofstudy_id) DESC"
+            query = "SELECT fieldofstudy_id AS id FROM core_publicationkeyword WHERE publication_id IN ("+self.__get_idstring(plus_additionals=plus_additionals)+") GROUP BY fieldofstudy_id ORDER BY COUNT(fieldofstudy_id) DESC"
             return list(FieldOfStudy.objects.using(self.database).raw(query))
         else:
             return FieldOfStudy.objects.using(self.database).filter(publicationkeyword__publication__in=self.publications).distinct()

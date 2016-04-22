@@ -16,8 +16,9 @@ def index(request):
     if type in ('author', 'conference', 'journal') and (name or id):
         publin_callback_url=request.GET.get('publin_callback_url', None)
         isi_fieldofstudy = request.GET.get('fieldofstudy', None) == 'isi'
-        asyncresult = tasks.citations.delay(type=type, name=name,
-                                            id=int(id),
+        asyncresult = tasks.citations.delay(type=type,
+                                            name=name,
+                                            id=int(id) if id else None,
                                             publin_callback_url=publin_callback_url,
                                             isi_fieldofstudy=isi_fieldofstudy)
         task = Task.objects.create(type=Task.TYPE_CITATION_MAG, taskmeta_id=asyncresult.id)

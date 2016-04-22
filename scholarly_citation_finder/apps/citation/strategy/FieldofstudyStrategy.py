@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import logging
-from scholarly_citation_finder.apps.core.models import Publication
+
+from scholarly_citation_finder.apps.core.models import Publication,\
+    FieldOfStudyHierarchy
 from .Strategy import Strategy
 
 logger = logging.getLogger(__name__)
@@ -9,25 +11,30 @@ logger = logging.getLogger(__name__)
 
 class FieldofstudyStrategy(Strategy):
 
-    def __init__(self, ordered=False, min_year=False, level=False, limit=None):
+    def __init__(self, ordered=False, min_year=False, max_level=None, limit=None):
         name = 'fieldofstudy'
         if ordered:
             name += '-ordered'
         if min_year:
             name += '-minyear'
-        if level:
-            name += '-level'
+        if max_level:
+            name += '-maxlevel'
         if limit > 0:
             name += '-limit'
 
         super(FieldofstudyStrategy, self).__init__(name=name)
         self.ordered = ordered
         self.min_year = min_year
-        self.level = level
+        self.max_level = max_level
         self.limit = limit
         
     def run(self, publication_set, callback):
-        fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered, level=self.level)
+        fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered, level=self.max_level)
+        if self.max_level:
+            for fieldofstudy in fieldofstudies:
+                num = FieldOfStudyHierarchy.objects.using(self.database).filter(child=fieldofstudy,child_level__gte=self.max_level).count()
+                if num == 0:
+                    fieldofstudies.remove(fieldofstudy)
         if self.limit > 0:
             fieldofstudies = fieldofstudies[:self.limit]
         logger.info('found {} (limit: {}) field of studies in search set'.format(len(fieldofstudies), self.limit))
