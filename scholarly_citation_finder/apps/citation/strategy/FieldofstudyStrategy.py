@@ -17,10 +17,10 @@ class FieldofstudyStrategy(Strategy):
             name += '-ordered'
         if min_year:
             name += '-minyear'
-        if max_level:
-            name += '-maxlevel'
+        if max_level > 0:
+            name += '-maxlevel{}'.format(max_level)
         if limit > 0:
-            name += '-limit'
+            name += '-limit{}'.format(limit)
 
         super(FieldofstudyStrategy, self).__init__(name=name)
         self.ordered = ordered
@@ -30,7 +30,7 @@ class FieldofstudyStrategy(Strategy):
         
     def run(self, publication_set, callback):
         fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered)
-        if self.max_level:
+        if self.max_level > 0:
             for fieldofstudy in list(fieldofstudies):
                 num = FieldOfStudyHierarchy.objects.using(self.database).filter(child=fieldofstudy, child_level__gte=self.max_level).count()
                 if num == 0:
