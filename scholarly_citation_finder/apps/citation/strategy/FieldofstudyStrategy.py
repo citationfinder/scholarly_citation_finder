@@ -40,7 +40,9 @@ class FieldofstudyStrategy(Strategy):
         logger.info('found {} (limit: {}) field of studies in search set'.format(len(fieldofstudies), self.limit))
 
         min_year = publication_set.get_min_year() if self.min_year else None
+        logger.warn('a')
         fieldofstudies_publications = self.__find_fieldofstudies_publications(fieldofstudies, min_year=min_year)
+        logger.warn('b')
         callback(fieldofstudies_publications, 'field of studies (year>={}, limit={})'.format(min_year, self.limit))
         #for fieldofstudy in fieldofstudies:
         #    fieldofstudy_publications = self.__find_fieldofstudy_publications(fieldofstudy.id, publication_set.get_min_year())
