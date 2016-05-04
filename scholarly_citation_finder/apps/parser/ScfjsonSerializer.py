@@ -73,7 +73,7 @@ class ScfjsonSerializer:
 
         if citations:
             for citation in citations:
-                result['citations'].append(self.__serialze(citation.publication))
+                result['citations'].append(self.serialze(citation.publication))
         
         return result
     
