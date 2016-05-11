@@ -9,14 +9,23 @@ logger = logging.getLogger(__name__)
 
 
 class CitationExtractor:
+    '''
+    Class to extract citations.
+    '''
     
     def __init__(self, database='default'):
+        '''
+        Create object.
+        
+        :param database: Database name
+        '''
         self.database = database
         self.document_crawler = PublicationDocumentCrawler(database=database)
         self.document_extractor = PublicationDocumentExtractor(database=database)
 
     def run(self, publications):
         '''
+        Run citation extractor.
         
         :param publications: List of publication objects
         #:return: List of successful extracted publications 
@@ -36,6 +45,8 @@ class CitationExtractor:
 
     def find_citations(self, publication):
         '''
+        Find citations for the given publication.
+        
         :param publication: 
         :return: Boolean True, if citations were found
         '''
@@ -58,6 +69,12 @@ class CitationExtractor:
         return False
 
     def extract_document_from_urls(self, publication, pdfs_as_urls):
+        '''
+        Extract a document from the given URLs.
+        
+        :param publication: Publication objects
+        :param pdfs_as_urls: List of URLs to PDF files
+        '''
         logger.info('extract_pdfs: {}'.format(len(pdfs_as_urls)))
         for url in pdfs_as_urls:
             logger.warn('\t{}'.format(url))

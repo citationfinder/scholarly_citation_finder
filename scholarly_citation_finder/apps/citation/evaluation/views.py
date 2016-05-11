@@ -15,6 +15,12 @@ from ..strategy.JournalStrategy import JournalStrategy
 from django.views.decorators.csrf import csrf_exempt
 
 def create(request, name):
+    '''
+    Evaluation create view.
+    
+    :param request: Django request
+    :param name: Evaluation name
+    '''
     setsize = request.GET.get('setsize', None)
     num_min_publications = request.GET.get('num_min_publications', 0)
     if setsize:
@@ -26,6 +32,12 @@ def create(request, name):
 
     
 def create_detail(request, id):
+    '''
+    Evaluation create detail view.
+    
+    :param request: Django request
+    :param id: Task ID
+    '''
     try:
         task = Task.objects.get(pk=id)
         result, tastmeta = task.result()
@@ -40,6 +52,12 @@ def create_detail(request, id):
 
 @csrf_exempt
 def run(request, name):
+    '''
+    Evaluation run view.
+    
+    :param request: Django request
+    :param name: Evaluation name
+    '''
     if request.body and os.path.isdir(os.path.join(config.EVALUATION_DIR, name)):
         try:
             strategies = eval(request.body)

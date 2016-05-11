@@ -19,11 +19,12 @@ logger = logging.getLogger(__name__)
 @shared_task
 def citations_find(strategy, type, id=None, name=None, database='default'):
     '''
+    Task to find citations.
 
-    :param strategy:    
-    :param type:
-    :param id:
-    :param name:
+    :param strategy: Strategy
+    :param type: 'author', 'conference' or 'journal'
+    :param id: ID of the entry
+    :param name: Name of the entry
     :return: Name of the output file
     :raise ObjectDoesNotExits:
     :raise MultipleObjectsReturned:
@@ -53,6 +54,12 @@ def citations_find(strategy, type, id=None, name=None, database='default'):
 
 @shared_task
 def citations_cron(limit=None, database='default'):
+    '''
+    Task for find citations in gernal.
+    
+    :param limit: Limit number of publications
+    :param database: Database name
+    '''
     try:
         limit = int(limit)
     except(TypeError, ValueError):

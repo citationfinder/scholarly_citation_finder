@@ -23,8 +23,17 @@ class NoCitationsFoundExeception(Exception):
 
 
 class CitationFinder:
+    '''
+    Main class for finding citations.
+    '''
 
     def __init__(self, database='default', evaluation=False):
+        '''
+        Create object.
+        
+        :param database: Database name
+        :param evaluation: If true, run in evaluation mode
+        '''
         self.evaluation = evaluation
         self.database = database
         self.publication_set = PublicationSet(database=self.database)
@@ -33,15 +42,26 @@ class CitationFinder:
         self.reset()
 
     def load_stored_citations(self):
+        '''
+        Load citations that are stored in the database.
+        '''
         # Get already stored citations
         self.stored_citations = PublicationReference.objects.using(self.database).filter(reference__in=self.publication_set.get())
         
     def reset(self):
+        '''
+        Reset object.
+        '''
         self.publication_set.reset()
         self.citations = []
         self.evaluation_result = []
         
     def run(self, strategies):
+        '''
+        Run multiple search strategies.
+        
+        :param strategies: List of search strategies
+        '''
         if self.publication_set.is_empty():
             raise EmptyPublicationSetException('publication_search_set is empty')
 
@@ -56,6 +76,12 @@ class CitationFinder:
         return strategies_name
 
     def inspect_publications(self, publications, string=''):
+        '''
+        Inspect the publications return by a search strategy.
+        
+        :param publications: List of publications
+        :param string: Information for the log
+        '''
         # Evaluation only
         if self.evaluation:
             publications_citing = self.stored_citations.filter(publication__in=publications)
@@ -76,10 +102,11 @@ class CitationFinder:
         
     def store(self, path, filename, isi_fieldofstudy=False):
         '''
+        Store result in a file.
         
-        :param path:
-        :param filename:
-        :param isi_fieldofstudy:
+        :param path: Path
+        :param filename: Filename
+        :param isi_fieldofstudy: If true, convert field of study to ISI fields
         :return: File name of the stored output
         :raise IOError: Problem to create or write output file
         :raise NoCitationsFoundExeception: When no citations where found
@@ -103,6 +130,7 @@ class CitationFinder:
     
     def store_evaluation(self, path, filename):
         '''
+        Store evaluation result in file.
         
         :param path: File path
         :param filename: File name (without extension)

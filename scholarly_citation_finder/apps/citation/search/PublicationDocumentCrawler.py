@@ -14,14 +14,27 @@ logger = logging.getLogger(__name__)
 
 
 class PublicationDocumentCrawler:
+    '''
+    Class to find a document of a publication.
+    '''
     
     def __init__(self, database='default'):
+        '''
+        Create object.
+        
+        :param database: Database name
+        '''
         self.database = database
         self.html_parser = HtmlParser()
         self.search_engine = Duckduckgo()
         self.publication = None
 
     def set(self, publication):
+        '''
+        Set the publication.
+        
+        :param publication: Publication object
+        '''
         self.publication = publication
         #logger.info('set publication {}'.format(publication.id))
     
@@ -33,6 +46,7 @@ class PublicationDocumentCrawler:
             
     def get_by_search_engine(self, keywords=None):
         '''
+        Get the document by search engine.
         
         :param keywords: Query keyword string
         :return: List of URLs, which refer to documents
@@ -59,6 +73,9 @@ class PublicationDocumentCrawler:
         return results
 
     def get_by_soure(self):
+        '''
+        Get the document by the stored source.
+        '''
         results = []
         source = self.publication.source
         if source:
@@ -69,6 +86,9 @@ class PublicationDocumentCrawler:
         return results
 
     def get_by_stored_urls(self):
+        '''
+        Get the document by the stored URLs.
+        '''
         results = []
         
         doi_not_in_urls = True
@@ -87,6 +107,11 @@ class PublicationDocumentCrawler:
         return results       
     
     def __find_document_on_website(self, html_url):
+        '''
+        Find documents on a website.
+        
+        :param html_url: HTML code of a website
+        '''
         results = []
         try:
             hyperrefs, resolved_url = self.html_parser.find_pdf_hyperrefs(html_url)

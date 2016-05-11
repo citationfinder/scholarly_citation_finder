@@ -10,6 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 class FieldofstudyStrategy(Strategy):
+    '''
+    Field of study search strategy (for publications)
+    '''
 
     def __init__(self, ordered=False, min_year=False, max_level=None, limit=None):
         name = 'fieldofstudy'
@@ -29,6 +32,9 @@ class FieldofstudyStrategy(Strategy):
         self.limit = limit
         
     def run(self, publication_set, callback):
+        '''
+        @see parent method
+       '''
         fieldofstudies = publication_set.get_fieldofstudies(ordered=self.ordered)
         if self.max_level > 0:
             for fieldofstudy in list(fieldofstudies):

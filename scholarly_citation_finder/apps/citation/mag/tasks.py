@@ -17,11 +17,14 @@ logger = logging.getLogger(__name__)
 @shared_task
 def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstudy=False, database='mag'):
     '''
+    Task to find citations in the MAG.
     
-    :param type:
-    :param name:
-    :param id:
-    :param publin_callback_url:
+    :param type: 'author', 'conference' or 'journal'
+    :param name: Name of the entry
+    :param id: ID of the entry
+    :param publin_callback_url: Callback URL
+    :param isi_fieldofstudy: If true, convernt field of studies to ISI field
+    :param database: Database name
     :return: Name of the output file
     :raise ObjectDoesNotExits:
     :raise MultipleObjectsReturned:
@@ -58,6 +61,12 @@ def citations(type, name=None, id=None, publin_callback_url=None, isi_fieldofstu
 
 
 def __publin_callback(callback_url, output_filename):
+    '''
+    Send data to callback URL.
+    
+    :param callback_url: Callback URL
+    :param output_filename: Stored output file
+    '''
     with open(output_filename, 'r') as output_file:
         r = requests.post(callback_url,
                           params={'p': 'submit', 'm': 'bulkimportapi'},

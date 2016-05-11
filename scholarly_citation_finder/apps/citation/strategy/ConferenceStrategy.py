@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConferenceStrategy(Strategy):
+    '''
+    Conference search strategy.
+    '''
 
     ordered = None
     min_year = None
@@ -23,6 +26,9 @@ class ConferenceStrategy(Strategy):
         self.min_year = min_year
         
     def run(self, publication_set, callback):
+        '''
+        @see parent method
+        '''
         conferences = publication_set.get_conferences(ordered=self.ordered, plus_additionals=True)
         logger.info('found {} conferences in search set'.format(len(conferences)))
         for conference in conferences:

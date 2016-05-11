@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 class IsiFieldofstudy():
-    
-    # Maps the MAG field of studies to the ISI field of studies
+    '''
+    Maps the MAG field of studies to the ISI field of studies
+    '''
+
     mappingLevel0 = {
         'Engineering': 'Engineering',
         'History': 'Social Sciences, general',

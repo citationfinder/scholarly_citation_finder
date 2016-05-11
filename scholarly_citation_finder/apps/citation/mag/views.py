@@ -10,6 +10,11 @@ from scholarly_citation_finder.apps.tasks.models import Task
 
 
 def index(request):
+    '''
+    MAG index view.
+    
+    :param request: Django request
+    '''
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
@@ -28,6 +33,12 @@ def index(request):
 
 
 def task_detail(request, id):
+    '''
+    MAG task detail view.
+    
+    :param request: Django request
+    :param id: Task ID
+    '''
     try:
         task = Task.objects.get(pk=id)
         result, tastmeta = task.result()

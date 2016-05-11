@@ -19,15 +19,24 @@ logger = logging.getLogger(__name__)
 
 
 class PublicationDocumentExtractor:
+    '''
+    Class to extract a document.
+    '''
     
     NUM_MINIMUM_REFERENCES = 3
 
     def __init__(self, database='default'):
+        '''
+        Create object.
+        
+        :param database: Database name
+        '''
         self.extractor = GrobidExtractor() # used to extract documents
         self.parser = Parser(database=database) # used to store results
       
     def extract_and_store(self, publication, url):
         '''
+        Extract the publication from the given URL and store the result.
         
         :param publication:
         :param url:
@@ -52,7 +61,7 @@ class PublicationDocumentExtractor:
 
     def extract(self, publication_title, publication_id, url):
         '''
-        Try to download the document from the given URL and extract it
+        Try to download the document from the given URL and extract it.
         
         :param publication_title: Title of the publication to check, if it's the correct document
         :param publication_id: ID of the publication. Used for the filename of the temporary stored document
@@ -88,7 +97,7 @@ class PublicationDocumentExtractor:
 
     def __store_references(self, publication, references, url):
         '''
-        Store the URL and the references
+        Store the URL and the references.
         
         :param publication: Publication that was extracted
         :param references: References list, extracted from the document
@@ -108,6 +117,12 @@ class PublicationDocumentExtractor:
         self.parser.commit() # raises ParserRollbackError
 
     def __store_document_meta(self, publication, document_meta):        
+        '''
+        Store the extracted head meta data.
+        
+        :param publication: Publication object
+        :param document_meta: Extracted head meta data
+        '''
         if 'keywords' in document_meta:
             for keyword in document_meta['keywords']:
                 keyword = normalize_string(keyword)

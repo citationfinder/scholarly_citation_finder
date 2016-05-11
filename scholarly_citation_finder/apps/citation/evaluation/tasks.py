@@ -16,6 +16,14 @@ AUTHOR_SET_FILENAME = 'authors.csv'
 
 @shared_task
 def evaluation_create_author_set(name, setsize, num_min_publications, database='mag'): 
+    '''
+    Task to create a random author set.
+    
+    :param name: Evaluation name
+    :param setsize: Size of the site, i.e. the number of authors
+    :param num_min_publications: Minimum number of an author's publications
+    :param database: Database name
+    '''
     dir = create_dir(os.path.join(config.EVALUATION_DIR, name))
     author_set = RandomAuthorSet(database=database)
     logger.info('{} -- create random author set of size {}'.format(name, setsize))
@@ -31,6 +39,12 @@ def evaluation_create_author_set(name, setsize, num_min_publications, database='
 
 @shared_task
 def evaluation_run(name, strategies):
+    '''
+    Evaluation run task.
+    
+    :param name: Evaluation name
+    :param strategies: List of strategies
+    '''
     evaluation_dir = os.path.join(config.EVALUATION_DIR, name)
     with open(os.path.join(evaluation_dir, AUTHOR_SET_FILENAME)) as author_set_file:
         reader = csv.DictReader(author_set_file)
@@ -56,9 +70,11 @@ def evaluation_run(name, strategies):
 @shared_task
 def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
     '''
+    Evaluation run view.
     
-    :param author_id:
-    :param evaluation:
+    :param author_id: Author ID
+    :param strategies: List of strategies
+    :param evaluation_name: Evaluation name
     :raise ObjectDoesNotExits:
     :raise MultipleObjectsReturned:
     :raise EmptyPublicationSetException: 
@@ -86,13 +102,16 @@ def evaluation_citations(author_id, strategies=None, evaluation_name='default'):
 
 
 def __store_evaluation_result(path, filename, row):
+    '''
+    Store evaluation result.
+    
+    :param path: Path
+    :param filename: Name of the file
+    :param row: Row to append to the file
+    '''
     filename = os.path.join(path, 'meta_{}.csv'.format(filename))
     file_exists = os.path.isfile(filename)
-    '''
-    
-    :param filename:
-    :param row:
-    '''
+
     try:
         with open(filename, 'a+') as csvfile:
             writer = csv.writer(csvfile)

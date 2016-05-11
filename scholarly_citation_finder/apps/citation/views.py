@@ -15,6 +15,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def citations_find(request):
+    '''
+    Find citations view.
+    
+    :param request: Django request
+    '''
     type = request.GET.get('type', None)
     name = request.GET.get('name', None)
     id = request.GET.get('id', None)
@@ -38,6 +43,11 @@ def citations_find(request):
 
 
 def citations_cron(request):
+    '''
+    Citation cron (job) view
+    
+    :param request: Django request
+    '''
     limit = request.GET.get('limit', None)
     asyncresult = tasks.citations_cron.delay(limit=limit)
     task = Task.objects.create(type=Task.TYPE_CITATION_CRON, taskmeta_id=asyncresult.id)

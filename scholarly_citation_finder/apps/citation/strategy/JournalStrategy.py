@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class JournalStrategy(Strategy):
+    '''
+    Journal search strategy.
+    '''
 
     ordered = None
     min_year = None
@@ -23,6 +26,9 @@ class JournalStrategy(Strategy):
         self.min_year = min_year
         
     def run(self, publication_set, callback):
+        '''
+        @see parent method
+       '''
         journals = publication_set.get_journals(ordered=self.ordered, plus_additionals=True)
         logger.info('found {} journals in search set'.format(len(journals)))
         for journal in journals:

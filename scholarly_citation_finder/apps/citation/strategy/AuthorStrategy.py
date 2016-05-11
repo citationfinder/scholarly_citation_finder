@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthorStrategy(Strategy):
+    '''
+    Author search strategy.
+    '''
 
     ordered = None
     min_year = None
@@ -27,6 +30,9 @@ class AuthorStrategy(Strategy):
         self.recursive = recursive
         
     def run(self, publication_set, callback):
+        '''
+        @see parent method
+        '''
         authors = publication_set.get_authors(ordered=self.ordered, plus_additionals=True)
         logger.info('found {} author in the search set'.format(len(authors)))
         
@@ -47,11 +53,6 @@ class AuthorStrategy(Strategy):
             callback(self.__find_author_publications(author.id, min_year), 'author "{} (year>={})"'.format(author.id, min_year))
 
     def __find_author_publications(self, author_id, min_year=None):
-        #self.cursor.execute("SELECT author_id, COUNT(author_id) as num FROM core_publicationauthoraffilation LEFT JOIN publicationreference ON publicationreference.publication_id =  WHERE publication_id IN %s GROUP BY author_id ORDER BY num DESC", (publications_authors,))
-        #return self.cursor.fetchall()
-
-        #self.cursor.execute("SELECT publication_id FROM core_publicationauthoraffilation WHERE author_id = %s", (author_id,))
-        #return self._sqllist2array(self.cursor.fetchall())
         query = Publication.objects.using(self.database).filter(publicationauthoraffilation__author_id=author_id)
         if min_year:
             query = query.filter(year__gte=min_year)
