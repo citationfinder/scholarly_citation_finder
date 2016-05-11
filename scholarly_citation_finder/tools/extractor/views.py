@@ -11,6 +11,12 @@ from scholarly_citation_finder.tools.extractor.Extractor import ExtractorNotAvai
 
 
 def grobid(request):
+    '''
+    Grobid view
+    
+    :param request: Django request
+    :return: Extracted data or error code
+    '''
     filename = request.GET.get('filename', None)
     url = request.GET.get('url', None)    
     if filename or url:
@@ -35,6 +41,12 @@ def grobid(request):
 
 
 def citeseer(request):
+    '''
+    CiteSeerExtractor view
+    
+    :param request: Django request
+    :return: Extracted data or error code
+    '''
     url = request.GET.get('url', None)    
     if url:
         try:

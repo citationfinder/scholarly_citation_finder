@@ -3,11 +3,24 @@ from io import BytesIO
 
 
 class CiteseerParser:
+    '''
+    Parser to the CiteSeerExtractor output.
+    '''
     
     def __init__(self, name=''):
+        '''
+        Create object.
+        
+        :param name: Parser name
+        '''
         self.name = name
 
     def parse(self, xml):
+        '''
+        Parse output
+        
+        :param xml: XML
+        '''
         context = etree.iterparse(BytesIO(xml), html=False)
         return self.fast_iter(context)
 

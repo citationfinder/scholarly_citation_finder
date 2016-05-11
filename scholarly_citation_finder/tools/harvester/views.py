@@ -9,6 +9,13 @@ from scholarly_citation_finder.tools.harvester import tasks
 from scholarly_citation_finder.tools.harvester.models import Harvester
 
 def oaipmh(request, name):
+    '''
+    View of OAI-PMH harvester.
+    
+    :param request: Django request
+    :param name: Name of the harvester
+    :return: Created task or error code
+    '''
     try:
         oaipmh_provider = Harvester.objects.filter(type=Harvester.TYPE_OAI).get(name=name)            
         harvest_parameter = {'limit': request.GET.get('limit', None), 
@@ -26,6 +33,12 @@ def oaipmh(request, name):
 
 
 def dblp(request):
+    '''
+    View of DBLP harvester.
+    
+    :param request: Django request
+    :return: Created task or error code
+    '''
     try:
         harvest_parameter = {'limit': request.GET.get('limit', None), 
                              '_from': request.GET.get('from', None)}

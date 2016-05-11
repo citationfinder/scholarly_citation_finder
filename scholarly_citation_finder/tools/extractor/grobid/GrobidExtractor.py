@@ -11,15 +11,22 @@ logger = logging.getLogger(__name__)
 
 
 class GrobidExtractor(Extractor):
+    '''
+    Grobid extractor.
+    '''
     
     GROBID_API_URL = 'http://localhost:8080'
 
     def __init__(self):
+        '''
+        Create object.
+        '''
         self.parser = TeiParser('grobid')
 
     def extract_file(self, filename, completely=False):
         '''
         Extract the citations from a provided file.
+        
         :param filename: Filename to PDF file
         :raise ProcessException: When extractor failed
         :raise ExtractorNotAvaiableException: When extractor is not available
@@ -38,6 +45,7 @@ class GrobidExtractor(Extractor):
 
     def __extract_document(self, data):
         '''
+        Call Grobid method to extract the full document.
 
         :param data:
         :raise ExtractorNotAvaiableException:
@@ -50,7 +58,8 @@ class GrobidExtractor(Extractor):
 
     def __extract_references(self, data):
         '''
-
+        Call Grobid method to extract the references of the document.
+        
         :param data:
         :raise ExtractorNotAvaiableException:
         :raise ProcessException: 
@@ -60,9 +69,10 @@ class GrobidExtractor(Extractor):
 
     def __call_grobid_method(self, data, method):
         '''
+        Call a Grobid method.
         
-        :param data:
-        :param method:
+        :param data: Data to send to grobid
+        :param method: Grobid method
         :raise ExtractorNotAvaiableException:
         :raise ProcessException: 
         '''

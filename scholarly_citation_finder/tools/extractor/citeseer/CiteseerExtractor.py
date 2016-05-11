@@ -10,17 +10,24 @@ logger = logging.getLogger(__name__)
 
 
 class CiteseerExtractor:
+    '''
+    CiteSeerExtractor
+    '''
 
     CITESEER_API_URL = 'http://citeseerextractor.ist.psu.edu:8080/extractor'
     CITESEER_API_FILENAME = 'myfile'
     CITESEER_API_RESPONSE_CITATIONS = 'citations'
 
     def __init__(self):
+        '''
+        Create object.
+        '''
         self.parser = CiteseerParser('citeseer')
 
     def extract_file(self, filename):
         '''
         Extract the citations from a provided file.
+        
         :param filename: Filename to PDF file
         :raise ProcessException: 
         '''
@@ -35,8 +42,9 @@ class CiteseerExtractor:
 
     def __extract_references(self, responseAsXml):
         '''
+        Extract the references
         
-        :param responseAsXml:
+        :param responseAsXml: XML response
         :raise ProcessException:
         '''
         citations_element = responseAsXml.find(self.CITESEER_API_RESPONSE_CITATIONS)
@@ -48,8 +56,10 @@ class CiteseerExtractor:
 
     def __call_citeseer_url(self, url, data=None):
         '''
-        
-        :param url:#
+        Call a CiteSeer URL
+
+        :param url: URL
+        :param data: Data to send 
         :raise ProcessException: 
         '''
         logger.info('Request citeseer url: {}'.format(url))

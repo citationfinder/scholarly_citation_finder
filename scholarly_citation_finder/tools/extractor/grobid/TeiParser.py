@@ -14,6 +14,9 @@ class TeiParserNoReferences(Exception):
 
 
 class TeiParser:
+    '''
+    Parser for the TEI format.
+    '''
     
     TEI_ELEMENT_XSI_PREFIX = '{http://www.tei-c.org/ns/1.0}'
 
@@ -22,12 +25,18 @@ class TeiParser:
     ELEMENT_BIBLSTRUCT = 'biblstruct'
 
     def __init__(self, name=''):
+        '''
+        Create object.
+        
+        :param name: Name of the parser
+        '''
         self.name = name
         
     def parse_document(self, xml):
         '''
+        Parse a document.
         
-        :param xml:
+        :param xml: XML
         :return: Document meta object, References list
         :raise TeiParserNoReferences: Document has no references
         :raise TeiParserNoDocumentTitle: Document has no title

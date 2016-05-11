@@ -23,6 +23,7 @@ class HtmlParser:
     
     def __init__(self, timeout=None):
         '''
+        Create object.
         
         :param timeout: Request timeout in seconds
         '''

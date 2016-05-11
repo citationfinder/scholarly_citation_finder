@@ -8,6 +8,9 @@ from .SearchEngine import SearchEngine, SearchEngineResponseException
 
 
 class Bing(SearchEngine):
+    '''
+    Bing search engine.
+    '''
     
     API_URL = 'https://bing.com/search'
     

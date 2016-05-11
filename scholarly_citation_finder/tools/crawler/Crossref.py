@@ -19,6 +19,7 @@ class CrossrefNothingFoundException(Exception):
 
 class Crossref:   
     '''
+    CrossRef service
     
     @see: http://api.crossref.org/
     '''
@@ -40,6 +41,7 @@ class Crossref:
     
     def query(self, resource, query=None, filter=None, sort=None, order=None):
         '''
+        Query CrossRef
         
         :param resource:
         :param query:

@@ -7,6 +7,9 @@ from .SearchEngine import SearchEngine, SearchEngineResponseException
 
 
 class Duckduckgo(SearchEngine):
+    '''
+    DuckDuckGo search engine.
+    '''
     
     API_URL = 'https://duckduckgo.com/html/'
     

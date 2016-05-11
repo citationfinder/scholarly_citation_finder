@@ -14,8 +14,17 @@ logger = logging.getLogger(__name__)
 
 
 class MagHarvester2:
+	'''
+	Harvester of the MAG graph.
+	'''
 
 	def __init__(self, path, database='mag'):
+		'''
+		Create object.
+		
+		:param path: Path to the MAG graph
+		:param database: Database name
+		'''
 		self.path = path
 		self.database = database
 		

@@ -15,13 +15,24 @@ logger = logging.getLogger(__name__)
 
 
 class MagHarvester:
+    '''
+    Harvester of the MAG graph.
+    '''
     
     def __init__(self):
+        '''
+        Create object.
+        '''
         self.name = 'mag'
         self.download_dir = os.path.join(config.DOWNLOAD_DIR, self.name)
         self.conn = self.connect_database()
 
     def connect_database(self):
+        '''
+        Connect to database.
+        
+        :return: Database connection
+        '''
         db = DATABASES[self.name]
         return psycopg2.connect(host=db['HOST'],
                                 dbname=db['NAME'],
@@ -30,7 +41,13 @@ class MagHarvester:
 
     def _database_copy(self, filename, table, columns):
         '''
+        Copy normalized CSV file into database
+        
         @see: http://initd.org/psycopg/docs/cursor.html
+        :param filename: Name of the CSV file
+        :param table: Database table name
+        :param columns: Table columns
+        :return: If copy was successful
         '''
         try:
             logger.info('harvest {} ++++++++'.format(filename))

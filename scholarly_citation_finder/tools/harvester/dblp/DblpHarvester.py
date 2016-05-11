@@ -17,6 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class DblpHarvester(Harvester):
+    '''
+    Harvester for DBLP database.
+    '''
     
     NAME = 'dblp'
     FILENAME_CITE = 'cite.csv'
@@ -56,9 +59,15 @@ class DblpHarvester(Harvester):
     }
     
     def __init__(self, **kwargs):
+        '''
+        Create object.
+        '''
         super(DblpHarvester, self).__init__(name=self.NAME, **kwargs)
 
     def download_database(self):
+        '''
+        Download the database from DBLP.
+        '''
         try:
             downloader = DblpDownloader(self.download_dir)
             result = downloader.download()
@@ -71,6 +80,8 @@ class DblpHarvester(Harvester):
     
     def harvest(self, filename=None, limit=None, _from=None):
         '''
+        Harvest, i.e. collect meta data from the downloaded XML file.
+        
         :param filename: DBLP XML file name
         :param limit: Number of maximum publications to parse
         :param _from: Last stored (!) DBLP key, e.g. 'journals/jlp/Winter08'
@@ -90,9 +101,10 @@ class DblpHarvester(Harvester):
 
     def _fast_iter(self, filename, _from=None):
         '''
-        @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
-        @param context : iterparsed (chunk of xml) data
+        Fast iter the XML file.
         
+        @see: https://github.com/Ajeo/dblp-to-csv/blob/master/parser.py
+
         :param filename:
         :param _from: Last stored (!) DBLP key, e.g. 'journals/jlp/Winter08'
         :return: The number of parsed publications

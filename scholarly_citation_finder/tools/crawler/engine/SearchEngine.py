@@ -8,9 +8,13 @@ class SearchEngineResponseException(Exception):
 
 
 class SearchEngine(object):
+    '''
+    Abstract search engine.
+    '''
     
     def __init__(self, timeout=1.5):
         '''
+        Create object.
         
         :param timeout: Request timeout in seconds
         '''
@@ -31,6 +35,12 @@ class SearchEngine(object):
         raise Exception('Implement this method')
 
     def nearly_match_titles(self, original, found):
+        '''
+        Check, if titles nearly match.
+        
+        :param original: Original title
+        :param found: Found title
+        '''
         if found.endswith(self.TRUNCATE_STRING):
             found = found.rstrip(self.TRUNCATE_STRING).rstrip()
             original = original[:len(found)]

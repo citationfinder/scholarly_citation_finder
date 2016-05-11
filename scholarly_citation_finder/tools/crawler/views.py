@@ -11,6 +11,11 @@ from scholarly_citation_finder.tools.crawler.Crossref import CrossrefNothingFoun
 
 
 def htmlparser(request):
+    '''
+    HTMLParser view.
+    
+    :param request: Django request
+    '''
     url = request.GET.get('url', None)
     if url:
         html_parser = HtmlParser()
@@ -24,6 +29,11 @@ def htmlparser(request):
 
 
 def duckduckgo(request):
+    '''
+    DuckDuckGo view.
+    
+    :param request: Django request
+    '''
     keywords = request.GET.get('keywords', None)
     if keywords:
         search_engine = Duckduckgo()
@@ -36,6 +46,11 @@ def duckduckgo(request):
     
     
 def crossref(request):
+    '''
+    CrossRef view.
+    
+    :param request: Django request
+    '''
     query = request.GET.get('query', None)
     doi = request.GET.get('doi', None)
     try:

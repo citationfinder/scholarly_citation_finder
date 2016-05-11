@@ -11,18 +11,29 @@ logger = logging.getLogger(__name__)
 
 
 class DblpDownloader:
+    '''
+    Helper for downloading the DBLP database.
+    '''
     
     DBLP_BASE_URL = 'http://dblp.uni-trier.de/xml/'
     DBLP_FILE_XML_GZ = 'dblp.xml.gz'
     DBLP_FILE_MD5 = 'dblp.xml.gz.md5'
     
     def __init__(self, download_dir):
+        '''
+        Create object.
+        
+        :param download_dir: Download directory
+        '''
         self.download_dir = download_dir
     
     def download(self):
         '''
+        Download database file.
+        
         :raise DownloadFailedException: 
-        :raise UnzipFailedException: 
+        :raise UnzipFailedException:
+        :return: File name or false
         '''
         if self.is_new_data_avaible():
             return self.__download_database()
@@ -32,7 +43,9 @@ class DblpDownloader:
     def is_new_data_avaible(self):
         '''
         Checks if new data is available:
-        Downloads the MD5-file of the XML and compares it with the local stored MD5-file        
+        Downloads the MD5-file of the XML and compares it with the local stored MD5-file
+        
+        :return: True, if new data is available  
         '''
         old_md5_file = os.path.join(self.download_dir, self.DBLP_FILE_MD5)
         if os.path.isfile(old_md5_file):
@@ -44,6 +57,7 @@ class DblpDownloader:
     def __download_database(self):
         '''
         Downloads the XML- and the DTD-file from DBLP
+        
         :return: Filename of the downloaded and unzipped XML database
 
         :raise DownloadFailedException:

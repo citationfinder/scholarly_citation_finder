@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 class OaiHarvester(Harvester):
+    '''
+    OAI harvester to collect meta data from OAI provider.
+    '''
     
     FIELD_MAPPING = {
         'title': 'title',
@@ -23,11 +26,18 @@ class OaiHarvester(Harvester):
     oai_url = None
     
     def __init__(self, name, oai_url, **kwargs):
+        '''
+        Create object.
+        
+        :param name: Harvester name
+        :param oai_url: OAI URL
+        '''
         super(OaiHarvester, self).__init__(name=name, **kwargs)
         self.oai_url = oai_url
     
     def harvest(self, limit=None, _from=None, until=None, _from_id=None, resumptionToken=None):
         '''
+        Harvest OAI data provider.
         
         :param limit: Number of maximum publications to parse
         :param _from: OAI-PHM from date YYYY-MM-DD
@@ -71,6 +81,7 @@ class OaiHarvester(Harvester):
         
     def harvest_oai_phm(self, list_records_options, _from_id=None):
         '''
+        Harvest OAI-PHM.
         
         :param list_records_options: List records option for Sickle
         :param _from_id: Last stored (!) identifier, e.g. '10.1.1.1.1519'
