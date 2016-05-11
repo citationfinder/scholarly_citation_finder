@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 class Parser:
+    '''
+    Parse a entry and store it in the database.
+    '''
 
     PUBLICATION_ATTRIBUTES = [
         'type',
@@ -32,6 +35,11 @@ class Parser:
     ]
 
     def __init__(self, database):
+        '''
+        Create object.
+        
+        :param database: Database name
+        '''
         self.conn = connections[database]
         self.cursor = self.conn.cursor()
         self.count_publications = 0
@@ -39,6 +47,8 @@ class Parser:
 
     def commit(self):
         '''
+        Commit database changes.
+        
         :raise ParserRollbackError When a problems occurred, that required to do a rollback
         '''
         try:
@@ -94,6 +104,11 @@ class Parser:
                 raise ParserDataError('Journal name is too long')
 
     def parse_conference(self, short_name):
+        '''
+        Parse a conference.
+        
+        :param short_name:
+        '''
         short_name = normalize_string(short_name)
         self.cursor.execute("SELECT id FROM core_conference WHERE short_name LIKE %s LIMIT 1", [short_name])
         result = self.cursor.fetchone()
@@ -108,6 +123,28 @@ class Parser:
                 raise ParserDataError('Conference short name is too long: %s' % short_name)        
 
     def parse_publication(self, type=None, title=None, year=None, date=None, booktitle=None, journal_id=None, volume=None, number=None, pages_from=None, pages_to=None, series=None, publisher=None, isbn=None, doi=None, abstract=None, copyright=None, conference_id=None, source=None):
+        '''
+        Parse a publication.
+        
+        :param type:
+        :param title:
+        :param year:
+        :param date:
+        :param booktitle:
+        :param journal_id:
+        :param volume:
+        :param number:
+        :param pages_from:
+        :param pages_to:
+        :param series:
+        :param publisher:
+        :param isbn:
+        :param doi:
+        :param abstract:
+        :param copyright:
+        :param conference_id:
+        :param source:
+        '''
         if title and len(title) <= 250:
             title = normalize_string(title)
             
@@ -142,6 +179,14 @@ class Parser:
             raise ParserDataError('Title does not exists or is too long')
 
     def parse_reference(self, publication_id, reference_id, context=None, source_id=None):
+        '''
+        Parse a reference 
+        
+        :param publication_id:
+        :param reference_id:
+        :param context:
+        :param source_id:
+        '''
         if publication_id and reference_id:
             self.cursor.execute("INSERT INTO core_publicationreference (publication_id, reference_id, context, source_id) VALUES (%s, %s, %s, %s)", [publication_id, reference_id, context, source_id])
         else:
@@ -149,6 +194,7 @@ class Parser:
 
     def parse(self, publication, conference=None, journal_name=None, authors=None, keywords=None, urls=None, reference=None):
         '''
+        Parse a entry.
         
         :param publication: Publication dictionary
         :param conference: Conference dictionary: 'short_name', 'instance_name'

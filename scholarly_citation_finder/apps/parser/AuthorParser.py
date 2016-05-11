@@ -11,11 +11,24 @@ logger = logging.getLogger(__name__)
 
 
 class AuthorParser:
+    '''
+    Parse an author.
+    '''
     
     def __init__(self, database):
+        '''
+        Create object.
+        
+        :param database: Database name
+        '''
         self.database = database
     
     def parse(self, name):
+        '''
+        Parse an author.
+        
+        :param name: Author name as string
+        '''
         name = AuthorNameParser(name, normalize=True)
         if name.title and not name.first:
             name.first = name.title
@@ -66,6 +79,15 @@ class AuthorParser:
             raise ParserDataError('Author name has no last or first name: %s' % name)
 
     def __store_shortname_variation(self, block_id, author_id, first, middle, last):
+        '''
+        Store the short version of the name variation.
+
+        :param block_id: ID of the block
+        :param author_id: ID of the author
+        :param first: First name
+        :param middle: Middle name
+        :param last: Last name
+        '''
         middle = middle[0] if middle else None
         AuthorNameVariation.objects.using(self.database).get_or_create(block_id=block_id,
                                                                        author_id=author_id,

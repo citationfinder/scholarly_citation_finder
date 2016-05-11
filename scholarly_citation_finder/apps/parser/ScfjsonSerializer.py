@@ -1,11 +1,21 @@
 from scholarly_citation_finder.apps.citation.mag.IsiFieldofstudy import IsiFieldofstudy
 
 class ScfjsonSerializer:
+    '''
+    Convert a publication to SCF JSON format.
+    '''
     
     def __init__(self, database):
         self.database = database
         
     def serialze(self, publication, citations=None, isi_fieldofstudy=False):
+        '''
+        Serialize a publication.
+        
+        :param publication: Publication object
+        :param citations: If true, citations get serialized as well
+        :param isi_fieldofstudy: If true, convert field of study to ISI fields
+        '''
         
         if self.database == 'mag':
             publication.title = publication.title.title()
@@ -84,6 +94,11 @@ class ScfjsonSerializer:
             return None
         
     def __isi_fieldofstudy_mapping(self, publication):
+        '''
+        Map the field of study of a publication to a ISI field of study.
+        
+        :param publication: Publication object.
+        '''
         # Sort field of study in descending level order, i.e. check first level 1 and then level 0.
         # Don't consider field of studies with a confidence lower then 0.5
         query = publication.publicationfieldofstudy_set.filter(level__gte=0, level__lte=1).order_by('-level', '-confidence')
