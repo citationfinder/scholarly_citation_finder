@@ -31,7 +31,7 @@ class UnzipFailedException(Exception):
 
 def create_dir(path):
     '''
-    Creates the given path, if it does not already exists
+    Creates the given path, if it does not already exists.
     
     :param path: Directory path
     :return: Directory path
@@ -43,7 +43,7 @@ def create_dir(path):
 
 def download_file_process(url, cwd=None):
     '''
-    Downloads a file by calling curl as external process
+    Downloads a file by calling curl as external process.
 
     :param url:
     :param cwd:
@@ -58,7 +58,8 @@ def download_file_process(url, cwd=None):
 
 def extract_file_process(file, cwd):
     '''
-    Extracts a file by calling 7-Zip as external process
+    Extracts a file by calling 7-Zip as external process.
+
     :param file:
     :param cwd:
     '''
@@ -71,6 +72,8 @@ def extract_file_process(file, cwd):
 
 def download_file_pdf(url, **kwargs):
     '''
+    Download a PDF file.
+    
     :param url:
     :raise DownloadFailedException: When the connection fails or the schema is invalid
     :raise UnexpectedContentTypeException: When expected_content_type and content type differs    
@@ -130,7 +133,8 @@ def upload_file(url, filename, status_code=201):
 
 def unzip_file(filename, huge_file=True):
     '''
-    
+    Unzip a file.
+
     :param filename:
     :param huge_file:
     :return: Name of the file

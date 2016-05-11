@@ -3,6 +3,9 @@
 import codecs
 
 class CsvFileWriter:
+    '''
+    Writer to create a CSV file.
+    '''
     
     output = None
         
