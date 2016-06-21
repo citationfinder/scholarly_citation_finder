@@ -24,6 +24,11 @@ $ ./manage.py migrate
 $ ./manage.py collectstatic
 ```
 
+Create a root user
+```bash
+$ ./manage.py createsuperuser
+```
+
 Start Celery
 ```bash
 $ celery -A scholarly_citation_finder worker -l info

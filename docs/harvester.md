@@ -17,3 +17,15 @@ $ cd downloads/harvester/mag
 $ curl -O https://academicgraph.blob.core.windows.net/graph-2015-11-06/MicrosoftAcademicGraph.zip
 $ 7z x MicrosoftAcademicGraph.zip
 ```
+
+Run harvester in terminal
+
+```python
+>>> from scholarly_citation_finder.tools.harvester.mag.MagNormalize import MagNormalize
+>>> normalizer = MagNormalize('downloads/mag/')
+>>> normalizer.run()
+>>>
+>>> from scholarly_citation_finder.tools.harvester.mag.MagHarvester import MagHarvester
+>>> harvester = MagHarvester()
+>>> harvester.run()
+```
