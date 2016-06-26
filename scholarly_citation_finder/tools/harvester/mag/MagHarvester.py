@@ -83,12 +83,14 @@ class MagHarvester:
         for name, file in MagNormalize.FILES.iteritems():
             file_pre = get_pre_name(file)
             csv_file = os.path.join(self.download_dir, file_pre)
-            if os.path.isfile(csv_file):
-                #logger.info('start store {}'.format(csv_file))
+            if os.path.isfile(csv_file) and hasattr(self, name):
+                logger.info('start store {}'.format(csv_file))
                 if getattr(self, name)(csv_file):
                     os.rename(csv_file, os.path.join(self.download_dir, '~{}'.format(file_pre)))
                 else:
                     pass # exceptions already get logged before this line
+            elif not hasattr(self, name):
+                logger.info('no attribute {}'.format(name))                
             else:
                 logger.info('no file {}'.format(csv_file))
         logger.info('run done ------------------------')
