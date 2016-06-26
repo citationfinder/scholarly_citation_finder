@@ -1,9 +1,17 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
 import codecs
 import logging
+import sys
 
 from scholarly_citation_finder import config
 
+# Set default encoding
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
+# Setup logging
 logging.basicConfig(filename=os.path.join(config.LOG_DIR, 'mag.log'),
                             level=logging.INFO,
                             format='[%(asctime)s] %(levelname)s [%(module)s] %(message)s')

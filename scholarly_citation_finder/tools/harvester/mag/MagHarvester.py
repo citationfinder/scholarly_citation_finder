@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os.path
 import psycopg2
 import logging
@@ -78,9 +80,11 @@ class MagHarvester:
             logger.warn(e, exc_info=True)
         return False
 
-    def run(self):
+    def run(self, files=None):
+        if files is None:
+            files = MagNormalize.FILES
         logger.info('run -----------------------------')        
-        for name, file in MagNormalize.FILES.iteritems():
+        for name, file in files.iteritems():
             file_pre = get_pre_name(file)
             csv_file = os.path.join(self.download_dir, file_pre)
             if os.path.isfile(csv_file) and hasattr(self, name):

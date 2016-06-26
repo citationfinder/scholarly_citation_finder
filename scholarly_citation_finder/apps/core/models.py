@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Affilation(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=150)
 
     def __unicode__(self):
@@ -9,6 +10,7 @@ class Affilation(models.Model):
 
 
 class Author(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     
     def __unicode__(self):
@@ -16,6 +18,7 @@ class Author(models.Model):
 
 
 class AuthorNameBlock(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(db_index=True, unique=True, max_length=52)
     
     def __unicode__(self):
@@ -23,6 +26,7 @@ class AuthorNameBlock(models.Model):
 
 
 class AuthorNameVariation(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     block = models.ForeignKey(AuthorNameBlock)
     author = models.ForeignKey(Author)
     first = models.CharField(max_length=20)
@@ -36,6 +40,7 @@ class AuthorNameVariation(models.Model):
 
 
 class Conference(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     short_name = models.CharField(db_index=True, max_length=20, blank=True, null=True)
     name = models.CharField(max_length=250, blank=True, null=True)
     
@@ -44,6 +49,7 @@ class Conference(models.Model):
     
 
 class ConferenceInstance(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     conference = models.ForeignKey(Conference, blank=True, null=True)
     short_name = models.CharField(max_length=40)
     name = models.CharField(max_length=250)
@@ -56,6 +62,7 @@ class ConferenceInstance(models.Model):
 
     
 class FieldOfStudy(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     
     def __unicode__(self):
@@ -63,6 +70,7 @@ class FieldOfStudy(models.Model):
 
 
 class FieldOfStudyHierarchy(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     child = models.ForeignKey(FieldOfStudy, related_name='%(class)s_child')
     child_level = models.SmallIntegerField()
     parent = models.ForeignKey(FieldOfStudy, related_name='%(class)s_parent')
@@ -71,6 +79,7 @@ class FieldOfStudyHierarchy(models.Model):
 
 
 class Journal(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(db_index=True, max_length=250)
     
     def __unicode__(self):
@@ -78,6 +87,7 @@ class Journal(models.Model):
 
 
 class KeywordFieldofstudy(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     fieldofstudy = models.ForeignKey(FieldOfStudy, blank=True, null=True)
     #fieldofstudy_name = models.CharField(max_length=100, blank=True, null=True)
@@ -91,6 +101,7 @@ class KeywordFieldofstudy(models.Model):
         unique_together = ('name', 'fieldofstudy')
 
 class Publication(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     """
     attributes
     """
@@ -131,6 +142,7 @@ class Publication(models.Model):
 
 
 class PublicationAuthorAffilation(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     publication = models.ForeignKey(Publication)
     author = models.ForeignKey(Author)
     affilation = models.ForeignKey(Affilation, blank=True, null=True)
@@ -140,6 +152,7 @@ class PublicationAuthorAffilation(models.Model):
 
 
 class PublicationFieldOfStudy(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     publication = models.ForeignKey(Publication)
     fieldofstudy = models.ForeignKey(FieldOfStudy, null=True)
     fieldofstudy_name = models.CharField(max_length=100)
@@ -154,6 +167,7 @@ class PublicationFieldOfStudy(models.Model):
     
     
 class PublicationKeyword(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     publication = models.ForeignKey(Publication)
     name = models.CharField(max_length=100)
     fieldofstudy = models.ForeignKey(FieldOfStudy, blank=True, null=True)
@@ -163,6 +177,7 @@ class PublicationKeyword(models.Model):
     
 
 class PublicationUrl(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     MIME_TYPE_PDF = 'application/pdf'
     MIME_TYPE_HTML = 'text/html'
     MIME_TYPES = (
@@ -181,6 +196,7 @@ class PublicationUrl(models.Model):
 
 
 class PublicationReference(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     publication = models.ForeignKey(Publication, related_name='%(class)s_publication')
     reference = models.ForeignKey(Publication, related_name='%(class)s_citation')
     context = models.TextField(blank=True, null=True)
