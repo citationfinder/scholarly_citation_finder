@@ -28,3 +28,11 @@ Create a user and a database
 CREATE USER <user_name> WITH PASSWORD '<password>';
 CREATE DATABASE <name> [OWNER <user_name>];
 ```
+
+
+## RabbitMQ tips
+
+Stop RabbitMQ
+```bash
+$ sudo -u rabbitmq rabbitmqctl stop
+```
