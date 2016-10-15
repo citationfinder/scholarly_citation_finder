@@ -1,0 +1,3 @@
+[submodule "public/client"]
+	path = public/client
+	url = git@github.com:citationfinder/client.git
